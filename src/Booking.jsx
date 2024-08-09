@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, InputNumber, Button, Typography, Space } from 'antd';
+import { Form, Input, InputNumber, Button, Typography, Space, Select } from 'antd';
 import { useLocation } from 'react-router-dom';
 
 const { Title, Text } = Typography;
@@ -14,7 +14,7 @@ const Booking = () => {
 
     return (
         <div style={{ maxWidth: 600, margin: 'auto', padding: '24px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-            <Title level={3} style={{ textAlign: 'center', marginBottom: '24px' }}>Your booking information in {selectedDate}</Title>
+            <Title level={3} style={{ textAlign: 'center', marginBottom: '24px' }}>Thông tin book vào {selectedDate}</Title>
             <Form
                 layout="vertical"
                 onFinish={onFinish}
@@ -22,28 +22,32 @@ const Booking = () => {
                 <Form.Item
                     name="fullname"
                     label="Full Name"
-                    rules={[{ required: true, message: 'Please enter your full name' }]}
+                    rules={[{ required: true, message: 'Làm ơn nhập tên đầy đủ của bạn' }]}
                 >
-                    <Input placeholder="Enter your full name" />
+                    <Input placeholder="Tên đầy đủ" />
                 </Form.Item>
 
                 <Form.Item
                     name="numberOfPeople"
                     label="Number of People"
                     rules={[
-                        { required: true, message: 'Please enter the number of people' },
-                        { type: 'number', min: 1, message: 'Must be at least 1 person' }
+                        { required: true, message: 'Làm ơn chọn số người dùng bàn' },
                     ]}
                 >
-                    <InputNumber min={1} style={{ width: '100%' }} placeholder="Enter number of people" />
+                    <Select placeholder="Chọn số người dùng bàn" >
+                        <Select.Option value={2}  > 2</Select.Option>
+                        <Select.Option value={3}  > 3</Select.Option>
+                        <Select.Option value={4}  > 4</Select.Option>
+                        <Select.Option value={5}  > 5</Select.Option>
+                    </Select>
                 </Form.Item>
 
                 <Form.Item
                     name="phoneNumber"
                     label="Phone Number"
-                    rules={[{ required: true, message: 'Please enter your phone number' }]}
+                    rules={[{ required: true, message: 'Vui lòng nhập số điện thoại của bạn' }]}
                 >
-                    <Input placeholder="Enter your phone number" />
+                    <Input placeholder="Số điện thoại" />
                 </Form.Item>
 
                 <Form.Item>
@@ -53,7 +57,7 @@ const Booking = () => {
                 </Form.Item>
             </Form>
             <Space direction="vertical" style={{ marginTop: '24px', textAlign: 'center' }}>
-                <Text type="danger">* Note or something note-worthy here</Text>
+                <Text type="danger">Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ và gắn link Fanpage</Text>
             </Space>
         </div>
     );

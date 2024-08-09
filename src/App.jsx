@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Calendar, Select, Row, Col, Tooltip, Modal, Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import 'antd/dist/reset.css'; // Import Ant Design styles
 import dayjs from 'dayjs';
 import './App.css'; // Import custom styles
-import { useNavigate } from 'react-router-dom';
 
 const App = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const customHeader = ({ value, onChange }) => {
     const monthOptions = [];
@@ -61,21 +61,13 @@ const App = () => {
       }
     };
 
-    if (isPast) {
-      return (
+    return (
+      <Tooltip title="hello">
         <div className={className} onClick={handleClick}>
           {current.date()}
         </div>
-      )
-    } else {
-      return (
-        <Tooltip title="hello">
-          <div className={className} onClick={handleClick}>
-            {current.date()}
-          </div>
-        </Tooltip>
-      );
-    }
+      </Tooltip>
+    );
   };
 
   const handleModalClose = () => {
@@ -83,16 +75,28 @@ const App = () => {
     setSelectedDate(null);
   };
 
-  const renderHourRows = () => {
-    const hours = Array.from({ length: 24 }, (_, i) => i); // Generate array [0, 1, 2, ..., 23]
+  const handleAvailableClick = () => {
+    navigate('/booking', { state: { selectedDate: selectedDate.format('YYYY-MM-DD') } });
+  };
 
-    return hours.map((hour) => (
-      <div key={hour} className="hour-row">
-        <span>{`${hour}:00`}</span>
-        <Button type="primary"
-          disabled={hour % 2 === 0 ? false : true}
-          onClick={() => navigate('/booking', { state: { selectedDate: selectedDate.format('YYYY-MM-DD') } })}>
-          {hour % 2 === 0 ? 'Available' : 'Occupied'}
+  const renderHourRows = () => {
+    const times = [];
+    const start = dayjs().hour(17).minute(0);
+    const end = dayjs().hour(21).minute(0);
+
+    for (let time = start; time.isBefore(end); time = time.add(30, 'minute')) {
+      times.push(time);
+    }
+
+    return times.map((time, index) => (
+      <div key={index} className="hour-row">
+        <span>{time.format('HH:mm')}</span>
+        <Button
+          type="primary"
+          disabled={index % 2 === 0 ? false : true}
+          onClick={index % 2 === 0 ? handleAvailableClick : undefined}
+        >
+          {index % 2 === 0 ? 'Available' : 'Occupied'}
         </Button>
       </div>
     ));
