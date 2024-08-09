@@ -57,7 +57,10 @@ const Booking = () => {
                 </Form.Item>
             </Form>
             <Space direction="vertical" style={{ marginTop: '24px', textAlign: 'center' }}>
-                <Text type="danger">Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ và gắn link Fanpage</Text>
+                <Text type="danger">Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;   
+                    <a href='https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d'>
+                        Fanpage
+                    </a></Text>
             </Space>
         </div>
     );
