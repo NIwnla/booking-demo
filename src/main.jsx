@@ -6,9 +6,9 @@ import { Router, Routes, Route, BrowserRouter } from 'react-router-dom'
 import Booking from './Booking.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename={"/booking-demo"}>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="*" element={<App />} />
         <Route path="/booking" element={<Booking />} />
       </Routes>
     </BrowserRouter>
