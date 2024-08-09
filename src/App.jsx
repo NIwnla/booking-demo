@@ -91,7 +91,7 @@ const App = () => {
         <span>{`${hour}:00`}</span>
         <Button type="primary"
           disabled={hour % 2 === 0 ? false : true}
-          onClick={() => navigate('/booking')}>
+          onClick={() => navigate('/booking', { state: { selectedDate: selectedDate.format('YYYY-MM-DD') } })}>
           {hour % 2 === 0 ? 'Available' : 'Occupied'}
         </Button>
       </div>
