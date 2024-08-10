@@ -1,15 +1,20 @@
-import React from 'react';
-import { Form, Input, InputNumber, Button, Typography, Space, Select } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Select, Button, Typography, Space, Checkbox } from 'antd';
 import { useLocation } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
 const Booking = () => {
+    const [isConfirmed, setIsConfirmed] = useState(false);
     const location = useLocation();
     const { selectedDate } = location?.state;
 
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
+    };
+
+    const handleCheckboxChange = (e) => {
+        setIsConfirmed(e.target.checked);
     };
 
     return (
@@ -30,9 +35,7 @@ const Booking = () => {
                 <Form.Item
                     name="numberOfPeople"
                     label="Number of People"
-                    rules={[
-                        { required: true, message: 'Làm ơn chọn số người dùng bàn' },
-                    ]}
+                    rules={[{ required: true, message: 'Làm ơn chọn số người dùng bàn' }]}
                 >
                     <Select placeholder="Chọn số người dùng bàn" >
                         <Select.Option value={2}  > 2</Select.Option>
@@ -49,15 +52,23 @@ const Booking = () => {
                 >
                     <Input placeholder="Số điện thoại" />
                 </Form.Item>
+                <Text type='warning'>
+                    Quý khách vui lòng đến đúng giờ, nhà sẽ chỉ giữ bàn muộn hơn 10 phút so với giờ đặt bàn nhé!
+                </Text>
+                <Form.Item>
+                    <Checkbox onChange={handleCheckboxChange}>
+                        Tôi xác nhận là sẽ đến đúng giờ.
+                    </Checkbox>
+                </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" block>
+                    <Button type="primary" htmlType="submit" block disabled={!isConfirmed}>
                         Book Now
                     </Button>
                 </Form.Item>
             </Form>
             <Space direction="vertical" style={{ marginTop: '24px', textAlign: 'center' }}>
-                <Text type="danger">Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;   
+                <Text type="danger">Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;
                     <a href='https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d'>
                         Fanpage
                     </a></Text>

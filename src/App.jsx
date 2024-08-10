@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Select, Row, Col, Tooltip, Modal, Button } from 'antd';
+import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import 'antd/dist/reset.css'; // Import Ant Design styles
 import dayjs from 'dayjs';
@@ -8,7 +8,8 @@ import './App.css'; // Import custom styles
 const App = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [isMorningMode, setIsMorningMode] = useState(false); // State for mode toggle
+  const navigate = useNavigate();
 
   const customHeader = ({ value, onChange }) => {
     const monthOptions = [];
@@ -81,8 +82,15 @@ const App = () => {
 
   const renderHourRows = () => {
     const times = [];
-    const start = dayjs().hour(17).minute(0);
-    const end = dayjs().hour(21).minute(0);
+    let start, end;
+
+    if (isMorningMode) {
+      start = dayjs().hour(10).minute(30);
+      end = dayjs().hour(16).minute(31);
+    } else {
+      start = dayjs().hour(17).minute(0);
+      end = dayjs().hour(21).minute(31);
+    }
 
     for (let time = start; time.isBefore(end); time = time.add(30, 'minute')) {
       times.push(time);
@@ -93,13 +101,17 @@ const App = () => {
         <span>{time.format('HH:mm')}</span>
         <Button
           type="primary"
-          disabled={index % 2 === 0 ? false : true}
+          disabled={index % 2 !== 0}
           onClick={index % 2 === 0 ? handleAvailableClick : undefined}
         >
           {index % 2 === 0 ? 'Available' : 'Occupied'}
         </Button>
       </div>
     ));
+  };
+
+  const handleModeChange = (checked) => {
+    setIsMorningMode(checked);
   };
 
   return (
@@ -114,6 +126,13 @@ const App = () => {
         onCancel={handleModalClose}
         footer={null}
       >
+        <div style={{ marginBottom: 16 }}>
+          <Switch
+            checkedChildren="Day"
+            unCheckedChildren="Night"
+            onChange={handleModeChange}
+          />
+        </div>
         {renderHourRows()}
       </Modal>
     </div>
