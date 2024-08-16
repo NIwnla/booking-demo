@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-const Booking = () => {
+const BookingPage = () => {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const location = useLocation();
     const { selectedDate } = location?.state;
@@ -77,4 +77,4 @@ const Booking = () => {
     );
 };
 
-export default Booking;
+export default BookingPage;
