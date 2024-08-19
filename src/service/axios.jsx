@@ -1,6 +1,7 @@
 import axios from "axios";
 import { AxiosConstants } from "../constaints/axiosContaint";
 import { routeNames } from "../constaints/routeName";
+import Cookies from "js-cookie";
 
 
 
@@ -12,6 +13,17 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
+        let token = Cookies.get('authToken');
+
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        } else {
+            token = Cookies.get('authToken');
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`;
+            }
+        }
+
         if (process.env.NODE_ENV === 'development') {
             const method = config.method?.toUpperCase() ?? 'GET';
             const urlWithParams = method.concat(` ${config.url}`, (config.params ? `?${new URLSearchParams(config.params).toString()}` : ''));
@@ -37,7 +49,7 @@ axiosInstance.interceptors.response.use(
             return Promise.reject(new Error('Network error, unable to connect to API'));
         }
         // Any status codes that fall outside the range of 2xx cause this function to trigger
-        if (error.response && error.response.status === 401 && window.location.pathname !== routeNames.login) {
+        if (error.response && error.response.status === 404 && window.location.pathname !== routeNames.login) {
             // Handle unauthorized errors (e.g., redirect to login)
             console.error('Unauthorized, redirecting to login...');
             window.location.href = routeNames.index;

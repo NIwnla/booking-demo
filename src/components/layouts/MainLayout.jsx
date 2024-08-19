@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Layout, Menu, Typography, Dropdown } from 'antd';
+import { Layout, Menu, Typography, Dropdown, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
@@ -8,21 +8,19 @@ const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
 
 const MainLayout = ({ children }) => {
-    const { email, setRole, setEmail } = useContext(AuthContext);
+    const { email, clearAuthToken } = useContext(AuthContext);
 
     const handleLogout = () => {
-        // Clear the auth context
-        setRole(null);
-        setEmail(null);
+        clearAuthToken();
     };
 
-    const menuItems = (
-        <Menu>
-            <Menu.Item key="logout" onClick={handleLogout}>
-                Logout
-            </Menu.Item>
-        </Menu>
-    );
+    const menuItems = [
+        {
+            key: 'logout',
+            label: 'Logout',
+            onClick: handleLogout,
+        },
+    ];
 
     return (
         <Layout>
@@ -35,26 +33,26 @@ const MainLayout = ({ children }) => {
                     <Menu
                         theme="dark"
                         mode="horizontal"
-                        defaultSelectedKeys={['1']}
                         style={{ display: 'flex', flex: 1 }}
                     >
                         <Menu.Item key="1">
                             <Link to={routeNames.index}>Home</Link>
                         </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to={routeNames.booking.calendar}>Booking</Link>
+                        </Menu.Item>
                         <Menu.Item key="3">
-                            <Link to="/contact">Contact</Link>
+                            <Link to={routeNames.booking.management}>Management</Link>
                         </Menu.Item>
                     </Menu>
 
                     {email ? (
                         <Dropdown
-                            // @ts-ignore
-                            menu={menuItems} placement="bottomRight" trigger={['click']}>
-                            <Menu theme="dark" mode="horizontal" style={{ width: '15vw' }}>
-                                <Menu.Item key="email">
-                                    {email}
-                                </Menu.Item>
-                            </Menu>
+                            menu={{ items: menuItems }} placement="bottomRight" trigger={['click']}
+                        >
+                            <Space style={{ cursor: 'pointer', color: '#fff' }}>
+                                {email}
+                            </Space>
                         </Dropdown>
                     ) : (
                         <Menu theme="dark" mode="horizontal" style={{ minWidth: '4vw' }}>

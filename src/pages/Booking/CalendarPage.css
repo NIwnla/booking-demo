@@ -11,18 +11,18 @@
     transition: background 0.3s;
 }
 
-.date-cell.past {
+.date-cell.disable {
     background: #f5f5f5;
     color: #d9d9d9;
 }
 
-.date-cell.future {
+.date-cell.enable {
     background: white;
     color: black;
     cursor: pointer;
 }
 
-.date-cell.future:hover {
+.date-cell.enable:hover {
     background: #e6f7ff;
 }
 

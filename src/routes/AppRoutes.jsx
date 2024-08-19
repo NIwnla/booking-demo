@@ -6,6 +6,8 @@ import { routeNames } from '../constaints/routeName';
 import NotFoundPage from '../pages/Common/NotFoundPage';
 import MainLayout from '../components/layouts/MainLayout';
 import SignInPage from '../pages/Common/SignInPage';
+import HomePage from '../pages/Common/HomePage';
+import BookingManagementAdminPage from '../pages/Booking/BookingManagementAdminPage';
 
 // Mock function to get the current user's role
 // Replace this with actual authentication logic
@@ -17,18 +19,20 @@ const getUserRole = () => {
 const PrivateRoute = ({ element, allowedRoles }) => {
     const userRole = getUserRole();
 
-    return allowedRoles.includes(userRole) ? element : <Navigate to="/unauthorized" />;
+    return allowedRoles.includes(userRole) ? element : <Navigate to={routeNames.notFound}/>;
 };
 
 const AppRoutes = () => {
     return (
         <MainLayout>
             <Routes>
-                <Route path={routeNames.index} element={<CalendarPage />} />
+                <Route path={routeNames.index} element={<HomePage />} />
                 <Route
                     path={routeNames.booking.bookingPage}
                     element={<PrivateRoute element={<BookingPage />} allowedRoles={['user', 'admin']} />}
                 />
+                <Route path={routeNames.booking.management} element={<BookingManagementAdminPage />} />
+                <Route path={routeNames.booking.calendar} element={<CalendarPage />} />
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
