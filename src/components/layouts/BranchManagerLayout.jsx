@@ -1,17 +1,19 @@
 import React, { useContext } from 'react';
 import { Layout, Menu, Typography, Dropdown, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
 
-const MainLayout = ({ children }) => {
+const BranchManagerLayout = ({ children }) => {
     const { email, clearAuthToken } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         clearAuthToken();
+        navigate(routeNames.index);
     };
 
     const menuItems = [
@@ -39,10 +41,16 @@ const MainLayout = ({ children }) => {
                             <Link to={routeNames.index}>Home</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <Link to={routeNames.booking.calendar}>Booking</Link>
+                            <Link to={routeNames.booking.branchChoose}>Booking</Link>
+                        </Menu.Item>
+                        <Menu.Item key="4">
+                            <Link to={routeNames.branch.management}>Branches</Link>
                         </Menu.Item>
                         <Menu.Item key="3">
                             <Link to={routeNames.booking.management}>Management</Link>
+                        </Menu.Item>
+                        <Menu.Item key="5">
+                            <Link to={routeNames.user.management}>Users</Link>
                         </Menu.Item>
                     </Menu>
 
@@ -77,4 +85,4 @@ const MainLayout = ({ children }) => {
     );
 };
 
-export default MainLayout;
+export default BranchManagerLayout;

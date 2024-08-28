@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Form, Input, Select, Button, Typography, Space, Checkbox } from 'antd';
+import { Form, Input, Select, Button, Typography, Space, Checkbox, message } from 'antd';
 import { useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
@@ -11,7 +11,7 @@ const { Title, Text } = Typography;
 const BookingPage = () => {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const location = useLocation();
-    const { selectedDate, selectedTime } = location?.state;
+    const { selectedDate, selectedTime, branchId } = location?.state;
     const { userId } = useContext(AuthContext);
     const [isFetching, setIsFetching] = useState(false);
     const navigate = useNavigate();
@@ -21,6 +21,7 @@ const BookingPage = () => {
 
         const payload = {
             userId,
+            branchId,
             time,
             userFullName: values.fullname,
             numberOfPeople: values.numberOfPeople,
@@ -35,10 +36,9 @@ const BookingPage = () => {
         try {
             const response = await axiosInstance.post(apiEndPoints.BOOKING_INFORMATION.CREATE, payload)
         }catch(error){
-
+            message.error(error.response.data)
         }finally{
             setIsFetching(false);
-            navigate(routeNames.index)
         }
     };
 
@@ -48,7 +48,7 @@ const BookingPage = () => {
 
     return (
         <div style={{ maxWidth: 600, margin: 'auto', padding: '24px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-            <Title level={3} style={{ textAlign: 'center', marginBottom: '24px' }}>Thông tin book vào {selectedDate} {selectedTime}</Title>
+            <Title level={3} style={{ textAlign: 'center', marginBottom: '24px' }}>Thông tin book vào {selectedDate} {selectedTime} {branchId}</Title>
             <Form
                 layout="vertical"
                 onFinish={onFinish}
@@ -71,7 +71,6 @@ const BookingPage = () => {
                         <Select.Option value={3}> 3</Select.Option>
                         <Select.Option value={4}> 4</Select.Option>
                         <Select.Option value={5}> 5</Select.Option>
-                        <Select.Option value={6}> 6</Select.Option>
                     </Select>
                 </Form.Item>
 

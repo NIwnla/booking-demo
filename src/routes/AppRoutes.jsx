@@ -1,42 +1,94 @@
-import React from 'react';
-import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
-import CalendarPage from '../pages/Booking/CalendarPage';
-import BookingPage from '../pages/Booking/BookingPage';
+import React, { useContext } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import RoleLayout from '../components/layouts/RoleLayout';
 import { routeNames } from '../constaints/routeName';
-import NotFoundPage from '../pages/Common/NotFoundPage';
-import MainLayout from '../components/layouts/MainLayout';
-import SignInPage from '../pages/Common/SignInPage';
-import HomePage from '../pages/Common/HomePage';
+import { userRoles } from '../constaints/userRoles';
+import { AuthContext } from '../context/AuthContext';
 import BookingManagementAdminPage from '../pages/Booking/BookingManagementAdminPage';
+import BookingPage from '../pages/Booking/BookingPage';
+import BranchChoosePage from '../pages/Booking/BranchChoosePage';
+import CalendarPage from '../pages/Booking/CalendarPage';
+import BranchManagementAdminPage from '../pages/Branch/BranchManagementAdminPage';
+import HomePage from '../pages/Common/HomePage';
+import NotFoundPage from '../pages/Common/NotFoundPage';
+import SignInPage from '../pages/Common/SignInPage';
+import UserManagementAdminPage from '../pages/Users/UserManagementAdminPage';
+import HomePageAdmin from '../pages/Home/HomePageAdmin';
+import HomePageBranchManager from '../pages/Home/HomePageBranchManager';
+import HomePageGuest from '../pages/Home/HomePageGuest';
+import DisableCalendarPage from '../pages/DisableBookingTime/DisableCalendarPage';
+import DisableBranchChoosePage from '../pages/DisableBookingTime/DisableBranchChoosePage';
 
-// Mock function to get the current user's role
-// Replace this with actual authentication logic
 const getUserRole = () => {
-    // Example: return 'admin' or 'user'
-    return 'user'; // Default role for testing
+    const { role } = useContext(AuthContext);
+    return role;
 };
 
 const PrivateRoute = ({ element, allowedRoles }) => {
     const userRole = getUserRole();
 
-    return allowedRoles.includes(userRole) ? element : <Navigate to={routeNames.notFound}/>;
+    return allowedRoles.includes(userRole) ? element : <Navigate to={routeNames.notFound} />;
 };
 
 const AppRoutes = () => {
     return (
-        <MainLayout>
+        <RoleLayout>
             <Routes>
                 <Route path={routeNames.index} element={<HomePage />} />
                 <Route
-                    path={routeNames.booking.bookingPage}
-                    element={<PrivateRoute element={<BookingPage />} allowedRoles={['user', 'admin']} />}
+                    path={routeNames.homepage.admin}
+                    element={<PrivateRoute element={<HomePageAdmin />} allowedRoles={[userRoles.ADMIN]} />}
                 />
-                <Route path={routeNames.booking.management} element={<BookingManagementAdminPage />} />
-                <Route path={routeNames.booking.calendar} element={<CalendarPage />} />
+                <Route
+                    path={routeNames.homepage.branchManager}
+                    element={<PrivateRoute element={<HomePageBranchManager />} allowedRoles={[userRoles.BRANCH_MANAGER]} />}
+                />
+                <Route
+                    path={routeNames.homepage.guest}
+                    element={<PrivateRoute element={<HomePageGuest />} allowedRoles={[userRoles.GUEST]} />}
+                />
+
+                <Route
+                    path={routeNames.user.management}
+                    element={<PrivateRoute element={<UserManagementAdminPage />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+
+                <Route
+                    path={routeNames.booking.bookingPage}
+                    element={<PrivateRoute element={<BookingPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
+                />
+                <Route
+                    path={routeNames.booking.branchChoose}
+                    element={<PrivateRoute element={<BranchChoosePage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
+                />
+                <Route
+                    path={routeNames.booking.management}
+                    element={<PrivateRoute element={<BookingManagementAdminPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
+                <Route
+                    path={routeNames.booking.calendar}
+                    element={<PrivateRoute element={<CalendarPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
+                />
+
+                <Route
+                    path={routeNames.disableTime.calendar}
+                    element={<PrivateRoute element={<DisableCalendarPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
+                <Route
+                    path={routeNames.disableTime.branchChoose}
+                    element={<PrivateRoute element={<DisableBranchChoosePage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
+
+                <Route
+                    path={routeNames.branch.management}
+                    element={<PrivateRoute element={<BranchManagementAdminPage />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+
+
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
-        </MainLayout>
+        </RoleLayout>
     );
 };
 

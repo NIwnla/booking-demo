@@ -3,14 +3,14 @@ import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin } from
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
-import './CalendarPage.css'; // You might want to rename this to CalendarPage.css later
+import './DisableCalendarPage.css'; // You might want to rename this to CalendarPage.css later
 import { routeNames } from '../../constaints/routeName';
 import axiosInstance from '../../service/axios';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 
-const CalendarPage = () => {
+const DisableCalendarPage = () => {
     const location = useLocation();
-    const { branchId, branchName } = location.state || {}; 
+    const { branchId, branchName } = location.state || {};
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [timeMode, setTimeMode] = useState('night'); // New state for time mode
@@ -61,7 +61,7 @@ const CalendarPage = () => {
         const getTimes = async () => {
             setIsFetching(true)
             try {
-                const response = await axiosInstance.get(apiEndPoints.BOOKING_INFORMATION.GET_TIME_BY_MONTH(selectedMonth + 1))
+                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId))
                 setBookedTimes(response.data)
             } catch (error) {
 
@@ -83,7 +83,6 @@ const CalendarPage = () => {
 
         // Count booked times on the current date
         const bookedCount = bookedTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
-        const tooltipText = bookedCount > 0 ? `${bookedCount} booked` : '';
 
 
         const handleClick = () => {
@@ -92,20 +91,12 @@ const CalendarPage = () => {
                 setIsModalVisible(true);
             }
         };
-        if (isPast || !isCurrentMonth) {
-            return (
-                <div className={className} onClick={handleClick}>
-                    {current.date()}
-                </div>
-            )
-        }
+
 
         return (
-            <Tooltip title={tooltipText ? tooltipText : '0 slot booked'}>
-                <div className={className} onClick={handleClick}>
-                    {current.date()}
-                </div>
-            </Tooltip>
+            <div className={className} onClick={handleClick}>
+                {current.date()}
+            </div>
         );
 
 
@@ -132,7 +123,7 @@ const CalendarPage = () => {
         return times.map((time, index) => {
             const isBooked = bookedTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute'));
             const isSameDay = dayjs(time).isSame(selectedDate, 'date')
-            
+
             return (
                 <div key={index} className="hour-row">
                     <span>{time.format('HH:mm')}</span>
@@ -176,4 +167,4 @@ const CalendarPage = () => {
     );
 };
 
-export default CalendarPage;
+export default DisableCalendarPage;
