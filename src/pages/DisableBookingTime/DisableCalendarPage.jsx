@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin } from 'antd';
+import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin, Tag } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
@@ -16,8 +16,8 @@ const DisableCalendarPage = () => {
     const [timeMode, setTimeMode] = useState('night'); // New state for time mode
     const [selectedMonth, setSelectedMonth] = useState(dayjs().month())
     const [isFetching, setIsFetching] = useState(false)
-    const [bookedTimes, setBookedTimes] = useState([]);
-    const navigate = useNavigate();
+    const [disabledTimes, setDisabledTimes] = useState([]);
+    const [isDisabling, setIsDisabling] = useState(false);
 
     const customHeader = ({ value, onChange }) => {
         const monthOptions = [];
@@ -57,19 +57,18 @@ const DisableCalendarPage = () => {
         );
     };
 
-    useEffect(() => {
-        const getTimes = async () => {
-            setIsFetching(true)
-            try {
-                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId))
-                setBookedTimes(response.data)
-            } catch (error) {
+    const getTimes = async () => {
+        setIsFetching(true)
+        try {
+            const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId))
+            setDisabledTimes(response.data)
+        } catch (error) {
 
-            } finally {
-                setIsFetching(false)
-            }
+        } finally {
+            setIsFetching(false)
         }
-
+    }
+    useEffect(() => {
         getTimes();
     }, [selectedMonth])
 
@@ -82,7 +81,7 @@ const DisableCalendarPage = () => {
         const className = `date-cell ${isPast || !isCurrentMonth ? 'disable' : ''} ${isFuture && isCurrentMonth ? 'enable' : ''}`;
 
         // Count booked times on the current date
-        const bookedCount = bookedTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
+        const bookedCount = disabledTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
 
 
         const handleClick = () => {
@@ -107,33 +106,67 @@ const DisableCalendarPage = () => {
         setSelectedDate(null);
     };
 
-    const handleAvailableClick = (time) => {
-        navigate(routeNames.booking.bookingPage, { state: { selectedDate: selectedDate.format('YYYY-MM-DD'), selectedTime: time.format('HH:mm'), branchId } });
+    const handleDisableTime = async (time) => {
+        setIsDisabling(true)
+        try {
+            const payload = {
+                time: time.format('YYYY-MM-DDTHH:mm'),
+                branchId
+            }
+            const response = await axiosInstance.post(apiEndPoints.DISABLED_TIME.CREATE, payload)
+            getTimes();
+        } catch (error) {
+
+        } finally {
+            setIsDisabling(false)
+        }
     };
 
-    const renderHourRows = () => {
+    const handleEnableTime = async (time) => {
+        setIsDisabling(true)
+        try {
+            const response = await axiosInstance.delete(apiEndPoints.DISABLED_TIME.DELETE(time.format('YYYY-MM-DDTHH:mm')))
+            getTimes();
+        } catch (error) {
+
+        } finally {
+            setIsDisabling(false)
+        }
+    };
+
+    const renderHourRows = (date) => {
         const times = [];
-        const start = timeMode === 'day' ? dayjs().hour(10).minute(30) : dayjs().hour(17).minute(0);
-        const end = timeMode === 'day' ? dayjs().hour(16).minute(30) : dayjs().hour(21).minute(30);
+        const start = timeMode === 'day' ? dayjs(date).hour(10).minute(30) : dayjs(date).hour(17).minute(0);
+        const end = timeMode === 'day' ? dayjs(date).hour(16).minute(30) : dayjs(date).hour(21).minute(30);
 
         for (let time = start; time.isBefore(end); time = time.add(30, 'minute')) {
             times.push(time);
         }
 
         return times.map((time, index) => {
-            const isBooked = bookedTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute'));
-            const isSameDay = dayjs(time).isSame(selectedDate, 'date')
+            const isDisabledTime = disabledTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute') && dayjs(bookedTime).isSame(time, 'date'));
 
             return (
                 <div key={index} className="hour-row">
-                    <span>{time.format('HH:mm')}</span>
-                    <Button
-                        type="primary"
-                        disabled={isBooked}
-                        onClick={!isBooked ? () => handleAvailableClick(time) : undefined}
-                    >
-                        {!isBooked ? 'Available' : 'Occupied'}
-                    </Button>
+                    <span>{time.format('YYYY-MM-DD HH:mm')}</span>
+                    <Tag color={isDisabledTime ? 'red' : 'green'}> {isDisabledTime ? 'Inactive' : 'Active'}</Tag>
+                    <div>
+                        <Button
+                            type="primary"
+                            disabled={isDisabledTime}
+                            onClick={() => handleDisableTime(time)}
+                        >
+                            Disable
+                        </Button>
+                        <Button
+                            style={{ marginLeft: '1vw' }}
+                            type="primary"
+                            disabled={!isDisabledTime}
+                            onClick={() => handleEnableTime(time)}
+                        >
+                            Enable
+                        </Button>
+                    </div>
                 </div>
             )
         });
@@ -160,7 +193,7 @@ const DisableCalendarPage = () => {
                             unCheckedChildren="Day"
                         />
                     </div>
-                    {renderHourRows()}
+                    {renderHourRows(selectedDate)}
                 </Modal>
             </Spin>
         </div>

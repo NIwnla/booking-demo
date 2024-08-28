@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(() => {
   return {
     plugins: [react()],
-    base: process.env.VITE_BASE_URL,
+    base: '/booking-demo/',
     server: {
       port: 3000,
     },

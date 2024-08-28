@@ -16,7 +16,7 @@ const CalendarPage = () => {
     const [timeMode, setTimeMode] = useState('night'); // New state for time mode
     const [selectedMonth, setSelectedMonth] = useState(dayjs().month())
     const [isFetching, setIsFetching] = useState(false)
-    const [bookedTimes, setBookedTimes] = useState([]);
+    const [disabledTimes, setDisabledTimes] = useState([]);
     const navigate = useNavigate();
 
     const customHeader = ({ value, onChange }) => {
@@ -61,8 +61,8 @@ const CalendarPage = () => {
         const getTimes = async () => {
             setIsFetching(true)
             try {
-                const response = await axiosInstance.get(apiEndPoints.BOOKING_INFORMATION.GET_TIME_BY_MONTH(selectedMonth + 1))
-                setBookedTimes(response.data)
+                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId))
+                setDisabledTimes(response.data)
             } catch (error) {
 
             } finally {
@@ -82,7 +82,7 @@ const CalendarPage = () => {
         const className = `date-cell ${isPast || !isCurrentMonth ? 'disable' : ''} ${isFuture && isCurrentMonth ? 'enable' : ''}`;
 
         // Count booked times on the current date
-        const bookedCount = bookedTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
+        const bookedCount = disabledTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
         const tooltipText = bookedCount > 0 ? `${bookedCount} booked` : '';
 
 
@@ -120,19 +120,17 @@ const CalendarPage = () => {
         navigate(routeNames.booking.bookingPage, { state: { selectedDate: selectedDate.format('YYYY-MM-DD'), selectedTime: time.format('HH:mm'), branchId } });
     };
 
-    const renderHourRows = () => {
+    const renderHourRows = (date) => {
         const times = [];
-        const start = timeMode === 'day' ? dayjs().hour(10).minute(30) : dayjs().hour(17).minute(0);
-        const end = timeMode === 'day' ? dayjs().hour(16).minute(30) : dayjs().hour(21).minute(30);
+        const start = timeMode === 'day' ? dayjs(date).hour(10).minute(30) : dayjs(date).hour(17).minute(0);
+        const end = timeMode === 'day' ? dayjs(date).hour(16).minute(30) : dayjs(date).hour(21).minute(30);
 
         for (let time = start; time.isBefore(end); time = time.add(30, 'minute')) {
             times.push(time);
         }
 
         return times.map((time, index) => {
-            const isBooked = bookedTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute'));
-            const isSameDay = dayjs(time).isSame(selectedDate, 'date')
-            
+            const isBooked = disabledTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute') && dayjs(bookedTime).isSame(time, 'date'));            
             return (
                 <div key={index} className="hour-row">
                     <span>{time.format('HH:mm')}</span>
@@ -169,7 +167,7 @@ const CalendarPage = () => {
                             unCheckedChildren="Day"
                         />
                     </div>
-                    {renderHourRows()}
+                    {renderHourRows(selectedDate)}
                 </Modal>
             </Spin>
         </div>

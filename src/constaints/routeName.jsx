@@ -23,6 +23,6 @@ export const routeNames = {
     },
     disableTime:{
         branchChoose: '/disable-time/branchs',
-        calendar : 'disable-time/calendar',
+        calendar : '/disable-time/calendar',
     },
 }

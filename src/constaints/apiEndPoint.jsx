@@ -26,6 +26,6 @@ export const apiEndPoints = {
     DISABLED_TIME:{
         GET_BY_MONTH : (year, month, branchId) => `/disabled-booking-times/${year}/${month}/${branchId}`,
         CREATE: '/disabled-booking-times',
-        DELETE: (id) => `/disabled-booking-times/${id}`,
+        DELETE: (time) => `/disabled-booking-times/${time}`,
     }
 }
