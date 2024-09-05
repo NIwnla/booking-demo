@@ -3,8 +3,8 @@ import { Table, Button, Modal, Image, Space, Spin, message, Tag, Typography } fr
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import axiosInstance from '../../service/axios';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
-import BranchCreationModal from '../../components/modals/BranchCreationModal';
-import BranchEditModal from '../../components/modals/BranchEditModal';
+import BranchCreationModal from '../../components/modals/branch/BranchCreationModal';
+import BranchEditModal from '../../components/modals/branch/BranchEditModal';
 import { Content } from 'antd/es/layout/layout';
 
 const { Title } = Typography;

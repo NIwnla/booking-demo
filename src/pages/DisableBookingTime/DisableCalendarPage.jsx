@@ -80,9 +80,6 @@ const DisableCalendarPage = () => {
 
         const className = `date-cell ${isPast || !isCurrentMonth ? 'disable' : ''} ${isFuture && isCurrentMonth ? 'enable' : ''}`;
 
-        // Count booked times on the current date
-        const bookedCount = disabledTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
-
 
         const handleClick = () => {
             if (!isPast || !isCurrentMonth) {
@@ -107,18 +104,19 @@ const DisableCalendarPage = () => {
     };
 
     const handleDisableTime = async (time) => {
-        setIsDisabling(true)
+        setIsDisabling(true);
         try {
             const payload = {
                 time: time.format('YYYY-MM-DDTHH:mm'),
-                branchId
-            }
-            const response = await axiosInstance.post(apiEndPoints.DISABLED_TIME.CREATE, payload)
+                branchId,
+                available: 0
+            };
+            const response = await axiosInstance.post(apiEndPoints.DISABLED_TIME.CREATE, payload);
             getTimes();
         } catch (error) {
-
+            console.error(error);
         } finally {
-            setIsDisabling(false)
+            setIsDisabling(false);
         }
     };
 
@@ -144,16 +142,19 @@ const DisableCalendarPage = () => {
         }
 
         return times.map((time, index) => {
-            const isDisabledTime = disabledTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute') && dayjs(bookedTime).isSame(time, 'date'));
+            const disabledTime = disabledTimes.find(bookedTime => dayjs(bookedTime.time).isSame(time, 'minute') && dayjs(bookedTime.time).isSame(time, 'date') );
+            const availableCount = disabledTime ? disabledTime.available : 10;
 
             return (
                 <div key={index} className="hour-row">
-                    <span>{time.format('YYYY-MM-DD HH:mm')}</span>
-                    <Tag color={isDisabledTime ? 'red' : 'green'}> {isDisabledTime ? 'Inactive' : 'Active'}</Tag>
+                    <span>{time.format('HH:mm')}</span>
+                    <Tag color={availableCount === 0 ? 'red' : 'green'}>
+                        {availableCount === 0 ? 'Inactive' : `Active (Available: ${availableCount})`}
+                    </Tag>
                     <div>
                         <Button
                             type="primary"
-                            disabled={isDisabledTime}
+                            disabled={availableCount === 0}
                             onClick={() => handleDisableTime(time)}
                         >
                             Disable
@@ -161,19 +162,21 @@ const DisableCalendarPage = () => {
                         <Button
                             style={{ marginLeft: '1vw' }}
                             type="primary"
-                            disabled={!isDisabledTime}
+                            disabled={availableCount > 0}
                             onClick={() => handleEnableTime(time)}
                         >
                             Enable
                         </Button>
                     </div>
                 </div>
-            )
+            );
         });
     };
 
+
     return (
         <div style={{ padding: 24 }}>
+            <div>Branch choosed : {branchName}</div>
             <Spin spinning={isFetching} >
                 <Calendar
                     headerRender={customHeader}

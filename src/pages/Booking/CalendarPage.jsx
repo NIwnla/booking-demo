@@ -10,7 +10,7 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 
 const CalendarPage = () => {
     const location = useLocation();
-    const { branchId, branchName } = location.state || {}; 
+    const { branchId, branchName } = location.state || {};
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [timeMode, setTimeMode] = useState('night'); // New state for time mode
@@ -76,10 +76,9 @@ const CalendarPage = () => {
     const dateFullCellRender = (current) => {
         const isPast = current.isBefore(dayjs(), 'day');
         const isToday = current.isSame(dayjs(), 'day');
-        const isCurrentMonth = current.isSame(dayjs(), 'month');
         const isFuture = !isPast && !isToday;
 
-        const className = `date-cell ${isPast || !isCurrentMonth ? 'disable' : ''} ${isFuture && isCurrentMonth ? 'enable' : ''}`;
+        const className = `date-cell ${isPast ? 'disable' : ''} ${isFuture ? 'enable' : ''}`;
 
         // Count booked times on the current date
         const bookedCount = disabledTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
@@ -87,12 +86,12 @@ const CalendarPage = () => {
 
 
         const handleClick = () => {
-            if (!isPast || !isCurrentMonth) {
+            if (!isPast) {
                 setSelectedDate(current);
                 setIsModalVisible(true);
             }
         };
-        if (isPast || !isCurrentMonth) {
+        if (isPast) {
             return (
                 <div className={className} onClick={handleClick}>
                     {current.date()}
@@ -120,6 +119,10 @@ const CalendarPage = () => {
         navigate(routeNames.booking.bookingPage, { state: { selectedDate: selectedDate.format('YYYY-MM-DD'), selectedTime: time.format('HH:mm'), branchId } });
     };
 
+    const handleUnavailableClick = () => {
+        navigate(routeNames.booking.unavailable);
+    };
+
     const renderHourRows = (date) => {
         const times = [];
         const start = timeMode === 'day' ? dayjs(date).hour(10).minute(30) : dayjs(date).hour(17).minute(0);
@@ -130,25 +133,39 @@ const CalendarPage = () => {
         }
 
         return times.map((time, index) => {
-            const isBooked = disabledTimes.some(bookedTime => dayjs(bookedTime).isSame(time, 'minute') && dayjs(bookedTime).isSame(time, 'date'));            
+            const disabledTime = disabledTimes.find(bookedTime => dayjs(bookedTime.time).isSame(time, 'minute') && dayjs(bookedTime.time).isSame(time, 'date'));
+            const availableCount = disabledTime ? disabledTime.available : 10;
+            const isBooked = availableCount === 0;
+
             return (
                 <div key={index} className="hour-row">
                     <span>{time.format('HH:mm')}</span>
-                    <Button
-                        type="primary"
-                        disabled={isBooked}
-                        onClick={!isBooked ? () => handleAvailableClick(time) : undefined}
-                    >
-                        {!isBooked ? 'Available' : 'Occupied'}
-                    </Button>
+                    {!isBooked ?
+                        (<Button
+                            type="primary"
+                            onClick={() => handleAvailableClick(time)}
+                        >
+                            {`Available : ${availableCount}`}
+                        </Button>)
+                        :
+                        (<Button
+                            type="primary"
+                            danger
+                            onClick={() => handleUnavailableClick()}
+                        >
+                            Not Available
+                        </Button>)}
+
                 </div>
-            )
+            );
         });
     };
+
 
     return (
         <div style={{ padding: 24 }}>
             <Spin spinning={isFetching} >
+                <div>Branch choosed : {branchName}</div>
                 <Calendar
                     headerRender={customHeader}
                     fullCellRender={dateFullCellRender}

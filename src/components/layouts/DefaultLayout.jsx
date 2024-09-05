@@ -24,14 +24,14 @@ const DefaultLayout = ({ children }) => {
 
     return (
         <Layout>
-            <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div className="logo" style={{ color: '#fff', fontSize: '20px', fontWeight: 'bold', marginRight: '2vw' }}>
+            <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff' }}>
+                <div style={{ color: '#000', fontSize: '20px', fontWeight: 'bold', marginRight: '2vw' }}>
                     My Restaurant
                 </div>
 
                 <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
                     <Menu
-                        theme="dark"
+                        theme="light"
                         mode="horizontal"
                         style={{ display: 'flex', flex: 1 }}
                     >
@@ -52,7 +52,7 @@ const DefaultLayout = ({ children }) => {
                             </Space>
                         </Dropdown>
                     ) : (
-                        <Menu theme="dark" mode="horizontal" style={{ minWidth: '4vw' }}>
+                        <Menu theme="light" mode="horizontal" style={{ minWidth: '4vw' }}>
                             <Menu.Item key="signin">
                                 <Link to={routeNames.login}>Sign In</Link>
                             </Menu.Item>

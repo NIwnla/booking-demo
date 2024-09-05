@@ -73,7 +73,9 @@ const HomePageGuest = () => {
                                 <p><strong>Branch:</strong> {bookingInfo.branchName}</p>
                                 <p><strong>Number of People:</strong> {bookingInfo.numberOfPeople}</p>
                                 <p><strong>Status:</strong> {bookingInfo.bookingStatus}</p>
-                                <p><strong>Message:</strong> {bookingInfo.message}</p>
+                                {bookingInfo.message && (<p><strong>Message:</strong> {bookingInfo.message}</p>)}
+                                {bookingInfo.preorder && (<p><strong>Preorder:</strong> {bookingInfo.preorder}</p>)}
+                                
                             </Card>
                         ) : (
                             !loading && <Card title="No current booking information available" />

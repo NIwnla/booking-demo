@@ -10,6 +10,7 @@ const { Title } = Typography;
 const UserManagementAdminPage = () => {
     const [data, setData] = useState([]);
     const [roles, setRoles] = useState([]);
+    const [branches, setBranches] = useState([]);
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
@@ -21,9 +22,11 @@ const UserManagementAdminPage = () => {
     const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [newRole, setNewRole] = useState(null);
+    const [selectedBranch, setSelectedBranch] = useState(null);
 
     useEffect(() => {
         fetchRoles();
+        fetchBranches();
     }, []);
 
     useEffect(() => {
@@ -39,6 +42,15 @@ const UserManagementAdminPage = () => {
         }
     };
 
+    const fetchBranches = async () => {
+        try {
+            const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL_NAME);
+            setBranches(response.data);
+        } catch (error) {
+            console.error('Failed to fetch branches:', error);
+        }
+    };
+
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -46,7 +58,7 @@ const UserManagementAdminPage = () => {
                 params: {
                     pageIndex,
                     pageSize,
-                    search: searchTerm,
+                    search: searchTerm ? searchTerm : undefined,
                     roleFilter,
                 },
             });
@@ -78,7 +90,7 @@ const UserManagementAdminPage = () => {
             setIsDetailModalVisible(true);
         } catch (error) {
             console.error('Failed to fetch user details:', error);
-        }finally{
+        } finally {
             setDetailLoading(false);
         }
     };
@@ -86,11 +98,17 @@ const UserManagementAdminPage = () => {
     const handleEditClick = (id) => {
         setSelectedUser(id);
         setIsEditModalVisible(true);
+        setSelectedBranch(null)
     };
 
     const handleRoleUpdate = async () => {
         try {
-            await axiosInstance.put(apiEndPoints.USERS.EDIT_ROLE(selectedUser,newRole));
+            const payload = {
+                userId: selectedUser,
+                role: newRole,
+                branchId: newRole === 'BranchManager' ? selectedBranch : null,
+            };
+            await axiosInstance.put(apiEndPoints.USERS.EDIT_ROLE, payload);
             fetchData(); // Refresh the data after updating
             setIsEditModalVisible(false);
         } catch (error) {
@@ -108,6 +126,12 @@ const UserManagementAdminPage = () => {
             title: 'Role',
             dataIndex: 'role',
             key: 'role',
+        },
+        {
+            title: 'Managing Branch',
+            dataIndex: 'branch',
+            key: 'branch',
+            render: (branch) => branch || '', // Display branch name or leave it blank if null
         },
         {
             title: 'Actions',
@@ -186,10 +210,16 @@ const UserManagementAdminPage = () => {
                 open={isEditModalVisible}
                 onOk={handleRoleUpdate}
                 onCancel={() => setIsEditModalVisible(false)}
+                okButtonProps={{ disabled: newRole === 'BranchManager' && !selectedBranch }}
             >
                 <Select
                     value={newRole}
-                    onChange={setNewRole}
+                    onChange={(value) => {
+                        setNewRole(value);
+                        if (value === 'BranchManager') {
+                            setSelectedBranch(null);
+                        }
+                    }}
                     style={{ width: '100%' }}
                 >
                     {roles.map((role) => (
@@ -198,6 +228,20 @@ const UserManagementAdminPage = () => {
                         </Option>
                     ))}
                 </Select>
+                {newRole === 'BranchManager' && (
+                    <Select
+                        placeholder="Select Branch"
+                        value={selectedBranch}
+                        onChange={setSelectedBranch}
+                        style={{ width: '100%', marginTop: '10px' }}
+                    >
+                        {branches.map((branch) => (
+                            <Option key={branch.id} value={branch.id}>
+                                {branch.name}
+                            </Option>
+                        ))}
+                    </Select>
+                )}
             </Modal>
         </div>
     );

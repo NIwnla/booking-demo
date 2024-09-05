@@ -42,19 +42,14 @@ axiosInstance.interceptors.response.use(
         return response
     },
     (error) => {
-        console.error(error)
+        console.error("Error :", error);
+
         if (!error.response) {
-            console.error('Network error, unable to connect to API');
-            // Return a specific error message or object for network errors
+            console.error('Unauthorized, redirecting to index...');
+            Cookies.remove('authToken');  // Remove the authentication token
+            window.location.href = routeNames.index;  // Redirect to index
             return Promise.reject(new Error('Network error, unable to connect to API'));
         }
-        // Any status codes that fall outside the range of 2xx cause this function to trigger
-        if (error.response && error.response.status === 404 && window.location.pathname !== routeNames.login) {
-            // Handle unauthorized errors (e.g., redirect to login)
-            console.error('Unauthorized, redirecting to login...');
-            window.location.href = routeNames.index;
-        }
-        // You can add other error handling logic here
 
         return Promise.reject(error);
     }

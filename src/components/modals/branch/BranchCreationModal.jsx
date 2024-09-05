@@ -1,69 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import axiosInstance from '../../service/axios';
-import { apiEndPoints } from '../../constaints/apiEndPoint';
-import { AxiosConstants } from '../../constaints/axiosContaint';
+import axios from 'axios';
+import axiosInstance from '../../../service/axios';
+import { apiEndPoints } from '../../../constaints/apiEndPoint';
 
-const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
+const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-    const [fileList, setFileList] = useState([]);
-
-    useEffect(() => {
-        if (branch) {
-            form.setFieldsValue({
-                name: branch.name,
-                description: branch.description,
-            });
-
-            setFileList(branch.imagePath ? [{
-                uid: '-1',
-                name: 'image.png',
-                status: 'done',
-                url: `${AxiosConstants.AXIOS_BASEURL}/${branch.imagePath}`,
-            }] : []);
-        }
-    }, [branch, form]);
 
     const handleFinish = async (values) => {
         const formData = new FormData();
         formData.append('Name', values.name);
         formData.append('Description', values.description);
-
-        if (fileList.length > 0 && fileList[0].originFileObj) {
-            formData.append('ImageFile', fileList[0].originFileObj);
-        }
+        formData.append('ImageFile', values.imageFile.file);
 
         setLoading(true);
 
         try {
-            const response = await axiosInstance.put(apiEndPoints.BRANCH.EDIT(branch.id), formData, {
+            const response = await axiosInstance.post(apiEndPoints.BRANCH.CREATE, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
 
-            message.success('Branch updated successfully!');
+            message.success('Branch created successfully!');
             form.resetFields();
-            setFileList([]); // Clear the file list after submission
-            onBranchUpdated(response.data); // Notify parent component
+            onBranchCreated(response.data); // Notify parent component
             onClose();
         } catch (error) {
-            message.error('Failed to update branch. Please try again.');
-            console.error('Error updating branch:', error);
+            message.error('Failed to create branch. Please try again.');
+            console.error('Error creating branch:', error);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleFileChange = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
-    };
-
     return (
         <Modal
-            title="Edit Branch"
+            title="Create New Branch"
             open={open}
             onCancel={onClose}
             footer={null}
@@ -92,15 +67,14 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 <Form.Item
                     label="Image"
                     name="imageFile"
-                    rules={[{ required: false }]}
+                    valuePropName="file"
+                    rules={[{ required: true, message: 'Please upload an image' }]}
                 >
                     <Upload
                         name="imageFile"
                         listType="picture"
                         maxCount={1}
                         beforeUpload={() => false} // Prevent automatic upload
-                        fileList={fileList}
-                        onChange={handleFileChange}
                     >
                         <Button icon={<UploadOutlined />}>Select Image</Button>
                     </Upload>
@@ -108,7 +82,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Update Branch
+                        Create Branch
                     </Button>
                 </Form.Item>
             </Form>
@@ -116,4 +90,4 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
     );
 };
 
-export default BranchEditModal;
+export default BranchCreationModal;

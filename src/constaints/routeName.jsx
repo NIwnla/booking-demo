@@ -9,20 +9,27 @@ export const routeNames = {
         management: '/booking/management',
         calendar: '/booking/calendar',
         bookingPage: '/booking/slot',
+        unavailable: '/booking/unavailable'
     },
     branch: {
-        management: '/branch/management',
+        management: '/branches/management',
     },
     user: {
-        management: '/user/management',
+        management: '/users/management',
     },
     homepage: {
         admin: '/home/admin',
         branchManager: '/home/branch-manager',
         guest: '/home/guest',
     },
-    disableTime:{
+    disableTime: {
         branchChoose: '/disable-time/branchs',
-        calendar : '/disable-time/calendar',
+        calendar: '/disable-time/calendar',
+    },
+    food: {
+        management: 'foods/management'
+    },
+    foodOption: {
+        management: 'food-options/management/:id'
     },
 }

@@ -7,6 +7,7 @@ export const AuthContext = createContext({
     userId: null,
     role: null,
     email: null,
+    branchId: null,
     setAuthToken: (token) => { },
     clearAuthToken: () => { },
 });
@@ -15,20 +16,23 @@ export const AuthProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
     const [role, setRole] = useState(null);
     const [email, setEmail] = useState(null);
+    const [branchId, setBranchId] = useState(null);
 
     // Function to decode the JWT token and extract information
     const decodeToken = (token) => {
         try {
             const decoded = jwtDecode(token);
             // @ts-ignore
-            const { sub, 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': userRole, Id } = decoded;
+            const { sub, 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': userRole, id, branchId } = decoded;
 
-            setUserId(Id);
+            setUserId(id);
             setRole(userRole);
             setEmail(sub);
+            setBranchId(branchId);
 
-            // Store the token in cookies for the session duration
-            Cookies.set('authToken', token, { expires: 1 }); // Cookie expires when the session ends
+            // Store the token in cookies for 120 mins
+            Cookies.set('authToken', token, { expires: 120 / (24 * 60) });
+
 
         } catch (error) {
             console.error('Invalid token:', error);
@@ -45,6 +49,7 @@ export const AuthProvider = ({ children }) => {
         setUserId(null);
         setRole(null);
         setEmail(null);
+        setBranchId(null);
         Cookies.remove('authToken');
     };
 
@@ -57,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ userId, role, email, setAuthToken, clearAuthToken }}>
+        <AuthContext.Provider value={{ userId, role, email, branchId, setAuthToken, clearAuthToken }}>
             {children}
         </AuthContext.Provider>
     );

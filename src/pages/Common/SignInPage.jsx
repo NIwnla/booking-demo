@@ -11,8 +11,8 @@ const SignInPage = () => {
     };
 
     const handleFacebookLogin = () => {
-        // Add your Facebook login logic here
-        console.log('Login with Facebook');
+        // @ts-ignore
+        window.location.href = import.meta.env.VITE_LOGIN_FACEBOOK_URL;
     };
 
     return (

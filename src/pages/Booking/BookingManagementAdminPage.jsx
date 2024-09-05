@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, Select, Pagination, Layout, Typography, Button, Modal, Tag } from 'antd';
+import { Table, Input, Select, Pagination, Layout, Typography, Button, Modal, Tag, message } from 'antd';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 
@@ -146,6 +146,14 @@ const BookingManagementAdminPage = () => {
             },
         },
         {
+            title: 'Preorder',
+            dataIndex: 'preorder',
+            key: 'preorder',
+            render: (preorder) => (
+                preorder ? <Tag color="green">Yes</Tag> : <Tag color="red">No</Tag>
+            ),
+        },
+        {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
@@ -161,6 +169,7 @@ const BookingManagementAdminPage = () => {
             ),
         },
     ];
+
 
     return (
         <Content style={{ padding: '20px' }}>
@@ -218,10 +227,16 @@ const BookingManagementAdminPage = () => {
                         <p><strong>Number of People:</strong> {selectedBooking.numberOfPeople}</p>
                         <p><strong>Phone Number:</strong> {selectedBooking.phoneNumber}</p>
                         <p><strong>Status:</strong> {selectedBooking.bookingStatus === 0 ? 'Canceled' : selectedBooking.bookingStatus === 1 ? 'Booking' : 'Confirmed'}</p>
-                        <p><strong>Message:</strong> {selectedBooking.message}</p>
+                        {selectedBooking.message && (
+                            <p><strong>Message:</strong> {selectedBooking.message}</p>
+                        )}
+                        {selectedBooking.preorder && (
+                            <p><strong>Preorder:</strong> {selectedBooking.preorder}</p>
+                        )}
                     </div>
                 )}
             </Modal>
+
         </Content>
     );
 };

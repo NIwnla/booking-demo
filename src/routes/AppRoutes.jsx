@@ -18,6 +18,9 @@ import HomePageBranchManager from '../pages/Home/HomePageBranchManager';
 import HomePageGuest from '../pages/Home/HomePageGuest';
 import DisableCalendarPage from '../pages/DisableBookingTime/DisableCalendarPage';
 import DisableBranchChoosePage from '../pages/DisableBookingTime/DisableBranchChoosePage';
+import FoodManagementPageAdmin from '../pages/Food/FoodManagementPageAdmin';
+import FoodOptionPageAdmin from '../pages/FoodOption/FoodOptionPageAdmin';
+import UnavailableTimeAlert from '../components/alerts/UnavailableTimeAlert';
 
 const getUserRole = () => {
     const { role } = useContext(AuthContext);
@@ -35,6 +38,7 @@ const AppRoutes = () => {
         <RoleLayout>
             <Routes>
                 <Route path={routeNames.index} element={<HomePage />} />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.homepage.admin}
                     element={<PrivateRoute element={<HomePageAdmin />} allowedRoles={[userRoles.ADMIN]} />}
@@ -47,12 +51,12 @@ const AppRoutes = () => {
                     path={routeNames.homepage.guest}
                     element={<PrivateRoute element={<HomePageGuest />} allowedRoles={[userRoles.GUEST]} />}
                 />
-
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.user.management}
                     element={<PrivateRoute element={<UserManagementAdminPage />} allowedRoles={[userRoles.ADMIN]} />}
                 />
-
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.booking.bookingPage}
                     element={<PrivateRoute element={<BookingPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
@@ -69,7 +73,11 @@ const AppRoutes = () => {
                     path={routeNames.booking.calendar}
                     element={<PrivateRoute element={<CalendarPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
                 />
-
+                <Route
+                    path={routeNames.booking.unavailable}
+                    element={<PrivateRoute element={<UnavailableTimeAlert />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
+                />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.disableTime.calendar}
                     element={<PrivateRoute element={<DisableCalendarPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
@@ -78,10 +86,20 @@ const AppRoutes = () => {
                     path={routeNames.disableTime.branchChoose}
                     element={<PrivateRoute element={<DisableBranchChoosePage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
-
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.branch.management}
                     element={<PrivateRoute element={<BranchManagementAdminPage />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route
+                    path={routeNames.food.management}
+                    element={<PrivateRoute element={<FoodManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route
+                    path={routeNames.foodOption.management}
+                    element={<PrivateRoute element={<FoodOptionPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
 
 
