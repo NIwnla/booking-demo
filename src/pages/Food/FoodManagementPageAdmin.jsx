@@ -7,6 +7,7 @@ import { AxiosConstants } from "../../constaints/axiosContaint";
 import { showMessage } from "../../helpers/showMessage";
 import axiosInstance from "../../service/axios";
 import './FoodManagementPageAdmin.css';
+import EditFoodModal from "../../components/modals/food/EditFoodModal";
 
 const FoodManagementPageAdmin = () => {
     const [foods, setFoods] = useState([]);
@@ -17,6 +18,7 @@ const FoodManagementPageAdmin = () => {
     const [search, setSearch] = useState("");
     const [selectedFood, setSelectedFood] = useState(null);
     const [createModalVisible, setCreateModalVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,9 +44,13 @@ const FoodManagementPageAdmin = () => {
         navigate(`/food-options/management/${foodId}`);
     };
 
-    const handleEdit = (foodId) => {
-        // Implement the edit functionality
-        showMessage("info", "Edit functionality is not implemented yet.");
+    const handleEdit = (food) => {
+        setSelectedFood(food);
+        setEditModalVisible(true);
+    };
+
+    const handleFoodUpdated = () => {
+        fetchFoods(); // Refresh list after editing
     };
 
     const handleDelete = async (foodId) => {
@@ -99,7 +105,7 @@ const FoodManagementPageAdmin = () => {
                                         <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleOptions(food.id)}>
                                             Options
                                         </Button>
-                                        <Button style={{ maxWidth: "15vw" }} onClick={() => handleEdit(food.id)}>
+                                        <Button style={{ maxWidth: "15vw" }} onClick={() => handleEdit(food)}>
                                             Edit
                                         </Button>
                                         <Popconfirm
@@ -133,6 +139,12 @@ const FoodManagementPageAdmin = () => {
                 visible={createModalVisible}
                 onClose={() => setCreateModalVisible(false)}
                 onFoodCreated={handleFoodCreated}
+            />
+            <EditFoodModal
+                visible={editModalVisible}
+                onClose={() => setEditModalVisible(false)}
+                onFoodUpdated={handleFoodUpdated}
+                food={selectedFood}
             />
         </div>
     );
