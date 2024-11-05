@@ -3,7 +3,11 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
 import { AuthProvider } from './context/AuthContext';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, App as AntdApp } from 'antd';
+import dayjs from 'dayjs';
+import isoWeek from 'dayjs/plugin/isoWeek'; // No need for a separate package
+
+dayjs.extend(isoWeek);
 
 const customTheme = {
   token: {
@@ -17,6 +21,16 @@ const customTheme = {
     Table: {
       headerBg: '#ff0000',       // Set table header background color to red
       headerColor: '#ffffff',    // Set table header text color to white
+    },
+    Menu: {
+      itemBg: '#ff0000',    // Default background color for menu items
+      colorText: '#ffffff',
+      itemSelectedColor: '#ff0000',
+      itemSelectedBg: '#ffffff',
+      horizontalItemSelectedBg: '#ffffff',
+      horizontalItemHoverBg: '#ffffff',
+      itemHoverBg: '#ffffff',
+      itemHoverColor: '#ff0000',
     }
   }
 };
@@ -25,11 +39,13 @@ const customTheme = {
 const App = () => {
   return (
     <ConfigProvider theme={customTheme}>
-      <AuthProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </AuthProvider>
+      <AntdApp>
+        <AuthProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </AuthProvider>
+      </AntdApp>
     </ConfigProvider>
   )
 };

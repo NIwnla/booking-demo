@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, Select, Pagination, Modal, Button, Typography } from 'antd';
+import { Table, Input, Select, Pagination, Modal, Button, Typography, Space } from 'antd';
 import axiosInstance from '../../service/axios';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
+import { useMediaQuery } from 'react-responsive';
+import { splitCamelCase } from '../../helpers/spilitCamelCase';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -23,6 +25,9 @@ const UserManagementAdminPage = () => {
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [newRole, setNewRole] = useState(null);
     const [selectedBranch, setSelectedBranch] = useState(null);
+
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' }); // Check for screen size
+
 
     useEffect(() => {
         fetchRoles();
@@ -121,26 +126,31 @@ const UserManagementAdminPage = () => {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
+            ellipsis: true,
         },
         {
             title: 'Role',
             dataIndex: 'role',
             key: 'role',
+            render : (role) => splitCamelCase(role)
         },
         {
             title: 'Managing Branch',
             dataIndex: 'branch',
             key: 'branch',
             render: (branch) => branch || '', // Display branch name or leave it blank if null
+            responsive: ['md'],
         },
         {
             title: 'Actions',
             key: 'actions',
             render: (_, record) => (
-                <span>
+                <Space wrap>
                     <Button onClick={() => handleDetailClick(record.id)}>Detail</Button>
-                    <Button onClick={() => handleEditClick(record.id)}>Change Role</Button>
-                </span>
+                    <Button onClick={() => handleEditClick(record.id)}>
+                        {isSmallScreen ? 'Edit' : 'Change Role'}
+                    </Button>
+                </Space>
             ),
         },
     ];
@@ -168,6 +178,7 @@ const UserManagementAdminPage = () => {
                 </Select>
             </div>
             <Table
+                // @ts-ignore
                 columns={columns}
                 dataSource={data}
                 rowKey="email"

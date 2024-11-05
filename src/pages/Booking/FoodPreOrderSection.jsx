@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Button, Row, Col, Input, Pagination, message, Spin, Image, Menu, Collapse } from 'antd';
-import axiosInstance from '../../service/axios';
+import { Button, Card, Col, Collapse, Image, Input, Pagination, Row, Space, Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
+import { showMessage } from '../../helpers/showMessage';
+import axiosInstance from '../../service/axios';
 
 const { Panel } = Collapse;
 
@@ -28,7 +29,7 @@ const FoodPreorderSection = ({ onPreorder }) => {
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            message.error("Failed to fetch foods.");
+            showMessage("error", "Failed to fetch foods.");
         } finally {
             setLoading(false);
         }
@@ -57,11 +58,11 @@ const FoodPreorderSection = ({ onPreorder }) => {
     const handlePreorder = (food, isOption = false) => {
         const quantity = preorders[food.id]?.quantity || 0;
         if (quantity > 0) {
-            const { imagePath, name } = food;
-            onPreorder({ imagePath, name, isOption }, quantity);
-            message.success(`Preordered ${quantity} of ${food.name}`);
+            const { id, imagePath, name } = food;
+            onPreorder({ id, imagePath, name, isOption }, quantity);
+            showMessage("success", `Preordered ${quantity} of ${food.name}`);
         } else {
-            message.warning(`Please select a quantity to preorder`);
+            showMessage("warning", "Please select a quantity to preorder");
         }
     };
 
@@ -81,14 +82,14 @@ const FoodPreorderSection = ({ onPreorder }) => {
                     }
                     style={{ marginBottom: '16px' }}
                 >
-                    <Card.Meta title={option.name} description={`Additional Price: ${option.additionalPrice}`} />
+                    <Card.Meta title={option.name} description={`Additional Price: ${option.price}`} />
                     <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
+                        <Space wrap>
                             <Button onClick={() => handleDecrement(option.id)}>-</Button>
-                            <span style={{ margin: '0 8px' }}>{preorders[option.id]?.quantity || 0}</span>
+                            <Button style={{ pointerEvents: 'none' }}>{preorders[option.id]?.quantity || 0}</Button>
                             <Button onClick={() => handleIncrement(option.id, true)}>+</Button>
-                        </div>
-                        <Button type="primary" onClick={() => handlePreorder(option, true)}>
+                        </Space>
+                        <Button type="primary" onClick={() => handlePreorder(option, true)} style={{ maxWidth: '20vw' }}>
                             Preorder
                         </Button>
                     </div>
@@ -101,7 +102,7 @@ const FoodPreorderSection = ({ onPreorder }) => {
 
     return (
         <div style={{ border: '1px solid #d9d9d9', padding: '24px', borderRadius: '8px', marginTop: '24px' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '24px' }}>Preorder Food for Your Booking</h3>
+            <h3 style={{ textAlign: 'center', marginBottom: '24px' }}>Đặt trước đồ ăn</h3>
             <Input.Search
                 placeholder="Search food"
                 onSearch={(value) => setSearch(value)}
@@ -110,7 +111,7 @@ const FoodPreorderSection = ({ onPreorder }) => {
             <Spin spinning={loading}>
                 <Row gutter={[16, 16]}>
                     {foods.map((food) => (
-                        <Col key={food.id} xs={24} sm={12} md={8}>
+                        <Col key={food.id} xs={24} sm={24} md={12} lg={8} xl={6} xxl={4}>
                             <Card
                                 hoverable
                                 cover={
@@ -125,21 +126,25 @@ const FoodPreorderSection = ({ onPreorder }) => {
                                 <Card.Meta title={food.name} description={`Price: ${food.basePrice}`} />
                                 <div style={{ marginTop: 16 }}>
                                     <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <div>
+                                        <Space wrap>
                                             <Button onClick={() => handleDecrement(food.id)}>-</Button>
-                                            <span style={{ margin: '0 8px' }}>{preorders[food.id]?.quantity || 0}</span>
+                                            <Button style={{ pointerEvents: 'none' }}>{preorders[food.id]?.quantity || 0}</Button>
                                             <Button onClick={() => handleIncrement(food.id)}>+</Button>
-                                        </div>
-                                        <Button type="primary" onClick={() => handlePreorder(food)}>
+                                        </Space>
+                                        <Button type="primary" onClick={() => handlePreorder(food)} style={{ maxWidth: '17vw' }}>
                                             Preorder
                                         </Button>
                                     </div>
                                     {food.options.length > 0 && (
-                                        <Collapse bordered={false}>
-                                            <Panel header="Show Options" key="1">
-                                                {renderFoodOptions(food)}
-                                            </Panel>
-                                        </Collapse>
+                                        <Collapse
+                                            bordered={false}
+                                            items={[
+                                                {
+                                                    key: '1',
+                                                    label: 'Show Options',
+                                                    children: renderFoodOptions(food), // The panel content
+                                                }
+                                            ]} />
                                     )}
                                 </div>
                             </Card>

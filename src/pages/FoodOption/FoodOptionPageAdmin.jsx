@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Popconfirm, message, Image, Spin } from "antd";
+import { Card, Button, Row, Col, Popconfirm, message, Image, Spin, Typography } from "antd";
 import axiosInstance from "../../service/axios";
 import { useParams } from "react-router-dom";
 import { AxiosConstants } from "../../constaints/axiosContaint";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import CreateFoodOptionModal from "../../components/modals/CreateFoodOptionModal";
 import EditFoodOptionModal from "../../components/modals/EditFoodOptionModal";
+import { useMediaQuery } from "react-responsive";
+import './FoodOptionPageAdmin.css'
+import { showMessage } from "../../helpers/showMessage";
 
+const { Title } = Typography
 const FoodOptionPageAdmin = () => {
     const { id } = useParams();
     const [food, setFood] = useState(null);
@@ -14,6 +18,8 @@ const FoodOptionPageAdmin = () => {
     const [createModalVisible, setCreateModalVisible] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [editModalVisible, setEditModalVisible] = useState(false);
+
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
 
     useEffect(() => {
         fetchOptions();
@@ -25,7 +31,7 @@ const FoodOptionPageAdmin = () => {
             const response = await axiosInstance.get(apiEndPoints.FOOD.GET_BY_ID(id));
             setFood(response.data);
         } catch (error) {
-            message.error("Failed to fetch food options.");
+            showMessage("error","Failed to fetch food options.");
         } finally {
             setLoading(false);
         }
@@ -39,10 +45,10 @@ const FoodOptionPageAdmin = () => {
     const handleDeleteOption = async (optionId) => {
         try {
             await axiosInstance.delete(apiEndPoints.FOOD_OPTION.DELETE(optionId));
-            message.success('Option deleted successfully.');
+            showMessage("success",'Option deleted successfully.');
             fetchOptions(); // Refresh the list after deletion
         } catch (error) {
-            message.error('Failed to delete option.');
+            showMessage("error",'Failed to delete option.');
         }
     };
 
@@ -52,9 +58,21 @@ const FoodOptionPageAdmin = () => {
 
 
     return (
-        <div style={{ padding: 24 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 24 }}>
-                <h2>{food?.name} Options</h2>
+        <div
+            style={{
+                padding: isSmallScreen ? "12px" : "24px", // Smaller padding for small screens
+            }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: isSmallScreen ? "column" : "row", // Change direction based on screen size
+                    justifyContent: "space-between",
+                    marginBottom: 24,
+                    alignItems: isSmallScreen ? "flex-start" : "center", // Align left on small screens, center on large screens
+                    gap: isSmallScreen ? "16px" : "0", // Add some gap on small screens
+                }}
+            >
+                <Title level={3}>{food?.name} Options</Title>
                 <Button type="primary" onClick={() => setCreateModalVisible(true)}>
                     Create Option
                 </Button>
@@ -75,8 +93,8 @@ const FoodOptionPageAdmin = () => {
                                     </div>
                                 }
                             >
-                                <Card.Meta title={option.name} description={`Additional Price: ${option.additionalPrice}`} />
-                                <div style={{ marginTop: 16, display: "flex", justifyContent: "center" }}>
+                                <Card.Meta title={option.name} description={`Price: ${option.price}`} />
+                                <div style={{ marginTop: 16, display: "flex", justifyContent: "center", gap: '8px' }}>
                                     <Button type="primary" onClick={() => handleEditOption(option)}>
                                         Edit
                                     </Button>
@@ -86,7 +104,7 @@ const FoodOptionPageAdmin = () => {
                                         okText="Yes"
                                         cancelText="No"
                                     >
-                                        <Button danger style={{ marginLeft: 8 }}>
+                                        <Button danger>
                                             Delete
                                         </Button>
                                     </Popconfirm>

@@ -1,6 +1,6 @@
 
 export const routeNames = {
-    index: "/booking-demo",
+    index: "/",
     login: "/login",
     callback: "/callback",
     notFound: "/404",
@@ -9,7 +9,8 @@ export const routeNames = {
         management: '/booking/management',
         calendar: '/booking/calendar',
         bookingPage: '/booking/slot',
-        unavailable: '/booking/unavailable'
+        unavailable: '/booking/unavailable',
+        edit: '/booking/edit/:id'
     },
     branch: {
         management: '/branches/management',

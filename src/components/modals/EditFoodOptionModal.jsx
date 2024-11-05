@@ -3,6 +3,7 @@ import { Modal, Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axiosInstance from "../../service/axios";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
+import { showMessage } from './../../helpers/showMessage';
 
 const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId }) => {
     const [form] = Form.useForm();
@@ -12,7 +13,7 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
         setLoading(true);
         const formData = new FormData();
         formData.append("Name", values.name);
-        formData.append("AdditionalPrice", values.additionalPrice);
+        formData.append("Price", values.price);
         formData.append("FoodId", foodId);
         if (values.imageFile) {
             formData.append("ImageFile", values.imageFile.file);
@@ -23,11 +24,11 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            message.success("Option updated successfully!");
+            showMessage("success","Option updated successfully!");
             onOptionUpdated();
             onClose();
         } catch (error) {
-            message.error("Failed to update option.");
+            showMessage("error","Failed to update option.");
         } finally {
             setLoading(false);
         }
@@ -46,7 +47,7 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
                 onFinish={handleFinish}
                 initialValues={{
                     name: option.name,
-                    additionalPrice: option.additionalPrice,
+                    price: option.price,
                 }}
             >
                 <Form.Item
@@ -58,7 +59,7 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
                 </Form.Item>
 
                 <Form.Item
-                    name="additionalPrice"
+                    name="price"
                     label="Additional Price"
                     rules={[{ required: true, message: "Please enter the additional price" }]}
                 >

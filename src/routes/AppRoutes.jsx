@@ -21,16 +21,24 @@ import DisableBranchChoosePage from '../pages/DisableBookingTime/DisableBranchCh
 import FoodManagementPageAdmin from '../pages/Food/FoodManagementPageAdmin';
 import FoodOptionPageAdmin from '../pages/FoodOption/FoodOptionPageAdmin';
 import UnavailableTimeAlert from '../components/alerts/UnavailableTimeAlert';
+import BookingEditPage from '../pages/Booking/BookingEditPage';
+import { Spin } from 'antd';
 
-const getUserRole = () => {
-    const { role } = useContext(AuthContext);
-    return role;
-};
 
 const PrivateRoute = ({ element, allowedRoles }) => {
-    const userRole = getUserRole();
+    const { role, isAuthenticated, loading } = useContext(AuthContext);
 
-    return allowedRoles.includes(userRole) ? element : <Navigate to={routeNames.notFound} />;
+    if (loading) {
+        return <Spin spinning></Spin>
+    }
+
+    if (isAuthenticated === false) {
+        // Redirect to the login page if the user is not authenticated
+        return <Navigate to={routeNames.login} />;
+    }
+
+    // Once the role is loaded, check if it's allowed to view the page
+    return allowedRoles.includes(role) ? element : <Navigate to={routeNames.notFound} />;
 };
 
 const AppRoutes = () => {
@@ -76,6 +84,10 @@ const AppRoutes = () => {
                 <Route
                     path={routeNames.booking.unavailable}
                     element={<PrivateRoute element={<UnavailableTimeAlert />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
+                />
+                <Route
+                    path={routeNames.booking.edit}
+                    element={<PrivateRoute element={<BookingEditPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER, userRoles.GUEST]} />}
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route

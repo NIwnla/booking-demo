@@ -8,11 +8,13 @@ export const apiEndPoints = {
         EDIT_ROLE: '/users',
     },
     BOOKING_INFORMATION: {
+        GET: (id) => `booking-informations/${id}`,
         GET_ALL: '/booking-informations',
         GET_TIME_BY_MONTH: (month) => `/booking-informations/month/${month}`,
-        GET_CURRENT_BOOKING: (userId) => `/booking-informations/current/${userId}`,
+        GET_CURRENT_BOOKING: '/booking-informations/current',
         CREATE: '/booking-informations',
-        EDIT: (id, status) => `/booking-informations/${id}/${status}`
+        EDIT_STATUS: (id, status) => `/booking-informations/${id}/${status}`,
+        EDIT: (id) => `/booking-informations/${id}`,
     },
     BRANCH: {
         GET_ALL: (includeDeleted) => `/branches/${includeDeleted ? 'true' : 'false'}`,

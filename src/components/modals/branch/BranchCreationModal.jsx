@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
+import { showMessage } from './../../../helpers/showMessage';
 
 const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
     const [form] = Form.useForm();
@@ -24,12 +25,12 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                 },
             });
 
-            message.success('Branch created successfully!');
+            showMessage("success", 'Branch created successfully!');
             form.resetFields();
             onBranchCreated(response.data); // Notify parent component
             onClose();
         } catch (error) {
-            message.error('Failed to create branch. Please try again.');
+            showMessage("error", 'Failed to create branch. Please try again.');
             console.error('Error creating branch:', error);
         } finally {
             setLoading(false);

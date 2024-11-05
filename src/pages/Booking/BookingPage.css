@@ -1,0 +1,17 @@
+/* Hide the preordered food section on small screens */
+@media (max-width: 768px) {
+    .preorder-food-section {
+        display: none;
+    }
+
+    .floating-button {
+        display: block;
+    }
+}
+
+/* Show the preordered food section on larger screens */
+@media (min-width: 769px) {
+    .floating-button {
+        display: none;
+    }
+}

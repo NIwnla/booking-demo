@@ -3,6 +3,7 @@ import { Modal, Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axiosInstance from "../../service/axios";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
+import { showMessage } from "../../helpers/showMessage";
 
 const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) => {
     const [form] = Form.useForm();
@@ -11,7 +12,7 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
     const handleFinish = async (values) => {
         const formData = new FormData();
         formData.append("Name", values.name);
-        formData.append("AdditionalPrice", values.additionalPrice);
+        formData.append("Price", values.price);
         formData.append("ImageFile", values.imageFile.file);
         formData.append("FoodId", foodId);
 
@@ -23,13 +24,12 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                     "Content-Type": "multipart/form-data",
                 },
             });
-
-            message.success("Option created successfully!");
+            showMessage("success", "Option created successfully!")
             form.resetFields();
             onOptionCreated();
             onClose();
         } catch (error) {
-            message.error("Failed to create option.");
+            showMessage("error","Failed to create option.");
         } finally {
             setLoading(false);
         }
@@ -56,7 +56,7 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                 </Form.Item>
 
                 <Form.Item
-                    name="additionalPrice"
+                    name="price"
                     label="Additional Price"
                     rules={[{ required: true, message: "Please enter the additional price" }]}
                 >

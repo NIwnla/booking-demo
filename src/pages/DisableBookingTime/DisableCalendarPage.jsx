@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin, Tag } from 'antd';
+import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin, Tag, Space } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
@@ -149,9 +149,9 @@ const DisableCalendarPage = () => {
                 <div key={index} className="hour-row">
                     <span>{time.format('HH:mm')}</span>
                     <Tag color={availableCount === 0 ? 'red' : 'green'}>
-                        {availableCount === 0 ? 'Inactive' : `Active (Available: ${availableCount})`}
+                        {availableCount === 0 ? 'Inactive' : `Available: ${availableCount}`}
                     </Tag>
-                    <div>
+                    <Space wrap>
                         <Button
                             type="primary"
                             disabled={availableCount === 0}
@@ -160,14 +160,13 @@ const DisableCalendarPage = () => {
                             Disable
                         </Button>
                         <Button
-                            style={{ marginLeft: '1vw' }}
                             type="primary"
                             disabled={availableCount > 0}
                             onClick={() => handleEnableTime(time)}
                         >
                             Enable
                         </Button>
-                    </div>
+                    </Space>
                 </div>
             );
         });

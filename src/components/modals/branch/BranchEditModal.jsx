@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../../constaints/axiosContaint';
+import { showMessage } from '../../../helpers/showMessage';
 
 const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
     const [form] = Form.useForm();
@@ -44,13 +45,13 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 },
             });
 
-            message.success('Branch updated successfully!');
+            showMessage("success",'Branch updated successfully!');
             form.resetFields();
             setFileList([]); // Clear the file list after submission
             onBranchUpdated(response.data); // Notify parent component
             onClose();
         } catch (error) {
-            message.error('Failed to update branch. Please try again.');
+            showMessage("error",'Failed to update branch. Please try again.');
             console.error('Error updating branch:', error);
         } finally {
             setLoading(false);

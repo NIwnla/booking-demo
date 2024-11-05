@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin } from 'antd';
+import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin, Typography } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
-import './CalendarPage.css'; // You might want to rename this to CalendarPage.css later
+import './CalendarPage.css';
 import { routeNames } from '../../constaints/routeName';
 import axiosInstance from '../../service/axios';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
+
+const { Title, Text } = Typography;
 
 const CalendarPage = () => {
     const location = useLocation();
     const { branchId, branchName } = location.state || {};
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [timeMode, setTimeMode] = useState('night'); // New state for time mode
-    const [selectedMonth, setSelectedMonth] = useState(dayjs().month())
-    const [isFetching, setIsFetching] = useState(false)
+    const [timeMode, setTimeMode] = useState('night');
+    const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
+    const [isFetching, setIsFetching] = useState(false);
     const [disabledTimes, setDisabledTimes] = useState([]);
     const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ const CalendarPage = () => {
                             onChange={(newMonth) => {
                                 const now = value.clone().month(newMonth);
                                 onChange(now);
-                                setSelectedMonth(newMonth)
+                                setSelectedMonth(newMonth);
                             }}
                         >
                             {monthOptions}
@@ -59,31 +60,29 @@ const CalendarPage = () => {
 
     useEffect(() => {
         const getTimes = async () => {
-            setIsFetching(true)
+            setIsFetching(true);
             try {
-                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId))
-                setDisabledTimes(response.data)
+                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId));
+                setDisabledTimes(response.data);
             } catch (error) {
-
+                // Handle error
             } finally {
-                setIsFetching(false)
+                setIsFetching(false);
             }
-        }
+        };
 
         getTimes();
-    }, [selectedMonth])
+    }, [selectedMonth]);
 
     const dateFullCellRender = (current) => {
         const isPast = current.isBefore(dayjs(), 'day');
         const isToday = current.isSame(dayjs(), 'day');
         const isFuture = !isPast && !isToday;
+        const isSelected = selectedDate && selectedDate.isSame(current, 'day');
 
-        const className = `date-cell ${isPast ? 'disable' : ''} ${isFuture ? 'enable' : ''}`;
-
-        // Count booked times on the current date
+        const className = `date-cell ${isPast ? 'disable' : ''} ${isFuture ? 'enable' : ''} ${isSelected ? 'selected-date' : ''}`;
         const bookedCount = disabledTimes.filter(time => dayjs(time).isSame(current, 'day')).length;
         const tooltipText = bookedCount > 0 ? `${bookedCount} booked` : '';
-
 
         const handleClick = () => {
             if (!isPast) {
@@ -91,23 +90,14 @@ const CalendarPage = () => {
                 setIsModalVisible(true);
             }
         };
-        if (isPast) {
-            return (
-                <div className={className} onClick={handleClick}>
-                    {current.date()}
-                </div>
-            )
-        }
 
         return (
-            <Tooltip title={tooltipText ? tooltipText : '0 slot booked'}>
+            <Tooltip title={tooltipText || '0 slot booked'}>
                 <div className={className} onClick={handleClick}>
                     {current.date()}
                 </div>
             </Tooltip>
         );
-
-
     };
 
     const handleModalClose = () => {
@@ -139,37 +129,39 @@ const CalendarPage = () => {
 
             return (
                 <div key={index} className="hour-row">
-                    <span>{time.format('HH:mm')}</span>
-                    {!isBooked ?
-                        (<Button
+                    <Text>{time.format('HH:mm')}</Text>
+                    {!isBooked ? (
+                        <Button
                             type="primary"
+                            style={{ backgroundColor: '#d32f2f', borderColor: '#d32f2f' , maxWidth:'30vw' }} // Red for available slots
                             onClick={() => handleAvailableClick(time)}
                         >
                             {`Available : ${availableCount}`}
-                        </Button>)
-                        :
-                        (<Button
+                        </Button>
+                    ) : (
+                        <Button
                             type="primary"
                             danger
-                            onClick={() => handleUnavailableClick()}
+                            style={{ maxWidth:'30vw' }} // Red for unavailable slots
+                            onClick={handleUnavailableClick}
                         >
                             Not Available
-                        </Button>)}
-
+                        </Button>
+                    )}
                 </div>
             );
         });
     };
 
-
     return (
-        <div style={{ padding: 24 }}>
-            <Spin spinning={isFetching} >
-                <div>Branch choosed : {branchName}</div>
-                <Calendar
-                    headerRender={customHeader}
-                    fullCellRender={dateFullCellRender}
-                />
+        <div className="calendar-page">
+            <Spin spinning={isFetching}>
+                <div className="calendar-header">
+                    <Title level={4} style={{ color: '#333' }}>Branch: {branchName}</Title>
+                </div>
+                <div className="calendar-container">
+                    <Calendar headerRender={customHeader} fullCellRender={dateFullCellRender} />
+                </div>
                 <Modal
                     title={`Selected Date: ${selectedDate ? selectedDate.format('YYYY-MM-DD') : ''}`}
                     open={isModalVisible}

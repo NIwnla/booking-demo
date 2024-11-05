@@ -8,6 +8,8 @@ export const AuthContext = createContext({
     role: null,
     email: null,
     branchId: null,
+    isAuthenticated: null,
+    loading: null,
     setAuthToken: (token) => { },
     clearAuthToken: () => { },
 });
@@ -17,6 +19,8 @@ export const AuthProvider = ({ children }) => {
     const [role, setRole] = useState(null);
     const [email, setEmail] = useState(null);
     const [branchId, setBranchId] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     // Function to decode the JWT token and extract information
     const decodeToken = (token) => {
@@ -29,6 +33,7 @@ export const AuthProvider = ({ children }) => {
             setRole(userRole);
             setEmail(sub);
             setBranchId(branchId);
+            setIsAuthenticated(true);
 
             // Store the token in cookies for 120 mins
             Cookies.set('authToken', token, { expires: 120 / (24 * 60) });
@@ -50,19 +55,27 @@ export const AuthProvider = ({ children }) => {
         setRole(null);
         setEmail(null);
         setBranchId(null);
+        setIsAuthenticated(false);
         Cookies.remove('authToken');
     };
 
     // Load token from cookies on initial load
     useEffect(() => {
-        const storedToken = Cookies.get('authToken');
-        if (storedToken) {
-            setAuthToken(storedToken);
+        try {
+            const storedToken = Cookies.get('authToken');
+            if (storedToken) {
+                setAuthToken(storedToken);
+            }
+        } catch (error) {
+            console.error('Failed to fetch user role:', error);
+            setIsAuthenticated(false)
+        }finally{
+            setLoading(false);
         }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ userId, role, email, branchId, setAuthToken, clearAuthToken }}>
+        <AuthContext.Provider value={{ userId, role, email, branchId, isAuthenticated, loading, setAuthToken, clearAuthToken }}>
             {children}
         </AuthContext.Provider>
     );

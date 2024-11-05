@@ -1,8 +1,9 @@
-import React from "react";
-import { Modal, Form, Input, Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axiosInstance from "../../../service/axios";
+import { Button, Form, Input, Modal, Upload } from "antd";
+import React from "react";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
+import { showMessage } from "../../../helpers/showMessage";
+import axiosInstance from "../../../service/axios";
 
 const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
     const [form] = Form.useForm();
@@ -21,12 +22,12 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            message.success("Food created successfully!");
+            showMessage("success","Food created successfully!");
             onFoodCreated();
             onClose();
             form.resetFields();
         } catch (error) {
-            message.error("Failed to create food.");
+            showMessage("error","Failed to create food.");
         }
     };
 

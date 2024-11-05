@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button, Input, Pagination, Row, Col, message, Spin, Image, Popconfirm } from "antd";
-import axiosInstance from "../../service/axios";
+import { Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CreateFoodModal from "../../components/modals/food/CreateFoodModal";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
-import CreateFoodModal from "../../components/modals/food/CreateFoodModal";
-import { useNavigate } from "react-router-dom";
+import { showMessage } from "../../helpers/showMessage";
+import axiosInstance from "../../service/axios";
+import './FoodManagementPageAdmin.css';
 
 const FoodManagementPageAdmin = () => {
     const [foods, setFoods] = useState([]);
@@ -30,7 +32,7 @@ const FoodManagementPageAdmin = () => {
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            message.error("Failed to fetch foods.");
+            showMessage("error", "Failed to fetch foods.");
         } finally {
             setLoading(false);
         }
@@ -42,16 +44,16 @@ const FoodManagementPageAdmin = () => {
 
     const handleEdit = (foodId) => {
         // Implement the edit functionality
-        message.info("Edit functionality is not implemented yet.");
+        showMessage("info", "Edit functionality is not implemented yet.");
     };
 
     const handleDelete = async (foodId) => {
         try {
             await axiosInstance.delete(apiEndPoints.FOOD.DELETE(foodId));
-            message.success('Food deleted successfully.');
+            showMessage("success", 'Food deleted successfully.');
             fetchFoods();
         } catch (error) {
-            message.error('Failed to delete food.');
+            showMessage("error", 'Failed to delete food.');
         }
     };
 
@@ -61,21 +63,25 @@ const FoodManagementPageAdmin = () => {
 
     return (
         <div style={{ padding: 24 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 24 }}>
-                <Input.Search
-                    placeholder="Search food"
-                    onSearch={(value) => setSearch(value)}
-                    style={{ maxWidth: "30vw" }}
-                />
-                <Button type="primary" onClick={() => setCreateModalVisible(true)}>
-                    Create Food
-                </Button>
-            </div>
+            <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+                <Col xs={24} md={12}>
+                    <Input.Search
+                        placeholder="Search food"
+                        onSearch={(value) => setSearch(value)}
+                        style={{ width: '100%' }}  // Ensures it takes full width on smaller screens
+                    />
+                </Col>
+                <Col xs={24} md={12}>
+                    <Button type="primary" onClick={() => setCreateModalVisible(true)} style={{ width: '100%' }}>
+                        Create Food
+                    </Button>
+                </Col>
+            </Row>
             <Spin spinning={loading}>
 
                 <Row gutter={[16, 16]}>
                     {foods.map((food) => (
-                        <Col key={food.id} xs={24} sm={12} md={6}>
+                        <Col key={food.id} xs={24} sm={12} md={12} lg={6}>
                             <Card
                                 hoverable
                                 cover={
@@ -88,23 +94,25 @@ const FoodManagementPageAdmin = () => {
                                 }
                             >
                                 <Card.Meta title={food.name} description={`Price: ${food.basePrice}`} />
-                                <div style={{ marginTop: 16, display: "flex", justifyContent: "center", gap: "8px" }}>
-                                    <Button type="primary" style={{ flex: 1, maxWidth: "7vw" }} onClick={() => handleOptions(food.id)}>
-                                        Options
-                                    </Button>
-                                    <Button style={{ flex: 1, maxWidth: "7vw" }} onClick={() => handleEdit(food.id)}>
-                                        Edit
-                                    </Button>
-                                    <Popconfirm
-                                        title="Are you sure you want to delete this food?"
-                                        onConfirm={() => handleDelete(food.id)}
-                                        okText="Yes"
-                                        cancelText="No"
-                                    >
-                                    <Button danger style={{ flex: 1, maxWidth: "7vw" }}>
-                                        Delete
-                                    </Button>
-                                    </Popconfirm>
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                                    <Space wrap>
+                                        <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleOptions(food.id)}>
+                                            Options
+                                        </Button>
+                                        <Button style={{ maxWidth: "15vw" }} onClick={() => handleEdit(food.id)}>
+                                            Edit
+                                        </Button>
+                                        <Popconfirm
+                                            title="Are you sure you want to delete this food?"
+                                            onConfirm={() => handleDelete(food.id)}
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <Button danger style={{ maxWidth: "15vw" }}>
+                                                Delete
+                                            </Button>
+                                        </Popconfirm>
+                                    </Space>
                                 </div>
                             </Card>
                         </Col>
