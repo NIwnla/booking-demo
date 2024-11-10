@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { routeNames } from "../../constaints/routeName";
 import { userRoles } from "../../constaints/userRoles";
@@ -14,8 +15,8 @@ const HomePage = () => {
         if (token) {
             setAuthToken(token)
         }
-        if(role){
-            switch(role){
+        if (role) {
+            switch (role) {
                 case userRoles.ADMIN:
                     navigate(routeNames.homepage.admin)
                     break;
@@ -28,11 +29,11 @@ const HomePage = () => {
             }
         }
     }, [token])
-
+    
     return (
-        <div>
-            <h1>This is the homepage</h1>
-        </div>
+            <div>
+                <h1>This is the homepage</h1>
+            </div>
     );
 };
 

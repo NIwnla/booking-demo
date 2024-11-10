@@ -8,7 +8,7 @@ import './Layout.css';
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
-const DefaultLayout = ({ children }) => {
+const BookingLayout = ({ children }) => {
     const [drawerVisible, setDrawerVisible] = useState(false);
 
     const rightMenuItems = [
@@ -101,7 +101,7 @@ const DefaultLayout = ({ children }) => {
     );
 };
 
-export default DefaultLayout;
+export default BookingLayout;
 
 // Styles
 const styles = {

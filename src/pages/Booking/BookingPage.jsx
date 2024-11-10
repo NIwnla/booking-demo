@@ -1,14 +1,14 @@
-import { Button, Card, Checkbox, Col, Form, Image, Input, message, Modal, Row, Space, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Card, Checkbox, Col, Form, Image, Input, Modal, Row, Space, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
-import axiosInstance from '../../service/axios';
-import FoodPreorderSection from './FoodPreOrderSection';
-import { PlusOutlined } from '@ant-design/icons';
-import './BookingPage.css'
 import { showMessage } from '../../helpers/showMessage';
+import axiosInstance from '../../service/axios';
+import './BookingPage.css';
+import FoodPreorderSection from './FoodPreOrderSection';
 
 const { Title, Text } = Typography;
 

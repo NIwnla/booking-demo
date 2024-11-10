@@ -1,11 +1,11 @@
+import { Card, Col, Row, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../service/axios';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
-import './BranchChoosePage.css';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
+import axiosInstance from '../../service/axios';
+import './BranchChoosePage.css';
 
 const BranchChoosePage = () => {
     const [branches, setBranches] = useState([]);
@@ -57,6 +57,7 @@ const BranchChoosePage = () => {
                 </Row>
             </Spin>
         </div>
+
     );
 };
 

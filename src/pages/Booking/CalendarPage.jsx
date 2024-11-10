@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin, Typography } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Button, Calendar, Col, Modal, Row, Select, Spin, Switch, Tooltip, Typography } from 'antd';
 import dayjs from 'dayjs';
-import './CalendarPage.css';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import axiosInstance from '../../service/axios';
-import { apiEndPoints } from '../../constaints/apiEndPoint';
+import './CalendarPage.css';
 
 const { Title, Text } = Typography;
 
@@ -167,16 +167,17 @@ const CalendarPage = () => {
                     open={isModalVisible}
                     onCancel={handleModalClose}
                     footer={null}
-                >
+                    >
                     <div style={{ marginBottom: '16px' }}>
                         <Switch
                             checked={timeMode === 'night'}
                             onChange={(checked) => setTimeMode(checked ? 'night' : 'day')}
                             checkedChildren="Night"
                             unCheckedChildren="Day"
-                        />
+                            />
                     </div>
                     {renderHourRows(selectedDate)}
+
                 </Modal>
             </Spin>
         </div>
