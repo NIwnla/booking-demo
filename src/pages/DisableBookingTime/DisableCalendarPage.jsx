@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Calendar, Select, Row, Col, Tooltip, Modal, Button, Switch, Spin, Tag, Space } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Button, Calendar, Col, Modal, Row, Select, Space, Spin, Switch, Tag } from 'antd';
 import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
-import './DisableCalendarPage.css'; // You might want to rename this to CalendarPage.css later
-import { routeNames } from '../../constaints/routeName';
-import axiosInstance from '../../service/axios';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
+import axiosInstance from '../../service/axios';
+import './DisableCalendarPage.css';
 
 const DisableCalendarPage = () => {
     const location = useLocation();

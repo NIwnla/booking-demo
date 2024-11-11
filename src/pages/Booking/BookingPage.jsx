@@ -18,8 +18,9 @@ const BookingPage = () => {
     const { selectedDate, selectedTime, branchId } = location?.state;
     const { userId } = useContext(AuthContext);
     const [isFetching, setIsFetching] = useState(false);
+    // @ts-ignore
     const [alertUnavailableTime, setAlertUnavailableTime] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false); // State to control modal visibility
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const navigate = useNavigate();
 
     const [preorderedFoods, setPreorderedFoods] = useState([]);
@@ -46,6 +47,7 @@ const BookingPage = () => {
 
         setIsFetching(true);
         try {
+            // @ts-ignore
             const response = await axiosInstance.post(apiEndPoints.BOOKING_INFORMATION.CREATE, payload);
             showMessage("success", 'Booked successfully');
             navigate(routeNames.index);
@@ -80,7 +82,6 @@ const BookingPage = () => {
         );
     };
 
-    // Modal handling functions
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -92,8 +93,8 @@ const BookingPage = () => {
     return (
         <Row gutter={24}>
             <Col xs={24} md={12}>
-                <div style={{ padding: '24px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <Title level={3} style={{ textAlign: 'center', marginBottom: '24px' }}>
+                <div style={styles.formContainer}>
+                    <Title level={3} style={styles.formTitle}>
                         Thông tin book vào {selectedDate} {selectedTime}
                     </Title>
                     <Form layout="vertical" onFinish={onFinish}>
@@ -108,9 +109,7 @@ const BookingPage = () => {
                         <Form.Item
                             name="numberOfPeople"
                             label="Number of People"
-                            rules={[
-                                { required: true, message: 'Làm ơn chọn số người dùng bàn' },
-                            ]}
+                            rules={[{ required: true, message: 'Làm ơn chọn số người dùng bàn' }]}
                         >
                             <Input placeholder="Chọn số người dùng bàn" type="number" min={2} />
                         </Form.Item>
@@ -134,7 +133,7 @@ const BookingPage = () => {
                         </Form.Item>
 
                         <Form.Item name="message" label="Message">
-                            <Input.TextArea placeholder="Message (Optional)" style={{ resize: 'none' }} />
+                            <Input.TextArea placeholder="Message (Optional)" style={styles.textArea} />
                         </Form.Item>
 
                         <Text type="warning">
@@ -151,7 +150,7 @@ const BookingPage = () => {
                             </Button>
                         </Form.Item>
                     </Form>
-                    <Space direction="vertical" style={{ marginTop: '24px', textAlign: 'center' }}>
+                    <Space direction="vertical" style={styles.fanpageMessage}>
                         <Text type="danger">
                             Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;
                             <a href="https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d">Fanpage</a>
@@ -161,18 +160,21 @@ const BookingPage = () => {
             </Col>
 
             <Col xs={24} md={12} className="preorder-food-section">
-                <div style={{ padding: '24px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <Title level={4} style={{ marginBottom: '16px' }}>Đồ ăn đặt trước</Title>
-                    <div style={{ maxHeight: '65vh', overflowY: 'auto' }}>
+                <div style={styles.preorderSection}>
+                    <Title level={4} style={styles.preorderTitle}>Đồ ăn đặt trước</Title>
+                    <div
+                        // @ts-ignore
+                        style={styles.scrollableContent}>
                         {preorderedFoods.length > 0 ? (
                             preorderedFoods.map((food, index) => (
-                                <Card key={index} style={{ marginBottom: '16px' }}>
+                                <Card key={index} style={styles.foodCard}>
                                     <Row align="middle" style={{ width: '100%' }}>
                                         <Col span={8}>
                                             <Image
                                                 src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
                                                 alt={food.name}
-                                                style={{ width: '100%', height: '10vh', borderRadius: '8px' }}
+                                                // @ts-ignore
+                                                style={styles.foodImage}
                                             />
                                         </Col>
                                         <Col span={16}>
@@ -183,7 +185,7 @@ const BookingPage = () => {
                                                 <Button
                                                     type="link"
                                                     onClick={() => handleRemove(index)}
-                                                    style={{ color: 'red', padding: 0 }}
+                                                    style={styles.removeButton}
                                                 >
                                                     Remove
                                                 </Button>
@@ -191,7 +193,6 @@ const BookingPage = () => {
                                         </Col>
                                     </Row>
                                 </Card>
-
                             ))
                         ) : (
                             <Text type="secondary">Chưa có đồ ăn được đặt trước.</Text>
@@ -204,65 +205,110 @@ const BookingPage = () => {
                 <FoodPreorderSection onPreorder={handlePreorder} />
             </Col>
 
-            {/* Floating button for small screens */}
             <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                style={{ position: 'fixed', bottom: '10px', right: '10px', zIndex: 999, maxWidth: '20vh' }}
+                // @ts-ignore
+                style={styles.floatingButton}
                 onClick={showModal}
                 className="floating-button"
             >
                 Đồ ăn đặt trước
             </Button>
 
-            {/* Modal to show preordered food list */}
             <Modal
                 title="Preordered Food"
                 open={isModalVisible}
                 onCancel={handleCancel}
                 footer={null}
-                styles={{
-                    body: {
-                        maxHeight: '65vh',
-                        overflowY: 'auto'
-                    }
-                }}
             >
-                {preorderedFoods.length > 0 ? (
-                    preorderedFoods.map((food, index) => (
-                        <Card key={index} style={{ marginBottom: '16px' }}>
-                            <Row align="middle" style={{ width: '100%' }}>
-                                <Col span={8}>
-                                    <Image
-                                        src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
-                                        alt={food.name}
-                                        style={{ width: '100%', height: '10vh', borderRadius: '8px' }}
-                                    />
-                                </Col>
-                                <Col span={16}>
-                                    <Space direction="vertical" size="small">
-                                        <Text strong>{food.name}</Text>
-                                        <Text>Quantity: {food.quantity}</Text>
-                                        <Text type="secondary">{food.isOption ? 'Option' : 'Main Dish'}</Text>
-                                        <Button
-                                            type="link"
-                                            onClick={() => handleRemove(index)}
-                                            style={{ color: 'red', padding: 0 }}
-                                        >
-                                            Remove
-                                        </Button>
-                                    </Space>
-                                </Col>
-                            </Row>
-                        </Card>
-                    ))
-                ) : (
-                    <Text type="secondary">Chưa có đồ ăn được đặt trước.</Text>
-                )}
+                <div
+                    // @ts-ignore
+                    style={styles.scrollableContent}>
+                    {preorderedFoods.length > 0 ? (
+                        preorderedFoods.map((food, index) => (
+                            <Card key={index} style={styles.foodCard}>
+                                <Row align="middle" style={{ width: '100%' }}>
+                                    <Col span={8}>
+                                        <Image
+                                            src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
+                                            alt={food.name}
+                                            // @ts-ignore
+                                            style={styles.foodImage}
+                                        />
+                                    </Col>
+                                    <Col span={16}>
+                                        <Space direction="vertical" size="small">
+                                            <Text strong>{food.name}</Text>
+                                            <Text>Quantity: {food.quantity}</Text>
+                                            <Text type="secondary">{food.isOption ? 'Option' : 'Main Dish'}</Text>
+                                            <Button
+                                                type="link"
+                                                onClick={() => handleRemove(index)}
+                                                style={styles.removeButton}
+                                            >
+                                                Remove
+                                            </Button>
+                                        </Space>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        ))
+                    ) : (
+                        <Text type="secondary">Chưa có đồ ăn được đặt trước.</Text>
+                    )}
+                </div>
             </Modal>
         </Row>
     );
 };
 
-export default BookingPage;
+const styles = {
+    formContainer: {
+        padding: '24px',
+        background: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    },
+    formTitle: {
+        color: '#ff4d4f',
+    },
+    textArea: {
+        height: '100px',
+    },
+    fanpageMessage: {
+        marginTop: '20px',
+    },
+    preorderSection: {
+        padding: '24px',
+        background: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    },
+    preorderTitle: {
+        color: '#ff4d4f',
+    },
+    scrollableContent: {
+        maxHeight: '65vh',
+        overflowY: 'auto',
+    },
+    foodCard: {
+        marginBottom: '16px',
+        width: '100%',
+    },
+    foodImage: {
+        width: '100%',
+        height: 'auto',
+        objectFit: 'cover',
+    },
+    removeButton: {
+        color: '#ff4d4f',
+    },
+    floatingButton: {
+        position: 'fixed',
+        bottom: '16px',
+        right: '16px',
+    },
+};
 
+export default BookingPage;

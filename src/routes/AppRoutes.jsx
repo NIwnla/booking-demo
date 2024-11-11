@@ -1,28 +1,29 @@
-import { Spin } from 'antd';
-import React, { useContext } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import UnavailableTimeAlert from '../components/alerts/UnavailableTimeAlert';
-import { routeNames } from '../constaints/routeName';
-import { userRoles } from '../constaints/userRoles';
-import { AuthContext } from '../context/AuthContext';
-import BookingEditPage from '../pages/Booking/BookingEditPage';
-import BookingManagementAdminPage from '../pages/Booking/BookingManagementAdminPage';
-import BookingPage from '../pages/Booking/BookingPage';
-import BranchChoosePage from '../pages/Booking/BranchChoosePage';
-import CalendarPage from '../pages/Booking/CalendarPage';
-import BranchManagementAdminPage from '../pages/Branch/BranchManagementAdminPage';
-import HomePage from '../pages/Common/HomePage';
-import NotFoundPage from '../pages/Common/NotFoundPage';
-import SignInPage from '../pages/Common/SignInPage';
-import DisableBranchChoosePage from '../pages/DisableBookingTime/DisableBranchChoosePage';
-import DisableCalendarPage from '../pages/DisableBookingTime/DisableCalendarPage';
-import FoodManagementPageAdmin from '../pages/Food/FoodManagementPageAdmin';
-import FoodOptionPageAdmin from '../pages/FoodOption/FoodOptionPageAdmin';
-import HomePageAdmin from '../pages/Home/HomePageAdmin';
-import HomePageBranchManager from '../pages/Home/HomePageBranchManager';
-import HomePageGuest from '../pages/Home/HomePageGuest';
-import UserManagementAdminPage from '../pages/Users/UserManagementAdminPage';
-import RoleLayout from '../components/layouts/RoleLayout';
+import { Spin } from "antd";
+import React, { useContext } from "react";
+import { Navigate, Routes, Route } from "react-router-dom";
+import UnavailableTimeAlert from "../components/alerts/UnavailableTimeAlert";
+import RoleLayout from "../components/layouts/RoleLayout";
+import { routeNames } from "../constaints/routeName";
+import { userRoles } from "../constaints/userRoles";
+import { AuthContext } from "../context/AuthContext";
+import BookingEditPage from "../pages/Booking/BookingEditPage";
+import BookingManagementAdminPage from "../pages/Booking/BookingManagementAdminPage";
+import BookingPage from "../pages/Booking/BookingPage";
+import BranchChoosePage from "../pages/Booking/BranchChoosePage";
+import CalendarPage from "../pages/Booking/CalendarPage";
+import BranchManagementAdminPage from "../pages/Branch/BranchManagementAdminPage";
+import HomePage from "../pages/Common/HomePage";
+import NotFoundPage from "../pages/Common/NotFoundPage";
+import SignInPage from "../pages/Common/SignInPage";
+import DisableBranchChoosePage from "../pages/DisableBookingTime/DisableBranchChoosePage";
+import DisableCalendarPage from "../pages/DisableBookingTime/DisableCalendarPage";
+import FoodManagementPageAdmin from "../pages/Food/FoodManagementPageAdmin";
+import FoodOptionPageAdmin from "../pages/FoodOption/FoodOptionPageAdmin";
+import HomePageAdmin from "../pages/Home/HomePageAdmin";
+import HomePageBranchManager from "../pages/Home/HomePageBranchManager";
+import HomePageGuest from "../pages/Home/HomePageGuest";
+import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
+
 
 
 const PrivateRoute = ({ element, allowedRoles }) => {

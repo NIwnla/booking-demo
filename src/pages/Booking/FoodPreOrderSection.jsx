@@ -4,8 +4,8 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
 
+// @ts-ignore
 const { Panel } = Collapse;
-
 
 const FoodPreorderSection = ({ onPreorder }) => {
     const [foods, setFoods] = useState([]);
@@ -67,29 +67,31 @@ const FoodPreorderSection = ({ onPreorder }) => {
     };
 
     const renderFoodOptions = (food) => (
-        <div style={{ maxHeight: '60vh', overflowY: 'auto', padding: '1px' }}>
+        <div
+            // @ts-ignore
+            style={styles.foodOptionsContainer}>
             {food.options.map((option) => (
                 <Card
                     key={option.id}
                     hoverable
                     cover={
-                        <div style={{ overflow: 'hidden', height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={styles.foodOptionImageContainer}>
                             <Image
                                 alt={option.name}
                                 src={`${axiosInstance.defaults.baseURL}/${option.imagePath}`}
                             />
                         </div>
                     }
-                    style={{ marginBottom: '16px' }}
+                    style={styles.foodOptionCard}
                 >
                     <Card.Meta title={option.name} description={`Additional Price: ${option.price}`} />
-                    <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={styles.foodOptionControls}>
                         <Space wrap>
                             <Button onClick={() => handleDecrement(option.id)}>-</Button>
                             <Button style={{ pointerEvents: 'none' }}>{preorders[option.id]?.quantity || 0}</Button>
                             <Button onClick={() => handleIncrement(option.id, true)}>+</Button>
                         </Space>
-                        <Button type="primary" onClick={() => handlePreorder(option, true)} style={{ maxWidth: '20vw' }}>
+                        <Button type="primary" onClick={() => handlePreorder(option, true)} style={styles.preorderButton}>
                             Preorder
                         </Button>
                     </div>
@@ -98,15 +100,15 @@ const FoodPreorderSection = ({ onPreorder }) => {
         </div>
     );
 
-
-
     return (
-        <div style={{ border: '1px solid #d9d9d9', padding: '24px', borderRadius: '8px', marginTop: '24px' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '24px' }}>Đặt trước đồ ăn</h3>
+        <div style={styles.container}>
+            <h3
+                // @ts-ignore
+                style={styles.title}>Đặt trước đồ ăn</h3>
             <Input.Search
                 placeholder="Search food"
                 onSearch={(value) => setSearch(value)}
-                style={{ marginBottom: 24 }}
+                style={styles.searchBar}
             />
             <Spin spinning={loading}>
                 <Row gutter={[16, 16]}>
@@ -115,7 +117,7 @@ const FoodPreorderSection = ({ onPreorder }) => {
                             <Card
                                 hoverable
                                 cover={
-                                    <div style={{ overflow: 'hidden', height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <div style={styles.foodImageContainer}>
                                         <Image
                                             alt={food.name}
                                             src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
@@ -124,27 +126,19 @@ const FoodPreorderSection = ({ onPreorder }) => {
                                 }
                             >
                                 <Card.Meta title={food.name} description={`Price: ${food.basePrice}`} />
-                                <div style={{ marginTop: 16 }}>
-                                    <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={styles.foodControls}>
+                                    <div style={styles.quantityControls}>
                                         <Space wrap>
                                             <Button onClick={() => handleDecrement(food.id)}>-</Button>
                                             <Button style={{ pointerEvents: 'none' }}>{preorders[food.id]?.quantity || 0}</Button>
                                             <Button onClick={() => handleIncrement(food.id)}>+</Button>
                                         </Space>
-                                        <Button type="primary" onClick={() => handlePreorder(food)} style={{ maxWidth: '17vw' }}>
+                                        <Button type="primary" onClick={() => handlePreorder(food)} style={styles.preorderButton}>
                                             Preorder
                                         </Button>
                                     </div>
                                     {food.options.length > 0 && (
-                                        <Collapse
-                                            bordered={false}
-                                            items={[
-                                                {
-                                                    key: '1',
-                                                    label: 'Show Options',
-                                                    children: renderFoodOptions(food), // The panel content
-                                                }
-                                            ]} />
+                                        <Collapse bordered={false} items={[{ key: '1', label: 'Show Options', children: renderFoodOptions(food) }]} />
                                     )}
                                 </div>
                             </Card>
@@ -160,10 +154,71 @@ const FoodPreorderSection = ({ onPreorder }) => {
                     setPageIndex(page);
                     setPageSize(pageSize);
                 }}
-                style={{ marginTop: 24, textAlign: 'center' }}
+                // @ts-ignore
+                style={styles.pagination}
             />
         </div>
     );
 };
 
 export default FoodPreorderSection;
+
+const styles = {
+    container: {
+        border: '1px solid #d9d9d9',
+        padding: '24px',
+        borderRadius: '8px',
+        marginTop: '24px',
+    },
+    title: {
+        textAlign: 'center',
+        marginBottom: '24px',
+    },
+    searchBar: {
+        marginBottom: 24,
+    },
+    foodImageContainer: {
+        overflow: 'hidden',
+        height: '20vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    foodControls: {
+        marginTop: 16,
+    },
+    quantityControls: {
+        marginBottom: 16,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    foodOptionsContainer: {
+        maxHeight: '60vh',
+        overflowY: 'auto',
+        padding: '1px',
+    },
+    foodOptionCard: {
+        marginBottom: '16px',
+    },
+    foodOptionImageContainer: {
+        overflow: 'hidden',
+        height: '20vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    foodOptionControls: {
+        marginTop: 16,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    preorderButton: {
+        maxWidth: '20vw',
+    },
+    pagination: {
+        marginTop: 24,
+        textAlign: 'center',
+    },
+};

@@ -13,16 +13,14 @@ import FoodPreorderSection from './FoodPreOrderSection';
 const { Title, Text } = Typography;
 
 const BookingEditPage = () => {
-    const { id } = useParams(); // Get booking ID from URL
+    const { id } = useParams();
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-    const [preorderData, setPreorderData] = useState([]); // Hold the preorder as an array of objects
-    const [isModalVisible, setIsModalVisible] = useState(false); // State to control modal visibility
-
+    const [preorderData, setPreorderData] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     useEffect(() => {
-        // Fetch the booking details to prefill the form
         const fetchBookingDetails = async () => {
             setLoading(true);
             try {
@@ -35,7 +33,6 @@ const BookingEditPage = () => {
                     preorder: bookingData.preorder
                 });
 
-                // Parse preorder string back to array for rendering
                 if (bookingData.preOrderItems.length > 0) {
                     setPreorderData(bookingData.preOrderItems)
                 }
@@ -49,14 +46,7 @@ const BookingEditPage = () => {
         fetchBookingDetails();
     }, [id, form]);
 
-    useEffect(() => {
-        console.log(preorderData);
-
-    }, [preorderData])
-
     const handlePreorder = (preorderItem, quantity) => {
-        // Update preorder data as an array of objects
-
         setPreorderData(prev => {
             const updated = [...prev];
             const existingIndex = updated.findIndex(item => item.id === preorderItem.id);
@@ -67,7 +57,6 @@ const BookingEditPage = () => {
             }
             return updated;
         });
-
     };
 
     const onFinish = async (values) => {
@@ -78,7 +67,7 @@ const BookingEditPage = () => {
                 preorder: preorderData.map(item => `[${item.id}${item.isOption ? ' - option' : ''}: ${item.quantity}]`).join(', ')
             });
             showMessage("success", 'Booking updated successfully');
-            navigate(routeNames.index); // Redirect after successful edit
+            navigate(routeNames.index);
         } catch (error) {
             showMessage("error", 'Failed to update booking');
         } finally {
@@ -97,8 +86,10 @@ const BookingEditPage = () => {
     return (
         <Row gutter={24}>
             <Col xs={24} md={12}>
-                <div style={{ padding: '24px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <Title level={3} style={{ textAlign: 'center', marginBottom: '24px' }}>
+                <div style={styles.formContainer}>
+                    <Title level={3}
+                        // @ts-ignore
+                        style={styles.formTitle}>
                         Edit Booking
                     </Title>
                     <Spin spinning={loading}>
@@ -136,19 +127,14 @@ const BookingEditPage = () => {
             </Col>
 
             <Col xs={24} md={12} className="preorder-food-section">
-                <div
-                    style={{
-                        padding: '24px',
-                        background: '#fff',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                    }}
-                >
-                    <Title level={4} style={{ marginBottom: '16px' }}>
+                <div style={styles.preorderContainer}>
+                    <Title level={4} style={styles.preorderTitle}>
                         Preordered Food
                     </Title>
 
-                    <div style={{ maxHeight: '65vh', overflowY: 'auto' }}>
+                    <div
+                        // @ts-ignore
+                        style={styles.scrollableContent}>
                         <Spin spinning={loading}>
                             {preorderData.length > 0 ? (
                                 <Row gutter={[16, 16]}>
@@ -160,7 +146,8 @@ const BookingEditPage = () => {
                                                     <Image
                                                         src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
                                                         alt={item.name}
-                                                        style={{ height: '150px', objectFit: 'cover', borderRadius: '8px' }}
+                                                        // @ts-ignore
+                                                        style={styles.foodImage}
                                                     />
                                                 }
                                                 actions={[
@@ -169,7 +156,7 @@ const BookingEditPage = () => {
                                                         onClick={() =>
                                                             setPreorderData((prev) => prev.filter((_, i) => i !== index))
                                                         }
-                                                        style={{ color: 'red' }}
+                                                        style={styles.removeButton}
                                                     >
                                                         Remove
                                                     </Button>,
@@ -203,7 +190,8 @@ const BookingEditPage = () => {
             <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                style={{ position: 'fixed', bottom: '10px', right: '10px', zIndex: 999, maxWidth: '20vh' }}
+                // @ts-ignore
+                style={styles.floatingButton}
                 onClick={showModal}
                 className="floating-button"
             >
@@ -215,14 +203,10 @@ const BookingEditPage = () => {
                 open={isModalVisible}
                 onCancel={handleCancel}
                 footer={null}
-                styles={{
-                    body: {
-                        maxHeight: '65vh',
-                        overflowY: 'auto'
-                    }
-                }}
             >
-                <div style={{ maxHeight: '65vh', overflowY: 'auto' }}>
+                <div
+                    // @ts-ignore
+                    style={styles.scrollableContent}>
                     <Spin spinning={loading}>
                         {preorderData.length > 0 ? (
                             <Row gutter={[16, 16]}>
@@ -234,7 +218,8 @@ const BookingEditPage = () => {
                                                 <Image
                                                     src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
                                                     alt={item.name}
-                                                    style={{ height: '150px', objectFit: 'cover', borderRadius: '8px' }}
+                                                    // @ts-ignore
+                                                    style={styles.foodImage}
                                                 />
                                             }
                                             actions={[
@@ -243,7 +228,7 @@ const BookingEditPage = () => {
                                                     onClick={() =>
                                                         setPreorderData((prev) => prev.filter((_, i) => i !== index))
                                                     }
-                                                    style={{ color: 'red' }}
+                                                    style={styles.removeButton}
                                                 >
                                                     Remove
                                                 </Button>,
@@ -268,9 +253,53 @@ const BookingEditPage = () => {
                     </Spin>
                 </div>
             </Modal>
-
         </Row>
     );
+};
+
+const styles = {
+    formContainer: {
+        padding: '24px',
+        background: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    },
+    formTitle: {
+        textAlign: 'center',
+        marginBottom: '24px',
+    },
+    preorderContainer: {
+        padding: '24px',
+        background: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    },
+    preorderTitle: {
+        marginBottom: '16px',
+    },
+    scrollableContent: {
+        maxHeight: '65vh',
+        overflowY: 'auto',
+    },
+    foodImage: {
+        height: '150px',
+        objectFit: 'cover',
+        borderRadius: '8px',
+    },
+    removeButton: {
+        color: 'red',
+    },
+    floatingButton: {
+        position: 'fixed',
+        bottom: '10px',
+        right: '10px',
+        zIndex: 999,
+        maxWidth: '20vh',
+    },
+    modalBody: {
+        maxHeight: '65vh',
+        overflowY: 'auto',
+    },
 };
 
 export default BookingEditPage;

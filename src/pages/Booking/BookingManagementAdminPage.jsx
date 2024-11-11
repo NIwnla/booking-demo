@@ -5,7 +5,6 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
-import './BookingManagementAdminPage.css';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -15,6 +14,7 @@ const { Title } = Typography;
 const BookingManagementAdminPage = () => {
     const [data, setData] = useState([]);
     const [pageIndex, setPageIndex] = useState(1);
+    // @ts-ignore
     const [pageSize, setPageSize] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -28,7 +28,6 @@ const BookingManagementAdminPage = () => {
 
     const getFormattedTime = (time) => {
         const date = dayjs(time);
-
         if (windowSize.width <= 576) {
             return date.format('HH:mm');
         } else if (windowSize.width <= 768) {
@@ -103,7 +102,7 @@ const BookingManagementAdminPage = () => {
     };
 
     const showDetailModal = (booking) => {
-        fetchDataById(booking.id);  // Fetch details using booking ID
+        fetchDataById(booking.id);
         setIsModalVisible(true);
     };
 
@@ -164,31 +163,17 @@ const BookingManagementAdminPage = () => {
             title: 'Status',
             dataIndex: 'bookingStatus',
             key: 'bookingStatus',
-            render: (status) => {
-                let color = statusColors[status] || 'default';
-                let text = '';
-
-                switch (status) {
-                    case 0:
-                        text = 'Canceled';
-                        break;
-                    case 1:
-                        text = 'Booking';
-                        break;
-                    case 2:
-                        text = 'Confirmed';
-                        break;
-                    default:
-                        text = 'Unknown';
-                }
-
-                return <Tag color={color}>{text}</Tag>;
-            },
+            render: (status) => (
+                <Tag color={statusColors[status] || 'default'}>
+                    {status === 0 ? 'Canceled' : status === 1 ? 'Booking' : 'Confirmed'}
+                </Tag>
+            ),
             responsive: ['sm'],
         },
         {
             title: 'Action',
             key: 'action',
+            // @ts-ignore
             render: (text, record) => (
                 <Space wrap>
                     <Button type="link" onClick={() => showDetailModal(record)}>Detail</Button>
@@ -206,9 +191,7 @@ const BookingManagementAdminPage = () => {
     return (
         <Content style={{ padding: '20px' }}>
             <Title level={3}>Booking Information</Title>
-            <div
-                className='search-filter-container'
-                style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+            <div style={styles.searchFilterContainer}>
                 <Search
                     placeholder="Search by username, phone number, email"
                     onSearch={handleSearch}
@@ -229,6 +212,7 @@ const BookingManagementAdminPage = () => {
             </div>
 
             <Table
+
                 // @ts-ignore
                 columns={columns}
                 dataSource={data}
@@ -250,11 +234,7 @@ const BookingManagementAdminPage = () => {
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 width={window.innerWidth < 768 ? '100%' : '600px'}
-                footer={[
-                    <Button key="close" onClick={handleModalClose}>
-                        Close
-                    </Button>,
-                ]}
+                footer={[<Button key="close" onClick={handleModalClose}>Close</Button>]}
             >
                 {modalLoading ? (
                     <p>Loading...</p>
@@ -265,39 +245,37 @@ const BookingManagementAdminPage = () => {
                         <p><strong>Branch:</strong> {selectedBooking.branchName}</p>
                         <p><strong>Time:</strong> {new Date(selectedBooking.time).toLocaleString()}</p>
                         <p><strong>Number of People:</strong> {selectedBooking.numberOfPeople}</p>
-                        {selectedBooking.numberOfChildren && (
-                            <p><strong>Number of Children:</strong> {selectedBooking.numberOfChildren}</p>
-                        )}
+                        {selectedBooking.numberOfChildren && <p><strong>Number of Children:</strong> {selectedBooking.numberOfChildren}</p>}
                         <p><strong>Phone Number:</strong> {selectedBooking.phoneNumber}</p>
                         <p><strong>Status:</strong> {selectedBooking.bookingStatus === 0 ? 'Canceled' : selectedBooking.bookingStatus === 1 ? 'Booking' : 'Confirmed'}</p>
-                        {selectedBooking.message && (
-                            <p><strong>Message:</strong> {selectedBooking.message}</p>
+                        {selectedBooking.message && <p><strong>Message:</strong> {selectedBooking.message}</p>}
+                        {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
+                            <>
+                                <p><strong>Preordered Items:</strong></p>
+                                <div
+                                    // @ts-ignore
+                                    style={styles.preorderItemsContainer}>
+                                    <Row gutter={[16, 16]}>
+                                        {selectedBooking.preOrderItems.map((item, index) => (
+                                            <Col key={index} xs={24} sm={12} md={8} lg={6}>
+                                                <div
+                                                    // @ts-ignore
+                                                    style={styles.preorderItem}>
+                                                    <Image
+                                                        src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
+                                                        alt={item.name}
+                                                        style={styles.preorderItemImage}
+                                                    />
+                                                    <p><strong>Name:</strong> {item.name}</p>
+                                                    <p><strong>Quantity:</strong> {item.quantity}</p>
+                                                    {item.isOption && <p><strong>Option</strong></p>}
+                                                </div>
+                                            </Col>
+                                        ))}
+                                    </Row>
+                                </div>
+                            </>
                         )}
-                            {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
-                                <>
-                                    <p><strong>Preordered Items:</strong></p>
-                                    <div className="preorder-items-container">
-                                        <Row gutter={[16, 16]}>
-                                            {selectedBooking.preOrderItems.map((item, index) => (
-                                                <Col key={index} xs={24} sm={12} md={8} lg={6}>
-                                                    <div className="preorder-item">
-                                                        <Image
-                                                            src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}  // Ensure the correct path for images
-                                                            alt={item.name}
-                                                            className="preorder-item-image"
-                                                        />
-                                                        <p><strong>Name:</strong> {item.name}</p>
-                                                        <p><strong>Quantity:</strong> {item.quantity}</p>
-                                                        <p><strong>Price:</strong> {item.price}</p>
-                                                        {item.isOption && <p><strong>Type:</strong> Option</p>}
-                                                    </div>
-                                                </Col>
-                                            ))}
-                                        </Row>
-                                    </div>
-                                </>
-                            )}
-
                     </div>
                 )}
             </Modal>
@@ -307,3 +285,29 @@ const BookingManagementAdminPage = () => {
 
 export default BookingManagementAdminPage;
 
+const styles = {
+    searchFilterContainer: {
+        display: 'flex',
+        gap: '20px',
+        alignItems: 'center',
+        marginBottom: '20px',
+    },
+    preorderItemsContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '20px',
+    },
+    preorderItem: {
+        backgroundColor: '#f5f5f5',
+        padding: '10px',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        textAlign: 'center',
+    },
+    preorderItemImage: {
+        width: '100%',
+        height: 'auto',
+        borderRadius: '5px',
+        marginBottom: '10px',
+    },
+};

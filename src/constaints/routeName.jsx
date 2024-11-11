@@ -5,7 +5,7 @@ export const routeNames = {
     callback: "/callback",
     notFound: "/404",
     booking: {
-        branchChoose: '/booking/branchs',
+        branchChoose: '/booking/branches',
         management: '/booking/management',
         calendar: '/booking/calendar',
         bookingPage: '/booking/slot',
@@ -24,7 +24,7 @@ export const routeNames = {
         guest: '/home/guest',
     },
     disableTime: {
-        branchChoose: '/disable-time/branchs',
+        branchChoose: '/disable-time/branches',
         calendar: '/disable-time/calendar',
     },
     food: {
