@@ -23,6 +23,8 @@ import HomePageAdmin from "../pages/Home/HomePageAdmin";
 import HomePageBranchManager from "../pages/Home/HomePageBranchManager";
 import HomePageGuest from "../pages/Home/HomePageGuest";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
+import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
+import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
 
 
 
@@ -98,6 +100,12 @@ const AppRoutes = () => {
                 <Route
                     path={routeNames.foodOption.management}
                     element={<PrivateRoute element={<FoodOptionPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route path={routeNames.recruitInformation.signUp} element={<CareerSignUpPage />} />
+                <Route
+                    path={routeNames.recruitInformation.management}
+                    element={<PrivateRoute element={<ApplicationManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
 
 

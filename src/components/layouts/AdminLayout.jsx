@@ -56,6 +56,10 @@ const AdminLayout = ({ children }) => {
             key: '7',
             label: <Link to={routeNames.food.management}>Foods</Link>,
         },
+        {
+            key: '8',
+            label: <Link to={routeNames.recruitInformation.management}>Application</Link>,
+        },
     ];
 
     const showDrawer = () => {

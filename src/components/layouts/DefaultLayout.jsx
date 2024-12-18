@@ -22,7 +22,7 @@ const DefaultLayout = ({ children }) => {
         },
         {
             key: 'career',
-            label: <Link to={routeNames.career}>Career</Link>,
+            label: <Link to={routeNames.recruitInformation.signUp}>Career</Link>,
         },
         {
             key: 'login',

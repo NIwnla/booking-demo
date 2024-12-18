@@ -57,7 +57,12 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
                 <Form.Item
                     name="name"
                     label="Food Name"
-                    rules={[{ required: true, message: "Please enter the food name" }]}
+                    rules={
+                        [
+                            { required: true, message: "Please enter the food name" },
+                            { max: 50, message: "Food name cannot exceed 50 characters" },
+                        ]
+                    }
                 >
                     <Input placeholder="Enter food name" />
                 </Form.Item>

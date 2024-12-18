@@ -4,8 +4,8 @@ import axiosInstance from "../../service/axios";
 import { useParams } from "react-router-dom";
 import { AxiosConstants } from "../../constaints/axiosContaint";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
-import CreateFoodOptionModal from "../../components/modals/CreateFoodOptionModal";
-import EditFoodOptionModal from "../../components/modals/EditFoodOptionModal";
+import CreateFoodOptionModal from "../../components/modals/foodOption/CreateFoodOptionModal";
+import EditFoodOptionModal from "../../components/modals/foodOption/EditFoodOptionModal";
 import { useMediaQuery } from "react-responsive";
 import './FoodOptionPageAdmin.css'
 import { showMessage } from "../../helpers/showMessage";

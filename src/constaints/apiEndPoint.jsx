@@ -42,5 +42,11 @@ export const apiEndPoints = {
         CREATE: '/food-options',
         EDIT: (id) => `/food-options/${id}`,
         DELETE: (id) => `/food-options/${id}`,
-    }
+    },
+    RECRUIT_INFORMATION:{
+        GET_ALL: '/recruit-informations',
+        CREATE:'/recruit-informations',
+        GET_BY_ID: (id) => `/recruit-informations/${id}`,
+        DELETE: (id) => `/recruit-informations/${id}`,
+    },
 }

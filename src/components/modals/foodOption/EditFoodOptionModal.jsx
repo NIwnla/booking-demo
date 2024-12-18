@@ -1,35 +1,34 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axiosInstance from "../../service/axios";
-import { apiEndPoints } from "../../constaints/apiEndPoint";
-import { showMessage } from "../../helpers/showMessage";
+import axiosInstance from "../../../service/axios";
+import { apiEndPoints } from "../../../constaints/apiEndPoint";
+import { showMessage } from '../../../helpers/showMessage';
 
-const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) => {
+const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
 
     const handleFinish = async (values) => {
+        setLoading(true);
         const formData = new FormData();
         formData.append("Name", values.name);
         formData.append("Price", values.price);
-        formData.append("ImageFile", values.imageFile.file);
         formData.append("FoodId", foodId);
-
-        setLoading(true);
-
+        if (values.imageFile) {
+            formData.append("ImageFile", values.imageFile.file);
+        }
         try {
-            await axiosInstance.post(apiEndPoints.FOOD_OPTION.CREATE, formData, {
+            await axiosInstance.put(apiEndPoints.FOOD_OPTION.EDIT(option.id), formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    'Content-Type': 'multipart/form-data',
                 },
             });
-            showMessage("success", "Option created successfully!")
-            form.resetFields();
-            onOptionCreated();
+            showMessage("success","Option updated successfully!");
+            onOptionUpdated();
             onClose();
         } catch (error) {
-            showMessage("error","Failed to create option.");
+            showMessage("error","Failed to update option.");
         } finally {
             setLoading(false);
         }
@@ -37,7 +36,7 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
 
     return (
         <Modal
-            title="Create Food Option"
+            title="Edit Food Option"
             open={visible}
             onCancel={onClose}
             footer={null}
@@ -46,11 +45,20 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                 form={form}
                 layout="vertical"
                 onFinish={handleFinish}
+                initialValues={{
+                    name: option.name,
+                    price: option.price,
+                }}
             >
                 <Form.Item
                     name="name"
                     label="Option Name"
-                    rules={[{ required: true, message: "Please enter the option name" }]}
+                    rules={
+                        [
+                            { required: true, message: "Please enter the option name" },
+                            { max: 50, message: "Option name cannot exceed 50 characters" },
+                        ]
+                    }
                 >
                     <Input placeholder="Enter option name" />
                 </Form.Item>
@@ -60,28 +68,27 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                     label="Additional Price"
                     rules={[{ required: true, message: "Please enter the additional price" }]}
                 >
-                    <Input placeholder="Enter additional price" type="number" />
+                    <Input placeholder="Enter additional price" />
                 </Form.Item>
 
                 <Form.Item
                     name="imageFile"
-                    label="Image"
+                    label="Option Image"
                     valuePropName="file"
-                    rules={[{ required: true, message: "Please upload an image for the option" }]}
                 >
                     <Upload
-                        name="imageFile"
+                        name="image"
                         listType="picture"
                         maxCount={1}
                         beforeUpload={() => false} // Prevent automatic upload
                     >
-                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                        <Button icon={<UploadOutlined />}>Upload New Image (optional)</Button>
                     </Upload>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Create Option
+                        Update Option
                     </Button>
                 </Form.Item>
             </Form>
@@ -89,5 +96,4 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
     );
 };
 
-export default CreateFoodOptionModal;
-
+export default EditFoodOptionModal;

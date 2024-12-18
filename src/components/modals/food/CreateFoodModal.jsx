@@ -22,12 +22,12 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            showMessage("success","Food created successfully!");
+            showMessage("success", "Food created successfully!");
             onFoodCreated();
             onClose();
             form.resetFields();
         } catch (error) {
-            showMessage("error","Failed to create food.");
+            showMessage("error", "Failed to create food.");
         }
     };
 
@@ -42,7 +42,12 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
                 <Form.Item
                     label="Name"
                     name="name"
-                    rules={[{ required: true, message: "Please enter the food name" }]}
+                    rules={
+                        [
+                            { required: true, message: "Please enter the food name" },
+                            { max: 50, message: "Food name cannot exceed 50 characters" },
+                        ]
+                    }
                 >
                     <Input placeholder="Enter food name" />
                 </Form.Item>

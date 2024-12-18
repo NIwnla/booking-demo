@@ -28,9 +28,13 @@ export const routeNames = {
         calendar: '/disable-time/calendar',
     },
     food: {
-        management: 'foods/management'
+        management: '/foods/management'
     },
     foodOption: {
-        management: 'food-options/management/:id'
+        management: '/food-options/management/:id'
+    },
+    recruitInformation:{
+      signUp: '/recruit/sign-up',
+      management: 'recruit/management',
     },
 }
