@@ -49,4 +49,16 @@ export const apiEndPoints = {
         GET_BY_ID: (id) => `/recruit-informations/${id}`,
         DELETE: (id) => `/recruit-informations/${id}`,
     },
+    DRIVER: {
+        GET_ALL: '/drivers',
+        GET_BY_ID: (id) => `/drivers/${id}`,
+        CREATE: '/drivers',
+        DELETE: (id) => `/drivers/${id}`,
+    },
+    DELIVERY_INFORMATION: {
+        GET_ALL: '/delivery-informations',
+        GET_BY_ID: (id) => `/delivery-informations/${id}`,
+        CREATE: '/delivery-informations',
+        DELETE: (id) => `/delivery-informations/${id}`,
+    },
 }

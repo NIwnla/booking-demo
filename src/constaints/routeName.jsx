@@ -37,4 +37,12 @@ export const routeNames = {
       signUp: '/recruit/sign-up',
       management: 'recruit/management',
     },
+    driver: {
+        management: '/drivers/management',
+    },
+    deliveryInformation: {
+        management: '/delivery-informations/management',
+        create: '/delivery-informations/create',
+        infoPage: '/delivery-informations/info/:id',
+    },
 }

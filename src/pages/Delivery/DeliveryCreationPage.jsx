@@ -7,18 +7,15 @@ import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
-import './BookingPage.css';
-import FoodPreorderSection from './FoodPreOrderSection';
+import './DeliveryCreationPage.css';
+import FoodPreorderSection from '../Booking/FoodPreOrderSection';
 
 const { Title, Text } = Typography;
 
-const BookingPage = () => {
+const DeliveryCreationPage = () => {
     const [isConfirmed, setIsConfirmed] = useState(false);
-    const location = useLocation();
-    const { selectedDate, selectedTime, branchId } = location?.state;
     const { userId } = useContext(AuthContext);
     const [isFetching, setIsFetching] = useState(false);
-    // @ts-ignore
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeKey, setActiveKey] = useState(null);
 
@@ -27,18 +24,14 @@ const BookingPage = () => {
     const [preorderedFoods, setPreorderedFoods] = useState([]);
 
     const onFinish = async (values) => {
-        const time = `${selectedDate}T${selectedTime}:00.000Z`;
 
         const preorder = preorderedFoods && preorderedFoods.length > 0
             ? preorderedFoods.map(food => `[${food.id}${food.isOption ? ' - option' : ''}: ${food.quantity}]`).join(', ') : undefined;
 
         const payload = {
             userId,
-            branchId,
-            time,
             userFullName: values.fullname,
-            numberOfPeople: values.numberOfPeople,
-            numberOfChildren: values.numberOfChildren || undefined,
+            location: values.location,
             phoneNumber: values.phoneNumber,
             message: values.message || undefined,
             preorder,
@@ -48,9 +41,8 @@ const BookingPage = () => {
 
         setIsFetching(true);
         try {
-            // @ts-ignore
-            const response = await axiosInstance.post(apiEndPoints.BOOKING_INFORMATION.CREATE, payload);
-            showMessage("success", 'Booked successfully');
+            const response = await axiosInstance.post(apiEndPoints.DELIVERY_INFORMATION.CREATE, payload);
+            showMessage("success", 'Delivery created successfully');
             navigate(routeNames.index);
         } catch (error) {
             showMessage("error", error.response.data);
@@ -97,8 +89,8 @@ const BookingPage = () => {
 
     const renderForm = () => (
         <>
-            <Title level={3} style={styles.formTitle}>
-                Thông tin book vào {selectedDate} {selectedTime}
+            <Title level={3} className="form-title">
+                Thông tin giao hàng
             </Title>
             <Form layout="vertical" onFinish={onFinish}>
                 <Form.Item
@@ -110,18 +102,11 @@ const BookingPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                    name="numberOfPeople"
-                    label="Number of People"
-                    rules={[{ required: true, message: 'Làm ơn chọn số người dùng bàn' }]}
+                    name="location"
+                    label="Location"
+                    rules={[{ required: true, message: 'Làm ơn nhập địa chỉ giao hàng' }]}
                 >
-                    <Input placeholder="Chọn số người dùng bàn" type="number" min={2} />
-                </Form.Item>
-
-                <Form.Item
-                    name="numberOfChildren"
-                    label="Number of Children"
-                >
-                    <Input placeholder="Chọn số trẻ em dùng bàn" type="number" />
+                    <Input placeholder="Địa chỉ giao hàng" />
                 </Form.Item>
 
                 <Form.Item
@@ -136,26 +121,26 @@ const BookingPage = () => {
                 </Form.Item>
 
                 <Form.Item name="message" label="Message">
-                    <Input.TextArea placeholder="Message (Optional)" style={styles.textArea} />
+                    <Input.TextArea placeholder="Message (Optional)" className="text-area" />
                 </Form.Item>
 
                 <Text type="warning">
-                    Quý khách vui lòng đến đúng giờ, nhà sẽ chỉ giữ bàn muộn hơn 10 phút so với giờ đặt bàn nhé!
+                    Quý khách vui lòng có mặt tại địa chỉ giao hàng đúng giờ!
                 </Text>
 
                 <Form.Item>
-                    <Checkbox onChange={handleCheckboxChange}>Tôi xác nhận là sẽ đến đúng giờ.</Checkbox>
+                    <Checkbox onChange={handleCheckboxChange}>Tôi xác nhận là sẽ có mặt đúng giờ.</Checkbox>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" block disabled={!isConfirmed} loading={isFetching}>
-                        Book Now
+                        Create Delivery
                     </Button>
                 </Form.Item>
             </Form>
-            <Space direction="vertical" style={styles.fanpageMessage}>
+            <Space direction="vertical" className="fanpage-message">
                 <Text type="danger">
-                    Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;
+                    Đối với đơn hàng lớn vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;
                     <a href="https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d">Fanpage</a>
                 </Text>
             </Space>
@@ -165,7 +150,7 @@ const BookingPage = () => {
     return (
         <Row gutter={24}>
             <Col xs={24}>
-                <div style={styles.formContainer}>
+                <div className="form-container">
                     <Collapse
                         activeKey={activeKey}
                         onChange={handleCollapseChange}
@@ -178,27 +163,23 @@ const BookingPage = () => {
                         ]}
                     />
                 </div>
-
             </Col>
 
             <Col xs={24} className="preorder-food-section">
-                <div style={styles.preorderSection}>
-                    <Title level={4} style={styles.preorderTitle}>Đồ ăn đặt trước</Title>
-                    <div
-                        // @ts-ignore
-                        style={styles.scrollableContent}>
+                <div className="preorder-section">
+                    <Title level={4} className="preorder-title">Đồ ăn đặt trước</Title>
+                    <div className="scrollable-content">
                         <Row>
                             {preorderedFoods.length > 0 ? (
                                 preorderedFoods.map((food, index) => (
-                                    <Col xs={12} xl={8}>
-                                        <Card key={index} style={styles.foodCard}>
-                                            <Row align="middle" style={{ width: '100%' }} gutter={16}>
+                                    <Col xs={12} xl={8} key={index}>
+                                        <Card key={index} className="food-card">
+                                            <Row align="middle" gutter={16}>
                                                 <Col span={8}>
                                                     <Image
                                                         src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
                                                         alt={food.name}
-                                                        // @ts-ignore
-                                                        style={styles.foodImage}
+                                                        className="food-image"
                                                     />
                                                 </Col>
                                                 <Col span={16}>
@@ -209,7 +190,7 @@ const BookingPage = () => {
                                                         <Button
                                                             type="link"
                                                             onClick={() => handleRemove(index)}
-                                                            style={styles.removeButton}
+                                                            className="remove-button"
                                                         >
                                                             Remove
                                                         </Button>
@@ -233,12 +214,11 @@ const BookingPage = () => {
 
             <Button
                 type="primary"
-                // @ts-ignore
-                style={styles.floatingButton}
-                onClick={showModal}
+                icon={<PlusCircleFilled />}
                 className="floating-button"
+                onClick={showModal}
             >
-                Xem đồ ăn được đặt trước
+                Xem đồ ăn đặt trước
             </Button>
 
             <Modal
@@ -247,19 +227,16 @@ const BookingPage = () => {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <div
-                    // @ts-ignore
-                    style={styles.scrollableContent}>
+                <div className="scrollable-content">
                     {preorderedFoods.length > 0 ? (
                         preorderedFoods.map((food, index) => (
-                            <Card key={index} style={styles.foodCard}>
+                            <Card key={index} className="food-card">
                                 <Row align="middle" style={{ width: '100%' }} gutter={16}>
                                     <Col span={8}>
                                         <Image
                                             src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
                                             alt={food.name}
-                                            // @ts-ignore
-                                            style={styles.foodImage}
+                                            className="food-image"
                                         />
                                     </Col>
                                     <Col span={16}>
@@ -270,7 +247,7 @@ const BookingPage = () => {
                                             <Button
                                                 type="link"
                                                 onClick={() => handleRemove(index)}
-                                                style={styles.removeButton}
+                                                className="remove-button"
                                             >
                                                 Remove
                                             </Button>
@@ -288,54 +265,4 @@ const BookingPage = () => {
     );
 };
 
-const styles = {
-    formContainer: {
-        padding: '24px',
-        background: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    },
-    formTitle: {
-        color: '#ff4d4f',
-    },
-    textArea: {
-        height: '100px',
-    },
-    fanpageMessage: {
-        marginTop: '20px',
-    },
-    preorderSection: {
-        marginTop: '24px',
-        padding: '24px',
-        background: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    },
-    preorderTitle: {
-        color: '#ff4d4f',
-    },
-    scrollableContent: {
-        maxHeight: '65vh',
-        overflowY: 'auto',
-    },
-    foodCard: {
-        marginBottom: '16px',
-        width: '100%',
-    },
-    foodImage: {
-        width: '100%',
-        height: 'auto',
-        objectFit: 'cover',
-    },
-    removeButton: {
-        color: '#ff4d4f',
-        padding: '0',
-    },
-    floatingButton: {
-        position: 'fixed',
-        bottom: '16px',
-        right: '16px',
-    },
-};
-
-export default BookingPage;
+export default DeliveryCreationPage;

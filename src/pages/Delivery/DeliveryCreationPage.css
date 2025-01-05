@@ -1,0 +1,79 @@
+/* Hide the preordered food section on small screens */
+@media (max-width: 768px) {
+    .preorder-food-section {
+        display: none;
+    }
+
+    .floating-button {
+        display: block;
+    }
+}
+
+/* Show the preordered food section on larger screens */
+@media (min-width: 769px) {
+    .floating-button {
+        display: none;
+    }
+}
+
+.form-container {
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    color: #ff4d4f;
+}
+
+.text-area {
+    height: 100px;
+}
+
+.fanpage-message {
+    margin-top: 20px;
+}
+
+.preorder-section {
+    margin-top: 24px;
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.preorder-title {
+    color: #ff4d4f;
+}
+
+.scrollable-content {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.food-card {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.food-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.remove-button {
+    color: #ff4d4f;
+    padding: 0;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}
+
+.no-horizontal-scroll {
+    overflow-x: hidden;
+}

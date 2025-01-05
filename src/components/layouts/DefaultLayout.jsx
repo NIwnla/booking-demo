@@ -21,6 +21,10 @@ const DefaultLayout = ({ children }) => {
             label: <Link to={routeNames.booking.branchChoose}>Reservation</Link>,
         },
         {
+            key: 'delivery',
+            label: <Link to={routeNames.deliveryInformation.create}>Delivery</Link>,
+        },
+        {
             key: 'career',
             label: <Link to={routeNames.recruitInformation.signUp}>Career</Link>,
         },

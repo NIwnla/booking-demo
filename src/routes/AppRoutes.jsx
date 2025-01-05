@@ -25,6 +25,7 @@ import HomePageGuest from "../pages/Home/HomePageGuest";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
 import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
 import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
+import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
 
 
 
@@ -107,7 +108,8 @@ const AppRoutes = () => {
                     path={routeNames.recruitInformation.management}
                     element={<PrivateRoute element={<ApplicationManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
-
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route path={routeNames.deliveryInformation.create} element={<DeliveryCreationPage />}/>
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />
