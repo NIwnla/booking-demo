@@ -1,11 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, Image, Input, Modal, Row, Spin, Typography } from 'antd';
+import { App, Button, Card, Col, Form, Image, Input, Modal, Row, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
-import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
 import './BookingPage.css'; // Import styles to match BookingPage
 import FoodPreorderSection from './FoodPreOrderSection';
@@ -19,6 +18,7 @@ const BookingEditPage = () => {
     const [loading, setLoading] = useState(false);
     const [preorderData, setPreorderData] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const { message } = App.useApp();
 
     useEffect(() => {
         const fetchBookingDetails = async () => {
@@ -37,7 +37,7 @@ const BookingEditPage = () => {
                     setPreorderData(bookingData.preOrderItems)
                 }
             } catch (error) {
-                showMessage("error", 'Failed to load booking details');
+                message.error('Failed to load booking details');
             } finally {
                 setLoading(false);
             }
@@ -66,10 +66,10 @@ const BookingEditPage = () => {
                 ...values,
                 preorder: preorderData.map(item => `[${item.id}${item.isOption ? ' - option' : ''}: ${item.quantity}]`).join(', ')
             });
-            showMessage("success", 'Booking updated successfully');
+            message.success('Booking updated successfully');
             navigate(routeNames.index);
         } catch (error) {
-            showMessage("error", 'Failed to update booking');
+            message.error('Failed to update booking');
         } finally {
             setLoading(false);
         }

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Modal, Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axiosInstance from "../../../service/axios";
+import { App, Button, Form, Input, Modal, Upload } from "antd";
+import React, { useState } from "react";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
-import { showMessage } from "../../../helpers/showMessage";
+import axiosInstance from "../../../service/axios";
 
 const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const { message } = App.useApp();
 
     const handleFinish = async (values) => {
         const formData = new FormData();
@@ -24,12 +24,12 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                     "Content-Type": "multipart/form-data",
                 },
             });
-            showMessage("success", "Option created successfully!")
+            message.success("Option created successfully!")
             form.resetFields();
             onOptionCreated();
             onClose();
         } catch (error) {
-            showMessage("error","Failed to create option.");
+            message.error("Failed to create option.");
         } finally {
             setLoading(false);
         }

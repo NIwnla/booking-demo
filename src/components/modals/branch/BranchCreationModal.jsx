@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Form, Input, Button, Upload, message } from 'antd';
+import { Modal, Form, Input, Button, Upload, App } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
-import { showMessage } from './../../../helpers/showMessage';
 
 const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const { message } = App.useApp();
 
     const handleFinish = async (values) => {
         const formData = new FormData();
@@ -25,12 +24,12 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                 },
             });
 
-            showMessage("success", 'Branch created successfully!');
+            message.success('Branch created successfully!');
             form.resetFields();
             onBranchCreated(response.data); // Notify parent component
             onClose();
         } catch (error) {
-            showMessage("error", 'Failed to create branch. Please try again.');
+            message.error('Failed to create branch. Please try again.');
             console.error('Error creating branch:', error);
         } finally {
             setLoading(false);

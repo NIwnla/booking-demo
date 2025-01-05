@@ -29,38 +29,71 @@ const AdminLayout = ({ children }) => {
 
     const leftMenuItems = [
         {
-            key: '1',
-            label: <Link to={routeNames.index}>Home</Link>,
+            key: 'general',
+            label: 'General',
+            children: [
+                {
+                    key: '1',
+                    label: <Link to={routeNames.index}>Home</Link>,
+                },
+                {
+                    key: '2',
+                    label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
+                },
+            ],
         },
         {
-            key: '2',
-            label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
+            key: 'management',
+            label: 'Management',
+            children: [
+                {
+                    key: '3',
+                    label: <Link to={routeNames.branch.management}>Branches</Link>,
+                },
+                {
+                    key: '4',
+                    label: <Link to={routeNames.booking.management}>Management</Link>,
+                },
+                {
+                    key: '5',
+                    label: <Link to={routeNames.user.management}>Users</Link>,
+                },
+                {
+                    key: '7',
+                    label: <Link to={routeNames.food.management}>Foods</Link>,
+                },
+                {
+                    key: '10',
+                    label: <Link to={routeNames.deliveryInformation.management}>Delivery</Link>,
+                },
+            ],
         },
         {
-            key: '3',
-            label: <Link to={routeNames.branch.management}>Branches</Link>,
+            key: 'configuration',
+            label: 'Configuration',
+            children: [
+                {
+                    key: '6',
+                    label: <Link to={routeNames.disableTime.branchChoose}>Disable booking time</Link>,
+                },
+            ],
         },
         {
-            key: '4',
-            label: <Link to={routeNames.booking.management}>Management</Link>,
-        },
-        {
-            key: '5',
-            label: <Link to={routeNames.user.management}>Users</Link>,
-        },
-        {
-            key: '6',
-            label: <Link to={routeNames.disableTime.branchChoose}>Disable booking time</Link>,
-        },
-        {
-            key: '7',
-            label: <Link to={routeNames.food.management}>Foods</Link>,
-        },
-        {
-            key: '8',
-            label: <Link to={routeNames.recruitInformation.management}>Application</Link>,
+            key: 'applications',
+            label: 'Applications',
+            children: [
+                {
+                    key: '8',
+                    label: <Link to={routeNames.recruitInformation.management}>Application</Link>,
+                },
+                {
+                    key: '9',
+                    label: <Link to={routeNames.deliveryInformation.create}>Delivery</Link>,
+                },
+            ],
         },
     ];
+
 
     const showDrawer = () => {
         setDrawerVisible(true);
@@ -104,7 +137,6 @@ const AdminLayout = ({ children }) => {
                     style={{
                         display: 'flex',
                         flex: 1,
-
                         color: '#ffffff',
                         justifyContent: 'flex-start',
                     }}
@@ -146,7 +178,7 @@ const AdminLayout = ({ children }) => {
             >
                 <Menu
                     theme='light'
-                    mode="vertical"
+                    mode="inline"
                     onClick={closeDrawer}
                     style={{ backgroundColor: '#ff0000' }}
                     items={leftMenuItems}

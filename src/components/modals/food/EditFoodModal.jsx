@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, Button, Upload, message, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { App, Button, Form, Input, InputNumber, Modal, Upload } from "antd";
+import React, { useEffect, useState } from "react";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
-import { showMessage } from "../../../helpers/showMessage";
 import axiosInstance from "../../../service/axios";
 
 const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const { message } = App.useApp();
 
     useEffect(() => {
         console.log("Food:", food)
@@ -28,11 +28,11 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            showMessage("success", "Food updated successfully!");
+            message.success("Food updated successfully!");
             onFoodUpdated();
             onClose();
         } catch (error) {
-            showMessage("error", "Failed to update food.");
+            message.error("Failed to update food.");
         } finally {
             setLoading(false);
         }

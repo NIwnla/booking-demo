@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Popconfirm, message, Image, Spin, Typography } from "antd";
-import axiosInstance from "../../service/axios";
+import { App, Button, Card, Col, Image, Popconfirm, Row, Spin, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
-import { AxiosConstants } from "../../constaints/axiosContaint";
-import { apiEndPoints } from "../../constaints/apiEndPoint";
 import CreateFoodOptionModal from "../../components/modals/foodOption/CreateFoodOptionModal";
 import EditFoodOptionModal from "../../components/modals/foodOption/EditFoodOptionModal";
-import { useMediaQuery } from "react-responsive";
-import './FoodOptionPageAdmin.css'
-import { showMessage } from "../../helpers/showMessage";
+import { apiEndPoints } from "../../constaints/apiEndPoint";
+import { AxiosConstants } from "../../constaints/axiosContaint";
+import axiosInstance from "../../service/axios";
+import './FoodOptionPageAdmin.css';
 
 const { Title } = Typography
 const FoodOptionPageAdmin = () => {
@@ -18,6 +17,7 @@ const FoodOptionPageAdmin = () => {
     const [createModalVisible, setCreateModalVisible] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [editModalVisible, setEditModalVisible] = useState(false);
+    const { message } = App.useApp();
 
     const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -31,7 +31,7 @@ const FoodOptionPageAdmin = () => {
             const response = await axiosInstance.get(apiEndPoints.FOOD.GET_BY_ID(id));
             setFood(response.data);
         } catch (error) {
-            showMessage("error","Failed to fetch food options.");
+            message.error("Failed to fetch food options.");
         } finally {
             setLoading(false);
         }
@@ -45,10 +45,10 @@ const FoodOptionPageAdmin = () => {
     const handleDeleteOption = async (optionId) => {
         try {
             await axiosInstance.delete(apiEndPoints.FOOD_OPTION.DELETE(optionId));
-            showMessage("success",'Option deleted successfully.');
+            message.success('Option deleted successfully.');
             fetchOptions(); // Refresh the list after deletion
         } catch (error) {
-            showMessage("error",'Failed to delete option.');
+            message.error('Failed to delete option.');
         }
     };
 

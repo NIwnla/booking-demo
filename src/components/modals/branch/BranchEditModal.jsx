@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import axiosInstance from '../../../service/axios';
+import { App, Button, Form, Input, Modal, Upload } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../../constaints/axiosContaint';
-import { showMessage } from '../../../helpers/showMessage';
+import axiosInstance from '../../../service/axios';
 
 const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
+    const { message } = App.useApp();
 
     useEffect(() => {
         if (branch) {
@@ -45,13 +45,13 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 },
             });
 
-            showMessage("success",'Branch updated successfully!');
+            message.success('Branch updated successfully!');
             form.resetFields();
             setFileList([]); // Clear the file list after submission
             onBranchUpdated(response.data); // Notify parent component
             onClose();
         } catch (error) {
-            showMessage("error",'Failed to update branch. Please try again.');
+            message.error('Failed to update branch. Please try again.');
             console.error('Error updating branch:', error);
         } finally {
             setLoading(false);

@@ -1,13 +1,12 @@
-import { Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin } from "antd";
+import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateFoodModal from "../../components/modals/food/CreateFoodModal";
+import EditFoodModal from "../../components/modals/food/EditFoodModal";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
-import { showMessage } from "../../helpers/showMessage";
 import axiosInstance from "../../service/axios";
 import './FoodManagementPageAdmin.css';
-import EditFoodModal from "../../components/modals/food/EditFoodModal";
 
 const FoodManagementPageAdmin = () => {
     const [foods, setFoods] = useState([]);
@@ -19,6 +18,7 @@ const FoodManagementPageAdmin = () => {
     const [selectedFood, setSelectedFood] = useState(null);
     const [createModalVisible, setCreateModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
+    const { message } = App.useApp();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const FoodManagementPageAdmin = () => {
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            showMessage("error", "Failed to fetch foods.");
+            message.error("Failed to fetch foods.");
         } finally {
             setLoading(false);
         }
@@ -56,10 +56,10 @@ const FoodManagementPageAdmin = () => {
     const handleDelete = async (foodId) => {
         try {
             await axiosInstance.delete(apiEndPoints.FOOD.DELETE(foodId));
-            showMessage("success", 'Food deleted successfully.');
+            message.success('Food deleted successfully.');
             fetchFoods();
         } catch (error) {
-            showMessage("error", 'Failed to delete food.');
+            message.error('Failed to delete food.');
         }
     };
 

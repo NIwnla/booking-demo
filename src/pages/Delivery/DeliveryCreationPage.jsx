@@ -1,14 +1,13 @@
-import { PlusCircleFilled, PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, Typography } from 'antd';
+import { PlusCircleFilled } from '@ant-design/icons';
+import { App, Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, TimePicker, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
-import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
-import './DeliveryCreationPage.css';
 import FoodPreorderSection from '../Booking/FoodPreOrderSection';
+import './DeliveryCreationPage.css';
 
 const { Title, Text } = Typography;
 
@@ -18,6 +17,7 @@ const DeliveryCreationPage = () => {
     const [isFetching, setIsFetching] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeKey, setActiveKey] = useState(null);
+    const { message } = App.useApp();
 
     const navigate = useNavigate();
 
@@ -30,11 +30,12 @@ const DeliveryCreationPage = () => {
 
         const payload = {
             userId,
+            time: values.time || undefined,
             userFullName: values.fullname,
             location: values.location,
             phoneNumber: values.phoneNumber,
             message: values.message || undefined,
-            preorder,
+            food : preorder,
         };
 
         console.log('Payload for API:', payload);
@@ -42,10 +43,10 @@ const DeliveryCreationPage = () => {
         setIsFetching(true);
         try {
             const response = await axiosInstance.post(apiEndPoints.DELIVERY_INFORMATION.CREATE, payload);
-            showMessage("success", 'Delivery created successfully');
+            message.success('Delivery created successfully');
             navigate(routeNames.index);
         } catch (error) {
-            showMessage("error", error.response.data);
+            message.error(error.response.data);
         } finally {
             setIsFetching(false);
         }
@@ -99,6 +100,17 @@ const DeliveryCreationPage = () => {
                     rules={[{ required: true, message: 'Làm ơn nhập tên đầy đủ của bạn' }]}
                 >
                     <Input placeholder="Tên đầy đủ" />
+                </Form.Item>
+
+                <Form.Item
+                    name="time"
+                    label="Time"
+                    rules={[{ required: false, message: 'Vui lòng nhập thời gian giao hàng' }]}
+                >
+                    <TimePicker placeholder="Thời gian giao hàng" style={{width:"250px"}} />
+                <Text type="danger" style={{ marginLeft: '8px' }}>
+                    Để trống nếu quý khách muốn giao sớm nhất có thể
+                </Text>
                 </Form.Item>
 
                 <Form.Item

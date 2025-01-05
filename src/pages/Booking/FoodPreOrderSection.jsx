@@ -1,7 +1,6 @@
-import { Button, Card, Col, Collapse, Image, Input, Pagination, Row, Space, Spin } from 'antd';
+import { App, Button, Card, Col, Collapse, Image, Input, Pagination, Row, Space, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
-import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
 
 // @ts-ignore
@@ -15,6 +14,7 @@ const FoodPreorderSection = ({ onPreorder }) => {
     const [totalCount, setTotalCount] = useState(0);
     const [search, setSearch] = useState("");
     const [preorders, setPreorders] = useState({});
+    const { message } = App.useApp();
 
     useEffect(() => {
         fetchFoods();
@@ -29,7 +29,7 @@ const FoodPreorderSection = ({ onPreorder }) => {
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            showMessage("error", "Failed to fetch foods.");
+            message.error("Failed to fetch foods.");
         } finally {
             setLoading(false);
         }
@@ -60,9 +60,10 @@ const FoodPreorderSection = ({ onPreorder }) => {
         if (quantity > 0) {
             const { id, imagePath, name } = food;
             onPreorder({ id, imagePath, name, isOption }, quantity);
-            showMessage("success", `Preordered ${quantity} of ${food.name}`);
+            message.success(`Preordered ${quantity} of ${food.name}`);
+           
         } else {
-            showMessage("warning", "Please select a quantity to preorder");
+            message.warning("Please select a quantity to preorder");
         }
     };
 

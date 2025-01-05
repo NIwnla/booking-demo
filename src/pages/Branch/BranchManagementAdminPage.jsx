@@ -1,11 +1,10 @@
-import { Button, Image, Modal, Space, Spin, Table, Tag, Typography } from 'antd';
+import { App, Button, Image, Modal, Space, Spin, Table, Tag, Typography } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import React, { useEffect, useState } from 'react';
 import BranchCreationModal from '../../components/modals/branch/BranchCreationModal';
 import BranchEditModal from '../../components/modals/branch/BranchEditModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
-import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
 
 const { Title } = Typography;
@@ -17,6 +16,7 @@ const BranchManagementAdminPage = () => {
     const [isCreationModalVisible, setIsCreationModalVisible] = useState(false);
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
+    const { message } = App.useApp();
 
     const fetchBranches = async () => {
         setIsFetching(true);
@@ -47,7 +47,7 @@ const BranchManagementAdminPage = () => {
         setIsFetching(true);
         try {
             const response = await axiosInstance.delete(apiEndPoints.BRANCH.DELETE(id));
-            showMessage("success", 'Branch disabled/enabled successfully!');
+            message.success('Branch disabled/enabled successfully!');
             fetchBranches();
         } catch (error) {
             console.error('Error fetching branches:', error);

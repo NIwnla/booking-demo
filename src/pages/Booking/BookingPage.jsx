@@ -1,11 +1,9 @@
-import { PlusCircleFilled, PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, Typography } from 'antd';
+import { App, Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
-import { showMessage } from '../../helpers/showMessage';
 import axiosInstance from '../../service/axios';
 import './BookingPage.css';
 import FoodPreorderSection from './FoodPreOrderSection';
@@ -21,6 +19,7 @@ const BookingPage = () => {
     // @ts-ignore
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeKey, setActiveKey] = useState(null);
+    const {message} = App.useApp();
 
     const navigate = useNavigate();
 
@@ -50,10 +49,10 @@ const BookingPage = () => {
         try {
             // @ts-ignore
             const response = await axiosInstance.post(apiEndPoints.BOOKING_INFORMATION.CREATE, payload);
-            showMessage("success", 'Booked successfully');
+            message.success('Booked successfully');
             navigate(routeNames.index);
         } catch (error) {
-            showMessage("error", error.response.data);
+            message.error(error.response.data);
         } finally {
             setIsFetching(false);
         }

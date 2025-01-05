@@ -1,12 +1,12 @@
-import React from "react";
-import { Button, Form, Input, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { showMessage } from "../../helpers/showMessage";
-import axiosInstance from "../../service/axios";
+import { App, Button, Form, Input, Upload } from "antd";
+import React from "react";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
+import axiosInstance from "../../service/axios";
 
 const CareerSignUpPage = () => {
     const [form] = Form.useForm();
+    const { message } = App.useApp();
     const handleSubmit = async (values) => {
         const formData = new FormData();
         formData.append("firstName", values.firstName);
@@ -21,21 +21,21 @@ const CareerSignUpPage = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            showMessage("success", "Your application has been submitted successfully!");
+            message.success("Your application has been submitted successfully!");
             form.resetFields();
         } catch (error) {
-            showMessage("error", "Failed to submit your application.");
+            message.error("Failed to submit your application.");
         }
     };
 
     const handleFailedSubmit = (errorInfo) => {
-        showMessage("error", "Please check the form fields and try again.");
+        message.error("Please check the form fields and try again.");
     };
 
     const validateFile = (file) => {
         const allowedTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
         if (!allowedTypes.includes(file.type)) {
-            showMessage("error", "Only Word or PDF files are allowed.");
+            message.error("Only Word or PDF files are allowed.");
             return Upload.LIST_IGNORE;
         }
         return true;

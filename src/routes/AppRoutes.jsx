@@ -26,6 +26,7 @@ import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
 import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
 import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
 import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
+import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
 
 
 
@@ -110,6 +111,10 @@ const AppRoutes = () => {
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.deliveryInformation.create} element={<DeliveryCreationPage />}/>
+                <Route
+                    path={routeNames.deliveryInformation.management}
+                    element={<PrivateRoute element={<DeliveryManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />

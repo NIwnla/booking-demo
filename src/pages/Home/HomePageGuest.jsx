@@ -1,13 +1,11 @@
+import { App, Button, Card, Col, Image, Layout, Row, Spin } from "antd";
 import React, { useContext, useEffect, useState } from "react";
-import { Layout, Card, Spin, Button, message, Row, Col, Image } from "antd";
-import axiosInstance from "../../service/axios";
-import { AuthContext } from "../../context/AuthContext";
-import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { useMediaQuery } from 'react-responsive'; // For media queries
 import { useNavigate } from "react-router-dom";
-import { routeNames } from "../../constaints/routeName";
+import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
-import { showMessage } from "../../helpers/showMessage";
+import { AuthContext } from "../../context/AuthContext";
+import axiosInstance from "../../service/axios";
 
 const { Content } = Layout;
 
@@ -17,6 +15,7 @@ const HomePageGuest = () => {
     const [loading, setLoading] = useState(false);
     const [canceling, setCanceling] = useState(false);
     const navigate = useNavigate();
+    const { message } = App.useApp();
 
     // Using media query to detect small screens
     const isSmallScreen = useMediaQuery({ query: '(max-width: 576px)' });
@@ -45,11 +44,11 @@ const HomePageGuest = () => {
         setCanceling(true);
         try {
             await axiosInstance.put(apiEndPoints.BOOKING_INFORMATION.EDIT_STATUS(bookingInfo.id, 0));
-            showMessage("success", 'Booking canceled successfully');
+            message.success('Booking canceled successfully');
             setBookingInfo(null); // Clear booking info after cancellation
         } catch (error) {
             console.error("Failed to cancel booking:", error);
-            showMessage("error", 'Failed to cancel booking');
+            message.error('Failed to cancel booking');
         } finally {
             setCanceling(false);
         }

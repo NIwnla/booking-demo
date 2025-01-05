@@ -23,14 +23,13 @@ const customTheme = {
       headerColor: '#ffffff',    // Set table header text color to white
     },
     Menu: {
-      itemBg: '#ff0000',    // Default background color for menu items
-      colorText: '#ffffff',
-      itemSelectedColor: '#ff0000',
-      itemSelectedBg: '#ffffff',
-      horizontalItemSelectedBg: '#ffffff',
-      horizontalItemHoverBg: '#ffffff',
-      itemHoverBg: '#ffffff',
-      itemHoverColor: '#ff0000',
+      itemBg: '#ff0000',          // Red background for menu items
+      itemColor: '#ffffff',       // White text for menu items
+      itemHoverBg: '#cc0000',     // Slightly darker red on hover
+      itemHoverColor: '#ffffff',  // White text on hover
+      itemSelectedBg: '#ffffff',  // Slightly darker red for selected items
+      itemSelectedColor: '#ffffff', // White text for selected items
+      popupBg: '#ff0000',         // Red background for submenu popup
     }
   }
 };
