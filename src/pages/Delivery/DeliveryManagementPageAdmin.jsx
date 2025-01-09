@@ -1,8 +1,10 @@
-import { App, Button, Layout, Modal, Pagination, Select, Space, Table, Tag, Typography, message } from 'antd';
+import { App, Button, Card, Col, Layout, Modal, Pagination, Row, Select, Space, Spin, Table, Tag, Typography, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import dayjs from 'dayjs';
+import { AxiosConstants } from '../../constaints/axiosContaint';
+import { useWindowSize } from '../../helpers/useWindowSize';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -14,10 +16,12 @@ const DeliveryManagementPageAdmin = () => {
     const [pageSize, setPageSize] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [statusFilter, setStatusFilter] = useState(null);
+    const [statusFilter, setStatusFilter] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedDelivery, setSelectedDelivery] = useState(null);
     const { message } = App.useApp();
+
+    const windowSize = useWindowSize();
 
     const fetchData = async () => {
         setLoading(true);
@@ -187,7 +191,12 @@ const DeliveryManagementPageAdmin = () => {
     return (
         <Content style={{ padding: '20px' }}>
             <Title level={3}>Delivery Management</Title>
-            <div style={styles.searchFilterContainer}>
+            <div style={{
+                display: 'flex',
+                gap: '20px',
+                alignItems: 'center',
+                marginBottom: '20px',
+            }}>
                 <Select
                     placeholder="Filter by Status"
                     style={{ width: '100%' }}
@@ -216,7 +225,7 @@ const DeliveryManagementPageAdmin = () => {
                 pageSize={pageSize}
                 total={totalCount}
                 onChange={(page) => setPageIndex(page)}
-                simple={window.innerWidth < 768}
+                simple={windowSize.width < 768}
                 style={{ marginTop: '20px', textAlign: 'center' }}
             />
 
@@ -224,35 +233,68 @@ const DeliveryManagementPageAdmin = () => {
                 title="Delivery Details"
                 open={isModalVisible}
                 onCancel={handleModalClose}
-                width={window.innerWidth < 768 ? '100%' : '600px'}
-                footer={[<Button key="close" onClick={handleModalClose}>Close</Button>]}
-            >
+                width={windowSize.width < 768 ? '100%' : '70vw'}
+                footer={[<Button key="close" onClick={handleModalClose}>Close</Button>]}>
                 {loading ? (
-                    <p>Loading...</p>
+                    <Spin />
                 ) : selectedDelivery && (
                     <div>
                         <p><strong>User Name:</strong> {selectedDelivery.userFullName}</p>
                         <p><strong>Email:</strong> {selectedDelivery.username}</p>
-                        <p><strong>Time:</strong> {selectedDelivery.time}</p>
+                        <p><strong>Time:</strong> {dayjs(selectedDelivery.time).format('MM/DD HH:mm')}</p>
                         <p><strong>Location:</strong> {selectedDelivery.location}</p>
                         <p><strong>Phone Number:</strong> {selectedDelivery.phoneNumber}</p>
                         <p><strong>Status:</strong> {selectedDelivery.status}</p>
-                        <p><strong>Food:</strong> {selectedDelivery.food}</p>
                         {selectedDelivery.message && <p><strong>Message:</strong> {selectedDelivery.message}</p>}
+
+                            <div
+                                style={{
+                                    display: windowSize.width < 768 ? 'block' : 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '20px',
+                                }}
+                            >
+                                <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                    Foods:
+                                </Title>
+                                <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                    Total: {selectedDelivery.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
+                                </Title>
+                            </div>
+
+                        <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
+                            {selectedDelivery.preOrderItems.map(item => (
+                                <Col key={item.id} xs={24} sm={12} md={8} lg={6} xl={4}>
+                                    <Card
+                                        cover={
+                                            <img
+                                                alt={item.name}
+                                                src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
+                                                style={{ height: '150px', objectFit: 'cover' }}
+                                            />
+                                        }
+                                        bordered
+                                    >
+                                        <Card.Meta
+                                            title={item.name}
+                                            description={
+                                                <>
+                                                    <p>{item.price.toLocaleString()} VND</p>
+                                                    <p>Quantity: {item.quantity}</p>
+                                                </>
+                                            }
+                                        />
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
                     </div>
                 )}
             </Modal>
+
         </Content>
     );
 };
 
 export default DeliveryManagementPageAdmin;
-
-const styles = {
-    searchFilterContainer: {
-        display: 'flex',
-        gap: '20px',
-        alignItems: 'center',
-        marginBottom: '20px',
-    },
-};

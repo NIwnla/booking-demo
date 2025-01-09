@@ -1,4 +1,4 @@
-import { Button, Col, Image, Input, Layout, Modal, Pagination, Row, Select, Space, Table, Tag, Typography } from 'antd';
+import { Button, Card, Col, Image, Input, Layout, Modal, Pagination, Row, Select, Space, Spin, Table, Tag, Typography } from 'antd';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
@@ -14,7 +14,6 @@ const { Title } = Typography;
 const BookingManagementAdminPage = () => {
     const [data, setData] = useState([]);
     const [pageIndex, setPageIndex] = useState(1);
-    // @ts-ignore
     const [pageSize, setPageSize] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -173,7 +172,6 @@ const BookingManagementAdminPage = () => {
         {
             title: 'Action',
             key: 'action',
-            // @ts-ignore
             render: (text, record) => (
                 <Space wrap>
                     <Button type="link" onClick={() => showDetailModal(record)}>Detail</Button>
@@ -191,7 +189,7 @@ const BookingManagementAdminPage = () => {
     return (
         <Content style={{ padding: '20px' }}>
             <Title level={3}>Booking Information</Title>
-            <div style={styles.searchFilterContainer}>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
                 <Search
                     placeholder="Search by username, phone number, email"
                     onSearch={handleSearch}
@@ -212,7 +210,6 @@ const BookingManagementAdminPage = () => {
             </div>
 
             <Table
-
                 // @ts-ignore
                 columns={columns}
                 dataSource={data}
@@ -233,81 +230,74 @@ const BookingManagementAdminPage = () => {
                 title="Booking Details"
                 open={isModalVisible}
                 onCancel={handleModalClose}
-                width={window.innerWidth < 768 ? '100%' : '600px'}
+                width={windowSize.width < 768 ? '100%' : '70vw'}
                 footer={[<Button key="close" onClick={handleModalClose}>Close</Button>]}
             >
                 {modalLoading ? (
-                    <p>Loading...</p>
+                    <Spin />
                 ) : selectedBooking && (
                     <div>
                         <p><strong>User Name:</strong> {selectedBooking.userFullName}</p>
                         <p><strong>Email:</strong> {selectedBooking.email}</p>
                         <p><strong>Branch:</strong> {selectedBooking.branchName}</p>
-                        <p><strong>Time:</strong> {new Date(selectedBooking.time).toLocaleString()}</p>
+                        <p><strong>Time:</strong> {dayjs(selectedBooking.time).format('MM/DD HH:mm')}</p>
                         <p><strong>Number of People:</strong> {selectedBooking.numberOfPeople}</p>
                         {selectedBooking.numberOfChildren && <p><strong>Number of Children:</strong> {selectedBooking.numberOfChildren}</p>}
                         <p><strong>Phone Number:</strong> {selectedBooking.phoneNumber}</p>
                         <p><strong>Status:</strong> {selectedBooking.bookingStatus === 0 ? 'Canceled' : selectedBooking.bookingStatus === 1 ? 'Booking' : 'Confirmed'}</p>
                         {selectedBooking.message && <p><strong>Message:</strong> {selectedBooking.message}</p>}
+
                         {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
                             <>
-                                <p><strong>Preordered Items:</strong></p>
                                 <div
-                                    // @ts-ignore
-                                    style={styles.preorderItemsContainer}>
-                                    <Row gutter={[16, 16]}>
-                                        {selectedBooking.preOrderItems.map((item, index) => (
-                                            <Col key={index} xs={24} sm={12} md={8} lg={6}>
-                                                <div
-                                                    // @ts-ignore
-                                                    style={styles.preorderItem}>
-                                                    <Image
-                                                        src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
-                                                        alt={item.name}
-                                                        style={styles.preorderItemImage}
-                                                    />
-                                                    <p><strong>Name:</strong> {item.name}</p>
-                                                    <p><strong>Quantity:</strong> {item.quantity}</p>
-                                                    {item.isOption && <p><strong>Option</strong></p>}
-                                                </div>
-                                            </Col>
-                                        ))}
-                                    </Row>
+                                    style={{
+                                        display: windowSize.width < 768 ? 'block' : 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        marginTop: '20px',
+                                    }}
+                                >
+                                    <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                        Pre-Order Items
+                                    </Title>
+                                    <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                        Total: {selectedBooking.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
+                                    </Title>
                                 </div>
+
+                                <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
+                                    {selectedBooking.preOrderItems.map(item => (
+                                        <Col key={item.id} xs={24} sm={12} md={8} lg={6} xl={4}>
+                                            <Card
+                                                cover={
+                                                    <img
+                                                        alt={item.name}
+                                                        src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
+                                                        style={{ height: '150px', objectFit: 'cover' }}
+                                                    />
+                                                }
+                                                bordered
+                                            >
+                                                <Card.Meta
+                                                    title={item.name}
+                                                    description={
+                                                        <>
+                                                            <p>{item.price.toLocaleString()} VND</p>
+                                                            <p>Quantity: {item.quantity}</p>
+                                                        </>
+                                                    }
+                                                />
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
                             </>
                         )}
                     </div>
                 )}
             </Modal>
+
         </Content>
     );
 };
-
 export default BookingManagementAdminPage;
-
-const styles = {
-    searchFilterContainer: {
-        display: 'flex',
-        gap: '20px',
-        alignItems: 'center',
-        marginBottom: '20px',
-    },
-    preorderItemsContainer: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '20px',
-    },
-    preorderItem: {
-        backgroundColor: '#f5f5f5',
-        padding: '10px',
-        borderRadius: '5px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        textAlign: 'center',
-    },
-    preorderItemImage: {
-        width: '100%',
-        height: 'auto',
-        borderRadius: '5px',
-        marginBottom: '10px',
-    },
-};
