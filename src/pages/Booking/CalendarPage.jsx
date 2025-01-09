@@ -64,9 +64,7 @@ const CalendarPage = () => {
             setIsFetching(true);
             try {
                 const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(currentYear, selectedMonth + 1, branchId));
-                setDisabledTimes(response.data);
-                console.log('Disabled times:', response.data);
-                
+                setDisabledTimes(response.data);                
             } catch (error) {
                 // Handle error`
             } finally {

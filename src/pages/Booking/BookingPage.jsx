@@ -45,8 +45,6 @@ const BookingPage = () => {
             preorder,
         };
 
-        console.log('Payload for API:', payload);
-
         setIsFetching(true);
         try {
             // @ts-ignore

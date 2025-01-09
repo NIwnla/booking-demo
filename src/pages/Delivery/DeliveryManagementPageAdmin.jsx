@@ -36,7 +36,7 @@ const DeliveryManagementPageAdmin = () => {
             setData(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            console.error('Failed to fetch data:', error);
+            console.error('Không thể tải dữ liệu:', error);
         } finally {
             setLoading(false);
         }
@@ -48,7 +48,7 @@ const DeliveryManagementPageAdmin = () => {
             const response = await axiosInstance.get(apiEndPoints.DELIVERY_INFORMATION.GET_BY_ID(id));
             setSelectedDelivery(response.data);
         } catch (error) {
-            console.error('Failed to fetch data:', error);
+            console.error('Không thể tải dữ liệu:', error);
         } finally {
             setLoading(false);
         }
@@ -76,29 +76,28 @@ const DeliveryManagementPageAdmin = () => {
     const handleDelete = async (id) => {
         try {
             const response = await axiosInstance.delete(apiEndPoints.DELIVERY_INFORMATION.DELETE(id));
-            message.success('Delivery information deleted successfully!');
+            message.success('Xóa thông tin giao hàng thành công!');
             fetchData();
         } catch (error) {
-            console.error('Error deleting delivery information:', error);
-            message.error('An error occurred while deleting delivery information.');
+            console.error('Lỗi khi xóa thông tin giao hàng:', error);
+            message.error('Có lỗi xảy ra khi xóa thông tin giao hàng.');
         }
     };
 
     const handleUpdate = async (id, status) => {
         try {
             const response = await axiosInstance.put(apiEndPoints.DELIVERY_INFORMATION.EDIT_STATUS(id, status));
-            message.success('Delivery information updated successfully!');
+            message.success('Cập nhật thông tin giao hàng thành công!');
             fetchData();
         } catch (error) {
-            console.error('Error updating delivery information:', error);
-            message.error('An error occurred while updating delivery information.');
+            console.error('Lỗi khi cập nhật thông tin giao hàng:', error);
+            message.error('Có lỗi xảy ra khi cập nhật thông tin giao hàng.');
         }
     };
 
-
     const columns = [
         {
-            title: 'User Name',
+            title: 'Tên Người Dùng',
             dataIndex: 'userFullName',
             key: 'userFullName',
         },
@@ -110,87 +109,92 @@ const DeliveryManagementPageAdmin = () => {
             ellipsis: true,
         },
         {
-            title: 'Time',
+            title: 'Thời Gian',
             dataIndex: 'time',
             key: 'time',
             responsive: ['md'],
             ellipsis: true,
             render: (time) => {
-                const formattedTime = dayjs(time).utc().local().format('MM/DD HH:mm');
+                const formattedTime = dayjs(time).utc().local().format('DD/MM HH:mm');
                 return formattedTime;
             },
         },
         {
-            title: 'Location',
+            title: 'Địa Chỉ',
             dataIndex: 'location',
             key: 'location',
             responsive: ['md'],
             ellipsis: true,
         },
         {
-            title: 'Phone Number',
+            title: 'Số Điện Thoại',
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
             responsive: ['lg'],
         },
         {
-            title: 'Status',
+            title: 'Trạng Thái',
             dataIndex: 'status',
             key: 'status',
             responsive: ['sm'],
             render: (status) => {
                 let color;
+                let message;
                 switch (status) {
-                    case 'Cancelled':
+                    case 0:
                         color = 'red';
+                        message = 'Hủy';
                         break;
-                    case 'Standby':
+                    case 1:
                         color = 'orange';
+                        message = 'Đang Đợi';
                         break;
-                    case 'Delivering':
+                    case 2:
                         color = 'blue';
+                        message = 'Đang giao';
                         break;
-                    case 'Delivered':
+                    case 3:
                         color = 'green';
+                        message = 'Đã giao';
                         break;
                     default:
                         color = 'gray';
+                        message = 'Không xác định';
                 }
-                return <Tag color={color}>{status}</Tag>;
+                return <Tag color={color}>{message}</Tag>;
             },
         },
         {
-            title: 'Action',
+            title: 'Hành Động',
             key: 'action',
             render: (text, record) => (
                 <Space wrap>
-                    <Button type="link" onClick={() => showDetailModal(record)} >Detail</Button>
-                    {record.status === 'Standby' && (
+                    <Button type="link" onClick={() => showDetailModal(record)}>Chi Tiết</Button>
+                    {record.status === 'Đợi' && (
                         <Button
                             type="link"
                             onClick={() => handleUpdate(record.id, 2)}
                         >
-                            Assign
+                            Phân Công
                         </Button>
                     )}
-                    {record.status !== 'Delivered' && (
+                    {record.status !== 'Đã giao' && (
                         <Button
                             type="link"
                             onClick={() => handleUpdate(record.id, 0)}
                             danger
                         >
-                            Cancel
+                            Hủy
                         </Button>
                     )}
                 </Space>
             ),
-        }
-
+        },
     ];
 
     return (
         <Content style={{ padding: '20px' }}>
-            <Title level={3}>Delivery Management</Title>
+            <Title level={3}>Quản Lý Giao Hàng</Title>
             <div style={{
                 display: 'flex',
                 gap: '20px',
@@ -198,17 +202,17 @@ const DeliveryManagementPageAdmin = () => {
                 marginBottom: '20px',
             }}>
                 <Select
-                    placeholder="Filter by Status"
+                    placeholder="Lọc theo Trạng Thái"
                     style={{ width: '100%' }}
                     onChange={handleStatusChange}
                     value={statusFilter}
                     allowClear
                 >
-                    <Option value={undefined}>All</Option>
-                    <Option value={0}>Cancelled</Option>
-                    <Option value={1}>Standby</Option>
-                    <Option value={2}>Delivering</Option>
-                    <Option value={3}>Delivered</Option>
+                    <Option value={undefined}>Tất Cả</Option>
+                    <Option value={0}>Hủy</Option>
+                    <Option value={1}>Đang Đợi</Option>
+                    <Option value={2}>Đang giao</Option>
+                    <Option value={3}>Đã giao</Option>
                 </Select>
             </div>
 
@@ -230,38 +234,38 @@ const DeliveryManagementPageAdmin = () => {
             />
 
             <Modal
-                title="Delivery Details"
+                title="Chi Tiết Giao Hàng"
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 width={windowSize.width < 768 ? '100%' : '70vw'}
-                footer={[<Button key="close" onClick={handleModalClose}>Close</Button>]}>
+                footer={[<Button key="close" onClick={handleModalClose}>Đóng</Button>]}>
                 {loading ? (
                     <Spin />
                 ) : selectedDelivery && (
                     <div>
-                        <p><strong>User Name:</strong> {selectedDelivery.userFullName}</p>
+                        <p><strong>Tên Người Dùng:</strong> {selectedDelivery.userFullName}</p>
                         <p><strong>Email:</strong> {selectedDelivery.username}</p>
-                        <p><strong>Time:</strong> {dayjs(selectedDelivery.time).format('MM/DD HH:mm')}</p>
-                        <p><strong>Location:</strong> {selectedDelivery.location}</p>
-                        <p><strong>Phone Number:</strong> {selectedDelivery.phoneNumber}</p>
-                        <p><strong>Status:</strong> {selectedDelivery.status}</p>
-                        {selectedDelivery.message && <p><strong>Message:</strong> {selectedDelivery.message}</p>}
+                        <p><strong>Thời Gian:</strong> {dayjs(selectedDelivery.time).format('DD/MM HH:mm')}</p>
+                        <p><strong>Địa Chỉ:</strong> {selectedDelivery.location}</p>
+                        <p><strong>Số Điện Thoại:</strong> {selectedDelivery.phoneNumber}</p>
+                        <p><strong>Trạng Thái:</strong> {selectedDelivery.status}</p>
+                        {selectedDelivery.message && <p><strong>Lời Nhắn:</strong> {selectedDelivery.message}</p>}
 
-                            <div
-                                style={{
-                                    display: windowSize.width < 768 ? 'block' : 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    marginTop: '20px',
-                                }}
-                            >
-                                <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                    Foods:
-                                </Title>
-                                <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                    Total: {selectedDelivery.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
-                                </Title>
-                            </div>
+                        <div
+                            style={{
+                                display: windowSize.width < 768 ? 'block' : 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginTop: '20px',
+                            }}
+                        >
+                            <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                Danh Sách Món:
+                            </Title>
+                            <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                Tổng: {selectedDelivery.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
+                            </Title>
+                        </div>
 
                         <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
                             {selectedDelivery.preOrderItems.map(item => (
@@ -281,7 +285,7 @@ const DeliveryManagementPageAdmin = () => {
                                             description={
                                                 <>
                                                     <p>{item.price.toLocaleString()} VND</p>
-                                                    <p>Quantity: {item.quantity}</p>
+                                                    <p>Số Lượng: {item.quantity}</p>
                                                 </>
                                             }
                                         />
@@ -292,7 +296,6 @@ const DeliveryManagementPageAdmin = () => {
                     </div>
                 )}
             </Modal>
-
         </Content>
     );
 };

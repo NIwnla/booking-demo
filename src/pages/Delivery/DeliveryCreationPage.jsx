@@ -8,6 +8,8 @@ import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
 import './DeliveryCreationPage.css';
 import FoodDeliveryChosingSection from './FoodDeliveryChosingSection';
+import FoodDeliveryChosingSectionMobile from './FoodDeliveryChosingSectionMobile';
+import { useWindowSize } from '../../helpers/useWindowSize';
 
 const { Title, Text } = Typography;
 
@@ -17,11 +19,10 @@ const DeliveryCreationPage = () => {
     const [isFetching, setIsFetching] = useState(false);
     const { message } = App.useApp();
 
+    const windowSize = useWindowSize();
     const navigate = useNavigate();
 
     const [preorderedFoods, setPreorderedFoods] = useState([]);
-
-
 
     const onFinish = async () => {
         const values = await form.validateFields(); // Validate and get form values
@@ -41,12 +42,11 @@ const DeliveryCreationPage = () => {
             message: values.message || undefined,
             food: preorder,
         };
-        console.log('Payload for API:', payload);
 
         setIsFetching(true);
         try {
             const response = await axiosInstance.post(apiEndPoints.DELIVERY_INFORMATION.CREATE, payload);
-            message.success('Delivery created successfully');
+            message.success('Tạo đơn giao hàng thành công');
             navigate(routeNames.index);
         } catch (error) {
             message.error(error.response.data);
@@ -57,22 +57,7 @@ const DeliveryCreationPage = () => {
 
     const handlePreorder = (preorders) => {
         setPreorderedFoods(preorders);
-        console.log('Preordered foods:', preorderedFoods.length);
-
     };
-    const disabledDateTime = () => {
-        const now = dayjs();
-        return {
-            disabledHours: () => Array.from({ length: 24 }, (_, i) => i).filter(hour => hour < now.hour()),
-            disabledMinutes: (selectedHour) => {
-                if (selectedHour === now.hour()) {
-                    return Array.from({ length: 60 }, (_, i) => i).filter(minute => minute < now.minute());
-                }
-                return [];
-            },
-        };
-    };
-
     const renderForm = () => (
         <>
             <Title level={3} className="form-title">
@@ -82,39 +67,58 @@ const DeliveryCreationPage = () => {
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}
-                initialValues={{ time: dayjs().add(30, 'minutes') }}
             >
                 <Form.Item
                     name="fullname"
-                    label="Full Name"
-                    rules={[{ required: true, message: 'Làm ơn nhập tên đầy đủ của bạn' }]}
+                    label="Họ và Tên"
+                    rules={[{ required: true, message: 'Vui lòng nhập họ và tên của bạn' }]}
                 >
-                    <Input placeholder="Tên đầy đủ" />
+                    <Input placeholder="Họ và tên" />
                 </Form.Item>
 
                 <Form.Item
                     name="time"
-                    label="Time"
+                    label="Thời gian"
                     rules={[{ required: false, message: 'Vui lòng nhập thời gian giao hàng' }]}
+                    extra="Nếu không chọn, chúng tôi sẽ mặc định giao hàng ngay khi có thể."
                 >
                     <TimePicker
-                        placeholder="Thời gian"
+                        placeholder="ASAP"
                         format="HH:mm"
-                        disabledTime={disabledDateTime}
+                        showNow={false}
+                        disabledTime={() => {
+                            const now = dayjs();
+                            const currentHour = now.hour();
+                            const currentMinute = now.minute();
+                            const minutesOffset = (currentMinute + 30) % 60; // Minutes 30 minutes from now
+                            const hoursOffset = (currentMinute + 30) >= 60 ? currentHour + 1 : currentHour;
+
+                            return {
+                                disabledHours: () =>
+                                    Array.from({ length: 24 }, (_, hour) => hour).filter(hour => hour < hoursOffset),
+                                disabledMinutes: (selectedHour) => {
+                                    if (selectedHour === hoursOffset) {
+                                        return Array.from({ length: 60 }, (_, minute) => minute).filter(minute => minute < minutesOffset);
+                                    }
+                                    return [];
+                                },
+                            };
+                        }}
                     />
                 </Form.Item>
 
+
                 <Form.Item
                     name="location"
-                    label="Location"
-                    rules={[{ required: true, message: 'Làm ơn nhập địa chỉ giao hàng' }]}
+                    label="Địa chỉ"
+                    rules={[{ required: true, message: 'Vui lòng nhập địa chỉ giao hàng' }]}
                 >
                     <Input placeholder="Địa chỉ giao hàng" />
                 </Form.Item>
 
                 <Form.Item
                     name="phoneNumber"
-                    label="Phone Number"
+                    label="Số điện thoại"
                     rules={[
                         { required: true, message: 'Vui lòng nhập số điện thoại của bạn' },
                         { pattern: /^\d{9,10}$/, message: 'Số điện thoại phải có từ 9 đến 10 chữ số' }
@@ -123,16 +127,10 @@ const DeliveryCreationPage = () => {
                     <Input placeholder="Số điện thoại" />
                 </Form.Item>
 
-                <Form.Item name="message" label="Message">
-                    <Input.TextArea placeholder="Thông tin chúng tôi cần lưu ý" className="text-area" />
+                <Form.Item name="message" label="Lời nhắn">
+                    <Input.TextArea placeholder="Thông tin cần lưu ý" className="text-area" />
                 </Form.Item>
             </Form>
-            <Space direction="vertical" className="fanpage-message">
-                <Text type="danger">
-                    Đối với đơn hàng lớn vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;
-                    <a href="https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d">Fanpage</a>
-                </Text>
-            </Space>
         </>
     );
 
@@ -144,18 +142,27 @@ const DeliveryCreationPage = () => {
                         items={[
                             {
                                 key: '1',
-                                label: 'Toggle Form',
+                                label: 'Mở/Đóng biểu mẫu',
                                 children: renderForm(),
                             },
                         ]}
                     />
                 </div>
             </Col>
-
+                        
             <Col xs={24}>
-                <FoodDeliveryChosingSection onPreorder={handlePreorder} onFinish={onFinish} />
+                {windowSize.width > 768 ? (
+                    <FoodDeliveryChosingSection
+                        onPreorder={handlePreorder}
+                        onFinish={onFinish}
+                    />
+                ) : (
+                    <FoodDeliveryChosingSectionMobile
+                        onPreorder={handlePreorder}
+                        onFinish={onFinish}
+                    />
+                )}
             </Col>
-
         </Row>
     );
 };

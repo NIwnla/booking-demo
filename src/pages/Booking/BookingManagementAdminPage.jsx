@@ -118,7 +118,7 @@ const BookingManagementAdminPage = () => {
 
     const columns = [
         {
-            title: 'User Name',
+            title: 'Tên người dùng',
             dataIndex: 'userFullName',
             key: 'userFullName',
         },
@@ -129,56 +129,56 @@ const BookingManagementAdminPage = () => {
             responsive: ['lg'],
         },
         {
-            title: 'Branch',
+            title: 'Chi nhánh',
             dataIndex: 'branchName',
             key: 'branchName',
             responsive: ['md'],
         },
         {
-            title: 'Time',
+            title: 'Thời gian',
             dataIndex: 'time',
             key: 'time',
             render: (text) => getFormattedTime(text),
         },
         {
-            title: 'People',
+            title: 'Số người lớn',
             dataIndex: 'numberOfPeople',
             key: 'numberOfPeople',
             responsive: ['lg'],
         },
         {
-            title: 'Children',
+            title: 'Số trẻ em',
             dataIndex: 'numberOfChildren',
             key: 'numberOfChildren',
             responsive: ['xl'],
         },
         {
-            title: 'Phone Number',
+            title: 'Số điện thoại',
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
             responsive: ['lg'],
         },
         {
-            title: 'Status',
+            title: 'Trạng thái',
             dataIndex: 'bookingStatus',
             key: 'bookingStatus',
             render: (status) => (
                 <Tag color={statusColors[status] || 'default'}>
-                    {status === 0 ? 'Canceled' : status === 1 ? 'Booking' : 'Confirmed'}
+                    {status === 0 ? 'Đã hủy' : status === 1 ? 'Đang đặt' : 'Đã xác nhận'}
                 </Tag>
             ),
             responsive: ['sm'],
         },
         {
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             render: (text, record) => (
                 <Space wrap>
-                    <Button type="link" onClick={() => showDetailModal(record)}>Detail</Button>
+                    <Button type="link" onClick={() => showDetailModal(record)}>Chi tiết</Button>
                     {record.bookingStatus === 1 && (
                         <>
-                            <Button type="primary" onClick={() => handleAccept(record.id)}>Accept</Button>
-                            <Button danger onClick={() => handleCancel(record.id)}>Cancel</Button>
+                            <Button type="primary" onClick={() => handleAccept(record.id)}>Chấp nhận</Button>
+                            <Button danger onClick={() => handleCancel(record.id)}>Hủy</Button>
                         </>
                     )}
                 </Space>
@@ -188,24 +188,24 @@ const BookingManagementAdminPage = () => {
 
     return (
         <Content style={{ padding: '20px' }}>
-            <Title level={3}>Booking Information</Title>
+            <Title level={3}>Thông tin đặt chỗ</Title>
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
                 <Search
-                    placeholder="Search by username, phone number, email"
+                    placeholder="Tìm kiếm theo tên, số điện thoại, email"
                     onSearch={handleSearch}
                     style={{ width: '100%' }}
                 />
                 <Select
-                    placeholder="Filter by Status"
+                    placeholder="Lọc theo trạng thái"
                     style={{ width: '100%' }}
                     onChange={handleStatusChange}
                     value={statusFilter}
                     allowClear
                 >
-                    <Option value={-1}>All</Option>
-                    <Option value={0}>Canceled</Option>
-                    <Option value={1}>Booking</Option>
-                    <Option value={2}>Confirmed</Option>
+                    <Option value={-1}>Tất cả</Option>
+                    <Option value={0}>Đã hủy</Option>
+                    <Option value={1}>Đang đặt</Option>
+                    <Option value={2}>Đã xác nhận</Option>
                 </Select>
             </div>
 
@@ -227,25 +227,25 @@ const BookingManagementAdminPage = () => {
             />
 
             <Modal
-                title="Booking Details"
+                title="Chi tiết đặt chỗ"
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 width={windowSize.width < 768 ? '100%' : '70vw'}
-                footer={[<Button key="close" onClick={handleModalClose}>Close</Button>]}
+                footer={[<Button key="close" onClick={handleModalClose}>Đóng</Button>]}
             >
                 {modalLoading ? (
                     <Spin />
                 ) : selectedBooking && (
                     <div>
-                        <p><strong>User Name:</strong> {selectedBooking.userFullName}</p>
+                        <p><strong>Tên người dùng:</strong> {selectedBooking.userFullName}</p>
                         <p><strong>Email:</strong> {selectedBooking.email}</p>
-                        <p><strong>Branch:</strong> {selectedBooking.branchName}</p>
-                        <p><strong>Time:</strong> {dayjs(selectedBooking.time).format('MM/DD HH:mm')}</p>
-                        <p><strong>Number of People:</strong> {selectedBooking.numberOfPeople}</p>
-                        {selectedBooking.numberOfChildren && <p><strong>Number of Children:</strong> {selectedBooking.numberOfChildren}</p>}
-                        <p><strong>Phone Number:</strong> {selectedBooking.phoneNumber}</p>
-                        <p><strong>Status:</strong> {selectedBooking.bookingStatus === 0 ? 'Canceled' : selectedBooking.bookingStatus === 1 ? 'Booking' : 'Confirmed'}</p>
-                        {selectedBooking.message && <p><strong>Message:</strong> {selectedBooking.message}</p>}
+                        <p><strong>Chi nhánh:</strong> {selectedBooking.branchName}</p>
+                        <p><strong>Thời gian:</strong> {dayjs(selectedBooking.time).format('MM/DD HH:mm')}</p>
+                        <p><strong>Số người lớn:</strong> {selectedBooking.numberOfPeople}</p>
+                        {selectedBooking.numberOfChildren && <p><strong>Số trẻ em:</strong> {selectedBooking.numberOfChildren}</p>}
+                        <p><strong>Số điện thoại:</strong> {selectedBooking.phoneNumber}</p>
+                        <p><strong>Trạng thái:</strong> {selectedBooking.bookingStatus === 0 ? 'Đã hủy' : selectedBooking.bookingStatus === 1 ? 'Đang đặt' : 'Đã xác nhận'}</p>
+                        {selectedBooking.message && <p><strong>Tin nhắn:</strong> {selectedBooking.message}</p>}
 
                         {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
                             <>
@@ -258,10 +258,10 @@ const BookingManagementAdminPage = () => {
                                     }}
                                 >
                                     <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                        Pre-Order Items
+                                        Món ăn đã đặt trước
                                     </Title>
                                     <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                        Total: {selectedBooking.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
+                                        Tổng cộng: {selectedBooking.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
                                     </Title>
                                 </div>
 
@@ -283,7 +283,7 @@ const BookingManagementAdminPage = () => {
                                                     description={
                                                         <>
                                                             <p>{item.price.toLocaleString()} VND</p>
-                                                            <p>Quantity: {item.quantity}</p>
+                                                            <p>Số lượng: {item.quantity}</p>
                                                         </>
                                                     }
                                                 />
