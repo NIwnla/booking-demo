@@ -1,7 +1,8 @@
-import { App, Button, Layout, Modal, Pagination, Select, Space, Table, Typography, message } from 'antd';
+import { App, Button, Layout, Modal, Pagination, Select, Space, Table, Tag, Typography, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
+import dayjs from 'dayjs';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -79,6 +80,17 @@ const DeliveryManagementPageAdmin = () => {
         }
     };
 
+    const handleUpdate = async (id, status) => {
+        try {
+            const response = await axiosInstance.put(apiEndPoints.DELIVERY_INFORMATION.EDIT_STATUS(id, status));
+            message.success('Delivery information updated successfully!');
+            fetchData();
+        } catch (error) {
+            console.error('Error updating delivery information:', error);
+            message.error('An error occurred while updating delivery information.');
+        }
+    };
+
 
     const columns = [
         {
@@ -92,6 +104,17 @@ const DeliveryManagementPageAdmin = () => {
             key: 'username',
             responsive: ['lg'],
             ellipsis: true,
+        },
+        {
+            title: 'Time',
+            dataIndex: 'time',
+            key: 'time',
+            responsive: ['md'],
+            ellipsis: true,
+            render: (time) => {
+                const formattedTime = dayjs(time).utc().local().format('MM/DD HH:mm');
+                return formattedTime;
+            },
         },
         {
             title: 'Location',
@@ -108,23 +131,53 @@ const DeliveryManagementPageAdmin = () => {
         },
         {
             title: 'Status',
-            dataIndex: 'bookingStatus',
-            key: 'bookingStatus',
+            dataIndex: 'status',
+            key: 'status',
             responsive: ['sm'],
+            render: (status) => {
+                let color;
+                switch (status) {
+                    case 'Cancelled':
+                        color = 'red';
+                        break;
+                    case 'Standby':
+                        color = 'orange';
+                        break;
+                    case 'Delivering':
+                        color = 'blue';
+                        break;
+                    case 'Delivered':
+                        color = 'green';
+                        break;
+                    default:
+                        color = 'gray';
+                }
+                return <Tag color={color}>{status}</Tag>;
+            },
         },
         {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
                 <Space wrap>
-                    <Button type="link" onClick={() => showDetailModal(record)}>Detail</Button>
-                    <Button
-                        type="link"
-                        danger
-                        onClick={() => handleDelete(record.id)}
-                    >
-                        Delete
-                    </Button>
+                    <Button type="link" onClick={() => showDetailModal(record)} >Detail</Button>
+                    {record.status === 'Standby' && (
+                        <Button
+                            type="link"
+                            onClick={() => handleUpdate(record.id, 2)}
+                        >
+                            Assign
+                        </Button>
+                    )}
+                    {record.status !== 'Delivered' && (
+                        <Button
+                            type="link"
+                            onClick={() => handleUpdate(record.id, 0)}
+                            danger
+                        >
+                            Cancel
+                        </Button>
+                    )}
                 </Space>
             ),
         }
@@ -180,9 +233,10 @@ const DeliveryManagementPageAdmin = () => {
                     <div>
                         <p><strong>User Name:</strong> {selectedDelivery.userFullName}</p>
                         <p><strong>Email:</strong> {selectedDelivery.username}</p>
+                        <p><strong>Time:</strong> {selectedDelivery.time}</p>
                         <p><strong>Location:</strong> {selectedDelivery.location}</p>
                         <p><strong>Phone Number:</strong> {selectedDelivery.phoneNumber}</p>
-                        <p><strong>Status:</strong> {selectedDelivery.bookingStatus}</p>
+                        <p><strong>Status:</strong> {selectedDelivery.status}</p>
                         <p><strong>Food:</strong> {selectedDelivery.food}</p>
                         {selectedDelivery.message && <p><strong>Message:</strong> {selectedDelivery.message}</p>}
                     </div>

@@ -3,7 +3,6 @@ import {
     App,
     Button,
     Card,
-    Checkbox,
     Col,
     Collapse,
     Empty,
@@ -24,7 +23,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 
-const FoodPreorderSection = ({ onPreorder, onFinish }) => {
+const FoodDeliveryChosingSection = ({ onPreorder, onFinish }) => {
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -33,15 +32,14 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
     const [totalCount, setTotalCount] = useState(0);
     const [search, setSearch] = useState('');
     const [preorders, setPreorders] = useState({});
-    const [havePendingBooking, setHavePendingBooking] = useState(false);
+    const [havePendingDelivery, setHavePendingDelivery] = useState(false);
     const { message } = App.useApp();
-    const [isConfirmed, setIsConfirmed] = useState(false);
 
     useEffect(() => {
         const checkPendingDelivery = async () => {
             try {
-                const response = await axiosInstance.get(apiEndPoints.BOOKING_INFORMATION.CHECK_PENDING(userId));
-                setHavePendingBooking(response.data);
+                const response = await axiosInstance.get(apiEndPoints.DELIVERY_INFORMATION.CHECK_PENDING(userId));
+                setHavePendingDelivery(response.data);
             } catch (error) {
                 console.error('Failed to check pending delivery:', error);
             }
@@ -57,10 +55,6 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
     useEffect(() => {
         onPreorder(preorders);
     }, [preorders]);
-
-    const handleCheckboxChange = (e) => {
-        setIsConfirmed(e.target.checked);
-    };
 
     const fetchFoods = async () => {
         setLoading(true);
@@ -119,7 +113,7 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                             borderRadius: '8px',
                         }}
                     >
-                        Chọn món để đặt trước
+                        Chọn món để giao hàng
                     </Typography.Title>
                     <Input.Search
                         placeholder="Search food"
@@ -333,56 +327,49 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                             }}
                         />
                         {Object.keys(preorders).length > 0 && (
+                            <>
+                                <div
+                                    style={{
+                                        marginTop: 'auto',
+                                        borderTop: '1px solid #d9d9d9',
+                                        paddingTop: '16px',
+                                    }}
+                                >
+                                    <Typography.Text strong style={{ fontSize: '16px' }}>
+                                        Tổng Giá:{" "}
+                                        {Object.keys(preorders)
+                                            .reduce((total, key) => {
+                                                const food = foods.find((item) => item.id === key) || {};
+                                                const quantity = preorders[key]?.quantity || 0;
+                                                return total + quantity * (food.basePrice || 0);
+                                            }, 0)
+                                            .toLocaleString()}đ
+                                    </Typography.Text>
+                                </div>
+                                <div
+                                    style={{
+                                        marginTop: '16px',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <Tooltip title={havePendingDelivery ? 'Quý khách hiện đang có đơn hàng khác, xin vui lòng xác nhận là đơn hàng trước được nhận trước khi tạo thêm đơn hàng mới' : ''}>
+                                        <Button
+                                            type="primary"
+                                            size="large"
+                                            onClick={onFinish}
+                                            disabled={havePendingDelivery}
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '8px',
+                                            }}
+                                        >
+                                            Hoàn Thành
+                                        </Button>
+                                    </Tooltip>
+                                </div>
+                            </>
+                        )}
 
-                            <div
-                                style={{
-                                    marginTop: 'auto',
-                                    borderTop: '1px solid #d9d9d9',
-                                    paddingTop: '16px',
-                                }}
-                            >
-                                <Typography.Text strong style={{ fontSize: '16px' }}>
-                                    Tổng Giá:{" "}
-                                    {Object.keys(preorders)
-                                        .reduce((total, key) => {
-                                            const food = foods.find((item) => item.id === key) || {};
-                                            const quantity = preorders[key]?.quantity || 0;
-                                            return total + quantity * (food.basePrice || 0);
-                                        }, 0)
-                                        .toLocaleString()}đ
-                                </Typography.Text>
-                            </div>)}
-                        <div
-                            style={{
-                                marginTop: '16px',
-                                textAlign: 'center',
-                            }}
-                        >
-                            {isConfirmed && (
-                                <Tooltip title={havePendingBooking ? 'Quý khách hiện đang có yêu cầu đặt chỗ vẫn chưa được xử lý, xin vui lòng xác nhận lại trước khi đặt chỗ' : ''}>
-                                    <Button
-                                        type="primary"
-                                        size="large"
-                                        onClick={onFinish}
-                                        disabled={havePendingBooking}
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '8px',
-                                            marginBottom: '16px',
-                                        }}
-                                    >
-                                        Hoàn Thành Đặt Chỗ
-                                    </Button>
-                                </Tooltip>)}
-
-
-                            <Checkbox onChange={handleCheckboxChange}>Tôi xác nhận là sẽ đến đúng giờ.</Checkbox>
-
-                            <Typography >
-                                Quý khách vui lòng đến đúng giờ, nhà sẽ chỉ giữ bàn muộn hơn 10 phút so với giờ đặt bàn nhé!
-                            </Typography>
-
-                        </div>
                     </div>
                 </Col>
 
@@ -391,4 +378,4 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
     );
 };
 
-export default FoodPreorderSection;
+export default FoodDeliveryChosingSection;

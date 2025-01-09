@@ -1,5 +1,6 @@
-import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin } from "antd";
+import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin, Typography } from "antd";
 import React, { useEffect, useState } from "react";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CreateFoodModal from "../../components/modals/food/CreateFoodModal";
 import EditFoodModal from "../../components/modals/food/EditFoodModal";
@@ -12,7 +13,7 @@ const FoodManagementPageAdmin = () => {
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(6);
+    const [pageSize, setPageSize] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
     const [search, setSearch] = useState("");
     const [selectedFood, setSelectedFood] = useState(null);
@@ -99,7 +100,11 @@ const FoodManagementPageAdmin = () => {
                                     </div>
                                 }
                             >
-                                <Card.Meta title={food.name} description={`Price: ${food.basePrice}`} />
+                                <Card.Meta title={food.name} description={food.description || "No description available"} />
+                                <Typography style={{ marginTop: "2vh", display: "flex", alignItems: "center" }}>
+                                    <ShoppingCartOutlined />
+                                    <strong>{food.basePrice}đ</strong>
+                                </Typography>
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
                                     <Space wrap>
                                         <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleOptions(food.id)}>

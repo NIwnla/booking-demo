@@ -36,6 +36,10 @@ const GuestLayout = ({ children }) => {
             key: '2',
             label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
         },
+        {
+            key: '3',
+            label: <Link to={routeNames.deliveryInformation.create}>Delivery</Link>,
+        }
     ];
 
     const showDrawer = () => {

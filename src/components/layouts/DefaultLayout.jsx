@@ -44,14 +44,10 @@ const DefaultLayout = ({ children }) => {
 
     return (
         <Layout style={styles.layout}>
-            {/* Header */}
             <Header style={styles.header}>
-                {/* Restaurant Name as Link */}
                 <Link to={routeNames.index} style={styles.headerTitle}>
                     Nollowa Chicken
                 </Link>
-
-                {/* Hamburger Button for Small Screens */}
                 <Button
                     className="menu-toggle-button"
                     type="primary"
@@ -60,7 +56,6 @@ const DefaultLayout = ({ children }) => {
                     style={styles.menuToggleButton}
                 />
 
-                {/* Right Menu Items */}
                 <Menu
                     className='desktop-menu'
                     theme="light"
@@ -70,7 +65,6 @@ const DefaultLayout = ({ children }) => {
                 />
             </Header>
 
-            {/* Drawer for Small Screens */}
             <Drawer
                 title={<Text style={{ color: '#ff0000' }}>My Restaurant</Text>}
                 placement="top"
@@ -88,14 +82,12 @@ const DefaultLayout = ({ children }) => {
                 />
             </Drawer>
 
-            {/* Content */}
             <Content className="content-container" style={styles.content}>
                 <div style={styles.innerContent}>
                     {children}
                 </div>
             </Content>
 
-            {/* Footer */}
             <Footer
                 // @ts-ignore
                 style={styles.footer}>

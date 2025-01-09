@@ -15,6 +15,7 @@ export const apiEndPoints = {
         CREATE: '/booking-informations',
         EDIT_STATUS: (id, status) => `/booking-informations/${id}/${status}`,
         EDIT: (id) => `/booking-informations/${id}`,
+        CHECK_PENDING: (id) => `/booking-informations/${id}/pending`,
     },
     BRANCH: {
         GET_ALL: (includeDeleted) => `/branches/${includeDeleted ? 'true' : 'false'}`,
@@ -43,9 +44,9 @@ export const apiEndPoints = {
         EDIT: (id) => `/food-options/${id}`,
         DELETE: (id) => `/food-options/${id}`,
     },
-    RECRUIT_INFORMATION:{
+    RECRUIT_INFORMATION: {
         GET_ALL: '/recruit-informations',
-        CREATE:'/recruit-informations',
+        CREATE: '/recruit-informations',
         GET_BY_ID: (id) => `/recruit-informations/${id}`,
         DELETE: (id) => `/recruit-informations/${id}`,
     },
@@ -60,5 +61,8 @@ export const apiEndPoints = {
         GET_BY_ID: (id) => `/delivery-informations/${id}`,
         CREATE: '/delivery-informations',
         DELETE: (id) => `/delivery-informations/${id}`,
+        EDIT_STATUS: (id, status) => `/delivery-informations/${id}/${status}`,
+        CHECK_PENDING: (id) => `/delivery-informations/${id}/pending`,
+        GET_CURRENT: '/delivery-informations/current',
     },
 }

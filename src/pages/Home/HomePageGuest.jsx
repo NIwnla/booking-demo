@@ -1,4 +1,4 @@
-import { App, Button, Card, Col, Image, Layout, Row, Spin } from "antd";
+import { App, Button, Card, Col, Collapse, Image, Layout, Row, Spin } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { useMediaQuery } from 'react-responsive'; // For media queries
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const { Content } = Layout;
 const HomePageGuest = () => {
     const { userId } = useContext(AuthContext);
     const [bookingInfo, setBookingInfo] = useState(null);
+    const [deliveryInfo, setDeliveryInfo] = useState(null);
     const [loading, setLoading] = useState(false);
     const [canceling, setCanceling] = useState(false);
     const navigate = useNavigate();
@@ -19,6 +20,24 @@ const HomePageGuest = () => {
 
     // Using media query to detect small screens
     const isSmallScreen = useMediaQuery({ query: '(max-width: 576px)' });
+
+    useEffect(() => {
+        const fetchDeliveryInfo = async () => {
+            if (userId) {
+                setLoading(true);
+                try {
+                    const response = await axiosInstance.get(apiEndPoints.DELIVERY_INFORMATION.GET_CURRENT);
+                    setDeliveryInfo(response.data);
+                } catch (error) {
+                    console.error("Failed to fetch delivery information:", error);
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchDeliveryInfo();
+    }, [userId]);
 
     useEffect(() => {
         const fetchBookingInfo = async () => {
@@ -60,7 +79,59 @@ const HomePageGuest = () => {
         }
     };
 
-    return (
+    const renderDeliveryInformation = () => (
+        <Content style={{ padding: '0px' }}>
+            <div>
+                <Spin spinning={loading}>
+                    {deliveryInfo ? (
+                        <Card
+                            title="Current Delivery Information"
+                        >
+                            <p><strong>Date:</strong> {new Date(deliveryInfo.time).toLocaleDateString()}</p>
+                            <p><strong>Time:</strong> {new Date(deliveryInfo.time).toLocaleTimeString()}</p>
+                            <p><strong>Location:</strong> {deliveryInfo.location}</p>
+                            <p><strong>Phone Number:</strong> {deliveryInfo.phoneNumber}</p>
+                            <p><strong>Status:</strong> {deliveryInfo.status}</p>
+                            {deliveryInfo.message && (<p><strong>Message:</strong> {deliveryInfo.message}</p>)}
+                            {deliveryInfo.preOrderItems && deliveryInfo.preOrderItems.length > 0 && (
+                                <>
+                                    <p><strong>Preordered Items:</strong></p>
+                                    <div className="preorder-items-container">
+                                        <Row gutter={[16, 16]}>
+                                            {deliveryInfo.preOrderItems.map((item, index) => (
+                                                <Col key={index} xs={24} sm={12} md={8} lg={6} xl={4}>
+                                                    <div className="preorder-item">
+                                                        <Image
+                                                            src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}  // Ensure the correct path for images
+                                                            alt={item.name}
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '15vh',
+                                                                objectFit: 'cover',
+                                                                borderRadius: '8px',
+                                                                marginBottom: '10px',
+                                                            }}
+                                                        />
+                                                        <p><strong>Name:</strong> {item.name}</p>
+                                                        <p><strong>Quantity:</strong> {item.quantity}</p>
+                                                        <p><strong>Price:</strong> {item.price}</p>
+                                                    </div>
+                                                </Col>
+                                            ))}
+                                        </Row>
+                                    </div>
+                                </>
+                            )}
+                        </Card>
+                    ) : (
+                        !loading && <Card title="No current delivery information available" />
+                    )}
+                </Spin>
+            </div>
+        </Content>
+    );
+
+    const renderBookingInformation = () => (
         <Content style={{ padding: '0px' }}>
             <div>
                 <Spin spinning={loading || canceling}>
@@ -139,7 +210,26 @@ const HomePageGuest = () => {
                 </Spin>
             </div>
         </Content>
+    )
+
+    return (
+        <Collapse
+            items={[
+                {
+                    key: '1',
+                    label: 'Toggle Booking Information',
+                    children: renderBookingInformation(),
+                },
+                {
+                    key: '2',
+                    label: 'Toggle Delivery Information',
+                    children: renderDeliveryInformation(),
+                },
+            ]}
+        />
     );
+
+    ;
 };
 
 export default HomePageGuest;

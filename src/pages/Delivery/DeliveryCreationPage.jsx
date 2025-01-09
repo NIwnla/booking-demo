@@ -1,43 +1,46 @@
-import { PlusCircleFilled } from '@ant-design/icons';
-import { App, Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, TimePicker, Typography } from 'antd';
+import { App, Col, Collapse, Form, Input, Row, Space, TimePicker, Typography } from 'antd';
+import dayjs from 'dayjs';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
-import FoodPreorderSection from '../Booking/FoodPreOrderSection';
 import './DeliveryCreationPage.css';
+import FoodDeliveryChosingSection from './FoodDeliveryChosingSection';
 
 const { Title, Text } = Typography;
 
 const DeliveryCreationPage = () => {
-    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [form] = Form.useForm();
     const { userId } = useContext(AuthContext);
     const [isFetching, setIsFetching] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [activeKey, setActiveKey] = useState(null);
     const { message } = App.useApp();
 
     const navigate = useNavigate();
 
     const [preorderedFoods, setPreorderedFoods] = useState([]);
 
-    const onFinish = async (values) => {
 
-        const preorder = preorderedFoods && preorderedFoods.length > 0
-            ? preorderedFoods.map(food => `[${food.id}${food.isOption ? ' - option' : ''}: ${food.quantity}]`).join(', ') : undefined;
+
+    const onFinish = async () => {
+        const values = await form.validateFields(); // Validate and get form values
+        const preorder =
+            preorderedFoods && Object.keys(preorderedFoods).length > 0
+                ? Object.entries(preorderedFoods)
+                    .map(([foodId, { quantity }]) => `[${foodId}: ${quantity}]`)
+                    .join(', ')
+                : undefined;
 
         const payload = {
             userId,
-            time: values.time || undefined,
+            time: values.time ? values.time.format("YYYY-MM-DDTHH:mm:ss.sssZ") : undefined,
             userFullName: values.fullname,
             location: values.location,
             phoneNumber: values.phoneNumber,
             message: values.message || undefined,
-            food : preorder,
+            food: preorder,
         };
-
         console.log('Payload for API:', payload);
 
         setIsFetching(true);
@@ -52,40 +55,22 @@ const DeliveryCreationPage = () => {
         }
     };
 
-    const handleCheckboxChange = (e) => {
-        setIsConfirmed(e.target.checked);
+    const handlePreorder = (preorders) => {
+        setPreorderedFoods(preorders);
+        console.log('Preordered foods:', preorderedFoods.length);
+
     };
-
-    const handlePreorder = (food, quantity) => {
-        setPreorderedFoods((prev) => {
-            const existingFoodIndex = prev.findIndex(item => item.imagePath === food.imagePath);
-
-            if (existingFoodIndex !== -1) {
-                const updatedFoods = [...prev];
-                updatedFoods[existingFoodIndex].quantity = quantity;
-                return updatedFoods;
-            } else {
-                return [...prev, { ...food, quantity }];
-            }
-        });
-    };
-
-    const handleRemove = (indexToRemove) => {
-        setPreorderedFoods((prev) =>
-            prev.filter((_, index) => index !== indexToRemove)
-        );
-    };
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
-
-    const handleCollapseChange = (key) => {
-        setActiveKey(key);
+    const disabledDateTime = () => {
+        const now = dayjs();
+        return {
+            disabledHours: () => Array.from({ length: 24 }, (_, i) => i).filter(hour => hour < now.hour()),
+            disabledMinutes: (selectedHour) => {
+                if (selectedHour === now.hour()) {
+                    return Array.from({ length: 60 }, (_, i) => i).filter(minute => minute < now.minute());
+                }
+                return [];
+            },
+        };
     };
 
     const renderForm = () => (
@@ -93,7 +78,12 @@ const DeliveryCreationPage = () => {
             <Title level={3} className="form-title">
                 Thông tin giao hàng
             </Title>
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form
+                form={form}
+                layout="vertical"
+                onFinish={onFinish}
+                initialValues={{ time: dayjs().add(30, 'minutes') }}
+            >
                 <Form.Item
                     name="fullname"
                     label="Full Name"
@@ -107,10 +97,11 @@ const DeliveryCreationPage = () => {
                     label="Time"
                     rules={[{ required: false, message: 'Vui lòng nhập thời gian giao hàng' }]}
                 >
-                    <TimePicker placeholder="Thời gian giao hàng" style={{width:"250px"}} />
-                <Text type="danger" style={{ marginLeft: '8px' }}>
-                    Để trống nếu quý khách muốn giao sớm nhất có thể
-                </Text>
+                    <TimePicker
+                        placeholder="Thời gian"
+                        format="HH:mm"
+                        disabledTime={disabledDateTime}
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -133,21 +124,7 @@ const DeliveryCreationPage = () => {
                 </Form.Item>
 
                 <Form.Item name="message" label="Message">
-                    <Input.TextArea placeholder="Message (Optional)" className="text-area" />
-                </Form.Item>
-
-                <Text type="warning">
-                    Quý khách vui lòng có mặt tại địa chỉ giao hàng đúng giờ!
-                </Text>
-
-                <Form.Item>
-                    <Checkbox onChange={handleCheckboxChange}>Tôi xác nhận là sẽ có mặt đúng giờ.</Checkbox>
-                </Form.Item>
-
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" block disabled={!isConfirmed} loading={isFetching}>
-                        Create Delivery
-                    </Button>
+                    <Input.TextArea placeholder="Thông tin chúng tôi cần lưu ý" className="text-area" />
                 </Form.Item>
             </Form>
             <Space direction="vertical" className="fanpage-message">
@@ -164,12 +141,10 @@ const DeliveryCreationPage = () => {
             <Col xs={24}>
                 <div className="form-container">
                     <Collapse
-                        activeKey={activeKey}
-                        onChange={handleCollapseChange}
                         items={[
                             {
                                 key: '1',
-                                label: activeKey ? 'Hide Form' : 'Show Form',
+                                label: 'Toggle Form',
                                 children: renderForm(),
                             },
                         ]}
@@ -177,102 +152,10 @@ const DeliveryCreationPage = () => {
                 </div>
             </Col>
 
-            <Col xs={24} className="preorder-food-section">
-                <div className="preorder-section">
-                    <Title level={4} className="preorder-title">Đồ ăn đặt trước</Title>
-                    <div className="scrollable-content">
-                        <Row>
-                            {preorderedFoods.length > 0 ? (
-                                preorderedFoods.map((food, index) => (
-                                    <Col xs={12} xl={8} key={index}>
-                                        <Card key={index} className="food-card">
-                                            <Row align="middle" gutter={16}>
-                                                <Col span={8}>
-                                                    <Image
-                                                        src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
-                                                        alt={food.name}
-                                                        className="food-image"
-                                                    />
-                                                </Col>
-                                                <Col span={16}>
-                                                    <Space direction="vertical" size="small">
-                                                        <Text strong>{food.name}</Text>
-                                                        <Text>Quantity: {food.quantity}</Text>
-                                                        <Text type="secondary">{food.isOption ? 'Option' : 'Main Dish'}</Text>
-                                                        <Button
-                                                            type="link"
-                                                            onClick={() => handleRemove(index)}
-                                                            className="remove-button"
-                                                        >
-                                                            Remove
-                                                        </Button>
-                                                    </Space>
-                                                </Col>
-                                            </Row>
-                                        </Card>
-                                    </Col>
-                                ))
-                            ) : (
-                                <Text type="secondary">Chưa có đồ ăn được đặt trước.</Text>
-                            )}
-                        </Row>
-                    </div>
-                </div>
-            </Col>
-
             <Col xs={24}>
-                <FoodPreorderSection onPreorder={handlePreorder} />
+                <FoodDeliveryChosingSection onPreorder={handlePreorder} onFinish={onFinish} />
             </Col>
 
-            <Button
-                type="primary"
-                icon={<PlusCircleFilled />}
-                className="floating-button"
-                onClick={showModal}
-            >
-                Xem đồ ăn đặt trước
-            </Button>
-
-            <Modal
-                title="Preordered Food"
-                open={isModalVisible}
-                onCancel={handleCancel}
-                footer={null}
-            >
-                <div className="scrollable-content">
-                    {preorderedFoods.length > 0 ? (
-                        preorderedFoods.map((food, index) => (
-                            <Card key={index} className="food-card">
-                                <Row align="middle" style={{ width: '100%' }} gutter={16}>
-                                    <Col span={8}>
-                                        <Image
-                                            src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
-                                            alt={food.name}
-                                            className="food-image"
-                                        />
-                                    </Col>
-                                    <Col span={16}>
-                                        <Space direction="vertical" size="small">
-                                            <Text strong>{food.name}</Text>
-                                            <Text>Quantity: {food.quantity}</Text>
-                                            <Text type="secondary">{food.isOption ? 'Option' : 'Main Dish'}</Text>
-                                            <Button
-                                                type="link"
-                                                onClick={() => handleRemove(index)}
-                                                className="remove-button"
-                                            >
-                                                Remove
-                                            </Button>
-                                        </Space>
-                                    </Col>
-                                </Row>
-                            </Card>
-                        ))
-                    ) : (
-                        <Text type="secondary">Chưa có đồ ăn được đặt trước.</Text>
-                    )}
-                </div>
-            </Modal>
         </Row>
     );
 };

@@ -36,10 +36,8 @@ const AdminLayout = ({ children }) => {
                     key: '1',
                     label: <Link to={routeNames.index}>Home</Link>,
                 },
-                {
-                    key: '2',
-                    label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
-                },
+                
+               
             ],
         },
         {
@@ -66,6 +64,10 @@ const AdminLayout = ({ children }) => {
                     key: '10',
                     label: <Link to={routeNames.deliveryInformation.management}>Delivery</Link>,
                 },
+                {
+                    key: '8',
+                    label: <Link to={routeNames.recruitInformation.management}>Application</Link>,
+                },
             ],
         },
         {
@@ -83,8 +85,8 @@ const AdminLayout = ({ children }) => {
             label: 'Applications',
             children: [
                 {
-                    key: '8',
-                    label: <Link to={routeNames.recruitInformation.management}>Application</Link>,
+                    key: '2',
+                    label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
                 },
                 {
                     key: '9',

@@ -60,12 +60,15 @@ const CalendarPage = () => {
 
     useEffect(() => {
         const getTimes = async () => {
+            const currentYear = dayjs().year();
             setIsFetching(true);
             try {
-                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId));
+                const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(currentYear, selectedMonth + 1, branchId));
                 setDisabledTimes(response.data);
+                console.log('Disabled times:', response.data);
+                
             } catch (error) {
-                // Handle error
+                // Handle error`
             } finally {
                 setIsFetching(false);
             }
@@ -142,7 +145,7 @@ const CalendarPage = () => {
                         <Button
                             type="primary"
                             danger
-                            style={{ maxWidth:'30vw' }} // Red for unavailable slots
+                            style={{ maxWidth:'30vw' }} 
                             onClick={handleUnavailableClick}
                         >
                             Not Available
