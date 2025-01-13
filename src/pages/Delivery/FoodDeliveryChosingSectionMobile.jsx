@@ -1,4 +1,4 @@
-import { DownOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
+import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import {
     App,
     Button,
@@ -14,6 +14,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
+import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
 
 const { Panel } = Collapse;
 
@@ -29,6 +30,8 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish }) => {
     const [preorders, setPreorders] = useState({});
     const [havePendingDelivery, setHavePendingDelivery] = useState(false);
     const [cartVisible, setCartVisible] = useState(false);
+    const [selectedFood, setSelectedFood] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const { message } = App.useApp();
 
     useEffect(() => {
@@ -67,30 +70,73 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish }) => {
         }
     };
 
-    const handleIncrement = (itemId) => {
+    const fetchFoodDetails = async (id) => {
+        try {
+            const response = await axiosInstance.get(apiEndPoints.FOOD.GET_BY_ID(id));
+            setSelectedFood(response.data);
+            setIsModalVisible(true);
+        } catch (error) {
+            message.error('Failed to fetch food details.');
+        }
+    };
+
+    const handleIncrement = (food) => {
         setPreorders((prevPreorders) => ({
             ...prevPreorders,
-            [itemId]: {
-                ...(prevPreorders[itemId] || { quantity: 0 }),
-                quantity: (prevPreorders[itemId]?.quantity || 0) + 1,
+            [food.id]: {
+                ...(prevPreorders[food.id] || {
+                    quantity: 0,
+                    name: food.name,
+                    basePrice: food.basePrice,
+                    imagePath: food.imagePath,
+                }),
+                quantity: (prevPreorders[food.id]?.quantity || 0) + 1,
             },
         }));
     };
 
-    const handleDecrement = (itemId) => {
-        setPreorders((prevPreorders) => ({
-            ...prevPreorders,
-            [itemId]: {
-                ...(prevPreorders[itemId] || { quantity: 0 }),
-                quantity: Math.max((prevPreorders[itemId]?.quantity || 0) - 1, 0),
-            },
-        }));
+    const handleDecrement = (food) => {
+        setPreorders((prevPreorders) => {
+            const currentQuantity = prevPreorders[food.id]?.quantity || 0;
+            if (currentQuantity <= 1) {
+                // Remove the item from preorders if quantity is 0 or less
+                // @ts-ignore
+                const { [food.id]: _, ...rest } = prevPreorders;
+                return rest;
+            }
+            return {
+                ...prevPreorders,
+                [food.id]: {
+                    ...prevPreorders[food.id],
+                    quantity: currentQuantity - 1,
+                },
+            };
+        });
     };
+
 
     const renderFoodItem = (food) => (
         <List.Item
             key={food.id}
-            actions={[<Button icon={<PlusOutlined />} onClick={() => handleIncrement(food.id)} />]}
+            actions={[
+                <Button
+                    icon={<MinusOutlined />}
+                    disabled={!(preorders[food.id]?.quantity > 0)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleDecrement(food);
+                    }}
+                />,
+                <Typography.Text>{preorders[food.id]?.quantity || 0}</Typography.Text>,
+                <Button
+                    icon={<PlusOutlined />}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleIncrement(food);
+                    }}
+                />,
+            ]}
+            onClick={() => fetchFoodDetails(food.id)}
         >
             <List.Item.Meta
                 avatar={
@@ -194,8 +240,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish }) => {
                                     (key) => preorders[key]?.quantity > 0
                                 )}
                                 renderItem={(key) => {
-                                    const food = foods.find((item) => item.id === key) || {};
-                                    const quantity = preorders[key]?.quantity || 0;
+                                    const { name, imagePath, quantity } = preorders[key];
                                     return (
                                         <List.Item>
                                             <List.Item.Meta
@@ -203,11 +248,11 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish }) => {
                                                     <Image
                                                         preview={false}
                                                         width={80}
-                                                        src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
-                                                        alt={food.name}
+                                                        src={`${axiosInstance.defaults.baseURL}/${imagePath}`}
+                                                        alt={name}
                                                     />
                                                 }
-                                                title={food.name}
+                                                title={name}
                                                 description={`Quantity: ${quantity}`}
                                             />
                                         </List.Item>
@@ -217,6 +262,15 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish }) => {
                         </Panel>
                     </Collapse>
                 </div>
+            )}
+
+            {selectedFood && (
+                <FoodDeliveryDetailModal
+                    visible={isModalVisible}
+                    food={selectedFood}
+                    onClose={() => setIsModalVisible(false)}
+                    onIncrement={handleIncrement}
+                />
             )}
         </div>
     );
