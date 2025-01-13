@@ -24,7 +24,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 
-const FoodPreorderSection = ({ onPreorder, onFinish }) => {
+const FoodPreorderSection = ({ onPreorder, onFinish, isFormValid }) => {
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -77,24 +77,38 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
         }
     };
 
-    const handleIncrement = (itemId) => {
+    const handleIncrement = (food) => {
         setPreorders((prevPreorders) => ({
             ...prevPreorders,
-            [itemId]: {
-                ...(prevPreorders[itemId] || { quantity: 0 }),
-                quantity: (prevPreorders[itemId]?.quantity || 0) + 1,
+            [food.id]: {
+                ...(prevPreorders[food.id] || {
+                    quantity: 0,
+                    name: food.name,
+                    basePrice: food.basePrice,
+                    imagePath: food.imagePath,
+                }),
+                quantity: (prevPreorders[food.id]?.quantity || 0) + 1,
             },
         }));
     };
 
-    const handleDecrement = (itemId) => {
-        setPreorders((prevPreorders) => ({
-            ...prevPreorders,
-            [itemId]: {
-                ...(prevPreorders[itemId] || { quantity: 0 }),
-                quantity: Math.max((prevPreorders[itemId]?.quantity || 0) - 1, 0),
-            },
-        }));
+    const handleDecrement = (food) => {
+        setPreorders((prevPreorders) => {
+            const currentQuantity = prevPreorders[food.id]?.quantity || 0;
+            if (currentQuantity <= 1) {
+                // Remove the item from preorders if quantity is 0 or less
+                // @ts-ignore
+                const { [food.id]: _, ...rest } = prevPreorders;
+                return rest;
+            }
+            return {
+                ...prevPreorders,
+                [food.id]: {
+                    ...prevPreorders[food.id],
+                    quantity: currentQuantity - 1,
+                },
+            };
+        });
     };
 
     return (
@@ -191,7 +205,10 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                                                 <strong><ShoppingCartOutlined />{food.basePrice}đ</strong>
                                                 <Button
                                                     type='primary'
-                                                    onClick={() => handleIncrement(food.id)}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleIncrement(food);
+                                                    }}
                                                 >
                                                     <PlusOutlined />
                                                 </Button>
@@ -252,16 +269,17 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                                 (key) => preorders[key]?.quantity > 0
                             )}
                             renderItem={(key) => {
-                                const food = foods.find((item) => item.id === key) || {};
-                                const quantity = preorders[key]?.quantity || 0;
+                                const { name, basePrice, imagePath, quantity } = preorders[key];
+                                const food = preorders[key];
+                                food.id = key;
                                 return (
                                     <List.Item>
                                         <div style={{ display: 'flex', width: '100%' }}>
                                             <Image
                                                 preview={false}
                                                 width={100}
-                                                src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
-                                                alt={food.name}
+                                                src={`${axiosInstance.defaults.baseURL}/${imagePath}`}
+                                                alt={name}
                                             />
                                             <div
                                                 style={{
@@ -277,7 +295,7 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                                                         fontWeight: 'bold',
                                                     }}
                                                 >
-                                                    {food.name}
+                                                    {name}
                                                 </Typography.Text>
                                                 <div style={{ marginTop: '8px' }}>
                                                     <Typography.Text
@@ -287,7 +305,7 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                                                             color: '#555',
                                                         }}
                                                     >
-                                                        Giá: {food.basePrice}đ
+                                                        Giá: {basePrice}đ
                                                     </Typography.Text>
                                                 </div>
                                                 <div
@@ -299,17 +317,16 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                                                     }}
                                                 >
                                                     <Space>
-                                                        <Typography.Text strong>Số Lượng:</Typography.Text>
                                                         <Button
                                                             size="small"
-                                                            onClick={() => handleDecrement(food.id)}
+                                                            onClick={() => handleDecrement(food)}
                                                         >
                                                             -
                                                         </Button>
                                                         <Typography.Text>{quantity}</Typography.Text>
                                                         <Button
                                                             size="small"
-                                                            onClick={() => handleIncrement(food.id)}
+                                                            onClick={() => handleIncrement(food)}
                                                         >
                                                             +
                                                         </Button>
@@ -343,13 +360,9 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                             >
                                 <Typography.Text strong style={{ fontSize: '16px' }}>
                                     Tổng Giá:{" "}
-                                    {Object.keys(preorders)
-                                        .reduce((total, key) => {
-                                            const food = foods.find((item) => item.id === key) || {};
-                                            const quantity = preorders[key]?.quantity || 0;
-                                            return total + quantity * (food.basePrice || 0);
-                                        }, 0)
-                                        .toLocaleString()}đ
+                                    {Object.values(preorders).reduce(
+                                        (sum, { basePrice, quantity }) => sum + basePrice * quantity,
+                                        0)}đ
                                 </Typography.Text>
                             </div>)}
                         <div
@@ -359,12 +372,13 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                             }}
                         >
                             {isConfirmed && (
-                                <Tooltip title={havePendingBooking ? 'Quý khách hiện đang có yêu cầu đặt chỗ vẫn chưa được xử lý, xin vui lòng xác nhận lại trước khi đặt chỗ' : ''}>
+                                <Tooltip title={havePendingBooking ? 'Quý khách hiện đang có yêu cầu đặt chỗ vẫn chưa được xử lý, xin vui lòng xác nhận lại trước khi đặt chỗ' 
+                                : 'Hãy kiểm tra kỹ thông tin trước khi đặt chỗ'}>
                                     <Button
                                         type="primary"
                                         size="large"
                                         onClick={onFinish}
-                                        disabled={havePendingBooking}
+                                        disabled={havePendingBooking || !isFormValid}
                                         style={{
                                             width: '100%',
                                             borderRadius: '8px',
@@ -375,10 +389,9 @@ const FoodPreorderSection = ({ onPreorder, onFinish }) => {
                                     </Button>
                                 </Tooltip>)}
 
-
                             <Checkbox onChange={handleCheckboxChange}>Tôi xác nhận là sẽ đến đúng giờ.</Checkbox>
 
-                            <Typography >
+                            <Typography style={{ color: 'red' }}>
                                 Quý khách vui lòng đến đúng giờ, nhà sẽ chỉ giữ bàn muộn hơn 10 phút so với giờ đặt bàn nhé!
                             </Typography>
 

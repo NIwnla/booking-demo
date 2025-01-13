@@ -16,10 +16,8 @@ import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
 import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
 
-const { Panel } = Collapse;
 
-
-const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {
+const FoodPreOrderSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -213,13 +211,13 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                                     >
                                         <Button
                                             type="link"
-                                            icon={cartVisible ? <UpOutlined /> : <DownOutlined />}
                                         >
                                             {cartVisible ? 'Hide Cart' : `Xe hàng (${Object.keys(preorders).length})`}
                                         </Button>
+
                                         {havePendingDelivery && (
                                             <Typography.Text type="danger" style={{ marginRight: 16 }}>
-                                                Quý khách hiện đang có đơn hàng khác, xin vui lòng xác nhận lại đơn hàng trước.
+                                                Quý khách hiện đang có yêu cầu đặt chỗ vẫn chưa được xử lý, xin vui lòng xác nhận lại trước khi đặt chỗ.
                                             </Typography.Text>
                                         )}
                                         {!havePendingDelivery && (
@@ -228,7 +226,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                                                 disabled={!isFormValid}
                                                 onClick={onFinish}
                                             >
-                                                Hoàn tất đặt hàng
+                                                Hoàn tất đặt chỗ
                                             </Button>
                                         )}
                                     </div>
@@ -304,4 +302,4 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
     );
 };
 
-export default FoodDeliveryChosingSectionMobile;
+export default FoodPreOrderSectionMobile;

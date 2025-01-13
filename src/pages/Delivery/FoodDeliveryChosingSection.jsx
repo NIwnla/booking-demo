@@ -4,12 +4,10 @@ import {
     Button,
     Card,
     Col,
-    Collapse,
     Empty,
     Image,
     Input,
     List,
-    Modal,
     Pagination,
     Row,
     Space,
@@ -17,15 +15,14 @@ import {
     Tooltip,
     Typography
 } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { apiEndPoints } from '../../constaints/apiEndPoint';
-import axiosInstance from '../../service/axios';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import React, { useContext, useEffect, useState } from 'react';
 import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
+import { apiEndPoints } from '../../constaints/apiEndPoint';
+import { AuthContext } from '../../context/AuthContext';
+import axiosInstance from '../../service/axios';
 
 
-const FoodDeliveryChosingSection = ({ onPreorder, onFinish }) => {
+const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -50,7 +47,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish }) => {
         }
 
         checkPendingDelivery();
-    });
+    }, [userId]);
 
     useEffect(() => {
         fetchFoods();
@@ -58,7 +55,6 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish }) => {
 
     useEffect(() => {
         onPreorder(preorders);
-        console.log(preorders);
     }, [preorders]);
 
     const fetchFoods = async () => {
@@ -393,13 +389,9 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish }) => {
                                 >
                                     <Typography.Text strong style={{ fontSize: '16px' }}>
                                         Tổng Giá:{" "}
-                                        {Object.keys(preorders)
-                                            .reduce((total, key) => {
-                                                const food = foods.find((item) => item.id === key) || {};
-                                                const quantity = preorders[key]?.quantity || 0;
-                                                return total + quantity * (food.basePrice || 0);
-                                            }, 0)
-                                            .toLocaleString()}đ
+                                        {Object.values(preorders).reduce(
+                                            (sum, { basePrice, quantity }) => sum + basePrice * quantity,
+                                            0)}đ
                                     </Typography.Text>
                                 </div>
                                 <div
@@ -413,7 +405,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish }) => {
                                             type="primary"
                                             size="large"
                                             onClick={onFinish}
-                                            disabled={havePendingDelivery}
+                                            disabled={havePendingDelivery || !isFormValid}
                                             style={{
                                                 width: '100%',
                                                 borderRadius: '8px',
