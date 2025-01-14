@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Input } from "antd";
 import axiosInstance from "../../service/axios";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
+import { AxiosConstants } from "../../constaints/axiosContaint";
 
 const ApplicationManagementPageAdmin = () => {
     const [data, setData] = useState([]);
@@ -73,7 +74,7 @@ const ApplicationManagementPageAdmin = () => {
             title: "Trường đang theo học",
             dataIndex: "currentEducation",
             key: "currentEducation",
-            responsive: ['xl'],
+            responsive: ['xl'], 
             render: (text) => text || "Chưa cung cấp",
         },
         {
@@ -81,9 +82,9 @@ const ApplicationManagementPageAdmin = () => {
             dataIndex: "resumePath",
             key: "resumePath",
             render: (text) => (
-                <a href={`${text}`} target="_blank" rel="noopener noreferrer">
-                    Xem Hồ sơ
-                </a>
+                <a href={`${AxiosConstants.AXIOS_BASEURL}/${text}`} target = "_blank" rel = "noopener noreferrer" >
+                    Xem hồ sơ
+                </a >
             ),
         },
     ];
