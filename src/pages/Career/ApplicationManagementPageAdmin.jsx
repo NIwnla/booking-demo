@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Input } from "antd";
-import axios from "axios";
-import { AxiosConstants } from "../../constaints/axiosContaint";
-import { apiEndPoints } from "../../constaints/apiEndPoint";
 import axiosInstance from "../../service/axios";
+import { apiEndPoints } from "../../constaints/apiEndPoint";
 
 const ApplicationManagementPageAdmin = () => {
     const [data, setData] = useState([]);
@@ -29,7 +27,7 @@ const ApplicationManagementPageAdmin = () => {
             setData(items);
             setTotal(totalCount);
         } catch (error) {
-            console.error("Failed to fetch data:", error);
+            console.error("Lỗi khi lấy dữ liệu:", error);
         } finally {
             setLoading(false);
         }
@@ -41,14 +39,14 @@ const ApplicationManagementPageAdmin = () => {
 
     const columns = [
         {
-            title: "First Name",
+            title: "Họ",
             dataIndex: "firstName",
             key: "firstName",
             ellipsis: true,
             responsive: ['md'],
         },
         {
-            title: "Last Name",
+            title: "Tên",
             dataIndex: "lastName",
             key: "lastName",
             ellipsis: true,
@@ -61,17 +59,30 @@ const ApplicationManagementPageAdmin = () => {
             ellipsis: true,
         },
         {
-            title: "Phone Number",
+            title: "Số điện thoại",
             dataIndex: "phoneNumber",
             key: "phoneNumber",
         },
         {
-            title: "Resume",
+            title: "Căn cước công dân",
+            dataIndex: "socialNumber",
+            key: "socialNumber",
+            render: (text) => text || "Chưa cung cấp",
+        },
+        {
+            title: "Trường đang theo học",
+            dataIndex: "currentEducation",
+            key: "currentEducation",
+            responsive: ['xl'],
+            render: (text) => text || "Chưa cung cấp",
+        },
+        {
+            title: "Hồ sơ",
             dataIndex: "resumePath",
             key: "resumePath",
             render: (text) => (
-                <a href={`${AxiosConstants.AXIOS_BASEURL}/${text}`} target="_blank" rel="noopener noreferrer">
-                    View Resume
+                <a href={`${text}`} target="_blank" rel="noopener noreferrer">
+                    Xem Hồ sơ
                 </a>
             ),
         },
@@ -87,9 +98,9 @@ const ApplicationManagementPageAdmin = () => {
 
     return (
         <div>
-            <h1>Application List</h1>
+            <h1>Danh sách ứng tuyển</h1>
             <Input.Search
-                placeholder="Search applications"
+                placeholder="Tìm kiếm đơn ứng tuyển"
                 onSearch={(value) => setSearch(value)}
                 style={{ marginBottom: 16, width: 300 }}
             />
