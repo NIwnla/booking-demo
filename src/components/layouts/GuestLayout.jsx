@@ -1,18 +1,20 @@
-import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, MailOutlined, PieChartOutlined } from '@ant-design/icons';
-import React, { useContext, useState } from 'react';
-import { MenuOutlined } from '@ant-design/icons';
+import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Dropdown, Layout, Menu, Space, Typography } from 'antd';
+import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import './Layout.css';
+
 const { Header, Content, Footer } = Layout;
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 const GuestLayout = ({ children }) => {
     const { email, clearAuthToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const [drawerVisible, setDrawerVisible] = useState(false);
+    const { t, i18n } = useTranslation("global");
 
     const handleLogout = () => {
         clearAuthToken();
@@ -21,8 +23,29 @@ const GuestLayout = ({ children }) => {
 
     const rightMenuItems = [
         {
+            key: 'language',
+            label: (
+                <span>
+                    <GlobalOutlined style={{ marginRight: 8 }} />
+                    {t('header.language')}
+                </span>
+            ),
+            children: [
+                {
+                    key: 'english',
+                    label: 'English',
+                    onClick: () => i18n.changeLanguage('en'),
+                },
+                {
+                    key: 'vietnamese',
+                    label: 'Tiếng Việt',
+                    onClick: () => i18n.changeLanguage('vi'),
+                },
+            ],
+        },
+        {
             key: 'logout',
-            label: 'Logout',
+            label: t('header.logout'),
             onClick: handleLogout,
         },
     ];
@@ -30,15 +53,19 @@ const GuestLayout = ({ children }) => {
     const leftMenuItems = [
         {
             key: '1',
-            label: <Link to={routeNames.index}>Home</Link>,
+            label: <Link to={routeNames.index}>{t('header.menu')}</Link>,
         },
         {
             key: '2',
-            label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
+            label: <Link to={routeNames.booking.branchChoose}>{t('header.reservation')}</Link>,
         },
         {
             key: '3',
-            label: <Link to={routeNames.deliveryInformation.create}>Delivery</Link>,
+            label: <Link to={routeNames.deliveryInformation.create}>{t('header.delivery')}</Link>,
+        },
+        {
+            key: '4',
+            label: <Link to={routeNames.career}>{t('header.career')}</Link>,
         }
     ];
 
@@ -53,7 +80,6 @@ const GuestLayout = ({ children }) => {
     return (
         <Layout style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
             {/* Header */}
-
             <Header
                 style={{
                     display: 'flex',
@@ -65,7 +91,7 @@ const GuestLayout = ({ children }) => {
             >
                 {/* Restaurant Name */}
                 <Title className="header-title" level={4} style={{ color: '#ffffff', margin: 6 }}>
-                    My Restaurant
+                    {t('header.title')}
                 </Title>
 
                 {/* Hamburger Button for Small Screens */}
@@ -79,12 +105,11 @@ const GuestLayout = ({ children }) => {
 
                 {/* Horizontal Menu for Large Screens */}
                 <Menu
-                    theme='light'
+                    theme="light"
                     mode="horizontal"
                     style={{
                         display: 'flex',
                         flex: 1,
-
                         color: '#ffffff',
                         justifyContent: 'flex-start',
                     }}
@@ -92,52 +117,45 @@ const GuestLayout = ({ children }) => {
                     items={leftMenuItems}
                 />
 
-
                 {/* Dropdown for Logged-in User */}
                 {email ? (
                     <Dropdown
                         menu={{ items: rightMenuItems }}
                         placement="bottomRight"
-                        trigger={['click']}
                     >
                         <Space style={{ cursor: 'pointer' }}>
                             <Text style={{ color: '#ffffff' }}>{email}</Text>
                         </Space>
                     </Dropdown>
                 ) : (
-                    <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }} >
-                        Sign In
+                    <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }}>
+                        {t('header.login')}
                     </Link>
                 )}
             </Header>
 
             {/* Drawer for Small Screens */}
             <Drawer
-                title={<Text style={{ color: '#ff0000' }}> My Restaurant</Text>}
+                title={<Text style={{ color: '#ff0000' }}>{t('drawer.title')}</Text>}
                 placement="top"
                 closable={true}
                 onClose={closeDrawer}
                 open={drawerVisible}
                 styles={{
-                    body:{
-                        padding: 0, backgroundColor: '#ff0000'
-                    }
+                    body: { padding: 0, backgroundColor: '#ff0000' },
                 }}
-
-
             >
                 <Menu
-                    theme='light'
+                    theme="light"
                     mode="vertical"
                     onClick={closeDrawer}
                     style={{ backgroundColor: '#ff0000' }}
                     items={leftMenuItems}
-                >
-                </Menu>
+                />
             </Drawer>
 
             {/* Content */}
-            <Content className='content-container' style={{ minHeight: 'calc(100vh - 133px)' }}>
+            <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
                 <div
                     style={{
                         background: '#ffffff',
@@ -152,7 +170,7 @@ const GuestLayout = ({ children }) => {
 
             {/* Footer */}
             <Footer style={{ textAlign: 'center', backgroundColor: '#ff0000', color: '#ffffff' }}>
-                <Text style={{ color: '#ffffff' }}>My Restaurant ©2024 Created by Your Name</Text>
+                <Text style={{ color: '#ffffff' }}>{t('footer.copyright')}</Text>
             </Footer>
         </Layout>
     );

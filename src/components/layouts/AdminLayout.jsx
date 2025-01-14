@@ -1,9 +1,10 @@
-import { MenuOutlined } from '@ant-design/icons';
+import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Dropdown, Layout, Menu, Space, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import './Layout.css';
 
 const { Header, Content, Footer } = Layout;
@@ -13,6 +14,7 @@ const AdminLayout = ({ children }) => {
     const { email, clearAuthToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const [drawerVisible, setDrawerVisible] = useState(false);
+    const { t, i18n } = useTranslation("global");
 
     const handleLogout = () => {
         clearAuthToken();
@@ -21,8 +23,29 @@ const AdminLayout = ({ children }) => {
 
     const rightMenuItems = [
         {
+            key: 'language',
+            label: (
+                <span>
+                    <GlobalOutlined style={{ marginRight: 8 }} />
+                    {t('header.language')}
+                </span>
+            ),
+            children: [
+                {
+                    key: 'english',
+                    label: 'English',
+                    onClick: () => i18n.changeLanguage('en'),
+                },
+                {
+                    key: 'vietnamese',
+                    label: 'Tiếng Việt',
+                    onClick: () => i18n.changeLanguage('vi'),
+                },
+            ],
+        },
+        {
             key: 'logout',
-            label: 'Logout',
+            label: t('header.logout'),
             onClick: handleLogout,
         },
     ];
@@ -30,72 +53,69 @@ const AdminLayout = ({ children }) => {
     const leftMenuItems = [
         {
             key: 'general',
-            label: 'General',
+            label: t('leftMenuItems.general.label'),
             children: [
                 {
                     key: '1',
-                    label: <Link to={routeNames.index}>Home</Link>,
+                    label: <Link to={routeNames.index}>{t('leftMenuItems.general.home')}</Link>,
                 },
-                
-               
             ],
         },
         {
             key: 'management',
-            label: 'Management',
+            label: t('leftMenuItems.management.label'),
             children: [
                 {
                     key: '3',
-                    label: <Link to={routeNames.branch.management}>Branches</Link>,
+                    label: <Link to={routeNames.branch.management}>{t('leftMenuItems.management.branches')}</Link>,
                 },
                 {
                     key: '4',
-                    label: <Link to={routeNames.booking.management}>Management</Link>,
+                    label: <Link to={routeNames.booking.management}>{t('leftMenuItems.management.booking')}</Link>,
                 },
                 {
                     key: '5',
-                    label: <Link to={routeNames.user.management}>Users</Link>,
+                    label: <Link to={routeNames.user.management}>{t('leftMenuItems.management.users')}</Link>,
                 },
                 {
                     key: '7',
-                    label: <Link to={routeNames.food.management}>Foods</Link>,
+                    label: <Link to={routeNames.food.management}>{t('leftMenuItems.management.foods')}</Link>,
                 },
                 {
                     key: '10',
-                    label: <Link to={routeNames.deliveryInformation.management}>Delivery</Link>,
+                    label: <Link to={routeNames.deliveryInformation.management}>{t('leftMenuItems.management.delivery')}</Link>,
                 },
                 {
                     key: '8',
-                    label: <Link to={routeNames.recruitInformation.management}>Application</Link>,
+                    label: <Link to={routeNames.recruitInformation.management}>{t('leftMenuItems.management.application')}</Link>,
                 },
             ],
         },
         {
             key: 'configuration',
-            label: 'Configuration',
+            label: t('leftMenuItems.configuration.label'),
             children: [
                 {
                     key: '6',
-                    label: <Link to={routeNames.disableTime.branchChoose}>Disable booking time</Link>,
+                    label: <Link to={routeNames.disableTime.branchChoose}>{t('leftMenuItems.configuration.disableTime')}</Link>,
                 },
             ],
         },
         {
             key: 'applications',
-            label: 'Applications',
+            label: t('leftMenuItems.applications.label'),
             children: [
                 {
                     key: '2',
-                    label: <Link to={routeNames.booking.branchChoose}>Booking</Link>,
+                    label: <Link to={routeNames.booking.branchChoose}>{t('leftMenuItems.applications.booking')}</Link>,
                 },
                 {
                     key: '9',
-                    label: <Link to={routeNames.deliveryInformation.create}>Delivery</Link>,
+                    label: <Link to={routeNames.deliveryInformation.create}>{t('leftMenuItems.applications.delivery')}</Link>,
                 },
             ],
         },
     ];
-
 
     const showDrawer = () => {
         setDrawerVisible(true);
@@ -108,7 +128,6 @@ const AdminLayout = ({ children }) => {
     return (
         <Layout style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
             {/* Header */}
-
             <Header
                 style={{
                     display: 'flex',
@@ -120,7 +139,7 @@ const AdminLayout = ({ children }) => {
             >
                 {/* Restaurant Name */}
                 <Title className="header-title" level={4} style={{ color: '#ffffff', margin: 6 }}>
-                    My Restaurant
+                    {t('header.title')}
                 </Title>
 
                 {/* Hamburger Button for Small Screens */}
@@ -134,7 +153,7 @@ const AdminLayout = ({ children }) => {
 
                 {/* Horizontal Menu for Large Screens */}
                 <Menu
-                    theme='light'
+                    theme="light"
                     mode="horizontal"
                     style={{
                         display: 'flex',
@@ -145,7 +164,6 @@ const AdminLayout = ({ children }) => {
                     className="desktop-menu"
                     items={leftMenuItems}
                 />
-
 
                 {/* Dropdown for Logged-in User */}
                 {email ? (
@@ -159,37 +177,34 @@ const AdminLayout = ({ children }) => {
                         </Space>
                     </Dropdown>
                 ) : (
-                    <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }} >
-                        Sign In
+                    <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }}>
+                        {t('header.login')}
                     </Link>
                 )}
             </Header>
 
             {/* Drawer for Small Screens */}
             <Drawer
-                title={<Text style={{ color: '#ff0000' }}> My Restaurant</Text>}
+                title={<Text style={{ color: '#ff0000' }}>{t('drawer.title')}</Text>}
                 placement="top"
                 closable={true}
                 onClose={closeDrawer}
                 open={drawerVisible}
                 styles={{
-                    body: {
-                        padding: 0, backgroundColor: '#ff0000'
-                    }
+                    body: { padding: 0, backgroundColor: '#ff0000' },
                 }}
             >
                 <Menu
-                    theme='light'
+                    theme="light"
                     mode="inline"
                     onClick={closeDrawer}
                     style={{ backgroundColor: '#ff0000' }}
                     items={leftMenuItems}
-                >
-                </Menu>
+                />
             </Drawer>
 
             {/* Content */}
-            <Content className='content-container' style={{ minHeight: 'calc(100vh - 133px)' }}>
+            <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
                 <div
                     style={{
                         background: '#ffffff',
@@ -204,7 +219,7 @@ const AdminLayout = ({ children }) => {
 
             {/* Footer */}
             <Footer style={{ textAlign: 'center', backgroundColor: '#ff0000', color: '#ffffff' }}>
-                <Text style={{ color: '#ffffff' }}>My Restaurant ©2024 Created by Your Name</Text>
+                <Text style={{ color: '#ffffff' }}>{t('footer.copyright')}</Text>
             </Footer>
         </Layout>
     );

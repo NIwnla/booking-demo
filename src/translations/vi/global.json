@@ -1,0 +1,63 @@
+{
+    "header": {
+        "title": "Nollowa Chicken",
+        "menu": "Thực Đơn",
+        "reservation": "Đặt Chỗ",
+        "delivery": "Giao Hàng",
+        "career": "Nghề Nghiệp",
+        "language": "Ngôn Ngữ",
+        "login": "Đăng Nhập",
+        "logout": "Đăng Xuất"
+    },
+    "drawer": {
+        "title": "Nollowa Chicken"
+    },
+    "footer": {
+        "copyright": "Nollowa Chicken ©2024 Tạo bởi Your Name"
+    },
+    "leftMenuItems": {
+        "general": {
+            "label": "Chung",
+            "home": "Trang Chủ"
+        },
+        "management": {
+            "label": "Quản Lý",
+            "branches": "Chi Nhánh",
+            "booking": "Đặt Chỗ",
+            "users": "Người Dùng",
+            "foods": "Món Ăn",
+            "delivery": "Giao Hàng",
+            "application": "Xin Việc"
+        },
+        "configuration": {
+            "label": "Cấu Hình",
+            "disableTime": "Tắt thời gian đặt chỗ"
+        },
+        "applications": {
+            "label": "Ứng Dụng",
+            "booking": "Đặt Chỗ",
+            "delivery": "Giao Hàng"
+        }
+    },
+    "form": {
+        "title": "Thông Tin Giao Hàng",
+        "fullname": "Họ và Tên",
+        "fullnameRequired": "Vui lòng nhập họ và tên",
+        "fullnamePlaceholder": "Họ và tên",
+        "time": "Thời Gian",
+        "timeRequired": "Vui lòng chọn thời gian giao hàng",
+        "timeExtra": "Nếu không chọn, chúng tôi sẽ giao hàng ngay khi có thể.",
+        "timePlaceholder": "ASAP",
+        "location": "Địa Chỉ",
+        "locationRequired": "Vui lòng nhập địa chỉ giao hàng",
+        "locationPlaceholder": "Địa chỉ giao hàng",
+        "phoneNumber": "Số Điện Thoại",
+        "phoneNumberRequired": "Vui lòng nhập số điện thoại",
+        "phoneNumberPattern": "Số điện thoại phải có từ 9 đến 10 chữ số",
+        "phoneNumberPlaceholder": "Số điện thoại",
+        "message": "Lời Nhắn",
+        "messagePlaceholder": "Thông tin cần lưu ý",
+        "messageDeliverySuccess": "Tạo đơn giao hàng thành công",
+        "messageDeliveryError": "Có lỗi xảy ra khi tạo đơn giao hàng"
+    }
+}

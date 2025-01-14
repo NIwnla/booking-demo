@@ -1,0 +1,63 @@
+{
+    "header": {
+        "title": "Nollowa Chicken",
+        "menu": "Menu",
+        "reservation": "Reservation",
+        "delivery": "Delivery",
+        "career": "Career",
+        "language": "Language",
+        "login": "Login",
+        "logout": "Logout"
+    },
+    "drawer": {
+        "title": "Nollowa Chicken"
+    },
+    "footer": {
+        "copyright": "Nollowa Chicken ©2024 Created by Your Name"
+    },
+    "leftMenuItems": {
+        "general": {
+            "label": "General",
+            "home": "Home"
+        },
+        "management": {
+            "label": "Management",
+            "branches": "Branches",
+            "booking": "Booking",
+            "users": "Users",
+            "foods": "Foods",
+            "delivery": "Delivery",
+            "application": "Application"
+        },
+        "configuration": {
+            "label": "Configuration",
+            "disableTime": "Disable booking time"
+        },
+        "applications": {
+            "label": "Applications",
+            "booking": "Booking",
+            "delivery": "Delivery"
+        }
+    },
+    "form": {
+        "title": "Delivery Information",
+        "fullname": "Full Name",
+        "fullnameRequired": "Please enter your full name",
+        "fullnamePlaceholder": "Full Name",
+        "time": "Time",
+        "timeRequired": "Please select delivery time",
+        "timeExtra": "If not selected, we will deliver as soon as possible.",
+        "timePlaceholder": "ASAP",
+        "location": "Location",
+        "locationRequired": "Please enter the delivery location",
+        "locationPlaceholder": "Delivery Address",
+        "phoneNumber": "Phone Number",
+        "phoneNumberRequired": "Please enter your phone number",
+        "phoneNumberPattern": "Phone number must be 9 to 10 digits",
+        "phoneNumberPlaceholder": "Phone Number",
+        "message": "Message",
+        "messagePlaceholder": "Notes",
+        "messageDeliverySuccess": "Delivery order created successfully",
+        "messageDeliveryError": "An error occurred while creating the delivery order"
+    }
+}

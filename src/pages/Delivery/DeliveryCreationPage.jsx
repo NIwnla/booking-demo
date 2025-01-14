@@ -1,15 +1,16 @@
-import { App, Col, Collapse, Form, Input, Row, Space, TimePicker, Typography } from 'antd';
+import { App, Col, Form, Input, Row, TimePicker, Typography } from 'antd';
 import dayjs from 'dayjs';
 import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
+import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
 import './DeliveryCreationPage.css';
 import FoodDeliveryChosingSection from './FoodDeliveryChosingSection';
 import FoodDeliveryChosingSectionMobile from './FoodDeliveryChosingSectionMobile';
-import { useWindowSize } from '../../helpers/useWindowSize';
 
 const { Title, Text } = Typography;
 
@@ -24,6 +25,8 @@ const DeliveryCreationPage = () => {
     const navigate = useNavigate();
 
     const [preorderedFoods, setPreorderedFoods] = useState([]);
+
+    const {t} = useTranslation("global");
 
     const onFinish = async () => {
         const values = await form.validateFields(); // Validate and get form values
@@ -47,10 +50,10 @@ const DeliveryCreationPage = () => {
         setIsFetching(true);
         try {
             const response = await axiosInstance.post(apiEndPoints.DELIVERY_INFORMATION.CREATE, payload);
-            message.success('Tạo đơn giao hàng thành công');
+            message.success(t('message.deliverySuccess'));
             navigate(routeNames.index);
         } catch (error) {
-            message.error("Có lỗi xảy ra khi tạo đơn giao hàng");
+            message.error(t('message.deliveryError'));
         } finally {
             setIsFetching(false);
         }
@@ -74,7 +77,7 @@ const DeliveryCreationPage = () => {
             <Col xs={24}>
                 <div className="form-container">
                     <Title level={3} className="form-title">
-                        Thông tin giao hàng
+                        {t('form.title')}
                     </Title>
                     <Form
                         form={form}
@@ -84,20 +87,20 @@ const DeliveryCreationPage = () => {
                     >
                         <Form.Item
                             name="fullname"
-                            label="Họ và Tên"
-                            rules={[{ required: true, message: 'Vui lòng nhập họ và tên của bạn' }]}
+                            label={t('form.fullname')}
+                            rules={[{ required: true, message: t('form.fullnameRequired') }]}
                         >
-                            <Input placeholder="Họ và tên" />
+                            <Input placeholder={t('form.fullnamePlaceholder')} />
                         </Form.Item>
 
                         <Form.Item
                             name="time"
                             label="Thời gian"
-                            rules={[{ required: false, message: 'Vui lòng nhập thời gian giao hàng' }]}
-                            extra="Nếu không chọn, chúng tôi sẽ mặc định giao hàng ngay khi có thể."
+                            rules={[{ required: false, message: t('form.timeRequired') }]}
+                            extra={t('form.timeExtra')}
                         >
                             <TimePicker
-                                placeholder="ASAP"
+                                placeholder={t('form.timePlaceholder')}
                                 format="HH:mm"
                                 showNow={false}
                                 disabledTime={() => {
@@ -124,25 +127,23 @@ const DeliveryCreationPage = () => {
 
                         <Form.Item
                             name="location"
-                            label="Địa chỉ"
-                            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ giao hàng' }]}
-                        >
-                            <Input placeholder="Địa chỉ giao hàng" />
+                            label={t('form.location')}
+                            rules={[{ required: true, message: t('form.locationRequired') }]}>
+                            <Input placeholder={t('form.locationPlaceholder')} />
                         </Form.Item>
 
                         <Form.Item
                             name="phoneNumber"
-                            label="Số điện thoại"
+                            label={t('form.phoneNumber')}
                             rules={[
-                                { required: true, message: 'Vui lòng nhập số điện thoại của bạn' },
-                                { pattern: /^\d{9,10}$/, message: 'Số điện thoại phải có từ 9 đến 10 chữ số' }
-                            ]}
-                        >
-                            <Input placeholder="Số điện thoại" />
+                                { required: true, message: t('form.phoneNumberRequired') },
+                                { pattern: /^\d{9,10}$/, message: t('form.phoneNumberPattern') }
+                            ]}>
+                            <Input placeholder={t('form.phoneNumberPlaceholder')} />
                         </Form.Item>
 
-                        <Form.Item name="message" label="Lời nhắn">
-                            <Input.TextArea placeholder="Thông tin cần lưu ý" className="text-area" />
+                        <Form.Item name="message" label={t('form.message')}>
+                            <Input.TextArea placeholder={t('form.messagePlaceholder')} className="text-area" />
                         </Form.Item>
                     </Form>
                 </div>
