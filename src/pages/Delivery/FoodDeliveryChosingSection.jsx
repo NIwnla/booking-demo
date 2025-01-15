@@ -16,13 +16,14 @@ import {
     Typography
 } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
 
-
 const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
+    const { t } = useTranslation("global");
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -66,7 +67,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            message.error('Failed to fetch foods.');
+            message.error(t('delivery.foodChoice.fetchError'));
         } finally {
             setLoading(false);
         }
@@ -78,7 +79,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
             setSelectedFood(response.data);
             setIsModalVisible(true);
         } catch (error) {
-            message.error('Failed to fetch food details.');
+            message.error(t('delivery.foodChoice.fetchFoodDetailsError'));
         }
     };
 
@@ -116,7 +117,6 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
         });
     };
 
-
     return (
         <div
             style={{
@@ -139,10 +139,10 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                             borderRadius: '8px',
                         }}
                     >
-                        Chọn món để giao hàng
+                        {t('delivery.foodChoice.title')}
                     </Typography.Title>
                     <Input.Search
-                        placeholder="Search food"
+                        placeholder={t('delivery.foodChoice.searchFood')}
                         onSearch={(value) => setSearch(value)}
                         style={{
                             marginBottom: 24,
@@ -185,7 +185,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                         <Card.Meta
                                             title={food.name}
                                             description={
-                                                food.description || 'No description available'
+                                                food.description || t('delivery.foodChoice.noDescription')
                                             }
                                         />
                                         <Typography
@@ -205,7 +205,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
 
                                                 }}
                                             >
-                                                <strong><ShoppingCartOutlined />{food.basePrice}đ</strong>
+                                                <strong><ShoppingCartOutlined />{food.basePrice}VND</strong>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                     {preorders[food.id]?.quantity > 0 && (
                                                         <Button
@@ -277,7 +277,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                             }}
                         >
                             <Typography.Title level={4} style={{ margin: 0 }}>
-                                Giỏ Hàng
+                                {t('delivery.foodChoice.shoppingCart')}
                             </Typography.Title>
                             <Button
                                 type="text"
@@ -289,7 +289,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                     fontWeight: 'bold',
                                 }}
                             >
-                                Clear All
+                                {t('delivery.foodChoice.clearAll')}
                             </Button>
                         </div>
                         <List
@@ -333,7 +333,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                                             color: '#555',
                                                         }}
                                                     >
-                                                        Giá: {basePrice}đ
+                                                        {t('delivery.foodChoice.price')}: {basePrice}VND
                                                     </Typography.Text>
                                                 </div>
                                                 <div
@@ -370,7 +370,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                     <Empty
                                         description={
                                             <Typography.Text type="secondary">
-                                                Giỏ hàng trống, hãy thêm món ăn để đặt trước!
+                                                {t('delivery.foodChoice.emptyCart')}
                                             </Typography.Text>
                                         }
                                     />
@@ -388,10 +388,10 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                     }}
                                 >
                                     <Typography.Text strong style={{ fontSize: '16px' }}>
-                                        Tổng Giá:{" "}
+                                        {t('delivery.foodChoice.total')}:{" "}
                                         {Object.values(preorders).reduce(
                                             (sum, { basePrice, quantity }) => sum + basePrice * quantity,
-                                            0)}đ
+                                            0)}VND
                                     </Typography.Text>
                                 </div>
                                 <div
@@ -400,7 +400,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                         textAlign: 'center',
                                     }}
                                 >
-                                    <Tooltip title={havePendingDelivery ? 'Quý khách hiện đang có đơn hàng khác, xin vui lòng xác nhận là đơn hàng trước được nhận trước khi tạo thêm đơn hàng mới' : ''}>
+                                    <Tooltip title={havePendingDelivery ? t('delivery.foodChoice.pendingDelivery') : ''}>
                                         <Button
                                             type="primary"
                                             size="large"
@@ -411,14 +411,12 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                                 borderRadius: '8px',
                                             }}
                                         >
-                                            Hoàn Thành
+                                            {t('delivery.foodChoice.proceedToCheckout')}
                                         </Button>
                                     </Tooltip>
                                 </div>
                             </>
                         )}
-
-
 
                         {/* Food Details Modal */}
                         <FoodDeliveryDetailModal
@@ -427,10 +425,8 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                             onClose={() => setIsModalVisible(false)}
                             onIncrement={handleIncrement}
                         />
-
                     </div>
                 </Col>
-
             </Row>
         </div>
     );

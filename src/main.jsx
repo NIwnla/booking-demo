@@ -5,10 +5,13 @@ import global_vn from "./translations/vi/global.json";
 import global_en from "./translations/en/global.json";
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
+import Cookies from 'js-cookie';
+
+const defaultLanguage = Cookies.get('language') || 'en';
 
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: 'en',
+  lng: defaultLanguage,
   resources: {
     en: {
       global: global_en

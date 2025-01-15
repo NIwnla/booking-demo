@@ -6,6 +6,7 @@ import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import './Layout.css';
+import { changeLanguage } from '../../helpers/changeLanguage';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
@@ -34,12 +35,12 @@ const AdminLayout = ({ children }) => {
                 {
                     key: 'english',
                     label: 'English',
-                    onClick: () => i18n.changeLanguage('en'),
+                    onClick: () => changeLanguage(i18n,'en'),
                 },
                 {
                     key: 'vietnamese',
                     label: 'Tiếng Việt',
-                    onClick: () => i18n.changeLanguage('vi'),
+                    onClick: () => changeLanguage(i18n,'vi'),
                 },
             ],
         },

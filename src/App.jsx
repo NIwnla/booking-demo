@@ -31,7 +31,7 @@ const customTheme = {
       itemSelectedBg: '#ffffff',  // white for selected items
       itemSelectedColor: '#ffffff', // White text for selected items
       popupBg: '#ff0000',         // Red background for submenu popup
-      horizontalItemSelectedBg: '0', // IDK why this work but this make the selected item background transparent
+      horizontalItemSelectedBg: '0', // IDK why this work but this make the selected item background transparent,
     }
   }
 };

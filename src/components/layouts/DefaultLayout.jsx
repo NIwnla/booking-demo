@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Layout.css';
 import { routeNames } from '../../constaints/routeName';
+import { changeLanguage } from '../../helpers/changeLanguage';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -42,12 +43,12 @@ const DefaultLayout = ({ children }) => {
                 {
                     key: 'english',
                     label: 'English',
-                    onclick: () => i18n.changeLanguage('en')
+                    onClick: () => changeLanguage(i18n,'en'),
                 },
                 {
                     key: 'vietnamese',
                     label: 'Tiếng Việt',
-                    onclick: () => i18n.changeLanguage('vi')
+                    onClick: () => changeLanguage(i18n,'vi'),
                 },
             ],
         },

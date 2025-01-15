@@ -50,10 +50,10 @@ const DeliveryCreationPage = () => {
         setIsFetching(true);
         try {
             const response = await axiosInstance.post(apiEndPoints.DELIVERY_INFORMATION.CREATE, payload);
-            message.success(t('message.deliverySuccess'));
+            message.success(t('delivery.form.messageDeliverySuccess'));
             navigate(routeNames.index);
         } catch (error) {
-            message.error(t('message.deliveryError'));
+            message.error(t('delivery.form.messageDeliveryError'));
         } finally {
             setIsFetching(false);
         }
@@ -77,7 +77,7 @@ const DeliveryCreationPage = () => {
             <Col xs={24}>
                 <div className="form-container">
                     <Title level={3} className="form-title">
-                        {t('form.title')}
+                        {t('delivery.form.title')}
                     </Title>
                     <Form
                         form={form}
@@ -87,20 +87,20 @@ const DeliveryCreationPage = () => {
                     >
                         <Form.Item
                             name="fullname"
-                            label={t('form.fullname')}
-                            rules={[{ required: true, message: t('form.fullnameRequired') }]}
+                            label={t('delivery.form.fullname')}
+                            rules={[{ required: true, message: t('delivery.form.fullnameRequired') }]}
                         >
-                            <Input placeholder={t('form.fullnamePlaceholder')} />
+                            <Input placeholder={t('delivery.form.fullnamePlaceholder')} />
                         </Form.Item>
 
                         <Form.Item
                             name="time"
                             label="Thời gian"
-                            rules={[{ required: false, message: t('form.timeRequired') }]}
-                            extra={t('form.timeExtra')}
+                            rules={[{ required: false, message: t('delivery.form.timeRequired') }]}
+                            extra={t('delivery.form.timeExtra')}
                         >
                             <TimePicker
-                                placeholder={t('form.timePlaceholder')}
+                                placeholder={t('delivery.form.timePlaceholder')}
                                 format="HH:mm"
                                 showNow={false}
                                 disabledTime={() => {
@@ -127,23 +127,23 @@ const DeliveryCreationPage = () => {
 
                         <Form.Item
                             name="location"
-                            label={t('form.location')}
-                            rules={[{ required: true, message: t('form.locationRequired') }]}>
-                            <Input placeholder={t('form.locationPlaceholder')} />
+                            label={t('delivery.form.location')}
+                            rules={[{ required: true, message: t('delivery.form.locationRequired') }]}>
+                            <Input placeholder={t('delivery.form.locationPlaceholder')} />
                         </Form.Item>
 
                         <Form.Item
                             name="phoneNumber"
-                            label={t('form.phoneNumber')}
+                            label={t('delivery.form.phoneNumber')}
                             rules={[
-                                { required: true, message: t('form.phoneNumberRequired') },
-                                { pattern: /^\d{9,10}$/, message: t('form.phoneNumberPattern') }
+                                { required: true, message: t('delivery.form.phoneNumberRequired') },
+                                { pattern: /^\d{9,10}$/, message: t('delivery.form.phoneNumberPattern') }
                             ]}>
-                            <Input placeholder={t('form.phoneNumberPlaceholder')} />
+                            <Input placeholder={t('delivery.form.phoneNumberPlaceholder')} />
                         </Form.Item>
 
-                        <Form.Item name="message" label={t('form.message')}>
-                            <Input.TextArea placeholder={t('form.messagePlaceholder')} className="text-area" />
+                        <Form.Item name="message" label={t('delivery.form.message')}>
+                            <Input.TextArea placeholder={t('delivery.form.messagePlaceholder')} className="text-area" />
                         </Form.Item>
                     </Form>
                 </div>

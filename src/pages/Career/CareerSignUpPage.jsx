@@ -1,12 +1,14 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { App, Button, Form, Input, Upload } from "antd";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import axiosInstance from "../../service/axios";
 
 const CareerSignUpPage = () => {
     const [form] = Form.useForm();
     const { message } = App.useApp();
+    const { t } = useTranslation("global"); // Use the "global" namespace for translations
 
     const handleSubmit = async (values) => {
         const formData = new FormData();
@@ -25,15 +27,15 @@ const CareerSignUpPage = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            message.success("Đơn ứng tuyển của bạn đã được gửi thành công!");
+            message.success(t("careerForm.successMessage"));
             form.resetFields();
         } catch (error) {
-            message.error("Gửi đơn ứng tuyển thất bại.");
+            message.error(t("careerForm.errorMessage"));
         }
     };
 
     const handleFailedSubmit = (errorInfo) => {
-        message.error("Vui lòng kiểm tra lại các trường trong biểu mẫu và thử lại.");
+        message.error(t("careerForm.formError"));
     };
 
     const validateFile = (file) => {
@@ -43,7 +45,7 @@ const CareerSignUpPage = () => {
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         ];
         if (!allowedTypes.includes(file.type)) {
-            message.error("Chỉ cho phép tệp Word hoặc PDF.");
+            message.error(t("careerForm.resumeFileInvalid"));
             return Upload.LIST_IGNORE;
         }
         return true;
@@ -51,7 +53,7 @@ const CareerSignUpPage = () => {
 
     return (
         <div style={{ padding: "24px", maxWidth: "600px", margin: "0 auto" }}>
-            <h2>Đăng ký tuyển dụng</h2>
+            <h2>{t("careerForm.title")}</h2>
             <Form
                 layout="vertical"
                 form={form}
@@ -59,75 +61,75 @@ const CareerSignUpPage = () => {
                 onFinishFailed={handleFailedSubmit}
             >
                 <Form.Item
-                    label="Họ"
+                    label={t("careerForm.firstName")}
                     name="firstName"
                     rules={[
-                        { required: true, message: "Vui lòng nhập họ của bạn" },
-                        { max: 50, message: "Họ không được vượt quá 50 ký tự" },
+                        { required: true, message: t("careerForm.firstNameRequired") },
+                        { max: 50, message: t("careerForm.firstNameMaxLength") },
                     ]}
                 >
-                    <Input placeholder="Nhập họ của bạn" />
+                    <Input placeholder={t("careerForm.firstName")} />
                 </Form.Item>
                 <Form.Item
-                    label="Tên"
+                    label={t("careerForm.lastName")}
                     name="lastName"
                     rules={[
-                        { required: true, message: "Vui lòng nhập tên của bạn" },
-                        { max: 50, message: "Tên không được vượt quá 50 ký tự" },
+                        { required: true, message: t("careerForm.lastNameRequired") },
+                        { max: 50, message: t("careerForm.lastNameMaxLength") },
                     ]}
                 >
-                    <Input placeholder="Nhập tên của bạn" />
+                    <Input placeholder={t("careerForm.lastName")} />
                 </Form.Item>
                 <Form.Item
-                    label="Email"
+                    label={t("careerForm.email")}
                     name="email"
                     rules={[
-                        { required: true, message: "Vui lòng nhập email của bạn" },
-                        { type: "email", message: "Vui lòng nhập một địa chỉ email hợp lệ" },
+                        { required: true, message: t("careerForm.emailRequired") },
+                        { type: "email", message: t("careerForm.emailInvalid") },
                     ]}
                 >
-                    <Input placeholder="Nhập email của bạn" />
+                    <Input placeholder={t("careerForm.email")} />
                 </Form.Item>
                 <Form.Item
-                    label="Số điện thoại"
+                    label={t("careerForm.phoneNumber")}
                     name="phoneNumber"
                     rules={[
-                        { required: true, message: "Vui lòng nhập số điện thoại của bạn" },
+                        { required: true, message: t("careerForm.phoneNumberRequired") },
                         {
                             pattern: /^\d{9,10}$/,
-                            message: "Số điện thoại phải có từ 9 đến 10 chữ số",
+                            message: t("careerForm.phoneNumberPattern"),
                         },
                     ]}
                 >
-                    <Input placeholder="Nhập số điện thoại của bạn" />
+                    <Input placeholder={t("careerForm.phoneNumber")} />
                 </Form.Item>
                 <Form.Item
-                    label="Căn cước công dân"
+                    label={t("careerForm.socialNumber")}
                     name="socialNumber"
                     rules={[
-                        { required: true, message: "Vui lòng nhập số căn cước công dân của bạn" },
+                        { required: true, message: t("careerForm.socialNumberRequired") },
                         {
                             pattern: /^\d{12}$/,
-                            message: "Căn cước công dân phải có đúng 12 chữ số",
+                            message: t("careerForm.socialNumberPattern"),
                         },
                     ]}
                 >
-                    <Input placeholder="Nhập số căn cước công dân của bạn" />
+                    <Input placeholder={t("careerForm.socialNumber")} />
                 </Form.Item>
                 <Form.Item
-                    label="Trường đang theo học hiện tại"
+                    label={t("careerForm.currentEducation")}
                     name="currentEducation"
                 >
-                    <Input placeholder="Nhập tên trường đang theo học (nếu có)" />
+                    <Input placeholder={t("careerForm.currentEducationPlaceholder")} />
                 </Form.Item>
                 <Form.Item
-                    label="Hồ sơ ứng tuyển"
+                    label={t("careerForm.resumeFile")}
                     name="ResumeFile"
                     valuePropName="fileList"
                     getValueFromEvent={(e) => {
                         return Array.isArray(e) ? e : e?.fileList;
                     }}
-                    rules={[{ required: true, message: "Vui lòng tải lên hồ sơ của bạn" }]}
+                    rules={[{ required: true, message: t("careerForm.resumeFileRequired") }]}
                 >
                     <Upload
                         name="ResumeFile"
@@ -135,12 +137,12 @@ const CareerSignUpPage = () => {
                         maxCount={1}
                         beforeUpload={validateFile}
                     >
-                        <Button icon={<UploadOutlined />}>Chọn tệp</Button>
+                        <Button icon={<UploadOutlined />}>{t("careerForm.resumeFile")}</Button>
                     </Upload>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
-                        Gửi đơn ứng tuyển
+                        {t("careerForm.submitButton")}
                     </Button>
                 </Form.Item>
             </Form>

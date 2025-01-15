@@ -15,11 +15,10 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
 import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
-
-const { Panel } = Collapse;
-
+import { useTranslation } from 'react-i18next';
 
 const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {
+    const { t } = useTranslation("global");
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -64,7 +63,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            message.error('Failed to fetch foods.');
+            message.error(t('delivery.foodChoice.fetchError'));
         } finally {
             setLoading(false);
         }
@@ -76,7 +75,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
             setSelectedFood(response.data);
             setIsModalVisible(true);
         } catch (error) {
-            message.error('Failed to fetch food details.');
+            message.error(t('delivery.foodChoice.fetchFoodDetailsError'));
         }
     };
 
@@ -114,7 +113,6 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
         });
     };
 
-
     const renderFoodItem = (food) => (
         <List.Item
             key={food.id}
@@ -150,7 +148,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                 title={food.name}
                 description={
                     <>
-                        <Typography.Text>{food.description || 'No description available'}</Typography.Text>
+                        <Typography.Text>{food.description || t('delivery.foodChoice.noDescription')}</Typography.Text>
                         <br />
                         <Typography.Text strong>{food.basePrice}đ</Typography.Text>
                     </>
@@ -163,7 +161,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
         <div style={{ backgroundColor: '#f0f0f0', padding: '16px' }}>
             {/* Search and Food List */}
             <Input.Search
-                placeholder="Tìm món ăn"
+                placeholder={t('delivery.foodChoice.searchFood')}
                 onSearch={(value) => setSearch(value)}
                 style={{ marginBottom: 16 }}
             />
@@ -202,6 +200,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                         bordered={false}
                         items={[
                             {
+                                showArrow: false,
                                 key: '1',
                                 label: (
                                     <div
@@ -213,13 +212,13 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                                     >
                                         <Button
                                             type="link"
-                                            icon={cartVisible ? <UpOutlined /> : <DownOutlined />}
+                                            icon={cartVisible ? <DownOutlined /> : <UpOutlined />}
                                         >
-                                            {cartVisible ? 'Hide Cart' : `Xe hàng (${Object.keys(preorders).length})`}
+                                            {cartVisible ? t('delivery.foodChoice.hideCart') : `${t('delivery.foodChoice.shoppingCart')} (${Object.keys(preorders).length})`}
                                         </Button>
                                         {havePendingDelivery && (
                                             <Typography.Text type="danger" style={{ marginRight: 16 }}>
-                                                Quý khách hiện đang có đơn hàng khác, xin vui lòng xác nhận lại đơn hàng trước.
+                                                {t('delivery.foodChoice.pendingDelivery')}
                                             </Typography.Text>
                                         )}
                                         {!havePendingDelivery && (
@@ -228,7 +227,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                                                 disabled={!isFormValid}
                                                 onClick={onFinish}
                                             >
-                                                Hoàn tất đặt hàng
+                                                {t('delivery.foodChoice.proceedToCheckout')}
                                             </Button>
                                         )}
                                     </div>
@@ -236,7 +235,7 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                                 children: (
                                     <>
                                         <Typography.Title level={4}>
-                                            <Typography.Text>Tổng: {Object.values(preorders).reduce(
+                                            <Typography.Text>{t('delivery.foodChoice.total')}: {Object.values(preorders).reduce(
                                                 (sum, { basePrice, quantity }) => sum + basePrice * quantity,
                                                 0)}đ
                                             </Typography.Text>
@@ -290,7 +289,6 @@ const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid })
                     />
                 </div>
             )}
-
 
             {selectedFood && (
                 <FoodDeliveryDetailModal
