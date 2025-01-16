@@ -79,7 +79,7 @@
             "noDescription": "No description",
             "fetchError": "Error fetching data",
             "fetchFoodDetailsError": "Error fetching food details",
-            "shoppingCart": "Shopping Cart",
+            "shoppingCart": "Cart",
             "emptyCart": "Your cart is empty, please add items to place an order!",
             "hideCart": "Hide Cart",
             "clearAll": "Clear All",
@@ -87,7 +87,7 @@
             "quantity": "Quantity",
             "total": "Total",
             "proceedToCheckout": "Proceed to Checkout",
-            "pendingDelivery": "You currently have another delivery order pending."
+            "pendingDelivery": "Last order is still pending"
         },
         "management": {
             "title": "Delivery Management",
@@ -247,6 +247,39 @@
             "messages": {
                 "success": "Booked successfully",
                 "error": "An error occurred while booking"
+            }
+        },
+        "foodChoice": {
+            "titles": {
+                "availableFoods": "Choose foods to preorder"
+            },
+            "placeholders": {
+                "searchFood": "Search for foods"
+            },
+            "buttons": {
+                "addToCart": "Add to cart",
+                "clearCart": "Clear All",
+                "completeBooking": "Complete Booking",
+                "havePendingBooking": "Last order is still pending"
+            },
+            "messages": {
+                "noDescription": "No description available",
+                "fetchFoodsError": "Failed to fetch food data.",
+                "emptyCart": "Your cart is empty, please add foods to preorder!",
+                "pendingBooking": "You currently have a pending booking request. Please confirm it before making another booking.",
+                "confirmInfo": "Please double-check the information before booking.",
+                "arriveOnTime": "Please arrive on time. We will only hold the table for 10 minutes past the booking time!"
+            },
+            "labels": {
+                "confirmArrival": "I confirm that I will arrive on time."
+            },
+            "cart": {
+                "title": "Cart",
+                "price": "Price",
+                "totalPrice": "Total Price",
+                "emptyText": "Your cart is empty, please add foods to preorder!",
+                "quantity": "Quantity",
+                "hide": "Hide Cart"
             }
         }
     }
