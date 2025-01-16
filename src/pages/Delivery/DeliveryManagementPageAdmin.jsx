@@ -5,6 +5,7 @@ import axiosInstance from '../../service/axios';
 import dayjs from 'dayjs';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { useWindowSize } from '../../helpers/useWindowSize';
+import { useTranslation } from 'react-i18next';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -21,6 +22,8 @@ const DeliveryManagementPageAdmin = () => {
     const [selectedDelivery, setSelectedDelivery] = useState(null);
     const { message } = App.useApp();
 
+    const { t } = useTranslation("global");
+
     const windowSize = useWindowSize();
 
     const fetchData = async () => {
@@ -36,7 +39,7 @@ const DeliveryManagementPageAdmin = () => {
             setData(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            console.error('Không thể tải dữ liệu:', error);
+            message.error(t('delivery.management.messages.fetchError'), error);
         } finally {
             setLoading(false);
         }
@@ -48,7 +51,7 @@ const DeliveryManagementPageAdmin = () => {
             const response = await axiosInstance.get(apiEndPoints.DELIVERY_INFORMATION.GET_BY_ID(id));
             setSelectedDelivery(response.data);
         } catch (error) {
-            console.error('Không thể tải dữ liệu:', error);
+            message.error(t('delivery.management.messages.fetchError'));
         } finally {
             setLoading(false);
         }
@@ -76,115 +79,88 @@ const DeliveryManagementPageAdmin = () => {
     const handleDelete = async (id) => {
         try {
             const response = await axiosInstance.delete(apiEndPoints.DELIVERY_INFORMATION.DELETE(id));
-            message.success('Xóa thông tin giao hàng thành công!');
+            message.success(t('delivery.management.messages.deleteSuccess'));
             fetchData();
         } catch (error) {
-            console.error('Lỗi khi xóa thông tin giao hàng:', error);
-            message.error('Có lỗi xảy ra khi xóa thông tin giao hàng.');
+            message.error(t('delivery.management.messages.deleteError'));
         }
     };
 
     const handleUpdate = async (id, status) => {
         try {
             const response = await axiosInstance.put(apiEndPoints.DELIVERY_INFORMATION.EDIT_STATUS(id, status));
-            message.success('Cập nhật thông tin giao hàng thành công!');
+            message.success(t('delivery.management.messages.updateSuccess'));
             fetchData();
         } catch (error) {
-            console.error('Lỗi khi cập nhật thông tin giao hàng:', error);
-            message.error('Có lỗi xảy ra khi cập nhật thông tin giao hàng.');
+            message.error(t('delivery.management.messages.updateError'));
         }
     };
 
     const columns = [
         {
-            title: 'Tên Người Dùng',
+            title: t('delivery.management.columns.userFullName'),
             dataIndex: 'userFullName',
             key: 'userFullName',
         },
         {
-            title: 'Email',
+            title: t('delivery.management.columns.email'),
             dataIndex: 'username',
             key: 'username',
             responsive: ['lg'],
             ellipsis: true,
         },
         {
-            title: 'Thời Gian',
+            title: t('delivery.management.columns.time'),
             dataIndex: 'time',
             key: 'time',
             responsive: ['md'],
             ellipsis: true,
-            render: (time) => {
-                const formattedTime = dayjs(time).utc().local().format('DD/MM HH:mm');
-                return formattedTime;
-            },
+            render: (time) => time ? dayjs(time).utc().local().format('DD/MM HH:mm') : '',
         },
         {
-            title: 'Địa Chỉ',
+            title: t('delivery.management.columns.location'),
             dataIndex: 'location',
             key: 'location',
             responsive: ['md'],
             ellipsis: true,
         },
         {
-            title: 'Số Điện Thoại',
+            title: t('delivery.management.columns.phoneNumber'),
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
             responsive: ['lg'],
         },
         {
-            title: 'Trạng Thái',
+            title: t('delivery.management.columns.status'),
             dataIndex: 'status',
             key: 'status',
             responsive: ['sm'],
             render: (status) => {
-                let color;
-                let message;
-                switch (status) {
-                    case 0:
-                        color = 'red';
-                        message = 'Hủy';
-                        break;
-                    case 1:
-                        color = 'orange';
-                        message = 'Đang Đợi';
-                        break;
-                    case 2:
-                        color = 'blue';
-                        message = 'Đang giao';
-                        break;
-                    case 3:
-                        color = 'green';
-                        message = 'Đã giao';
-                        break;
-                    default:
-                        color = 'gray';
-                        message = 'Không xác định';
-                }
+                const statusMap = {
+                    0: { color: 'red', message: t('delivery.management.statuses.cancelled') },
+                    1: { color: 'orange', message: t('delivery.management.statuses.waiting') },
+                    2: { color: 'blue', message: t('delivery.management.statuses.inProgress') },
+                    3: { color: 'green', message: t('delivery.management.statuses.completed') },
+                    default: { color: 'gray', message: t('delivery.management.statuses.unknown') },
+                };
+                const { color, message } = statusMap[status] || statusMap.default;
                 return <Tag color={color}>{message}</Tag>;
             },
         },
         {
-            title: 'Hành Động',
+            title: t('delivery.management.columns.action'),
             key: 'action',
             render: (text, record) => (
                 <Space wrap>
-                    <Button type="link" onClick={() => showDetailModal(record)}>Chi Tiết</Button>
-                    {record.status === 'Đợi' && (
-                        <Button
-                            type="link"
-                            onClick={() => handleUpdate(record.id, 2)}
-                        >
-                            Phân Công
+                    <Button type="link" onClick={() => showDetailModal(record)}>{t('delivery.management.actions.details')}</Button>
+                    {record.status === 1 && (
+                        <Button type="link" onClick={() => handleUpdate(record.id, 2)}>
+                            {t('delivery.management.actions.assign')}
                         </Button>
                     )}
-                    {record.status !== 'Đã giao' && (
-                        <Button
-                            type="link"
-                            onClick={() => handleUpdate(record.id, 0)}
-                            danger
-                        >
-                            Hủy
+                    {record.status !== 3 && (
+                        <Button type="link" onClick={() => handleUpdate(record.id, 0)} danger>
+                            {t('delivery.management.actions.cancel')}
                         </Button>
                     )}
                 </Space>
@@ -194,7 +170,7 @@ const DeliveryManagementPageAdmin = () => {
 
     return (
         <Content style={{ padding: '20px' }}>
-            <Title level={3}>Quản Lý Giao Hàng</Title>
+            <Title level={3}>{t('delivery.management.title')}</Title>
             <div style={{
                 display: 'flex',
                 gap: '20px',
@@ -202,17 +178,17 @@ const DeliveryManagementPageAdmin = () => {
                 marginBottom: '20px',
             }}>
                 <Select
-                    placeholder="Lọc theo Trạng Thái"
+                    placeholder={t('delivery.management.filterPlaceholder')}
                     style={{ width: '100%' }}
                     onChange={handleStatusChange}
                     value={statusFilter}
                     allowClear
                 >
-                    <Option value={undefined}>Tất Cả</Option>
-                    <Option value={0}>Hủy</Option>
-                    <Option value={1}>Đang Đợi</Option>
-                    <Option value={2}>Đang giao</Option>
-                    <Option value={3}>Đã giao</Option>
+                    <Option value={undefined}>{t('delivery.management.statuses.all')}</Option>
+                    <Option value={0}>{t('delivery.management.statuses.cancelled')}</Option>
+                    <Option value={1}>{t('delivery.management.statuses.waiting')}</Option>
+                    <Option value={2}>{t('delivery.management.statuses.inProgress')}</Option>
+                    <Option value={3}>{t('delivery.management.statuses.completed')}</Option>
                 </Select>
             </div>
 
@@ -234,22 +210,22 @@ const DeliveryManagementPageAdmin = () => {
             />
 
             <Modal
-                title="Chi Tiết Giao Hàng"
+                title={t('delivery.management.modal.title')}
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 width={windowSize.width < 768 ? '100%' : '70vw'}
-                footer={[<Button key="close" onClick={handleModalClose}>Đóng</Button>]}>
+                footer={[<Button key="close" onClick={handleModalClose}>{t('delivery.management.actions.close')}</Button>]}>
                 {loading ? (
                     <Spin />
                 ) : selectedDelivery && (
                     <div>
-                        <p><strong>Tên Người Dùng:</strong> {selectedDelivery.userFullName}</p>
-                        <p><strong>Email:</strong> {selectedDelivery.username}</p>
-                        <p><strong>Thời Gian:</strong> {dayjs(selectedDelivery.time).format('DD/MM HH:mm')}</p>
-                        <p><strong>Địa Chỉ:</strong> {selectedDelivery.location}</p>
-                        <p><strong>Số Điện Thoại:</strong> {selectedDelivery.phoneNumber}</p>
-                        <p><strong>Trạng Thái:</strong> {selectedDelivery.status}</p>
-                        {selectedDelivery.message && <p><strong>Lời Nhắn:</strong> {selectedDelivery.message}</p>}
+                        <p><strong>{t('delivery.management.modal.userFullName')}:</strong> {selectedDelivery.userFullName}</p>
+                        <p><strong>{t('delivery.management.modal.email')}:</strong> {selectedDelivery.username}</p>
+                        <p><strong>{t('delivery.management.modal.time')}:</strong> {selectedDelivery.time ? dayjs(selectedDelivery.time).utc().local().format('DD/MM HH:mm') : ''}</p>
+                        <p><strong>{t('delivery.management.modal.location')}:</strong> {selectedDelivery.location}</p>
+                        <p><strong>{t('delivery.management.modal.phoneNumber')}:</strong> {selectedDelivery.phoneNumber}</p>
+                        <p><strong>{t('delivery.management.modal.status')}:</strong> {selectedDelivery.status}</p>
+                        {selectedDelivery.message && <p><strong>{t('delivery.management.modal.message')}:</strong> {selectedDelivery.message}</p>}
 
                         <div
                             style={{
@@ -260,10 +236,10 @@ const DeliveryManagementPageAdmin = () => {
                             }}
                         >
                             <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                Danh Sách Món:
+                                {t('delivery.management.modal.preOrderItems')}:
                             </Title>
                             <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                Tổng: {selectedDelivery.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
+                                {t('delivery.management.modal.total')} {selectedDelivery.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
                             </Title>
                         </div>
 
@@ -285,7 +261,7 @@ const DeliveryManagementPageAdmin = () => {
                                             description={
                                                 <>
                                                     <p>{item.price.toLocaleString()} VND</p>
-                                                    <p>Số Lượng: {item.quantity}</p>
+                                                    <p>{t('delivery.management.modal.quantity')}: {item.quantity}</p>
                                                 </>
                                             }
                                         />

@@ -42,24 +42,36 @@
     "delivery": {
         "form": {
             "title": "Thông Tin Giao Hàng",
-            "fullname": "Họ và Tên",
-            "fullnameRequired": "Vui lòng nhập họ và tên",
-            "fullnamePlaceholder": "Họ và tên",
-            "time": "Thời Gian",
-            "timeRequired": "Vui lòng chọn thời gian giao hàng",
-            "timeExtra": "Nếu không chọn, chúng tôi sẽ giao hàng ngay khi có thể.",
-            "timePlaceholder": "ASAP",
-            "location": "Địa Chỉ",
-            "locationRequired": "Vui lòng nhập địa chỉ giao hàng",
-            "locationPlaceholder": "Địa chỉ giao hàng",
-            "phoneNumber": "Số Điện Thoại",
-            "phoneNumberRequired": "Vui lòng nhập số điện thoại",
-            "phoneNumberPattern": "Số điện thoại phải có từ 9 đến 10 chữ số",
-            "phoneNumberPlaceholder": "Số điện thoại",
-            "message": "Lời Nhắn",
-            "messagePlaceholder": "Thông tin cần lưu ý",
-            "messageDeliverySuccess": "Tạo đơn giao hàng thành công",
-            "messageDeliveryError": "Có lỗi xảy ra khi tạo đơn giao hàng"
+            "fullname": {
+                "label": "Họ và Tên",
+                "placeholder": "Họ và tên",
+                "required": "Vui lòng nhập họ và tên"
+            },
+            "time": {
+                "label": "Thời Gian",
+                "placeholder": "ASAP",
+                "required": "Vui lòng chọn thời gian giao hàng",
+                "extra": "Nếu không chọn, chúng tôi sẽ giao hàng ngay khi có thể."
+            },
+            "location": {
+                "label": "Địa Chỉ",
+                "placeholder": "Địa chỉ giao hàng",
+                "required": "Vui lòng nhập địa chỉ giao hàng"
+            },
+            "phoneNumber": {
+                "label": "Số Điện Thoại",
+                "placeholder": "Số điện thoại",
+                "required": "Vui lòng nhập số điện thoại",
+                "pattern": "Số điện thoại phải có từ 9 đến 10 chữ số"
+            },
+            "message": {
+                "label": "Lời Nhắn",
+                "placeholder": "Thông tin cần lưu ý"
+            },
+            "messages": {
+                "success": "Tạo đơn giao hàng thành công",
+                "error": "Có lỗi xảy ra khi tạo đơn giao hàng"
+            }
         },
         "foodChoice": {
             "title": "Chọn Món Ăn",
@@ -76,33 +88,166 @@
             "total": "Tổng Cộng",
             "proceedToCheckout": "Tiến Hành Thanh Toán",
             "pendingDelivery": "Quý khách hiện đang có đơn hàng khác, xin vui lòng xác nhận lại đơn hàng trước."
+        },
+        "management": {
+            "title": "Quản Lý Giao Hàng",
+            "filterPlaceholder": "Lọc theo Trạng Thái",
+            "statuses": {
+                "all": "Tất Cả",
+                "cancelled": "Hủy",
+                "waiting": "Đang Đợi",
+                "inProgress": "Đang giao",
+                "completed": "Đã giao",
+                "unknown": "Không xác định"
+            },
+            "actions": {
+                "details": "Chi Tiết",
+                "assign": "Phân Công",
+                "cancel": "Hủy",
+                "close": "Đóng"
+            },
+            "columns": {
+                "userFullName": "Tên Người Dùng",
+                "email": "Email",
+                "time": "Thời Gian",
+                "location": "Địa Chỉ",
+                "phoneNumber": "Số Điện Thoại",
+                "status": "Trạng Thái",
+                "action": "Hành Động"
+            },
+            "modal": {
+                "title": "Chi Tiết Giao Hàng",
+                "userFullName": "Tên Người Dùng",
+                "email": "Email",
+                "time": "Thời Gian",
+                "location": "Địa Chỉ",
+                "phoneNumber": "Số Điện Thoại",
+                "status": "Trạng Thái",
+                "message": "Lời Nhắn",
+                "preOrderItems": "Danh Sách Món",
+                "total": "Tổng",
+                "quantity": "Số Lượng"
+            },
+            "messages": {
+                "fetchError": "Không thể tải dữ liệu.",
+                "deleteSuccess": "Xóa thông tin giao hàng thành công!",
+                "deleteError": "Có lỗi xảy ra khi xóa thông tin giao hàng.",
+                "updateSuccess": "Cập nhật thông tin giao hàng thành công!",
+                "updateError": "Có lỗi xảy ra khi cập nhật thông tin giao hàng."
+            }
         }
     },
-    "careerForm": {
-        "title": "Đăng ký tuyển dụng",
-        "firstName": "Họ",
-        "firstNameRequired": "Vui lòng nhập họ của bạn",
-        "firstNameMaxLength": "Họ không được vượt quá 50 ký tự",
-        "lastName": "Tên",
-        "lastNameRequired": "Vui lòng nhập tên của bạn",
-        "lastNameMaxLength": "Tên không được vượt quá 50 ký tự",
-        "email": "Email",
-        "emailRequired": "Vui lòng nhập email của bạn",
-        "emailInvalid": "Vui lòng nhập một địa chỉ email hợp lệ",
-        "phoneNumber": "Số điện thoại",
-        "phoneNumberRequired": "Vui lòng nhập số điện thoại của bạn",
-        "phoneNumberPattern": "Số điện thoại phải có từ 9 đến 10 chữ số",
-        "socialNumber": "Căn cước công dân",
-        "socialNumberRequired": "Vui lòng nhập số căn cước công dân của bạn",
-        "socialNumberPattern": "Căn cước công dân phải có đúng 12 chữ số",
-        "currentEducation": "Trường đang theo học hiện tại",
-        "currentEducationPlaceholder": "Nhập tên trường đang theo học (nếu có)",
-        "resumeFile": "Hồ sơ ứng tuyển",
-        "resumeFileRequired": "Vui lòng tải lên hồ sơ của bạn",
-        "resumeFileInvalid": "Chỉ cho phép tệp Word hoặc PDF",
-        "submitButton": "Gửi đơn ứng tuyển",
-        "successMessage": "Đơn ứng tuyển của bạn đã được gửi thành công!",
-        "errorMessage": "Gửi đơn ứng tuyển thất bại.",
-        "formError": "Vui lòng kiểm tra lại các trường trong biểu mẫu và thử lại."
+    "career": {
+        "form": {
+            "title": "Đơn Ứng Tuyển",
+            "firstName": {
+                "label": "Họ",
+                "placeholder": "Nhập họ của bạn",
+                "required": "Vui lòng nhập họ của bạn",
+                "maxLength": "Họ không được vượt quá 50 ký tự"
+            },
+            "lastName": {
+                "label": "Tên",
+                "placeholder": "Nhập tên của bạn",
+                "required": "Vui lòng nhập tên của bạn",
+                "maxLength": "Tên không được vượt quá 50 ký tự"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "Nhập email của bạn",
+                "required": "Vui lòng nhập email của bạn",
+                "invalid": "Vui lòng nhập một địa chỉ email hợp lệ"
+            },
+            "phoneNumber": {
+                "label": "Số điện thoại",
+                "placeholder": "Nhập số điện thoại của bạn",
+                "required": "Vui lòng nhập số điện thoại của bạn",
+                "pattern": "Số điện thoại phải có từ 9 đến 10 chữ số"
+            },
+            "socialNumber": {
+                "label": "Số căn cước công dân",
+                "placeholder": "Nhập số căn cước công dân của bạn",
+                "required": "Vui lòng nhập số căn cước công dân của bạn",
+                "pattern": "Số căn cước công dân phải có đúng 12 chữ số"
+            },
+            "currentEducation": {
+                "label": "Trường hiện tại",
+                "placeholder": "Nhập tên trường bạn đang học (nếu có)"
+            },
+            "resumeFile": {
+                "label": "Hồ sơ ứng tuyển",
+                "required": "Vui lòng tải lên hồ sơ của bạn",
+                "invalid": "Chỉ chấp nhận tệp Word hoặc PDF"
+            },
+            "submitButton": "Gửi đơn ứng tuyển",
+            "messages": {
+                "success": "Đơn ứng tuyển của bạn đã được gửi thành công!",
+                "error": "Gửi đơn ứng tuyển thất bại.",
+                "formError": "Vui lòng kiểm tra lại các trường trong biểu mẫu và thử lại."
+            }
+        }
+    },
+    "booking": {
+        "calendar": {
+            "header": {
+                "branchTitle": "Chi Nhánh"
+            },
+            "modal": {
+                "title": "Ngày Đã Chọn",
+                "switch": {
+                    "day": "Ban Ngày",
+                    "night": "Buổi Tối"
+                }
+            },
+            "tooltip": {
+                "booked": "đã đặt",
+                "noBookings": "0 lượt đặt"
+            },
+            "buttons": {
+                "available": "Còn Chỗ",
+                "notAvailable": "Hết Chỗ"
+            },
+            "messages": {
+                "fetchError": "Không thể tải dữ liệu.",
+                "loading": "Đang tải..."
+            }
+        },
+        "bookingPage": {
+            "title": "Thông Tin Đặt Chỗ cho",
+            "form": {
+                "fullname": {
+                    "label": "Họ và Tên",
+                    "placeholder": "Nhập họ và tên của bạn",
+                    "required": "Vui lòng nhập họ và tên của bạn"
+                },
+                "numberOfPeople": {
+                    "label": "Số Người",
+                    "placeholder": "Nhập số người",
+                    "required": "Vui lòng chọn số người"
+                },
+                "numberOfChildren": {
+                    "label": "Số Trẻ Em",
+                    "placeholder": "Nhập số trẻ em"
+                },
+                "phoneNumber": {
+                    "label": "Số Điện Thoại",
+                    "placeholder": "Nhập số điện thoại của bạn",
+                    "required": "Vui lòng nhập số điện thoại của bạn",
+                    "pattern": "Số điện thoại phải có từ 9 đến 10 chữ số"
+                },
+                "message": {
+                    "label": "Lời Nhắn",
+                    "placeholder": "Lời nhắn (Không bắt buộc)"
+                }
+            },
+            "warnings": {
+                "largeGroup": "Đối với nhóm từ 6 người trở lên, vui lòng nhắn tin cho chúng tôi qua Fanpage để được hỗ trợ: ",
+                "fanpageLink": "Fanpage"
+            },
+            "messages": {
+                "success": "Đặt chỗ thành công",
+                "error": "Đã xảy ra lỗi khi đặt chỗ"
+            }
+        }
     }
 }

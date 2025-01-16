@@ -42,24 +42,36 @@
     "delivery": {
         "form": {
             "title": "Delivery Information",
-            "fullname": "Full Name",
-            "fullnameRequired": "Please enter your full name",
-            "fullnamePlaceholder": "Full name",
-            "time": "Time",
-            "timeRequired": "Please select a delivery time",
-            "timeExtra": "If not selected, we will deliver as soon as possible.",
-            "timePlaceholder": "ASAP",
-            "location": "Address",
-            "locationRequired": "Please enter the delivery address",
-            "locationPlaceholder": "Delivery address",
-            "phoneNumber": "Phone Number",
-            "phoneNumberRequired": "Please enter your phone number",
-            "phoneNumberPattern": "Phone number must be 9 to 10 digits",
-            "phoneNumberPlaceholder": "Phone number",
-            "message": "Message",
-            "messagePlaceholder": "Additional notes",
-            "messageDeliverySuccess": "Delivery order created successfully",
-            "messageDeliveryError": "There was an error creating the delivery order"
+            "fullname": {
+                "label": "Full Name",
+                "placeholder": "Enter your full name",
+                "required": "Please enter your full name"
+            },
+            "time": {
+                "label": "Delivery Time",
+                "placeholder": "ASAP",
+                "required": "Please select a delivery time",
+                "extra": "If not selected, we will deliver as soon as possible."
+            },
+            "location": {
+                "label": "Address",
+                "placeholder": "Enter your delivery address",
+                "required": "Please enter your delivery address"
+            },
+            "phoneNumber": {
+                "label": "Phone Number",
+                "placeholder": "Enter your phone number",
+                "required": "Please enter your phone number",
+                "pattern": "Phone number must be 9 to 10 digits"
+            },
+            "message": {
+                "label": "Message",
+                "placeholder": "Additional information (optional)"
+            },
+            "messages": {
+                "success": "Delivery order created successfully",
+                "error": "An error occurred while creating the delivery order"
+            }
         },
         "foodChoice": {
             "title": "Choose Food",
@@ -76,33 +88,166 @@
             "total": "Total",
             "proceedToCheckout": "Proceed to Checkout",
             "pendingDelivery": "You currently have another delivery order pending."
+        },
+        "management": {
+            "title": "Delivery Management",
+            "filterPlaceholder": "Filter by Status",
+            "statuses": {
+                "all": "All",
+                "cancelled": "Cancelled",
+                "waiting": "Waiting",
+                "inProgress": "In Progress",
+                "completed": "Completed",
+                "unknown": "Unknown"
+            },
+            "actions": {
+                "details": "Details",
+                "assign": "Assign",
+                "cancel": "Cancel",
+                "close": "Close"
+            },
+            "columns": {
+                "userFullName": "User Full Name",
+                "email": "Email",
+                "time": "Time",
+                "location": "Address",
+                "phoneNumber": "Phone Number",
+                "status": "Status",
+                "action": "Action"
+            },
+            "modal": {
+                "title": "Delivery Details",
+                "userFullName": "User Full Name",
+                "email": "Email",
+                "time": "Time",
+                "location": "Address",
+                "phoneNumber": "Phone Number",
+                "status": "Status",
+                "message": "Message",
+                "preOrderItems": "Preorder Items",
+                "total": "Total",
+                "quantity": "Quantity"
+            },
+            "messages": {
+                "fetchError": "Failed to fetch data.",
+                "deleteSuccess": "Delivery information deleted successfully!",
+                "deleteError": "An error occurred while deleting delivery information.",
+                "updateSuccess": "Delivery information updated successfully!",
+                "updateError": "An error occurred while updating delivery information."
+            }
         }
     },
-    "careerForm": {
-        "title": "Job Application",
-        "firstName": "First Name",
-        "firstNameRequired": "Please enter your first name",
-        "firstNameMaxLength": "First name cannot exceed 50 characters",
-        "lastName": "Last Name",
-        "lastNameRequired": "Please enter your last name",
-        "lastNameMaxLength": "Last name cannot exceed 50 characters",
-        "email": "Email",
-        "emailRequired": "Please enter your email",
-        "emailInvalid": "Please enter a valid email address",
-        "phoneNumber": "Phone Number",
-        "phoneNumberRequired": "Please enter your phone number",
-        "phoneNumberPattern": "Phone number must have 9 to 10 digits",
-        "socialNumber": "ID Card Number",
-        "socialNumberRequired": "Please enter your ID card number",
-        "socialNumberPattern": "ID card number must have exactly 12 digits",
-        "currentEducation": "Current School",
-        "currentEducationPlaceholder": "Enter your current school (if any)",
-        "resumeFile": "Resume",
-        "resumeFileRequired": "Please upload your resume",
-        "resumeFileInvalid": "Only Word or PDF files are allowed",
-        "submitButton": "Submit Application",
-        "successMessage": "Your application has been successfully submitted!",
-        "errorMessage": "Application submission failed.",
-        "formError": "Please check the fields in the form and try again."
+    "career": {
+        "form": {
+            "title": "Application Form",
+            "firstName": {
+                "label": "First Name",
+                "placeholder": "Enter your first name",
+                "required": "Please enter your first name",
+                "maxLength": "First name cannot exceed 50 characters"
+            },
+            "lastName": {
+                "label": "Last Name",
+                "placeholder": "Enter your last name",
+                "required": "Please enter your last name",
+                "maxLength": "Last name cannot exceed 50 characters"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "Enter your email",
+                "required": "Please enter your email",
+                "invalid": "Please enter a valid email address"
+            },
+            "phoneNumber": {
+                "label": "Phone Number",
+                "placeholder": "Enter your phone number",
+                "required": "Please enter your phone number",
+                "pattern": "Phone number must have 9 to 10 digits"
+            },
+            "socialNumber": {
+                "label": "ID Card Number",
+                "placeholder": "Enter your ID card number",
+                "required": "Please enter your ID card number",
+                "pattern": "ID card number must have exactly 12 digits"
+            },
+            "currentEducation": {
+                "label": "Current School",
+                "placeholder": "Enter your current school (if any)"
+            },
+            "resumeFile": {
+                "label": "Resume",
+                "required": "Please upload your resume",
+                "invalid": "Only Word or PDF files are allowed"
+            },
+            "submitButton": "Submit Application",
+            "messages": {
+                "success": "Your application has been successfully submitted!",
+                "error": "Application submission failed.",
+                "formError": "Please check the fields in the form and try again."
+            }
+        }
+    },
+    "booking": {
+        "calendar": {
+            "header": {
+                "branchTitle": "Branch"
+            },
+            "modal": {
+                "title": "Selected Date",
+                "switch": {
+                    "day": "Day",
+                    "night": "Night"
+                }
+            },
+            "tooltip": {
+                "booked": "booked",
+                "noBookings": "0 slot booked"
+            },
+            "buttons": {
+                "available": "Available",
+                "notAvailable": "Not Available"
+            },
+            "messages": {
+                "fetchError": "Failed to fetch data.",
+                "loading": "Loading..."
+            }
+        },
+        "bookingPage": {
+            "title": "Booking Information for",
+            "form": {
+                "fullname": {
+                    "label": "Full Name",
+                    "placeholder": "Enter your full name",
+                    "required": "Please enter your full name"
+                },
+                "numberOfPeople": {
+                    "label": "Number of People",
+                    "placeholder": "Enter the number of people",
+                    "required": "Please select the number of people"
+                },
+                "numberOfChildren": {
+                    "label": "Number of Children",
+                    "placeholder": "Enter the number of children"
+                },
+                "phoneNumber": {
+                    "label": "Phone Number",
+                    "placeholder": "Enter your phone number",
+                    "required": "Please enter your phone number",
+                    "pattern": "Phone number must be 9 to 10 digits"
+                },
+                "message": {
+                    "label": "Message",
+                    "placeholder": "Message (Optional)"
+                }
+            },
+            "warnings": {
+                "largeGroup": "For groups of 6 or more, please message us via Fanpage for assistance: ",
+                "fanpageLink": "Fanpage"
+            },
+            "messages": {
+                "success": "Booked successfully",
+                "error": "An error occurred while booking"
+            }
+        }
     }
 }

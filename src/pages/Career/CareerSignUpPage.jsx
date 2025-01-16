@@ -1,14 +1,14 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { App, Button, Form, Input, Upload } from "antd";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"; // Import translation hook
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import axiosInstance from "../../service/axios";
 
 const CareerSignUpPage = () => {
     const [form] = Form.useForm();
     const { message } = App.useApp();
-    const { t } = useTranslation("global"); // Use the "global" namespace for translations
+    const { t } = useTranslation("global"); // Initialize translation
 
     const handleSubmit = async (values) => {
         const formData = new FormData();
@@ -17,7 +17,7 @@ const CareerSignUpPage = () => {
         formData.append("email", values.email);
         formData.append("phoneNumber", values.phoneNumber);
         formData.append("socialNumber", values.socialNumber);
-        formData.append("resumeFile", values.ResumeFile[0].originFileObj);
+        formData.append("resumeFile", values.resumeFile[0].originFileObj);
         if (values.currentEducation) {
             formData.append("currentEducation", values.currentEducation);
         }
@@ -27,15 +27,15 @@ const CareerSignUpPage = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            message.success(t("careerForm.successMessage"));
+            message.success(t("career.form.messages.success"));
             form.resetFields();
         } catch (error) {
-            message.error(t("careerForm.errorMessage"));
+            message.error(t("career.form.messages.error"));
         }
     };
 
-    const handleFailedSubmit = (errorInfo) => {
-        message.error(t("careerForm.formError"));
+    const handleFailedSubmit = () => {
+        message.error(t("career.form.messages.formError"));
     };
 
     const validateFile = (file) => {
@@ -45,7 +45,7 @@ const CareerSignUpPage = () => {
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         ];
         if (!allowedTypes.includes(file.type)) {
-            message.error(t("careerForm.resumeFileInvalid"));
+            message.error(t("career.form.resumeFile.invalid"));
             return Upload.LIST_IGNORE;
         }
         return true;
@@ -53,7 +53,7 @@ const CareerSignUpPage = () => {
 
     return (
         <div style={{ padding: "24px", maxWidth: "600px", margin: "0 auto" }}>
-            <h2>{t("careerForm.title")}</h2>
+            <h2>{t("career.form.title")}</h2>
             <Form
                 layout="vertical"
                 form={form}
@@ -61,88 +61,89 @@ const CareerSignUpPage = () => {
                 onFinishFailed={handleFailedSubmit}
             >
                 <Form.Item
-                    label={t("careerForm.firstName")}
+                    label={t("career.form.firstName.label")}
                     name="firstName"
                     rules={[
-                        { required: true, message: t("careerForm.firstNameRequired") },
-                        { max: 50, message: t("careerForm.firstNameMaxLength") },
+                        { required: true, message: t("career.form.firstName.required") },
+                        { max: 50, message: t("career.form.firstName.maxLength") },
                     ]}
                 >
-                    <Input placeholder={t("careerForm.firstName")} />
+                    <Input placeholder={t("career.form.firstName.placeholder")} />
                 </Form.Item>
+
                 <Form.Item
-                    label={t("careerForm.lastName")}
+                    label={t("career.form.lastName.label")}
                     name="lastName"
                     rules={[
-                        { required: true, message: t("careerForm.lastNameRequired") },
-                        { max: 50, message: t("careerForm.lastNameMaxLength") },
+                        { required: true, message: t("career.form.lastName.required") },
+                        { max: 50, message: t("career.form.lastName.maxLength") },
                     ]}
                 >
-                    <Input placeholder={t("careerForm.lastName")} />
+                    <Input placeholder={t("career.form.lastName.placeholder")} />
                 </Form.Item>
+
                 <Form.Item
-                    label={t("careerForm.email")}
+                    label={t("career.form.email.label")}
                     name="email"
                     rules={[
-                        { required: true, message: t("careerForm.emailRequired") },
-                        { type: "email", message: t("careerForm.emailInvalid") },
+                        { required: true, message: t("career.form.email.required") },
+                        { type: "email", message: t("career.form.email.invalid") },
                     ]}
                 >
-                    <Input placeholder={t("careerForm.email")} />
+                    <Input placeholder={t("career.form.email.placeholder")} />
                 </Form.Item>
+
                 <Form.Item
-                    label={t("careerForm.phoneNumber")}
+                    label={t("career.form.phoneNumber.label")}
                     name="phoneNumber"
                     rules={[
-                        { required: true, message: t("careerForm.phoneNumberRequired") },
-                        {
-                            pattern: /^\d{9,10}$/,
-                            message: t("careerForm.phoneNumberPattern"),
-                        },
+                        { required: true, message: t("career.form.phoneNumber.required") },
+                        { pattern: /^\d{9,10}$/, message: t("career.form.phoneNumber.pattern") },
                     ]}
                 >
-                    <Input placeholder={t("careerForm.phoneNumber")} />
+                    <Input placeholder={t("career.form.phoneNumber.placeholder")} />
                 </Form.Item>
+
                 <Form.Item
-                    label={t("careerForm.socialNumber")}
+                    label={t("career.form.socialNumber.label")}
                     name="socialNumber"
                     rules={[
-                        { required: true, message: t("careerForm.socialNumberRequired") },
-                        {
-                            pattern: /^\d{12}$/,
-                            message: t("careerForm.socialNumberPattern"),
-                        },
+                        { required: true, message: t("career.form.socialNumber.required") },
+                        { pattern: /^\d{12}$/, message: t("career.form.socialNumber.pattern") },
                     ]}
                 >
-                    <Input placeholder={t("careerForm.socialNumber")} />
+                    <Input placeholder={t("career.form.socialNumber.placeholder")} />
                 </Form.Item>
+
                 <Form.Item
-                    label={t("careerForm.currentEducation")}
+                    label={t("career.form.currentEducation.label")}
                     name="currentEducation"
                 >
-                    <Input placeholder={t("careerForm.currentEducationPlaceholder")} />
+                    <Input placeholder={t("career.form.currentEducation.placeholder")} />
                 </Form.Item>
+
                 <Form.Item
-                    label={t("careerForm.resumeFile")}
-                    name="ResumeFile"
+                    label={t("career.form.resumeFile.label")}
+                    name="resumeFile"
                     valuePropName="fileList"
-                    getValueFromEvent={(e) => {
-                        return Array.isArray(e) ? e : e?.fileList;
-                    }}
-                    rules={[{ required: true, message: t("careerForm.resumeFileRequired") }]}
+                    getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
+                    rules={[{ required: true, message: t("career.form.resumeFile.required") }]}
                 >
                     <Upload
-                        name="ResumeFile"
+                        name="resumeFile"
                         listType="text"
                         maxCount={1}
                         beforeUpload={validateFile}
                     >
-                        <Button icon={<UploadOutlined />}>{t("careerForm.resumeFile")}</Button>
+                        <Button icon={<UploadOutlined />}>
+                            {t("career.form.resumeFile.label")}
+                        </Button>
                     </Upload>
                 </Form.Item>
+
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
-                        {t("careerForm.submitButton")}
+                        {t("career.form.submitButton")}
                     </Button>
                 </Form.Item>
             </Form>

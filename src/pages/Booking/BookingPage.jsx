@@ -1,6 +1,7 @@
 import { App, Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, Typography } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
@@ -13,6 +14,7 @@ import FoodPreOrderSectionMobile from './FoodPreOrderSectionMobile';
 const { Title, Text } = Typography;
 
 const BookingPage = () => {
+    const { t } = useTranslation('global');
     const [form] = Form.useForm();
     const location = useLocation();
     const { selectedDate, selectedTime, branchId } = location?.state;
@@ -51,11 +53,11 @@ const BookingPage = () => {
 
         setIsFetching(true);
         try {
-            const response = await axiosInstance.post(apiEndPoints.BOOKING_INFORMATION.CREATE, payload);
-            message.success('Booked successfully');
+            await axiosInstance.post(apiEndPoints.BOOKING_INFORMATION.CREATE, payload);
+            message.success(t('booking.bookingPage.messages.success'));
             navigate(routeNames.index);
         } catch (error) {
-            message.error(error.response.data);
+            message.error(t('booking.bookingPage.messages.error'));
         } finally {
             setIsFetching(false);
         }
@@ -86,7 +88,7 @@ const BookingPage = () => {
                     }}
                 >
                     <Title level={3} style={{ color: '#ff4d4f' }}>
-                        Thông tin book vào {selectedDate} {selectedTime}
+                        {t('booking.bookingPage.title') + ` ${selectedDate} ${selectedTime}`}
                     </Title>
                     <Form
                         layout="vertical"
@@ -96,49 +98,58 @@ const BookingPage = () => {
                     >
                         <Form.Item
                             name="fullname"
-                            label="Full Name"
-                            rules={[{ required: true, message: 'Làm ơn nhập tên đầy đủ của bạn' }]}
+                            label={t('booking.bookingPage.form.fullname.label')}
+                            rules={[{ required: true, message: t('booking.bookingPage.form.fullname.required') }]}
                         >
-                            <Input placeholder="Tên đầy đủ" />
+                            <Input placeholder={t('booking.bookingPage.form.fullname.placeholder')} />
                         </Form.Item>
 
                         <Form.Item
                             name="numberOfPeople"
-                            label="Number of People"
-                            rules={[{ required: true, message: 'Làm ơn chọn số người dùng bàn' }]}
+                            label={t('booking.bookingPage.form.numberOfPeople.label')}
+                            rules={[{ required: true, message: t('booking.bookingPage.form.numberOfPeople.required') }]}
                         >
-                            <Input placeholder="Chọn số người dùng bàn" type="number" min={2} />
+                            <Input
+                                placeholder={t('booking.bookingPage.form.numberOfPeople.placeholder')}
+                                type="number"
+                                min={2}
+                            />
                         </Form.Item>
 
                         <Form.Item
                             name="numberOfChildren"
-                            label="Number of Children"
+                            label={t('booking.bookingPage.form.numberOfChildren.label')}
                         >
-                            <Input placeholder="Chọn số trẻ em dùng bàn" type="number" />
+                            <Input
+                                placeholder={t('booking.bookingPage.form.numberOfChildren.placeholder')}
+                                type="number"
+                            />
                         </Form.Item>
 
                         <Form.Item
                             name="phoneNumber"
-                            label="Phone Number"
+                            label={t('booking.bookingPage.form.phoneNumber.label')}
                             rules={[
-                                { required: true, message: 'Vui lòng nhập số điện thoại của bạn' },
-                                { pattern: /^\d{9,10}$/, message: 'Số điện thoại phải có từ 9 đến 10 chữ số' }
+                                { required: true, message: t('booking.bookingPage.form.phoneNumber.required') },
+                                { pattern: /^\d{9,10}$/, message: t('booking.bookingPage.form.phoneNumber.pattern') },
                             ]}
                         >
-                            <Input placeholder="Số điện thoại" />
+                            <Input placeholder={t('booking.bookingPage.form.phoneNumber.placeholder')} />
                         </Form.Item>
 
-                        <Form.Item name="message" label="Message">
+                        <Form.Item name="message" label={t('booking.bookingPage.form.message.label')}>
                             <Input.TextArea
-                                placeholder="Message (Optional)"
+                                placeholder={t('booking.bookingPage.form.message.placeholder')}
                                 style={{ height: '100px' }}
                             />
                         </Form.Item>
                     </Form>
                     <Space direction="vertical" style={{ marginTop: '20px' }}>
                         <Text type="danger">
-                            Đối với bàn 6 trở lên người vui lòng nhắn tin qua Fanpage để được hỗ trợ:&nbsp;
-                            <a href="https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d">Fanpage</a>
+                            {t('booking.bookingPage.warnings.largeGroup')}
+                            <a href="https://www.facebook.com/profile.php?id=61562738210745&mibextid=LQQJ4d">
+                                {t('booking.bookingPage.warnings.fanpageLink')}
+                            </a>
                         </Text>
                     </Space>
                 </div>
