@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../../constaints/axiosContaint';
 import axiosInstance from '../../../service/axios';
+import { useTranslation } from 'react-i18next';
 
 const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
     const { message } = App.useApp();
+    const { t } = useTranslation('global');
 
     useEffect(() => {
         if (branch) {
@@ -18,12 +20,14 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 description: branch.description,
             });
 
-            setFileList(branch.imagePath ? [{
-                uid: '-1',
-                name: 'image.png',
-                status: 'done',
-                url: `${AxiosConstants.AXIOS_BASEURL}/${branch.imagePath}`,
-            }] : []);
+            setFileList(branch.imagePath ? [
+                {
+                    uid: '-1',
+                    name: 'image.png',
+                    status: 'done',
+                    url: `${AxiosConstants.AXIOS_BASEURL}/${branch.imagePath}`,
+                },
+            ] : []);
         }
     }, [branch, form]);
 
@@ -45,13 +49,13 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 },
             });
 
-            message.success('Branch updated successfully!');
+            message.success(t('branch.editModal.messages.success'));
             form.resetFields();
-            setFileList([]); // Clear the file list after submission
-            onBranchUpdated(response.data); // Notify parent component
+            setFileList([]);
+            onBranchUpdated(response.data);
             onClose();
         } catch (error) {
-            message.error('Failed to update branch. Please try again.');
+            message.error(t('branch.editModal.messages.error'));
             console.error('Error updating branch:', error);
         } finally {
             setLoading(false);
@@ -64,7 +68,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
 
     return (
         <Modal
-            title="Edit Branch"
+            title={t('branch.editModal.titles.modalTitle')}
             open={open}
             onCancel={onClose}
             footer={null}
@@ -75,23 +79,23 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    label="Name"
+                    label={t('branch.editModal.form.name.label')}
                     name="name"
-                    rules={[{ required: true, message: 'Please enter the branch name' }]}
+                    rules={[{ required: true, message: t('branch.editModal.form.name.required') }]}
                 >
-                    <Input placeholder="Enter branch name" />
+                    <Input placeholder={t('branch.editModal.form.name.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
-                    label="Description"
+                    label={t('branch.editModal.form.description.label')}
                     name="description"
-                    rules={[{ required: true, message: 'Please enter the branch description' }]}
+                    rules={[{ required: true, message: t('branch.editModal.form.description.required') }]}
                 >
-                    <Input.TextArea rows={4} placeholder="Enter branch description" />
+                    <Input.TextArea rows={4} placeholder={t('branch.editModal.form.description.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
-                    label="Image"
+                    label={t('branch.editModal.form.image.label')}
                     name="imageFile"
                     rules={[{ required: false }]}
                 >
@@ -99,17 +103,17 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                         name="imageFile"
                         listType="picture"
                         maxCount={1}
-                        beforeUpload={() => false} // Prevent automatic upload
+                        beforeUpload={() => false}
                         fileList={fileList}
                         onChange={handleFileChange}
                     >
-                        <Button icon={<UploadOutlined />}>Select Image</Button>
+                        <Button icon={<UploadOutlined />}>{t('branch.editModal.form.image.placeholder')}</Button>
                     </Upload>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Update Branch
+                        {t('branch.editModal.buttons.submit')}
                     </Button>
                 </Form.Item>
             </Form>

@@ -184,7 +184,7 @@ const BookingEditPage = () => {
             </Col>
 
             <Col xs={24}>
-                <FoodPreorderSection onPreorder={handlePreorder} />
+                {/* <FoodPreorderSection onPreorder={handlePreorder} /> */}
             </Col>
 
             <Button

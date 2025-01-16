@@ -1,10 +1,11 @@
-import { Button, Card, Col, Image, Input, Layout, Modal, Pagination, Row, Select, Space, Spin, Table, Tag, Typography } from 'antd';
+import { Layout, Input, Select, Typography, Tag, Space, Button, Table, Pagination, Modal, Spin, Card, Col, Row } from 'antd';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
-import { AxiosConstants } from '../../constaints/axiosContaint';
 import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
+import { AxiosConstants } from '../../constaints/axiosContaint';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -12,6 +13,7 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const BookingManagementAdminPage = () => {
+    const { t } = useTranslation("global");
     const [data, setData] = useState([]);
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -50,7 +52,7 @@ const BookingManagementAdminPage = () => {
             setData(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            console.error('Failed to fetch data:', error);
+            console.error(t('booking.bookingManagement.messages.fetchError'), error);
         } finally {
             setLoading(false);
         }
@@ -62,7 +64,7 @@ const BookingManagementAdminPage = () => {
             const response = await axiosInstance.get(apiEndPoints.BOOKING_INFORMATION.GET(id));
             setSelectedBooking(response.data);
         } catch (error) {
-            console.error('Failed to fetch data:', error);
+            console.error(t('booking.bookingManagement.messages.fetchError'), error);
         } finally {
             setModalLoading(false);
         }
@@ -87,7 +89,7 @@ const BookingManagementAdminPage = () => {
             await axiosInstance.put(apiEndPoints.BOOKING_INFORMATION.EDIT_STATUS(id, 2));
             fetchData();
         } catch (error) {
-            console.error('Failed to accept booking:', error);
+            console.error(t('booking.bookingManagement.messages.acceptError'), error);
         }
     };
 
@@ -96,7 +98,7 @@ const BookingManagementAdminPage = () => {
             await axiosInstance.put(apiEndPoints.BOOKING_INFORMATION.EDIT_STATUS(id, 0));
             fetchData();
         } catch (error) {
-            console.error('Failed to cancel booking:', error);
+            console.error(t('booking.bookingManagement.messages.cancelError'), error);
         }
     };
 
@@ -118,67 +120,77 @@ const BookingManagementAdminPage = () => {
 
     const columns = [
         {
-            title: 'Tên người dùng',
+            title: t('booking.bookingManagement.columns.userFullName'),
             dataIndex: 'userFullName',
             key: 'userFullName',
         },
         {
-            title: 'Email',
+            title: t('booking.bookingManagement.columns.email'),
             dataIndex: 'email',
             key: 'email',
             responsive: ['lg'],
         },
         {
-            title: 'Chi nhánh',
+            title: t('booking.bookingManagement.columns.branchName'),
             dataIndex: 'branchName',
             key: 'branchName',
             responsive: ['md'],
         },
         {
-            title: 'Thời gian',
+            title: t('booking.bookingManagement.columns.time'),
             dataIndex: 'time',
             key: 'time',
             render: (text) => getFormattedTime(text),
         },
         {
-            title: 'Số người lớn',
+            title: t('booking.bookingManagement.columns.numberOfPeople'),
             dataIndex: 'numberOfPeople',
             key: 'numberOfPeople',
             responsive: ['lg'],
         },
         {
-            title: 'Số trẻ em',
+            title: t('booking.bookingManagement.columns.numberOfChildren'),
             dataIndex: 'numberOfChildren',
             key: 'numberOfChildren',
             responsive: ['xl'],
         },
         {
-            title: 'Số điện thoại',
+            title: t('booking.bookingManagement.columns.phoneNumber'),
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
             responsive: ['lg'],
         },
         {
-            title: 'Trạng thái',
+            title: t('booking.bookingManagement.columns.status'),
             dataIndex: 'bookingStatus',
             key: 'bookingStatus',
             render: (status) => (
                 <Tag color={statusColors[status] || 'default'}>
-                    {status === 0 ? 'Đã hủy' : status === 1 ? 'Đang đặt' : 'Đã xác nhận'}
+                    {status === 0
+                        ? t('booking.bookingManagement.statuses.cancelled')
+                        : status === 1
+                            ? t('booking.bookingManagement.statuses.pending')
+                            : t('booking.bookingManagement.statuses.confirmed')}
                 </Tag>
             ),
             responsive: ['sm'],
         },
         {
-            title: 'Hành động',
+            title: t('booking.bookingManagement.columns.action'),
             key: 'action',
             render: (text, record) => (
                 <Space wrap>
-                    <Button type="link" onClick={() => showDetailModal(record)}>Chi tiết</Button>
+                    <Button type="link" onClick={() => showDetailModal(record)}>
+                        {t('booking.bookingManagement.buttons.detail')}
+                    </Button>
                     {record.bookingStatus === 1 && (
                         <>
-                            <Button type="primary" onClick={() => handleAccept(record.id)}>Chấp nhận</Button>
-                            <Button danger onClick={() => handleCancel(record.id)}>Hủy</Button>
+                            <Button type="primary" onClick={() => handleAccept(record.id)}>
+                                {t('booking.bookingManagement.buttons.accept')}
+                            </Button>
+                            <Button danger onClick={() => handleCancel(record.id)}>
+                                {t('booking.bookingManagement.buttons.cancel')}
+                            </Button>
                         </>
                     )}
                 </Space>
@@ -188,24 +200,24 @@ const BookingManagementAdminPage = () => {
 
     return (
         <Content style={{ padding: '20px' }}>
-            <Title level={3}>Thông tin đặt chỗ</Title>
+            <Title level={3}>{t('booking.bookingManagement.titles.pageTitle')}</Title>
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
                 <Search
-                    placeholder="Tìm kiếm theo tên, số điện thoại, email"
+                    placeholder={t('booking.bookingManagement.placeholders.search')}
                     onSearch={handleSearch}
                     style={{ width: '100%' }}
                 />
                 <Select
-                    placeholder="Lọc theo trạng thái"
+                    placeholder={t('booking.bookingManagement.placeholders.statusFilter')}
                     style={{ width: '100%' }}
                     onChange={handleStatusChange}
                     value={statusFilter}
                     allowClear
                 >
-                    <Option value={-1}>Tất cả</Option>
-                    <Option value={0}>Đã hủy</Option>
-                    <Option value={1}>Đang đặt</Option>
-                    <Option value={2}>Đã xác nhận</Option>
+                    <Option value={-1}>{t('booking.bookingManagement.statuses.all')}</Option>
+                    <Option value={0}>{t('booking.bookingManagement.statuses.cancelled')}</Option>
+                    <Option value={1}>{t('booking.bookingManagement.statuses.pending')}</Option>
+                    <Option value={2}>{t('booking.bookingManagement.statuses.confirmed')}</Option>
                 </Select>
             </div>
 
@@ -227,77 +239,116 @@ const BookingManagementAdminPage = () => {
             />
 
             <Modal
-                title="Chi tiết đặt chỗ"
+                title={t('booking.bookingManagement.titles.modalTitle')}
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 width={windowSize.width < 768 ? '100%' : '70vw'}
-                footer={[<Button key="close" onClick={handleModalClose}>Đóng</Button>]}
+                footer={[
+                    <Button key="close" onClick={handleModalClose}>
+                        {t('booking.bookingManagement.buttons.close')}
+                    </Button>,
+                ]}
             >
                 {modalLoading ? (
                     <Spin />
                 ) : selectedBooking && (
-                    <div>
-                        <p><strong>Tên người dùng:</strong> {selectedBooking.userFullName}</p>
-                        <p><strong>Email:</strong> {selectedBooking.email}</p>
-                        <p><strong>Chi nhánh:</strong> {selectedBooking.branchName}</p>
-                        <p><strong>Thời gian:</strong> {dayjs(selectedBooking.time).format('MM/DD HH:mm')}</p>
-                        <p><strong>Số người lớn:</strong> {selectedBooking.numberOfPeople}</p>
-                        {selectedBooking.numberOfChildren && <p><strong>Số trẻ em:</strong> {selectedBooking.numberOfChildren}</p>}
-                        <p><strong>Số điện thoại:</strong> {selectedBooking.phoneNumber}</p>
-                        <p><strong>Trạng thái:</strong> {selectedBooking.bookingStatus === 0 ? 'Đã hủy' : selectedBooking.bookingStatus === 1 ? 'Đang đặt' : 'Đã xác nhận'}</p>
-                        {selectedBooking.message && <p><strong>Tin nhắn:</strong> {selectedBooking.message}</p>}
+                        <div>
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.userFullName')}:</strong> {selectedBooking.userFullName}
+                            </p>
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.email')}:</strong> {selectedBooking.email}
+                            </p>
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.branchName')}:</strong> {selectedBooking.branchName}
+                            </p>
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.time')}:</strong> {dayjs(selectedBooking.time).format('MM/DD HH:mm')}
+                            </p>
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.numberOfPeople')}:</strong> {selectedBooking.numberOfPeople}
+                            </p>
+                            {selectedBooking.numberOfChildren && (
+                                <p>
+                                    <strong>{t('booking.bookingManagement.modal.fields.numberOfChildren')}:</strong> {selectedBooking.numberOfChildren}
+                                </p>
+                            )}
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.phoneNumber')}:</strong> {selectedBooking.phoneNumber}
+                            </p>
+                            <p>
+                                <strong>{t('booking.bookingManagement.modal.fields.status')}: </strong>
+                                {selectedBooking.bookingStatus === 0
+                                    ? t('booking.bookingManagement.statuses.cancelled')
+                                    : selectedBooking.bookingStatus === 1
+                                        ? t('booking.bookingManagement.statuses.pending')
+                                        : t('booking.bookingManagement.statuses.confirmed')}
+                            </p>
+                            {selectedBooking.message && (
+                                <p>
+                                    <strong>{t('booking.bookingManagement.modal.fields.message')}:</strong> {selectedBooking.message}
+                                </p>
+                            )}
+                            {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
+                                <>
+                                    <div
+                                        style={{
+                                            display: windowSize.width < 768 ? 'block' : 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            marginTop: '20px',
+                                        }}
+                                    >
+                                        <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                            {t('booking.bookingManagement.titles.preOrderItems')}
+                                        </Title>
+                                        <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
+                                            {t('booking.bookingManagement.titles.total')}:{' '}
+                                            {selectedBooking.preOrderItems
+                                                .reduce((total, item) => total + item.price * item.quantity, 0)
+                                                .toLocaleString()}{' '}
+                                            VND
+                                        </Title>
+                                    </div>
 
-                        {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
-                            <>
-                                <div
-                                    style={{
-                                        display: windowSize.width < 768 ? 'block' : 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        marginTop: '20px',
-                                    }}
-                                >
-                                    <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                        Món ăn đã đặt trước
-                                    </Title>
-                                    <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                        Tổng cộng: {selectedBooking.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
-                                    </Title>
-                                </div>
-
-                                <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-                                    {selectedBooking.preOrderItems.map(item => (
-                                        <Col key={item.id} xs={24} sm={12} md={8} lg={6} xl={4}>
-                                            <Card
-                                                cover={
-                                                    <img
-                                                        alt={item.name}
-                                                        src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
-                                                        style={{ height: '150px', objectFit: 'cover' }}
-                                                    />
-                                                }
-                                                bordered
-                                            >
-                                                <Card.Meta
-                                                    title={item.name}
-                                                    description={
-                                                        <>
-                                                            <p>{item.price.toLocaleString()} VND</p>
-                                                            <p>Số lượng: {item.quantity}</p>
-                                                        </>
+                                    <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
+                                        {selectedBooking.preOrderItems.map((item) => (
+                                            <Col key={item.id} xs={24} sm={12} md={8} lg={6} xl={4}>
+                                                <Card
+                                                    cover={
+                                                        <img
+                                                            alt={item.name}
+                                                            src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
+                                                            style={{ height: '150px', objectFit: 'cover' }}
+                                                        />
                                                     }
-                                                />
-                                            </Card>
-                                        </Col>
-                                    ))}
-                                </Row>
-                            </>
-                        )}
-                    </div>
+                                                    bordered
+                                                >
+                                                    <Card.Meta
+                                                        title={item.name}
+                                                        description={
+                                                            <>
+                                                                <p>
+                                                                    {t('booking.bookingManagement.modal.preOrderItems.price')}: {item.price.toLocaleString()} VND
+                                                                </p>
+                                                                <p>
+                                                                    {t('booking.bookingManagement.modal.preOrderItems.quantity')}: {item.quantity}
+                                                                </p>
+                                                            </>
+                                                        }
+                                                    />
+                                                </Card>
+                                            </Col>
+                                        ))}
+                                    </Row>
+                                </>
+                            )}
+                        </div>
+
                 )}
             </Modal>
-
         </Content>
     );
 };
+
 export default BookingManagementAdminPage;

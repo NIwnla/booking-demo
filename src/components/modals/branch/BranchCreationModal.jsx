@@ -3,11 +3,13 @@ import { Modal, Form, Input, Button, Upload, App } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
+import { useTranslation } from 'react-i18next';
 
 const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { message } = App.useApp();
+    const { t } = useTranslation('global');
 
     const handleFinish = async (values) => {
         const formData = new FormData();
@@ -24,12 +26,12 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                 },
             });
 
-            message.success('Branch created successfully!');
+            message.success(t('branch.creationModal.messages.success'));
             form.resetFields();
-            onBranchCreated(response.data); // Notify parent component
+            onBranchCreated(response.data);
             onClose();
         } catch (error) {
-            message.error('Failed to create branch. Please try again.');
+            message.error(t('branch.creationModal.messages.error'));
             console.error('Error creating branch:', error);
         } finally {
             setLoading(false);
@@ -38,7 +40,7 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
 
     return (
         <Modal
-            title="Create New Branch"
+            title={t('branch.creationModal.titles.modalTitle')}
             open={open}
             onCancel={onClose}
             footer={null}
@@ -49,40 +51,40 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    label="Name"
+                    label={t('branch.creationModal.form.name.label')}
                     name="name"
-                    rules={[{ required: true, message: 'Please enter the branch name' }]}
+                    rules={[{ required: true, message: t('branch.creationModal.form.name.required') }]}
                 >
-                    <Input placeholder="Enter branch name" />
+                    <Input placeholder={t('branch.creationModal.form.name.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
-                    label="Description"
+                    label={t('branch.creationModal.form.description.label')}
                     name="description"
-                    rules={[{ required: true, message: 'Please enter the branch description' }]}
+                    rules={[{ required: true, message: t('branch.creationModal.form.description.required') }]}
                 >
-                    <Input.TextArea rows={4} placeholder="Enter branch description" />
+                    <Input.TextArea rows={4} placeholder={t('branch.creationModal.form.description.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
-                    label="Image"
+                    label={t('branch.creationModal.form.image.label')}
                     name="imageFile"
                     valuePropName="file"
-                    rules={[{ required: true, message: 'Please upload an image' }]}
+                    rules={[{ required: true, message: t('branch.creationModal.form.image.required') }]}
                 >
                     <Upload
                         name="imageFile"
                         listType="picture"
                         maxCount={1}
-                        beforeUpload={() => false} // Prevent automatic upload
+                        beforeUpload={() => false}
                     >
-                        <Button icon={<UploadOutlined />}>Select Image</Button>
+                        <Button icon={<UploadOutlined />}>{t('branch.creationModal.form.image.placeholder')}</Button>
                     </Upload>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Create Branch
+                        {t('branch.creationModal.buttons.submit')}
                     </Button>
                 </Form.Item>
             </Form>

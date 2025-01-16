@@ -260,7 +260,7 @@
                 "addToCart": "Thêm vào giỏ hàng",
                 "clearCart": "Xóa Tất Cả",
                 "completeBooking": "Hoàn Thành Đặt Chỗ",
-                "havePendingBooking":"Yêu cầu trước chưa được xử lý"
+                "havePendingBooking": "Yêu cầu trước chưa được xử lý"
             },
             "messages": {
                 "noDescription": "Không có mô tả",
@@ -280,6 +280,161 @@
                 "emptyText": "Giỏ hàng trống, hãy thêm món ăn để đặt trước!",
                 "quantity": "Số Lượng",
                 "hide": "Ẩn Giỏ Hàng"
+            }
+        },
+        "bookingManagement": {
+            "titles": {
+                "pageTitle": "Thông tin đặt chỗ",
+                "modalTitle": "Chi tiết đặt chỗ",
+                "preOrderItems": "Món ăn đã đặt trước",
+                "total": "Tổng cộng"
+            },
+            "placeholders": {
+                "search": "Tìm kiếm theo tên, số điện thoại, email",
+                "statusFilter": "Lọc theo trạng thái"
+            },
+            "buttons": {
+                "detail": "Chi tiết",
+                "accept": "Chấp nhận",
+                "cancel": "Hủy",
+                "close": "Đóng"
+            },
+            "messages": {
+                "fetchError": "Không thể tải dữ liệu.",
+                "acceptError": "Không thể chấp nhận đặt chỗ.",
+                "cancelError": "Không thể hủy đặt chỗ.",
+                "loading": "Đang tải..."
+            },
+            "statuses": {
+                "all": "Tất cả",
+                "cancelled": "Đã hủy",
+                "pending": "Đang đặt",
+                "confirmed": "Đã xác nhận"
+            },
+            "columns": {
+                "userFullName": "Tên người dùng",
+                "email": "Email",
+                "branchName": "Chi nhánh",
+                "time": "Thời gian",
+                "numberOfPeople": "Số người lớn",
+                "numberOfChildren": "Số trẻ em",
+                "phoneNumber": "Số điện thoại",
+                "status": "Trạng thái",
+                "action": "Hành động"
+            },
+            "modal": {
+                "fields": {
+                    "userFullName": "Tên người dùng",
+                    "email": "Email",
+                    "branchName": "Chi nhánh",
+                    "time": "Thời gian",
+                    "numberOfPeople": "Số người lớn",
+                    "numberOfChildren": "Số trẻ em",
+                    "phoneNumber": "Số điện thoại",
+                    "status": "Trạng thái",
+                    "message": "Tin nhắn"
+                },
+                "preOrderItems": {
+                    "name": "Tên món ăn",
+                    "price": "Giá",
+                    "quantity": "Số lượng"
+                }
+            }
+        }
+    },
+    "branch": {
+        "branchManagement": {
+            "titles": {
+                "pageTitle": "Quản Lý Chi Nhánh",
+                "detailModalTitle": "Chi Tiết Chi Nhánh",
+                "createButton": "Tạo Chi Nhánh Mới"
+            },
+            "columns": {
+                "name": "Tên",
+                "description": "Mô Tả",
+                "status": "Trạng Thái",
+                "action": "Hành Động"
+            },
+            "buttons": {
+                "detail": "Chi Tiết",
+                "edit": "Chỉnh Sửa",
+                "disable": "Ngưng",
+                "reenable": "Kích Hoạt"
+            },
+            "tags": {
+                "active": "Hoạt Động",
+                "disabled": "Ngưng Hoạt Động"
+            },
+            "messages": {
+                "fetchError": "Lỗi khi tải dữ liệu chi nhánh.",
+                "deleteSuccess": "Đã vô hiệu hóa/kích hoạt chi nhánh thành công!",
+                "loading": "Đang tải..."
+            },
+            "modals": {
+                "detail": {
+                    "fields": {
+                        "name": "Tên",
+                        "description": "Mô Tả",
+                        "status": "Trạng Thái"
+                    }
+                }
+            }
+        },
+        "creationModal": {
+            "titles": {
+                "modalTitle": "Tạo Chi Nhánh Mới"
+            },
+            "form": {
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Nhập tên chi nhánh",
+                    "required": "Vui lòng nhập tên chi nhánh"
+                },
+                "description": {
+                    "label": "Mô Tả",
+                    "placeholder": "Nhập mô tả chi nhánh",
+                    "required": "Vui lòng nhập mô tả chi nhánh"
+                },
+                "image": {
+                    "label": "Hình Ảnh",
+                    "placeholder": "Chọn Hình Ảnh",
+                    "required": "Vui lòng tải lên hình ảnh"
+                }
+            },
+            "buttons": {
+                "submit": "Tạo Chi Nhánh"
+            },
+            "messages": {
+                "success": "Tạo chi nhánh thành công!",
+                "error": "Không thể tạo chi nhánh. Vui lòng thử lại."
+            }
+        },
+        "editModal": {
+            "titles": {
+                "modalTitle": "Chỉnh Sửa Chi Nhánh"
+            },
+            "form": {
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Nhập tên chi nhánh",
+                    "required": "Vui lòng nhập tên chi nhánh"
+                },
+                "description": {
+                    "label": "Mô Tả",
+                    "placeholder": "Nhập mô tả chi nhánh",
+                    "required": "Vui lòng nhập mô tả chi nhánh"
+                },
+                "image": {
+                    "label": "Hình Ảnh",
+                    "placeholder": "Chọn Hình Ảnh"
+                }
+            },
+            "buttons": {
+                "submit": "Cập Nhật Chi Nhánh"
+            },
+            "messages": {
+                "success": "Cập nhật chi nhánh thành công!",
+                "error": "Không thể cập nhật chi nhánh. Vui lòng thử lại."
             }
         }
     }

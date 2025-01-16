@@ -1,6 +1,7 @@
 import { App, Button, Image, Modal, Space, Spin, Table, Tag, Typography } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import BranchCreationModal from '../../components/modals/branch/BranchCreationModal';
 import BranchEditModal from '../../components/modals/branch/BranchEditModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
@@ -10,6 +11,7 @@ import axiosInstance from '../../service/axios';
 const { Title } = Typography;
 
 const BranchManagementAdminPage = () => {
+    const { t } = useTranslation('global');
     const [branches, setBranches] = useState([]);
     const [selectedBranch, setSelectedBranch] = useState(null);
     const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
@@ -24,11 +26,12 @@ const BranchManagementAdminPage = () => {
             const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL(true));
             setBranches(response.data);
         } catch (error) {
-            console.error('Error fetching branches:', error);
+            message.error(t('branch.branchManagement.messages.fetchError'));
         } finally {
             setIsFetching(false);
         }
     };
+
     useEffect(() => {
         fetchBranches();
     }, []);
@@ -39,27 +42,26 @@ const BranchManagementAdminPage = () => {
     };
 
     const handleEditClick = (branch) => {
-        setSelectedBranch(branch)
+        setSelectedBranch(branch);
         setIsEditModalVisible(true);
     };
 
     const deleteBranch = async (id) => {
         setIsFetching(true);
         try {
-            const response = await axiosInstance.delete(apiEndPoints.BRANCH.DELETE(id));
-            message.success('Branch disabled/enabled successfully!');
+            await axiosInstance.delete(apiEndPoints.BRANCH.DELETE(id));
+            message.success(t('branch.branchManagement.messages.deleteSuccess'));
             fetchBranches();
         } catch (error) {
-            console.error('Error fetching branches:', error);
+            message.error(t('branch.branchManagement.messages.fetchError'));
         } finally {
             setIsFetching(false);
         }
     };
 
     const handleDeleteClick = (branchId) => {
-        deleteBranch(branchId)
+        deleteBranch(branchId);
     };
-
 
     const handleDetailModalClose = () => {
         setIsDetailModalVisible(false);
@@ -81,48 +83,44 @@ const BranchManagementAdminPage = () => {
     const handleEditModalClose = () => {
         setIsEditModalVisible(false);
         setSelectedBranch(null);
-    }
+    };
 
     const handleBranchEdited = (branch) => {
         fetchBranches();
-    }
+    };
 
     const columns = [
         {
-            title: 'Name',
+            title: t('branch.branchManagement.columns.name'),
             dataIndex: 'name',
             key: 'name',
         },
         {
-            title: 'Description',
+            title: t('branch.branchManagement.columns.description'),
             dataIndex: 'description',
             key: 'description',
-            render: (text) => (
-                <span>
-                    {text.length > 50 ? `${text.substring(0, 50)}...` : text}
-                </span>
-            ),
+            ellipsis: true,
             responsive: ['md'],
         },
         {
-            title: 'Status',
+            title: t('branch.branchManagement.columns.status'),
             dataIndex: 'isDeleted',
             key: 'isDeleted',
             render: (isDeleted) => (
                 <Tag color={isDeleted ? 'red' : 'green'}>
-                    {isDeleted ? 'Disabled' : 'Active'}
+                    {isDeleted ? t('branch.branchManagement.tags.disabled') : t('branch.branchManagement.tags.active')}
                 </Tag>
             ),
         },
         {
-            title: 'Action',
+            title: t('branch.branchManagement.columns.action'),
             key: 'action',
             render: (_, branch) => (
                 <Space wrap>
-                    <Button onClick={() => handleDetailClick(branch)}>Detail</Button>
-                    <Button onClick={() => handleEditClick(branch)}>Edit</Button>
-                    <Button danger={!branch.isDeleted} onClick={() => handleDeleteClick(branch.id)}>
-                        {branch.isDeleted ? 'Renable' : 'Disable'}
+                    <Button onClick={() => handleDetailClick(branch)}>{t('branch.branchManagement.buttons.detail')}</Button>
+                    <Button onClick={() => handleEditClick(branch)}>{t('branch.branchManagement.buttons.edit')}</Button>
+                    <Button danger onClick={() => handleDeleteClick(branch.id)}>
+                        {branch.isDeleted ? t('branch.branchManagement.buttons.reenable') : t('branch.branchManagement.buttons.disable')}
                     </Button>
                 </Space>
             ),
@@ -131,32 +129,32 @@ const BranchManagementAdminPage = () => {
 
     return (
         <Content style={{ padding: '20px' }}>
-            <Title level={3}>Branch Management</Title>
+            <Title level={3}>{t('branch.branchManagement.titles.pageTitle')}</Title>
             <Button
                 type="primary"
                 style={{ marginBottom: '16px' }}
                 onClick={handleCreateBranchClick}
             >
-                Create New Branch
+                {t('branch.branchManagement.titles.createButton')}
             </Button>
 
-            <Spin spinning={isFetching}>
+            <Spin spinning={isFetching} tip={t('branch.branchManagement.messages.loading')}>
                 <Table
                     // @ts-ignore
                     columns={columns} dataSource={branches} rowKey="id" pagination={false} />
             </Spin>
 
             <Modal
-                title="Branch Details"
+                title={t('branch.branchManagement.titles.detailModalTitle')}
                 open={isDetailModalVisible}
                 onCancel={handleDetailModalClose}
                 footer={null}
             >
                 {selectedBranch && (
                     <div>
-                        <p><strong>Name:</strong> {selectedBranch.name}</p>
-                        <p><strong>Description:</strong> {selectedBranch.description}</p>
-                        <p><strong>Status:</strong> {selectedBranch.isDeleted ? 'Disabled' : 'Active'}</p>
+                        <p><strong>{t('branch.branchManagement.modals.detail.fields.name')}:</strong> {selectedBranch.name}</p>
+                        <p><strong>{t('branch.branchManagement.modals.detail.fields.description')}:</strong> {selectedBranch.description}</p>
+                        <p><strong>{t('branch.branchManagement.modals.detail.fields.status')}:</strong> {selectedBranch.isDeleted ? t('branch.branchManagement.tags.disabled') : t('branch.branchManagement.tags.active')}</p>
                         <Image
                             src={`${AxiosConstants.AXIOS_BASEURL}/${selectedBranch.imagePath}`}
                             alt={selectedBranch.name}
