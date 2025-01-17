@@ -1,7 +1,8 @@
-import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin, Typography } from "antd";
 import React, { useEffect, useState } from "react";
+import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin, Typography } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import CreateFoodModal from "../../components/modals/food/CreateFoodModal";
 import EditFoodModal from "../../components/modals/food/EditFoodModal";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
@@ -10,6 +11,7 @@ import axiosInstance from "../../service/axios";
 import './FoodManagementPageAdmin.css';
 
 const FoodManagementPageAdmin = () => {
+    const { t } = useTranslation('global');
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pageIndex, setPageIndex] = useState(1);
@@ -35,7 +37,7 @@ const FoodManagementPageAdmin = () => {
             setFoods(response.data.items);
             setTotalCount(response.data.totalCount);
         } catch (error) {
-            message.error("Failed to fetch foods.");
+            message.error(t("food.management.messages.fetchError"));
         } finally {
             setLoading(false);
         }
@@ -51,21 +53,21 @@ const FoodManagementPageAdmin = () => {
     };
 
     const handleFoodUpdated = () => {
-        fetchFoods(); // Refresh list after editing
+        fetchFoods();
     };
 
     const handleDelete = async (foodId) => {
         try {
             await axiosInstance.delete(apiEndPoints.FOOD.DELETE(foodId));
-            message.success('Food deleted successfully.');
+            message.success(t("food.management.messages.deleteSuccess"));
             fetchFoods();
         } catch (error) {
-            message.error('Failed to delete food.');
+            message.error(t("food.management.messages.deleteError"));
         }
     };
 
     const handleFoodCreated = () => {
-        fetchFoods(); // Refresh the list when a new food is created
+        fetchFoods();
     };
 
     return (
@@ -73,19 +75,22 @@ const FoodManagementPageAdmin = () => {
             <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
                 <Col xs={24} md={12}>
                     <Input.Search
-                        placeholder="Search food"
+                        placeholder={t("food.management.placeholders.search")}
                         onSearch={(value) => setSearch(value)}
-                        style={{ width: '100%' }}  // Ensures it takes full width on smaller screens
+                        style={{ width: '100%' }}
                     />
                 </Col>
                 <Col xs={24} md={12}>
-                    <Button type="primary" onClick={() => setCreateModalVisible(true)} style={{ width: '100%' }}>
-                        Create Food
+                    <Button
+                        type="primary"
+                        onClick={() => setCreateModalVisible(true)}
+                        style={{ width: '100%' }}
+                    >
+                        {t("food.management.buttons.createFood")}
                     </Button>
                 </Col>
             </Row>
             <Spin spinning={loading}>
-
                 <Row gutter={[16, 16]}>
                     {foods.map((food) => (
                         <Col key={food.id} xs={24} sm={12} md={12} lg={6}>
@@ -100,27 +105,30 @@ const FoodManagementPageAdmin = () => {
                                     </div>
                                 }
                             >
-                                <Card.Meta title={food.name} description={food.description || "No description available"} />
+                                <Card.Meta
+                                    title={food.name}
+                                    description={food.description || t("food.management.card.noDescription")}
+                                />
                                 <Typography style={{ marginTop: "2vh", display: "flex", alignItems: "center" }}>
                                     <ShoppingCartOutlined />
-                                    <strong>{food.basePrice}đ</strong>
+                                    <strong>{t("food.management.card.price")}: {food.basePrice}đ</strong>
                                 </Typography>
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
                                     <Space wrap>
                                         <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleOptions(food.id)}>
-                                            Options
+                                            {t("food.management.buttons.options")}
                                         </Button>
                                         <Button style={{ maxWidth: "15vw" }} onClick={() => handleEdit(food)}>
-                                            Edit
+                                            {t("food.management.buttons.edit")}
                                         </Button>
                                         <Popconfirm
-                                            title="Are you sure you want to delete this food?"
+                                            title={t("food.management.popconfirm.deleteTitle")}
                                             onConfirm={() => handleDelete(food.id)}
-                                            okText="Yes"
-                                            cancelText="No"
+                                            okText={t("food.management.popconfirm.okText")}
+                                            cancelText={t("food.management.popconfirm.cancelText")}
                                         >
                                             <Button danger style={{ maxWidth: "15vw" }}>
-                                                Delete
+                                                {t("food.management.buttons.delete")}
                                             </Button>
                                         </Popconfirm>
                                     </Space>

@@ -50,6 +50,43 @@
         "googleButton": "Đăng nhập bằng Google",
         "facebookButton": "Đăng nhập bằng Facebook"
     },
+    "homePageGuest": {
+        "titles": {
+            "bookingCollapse": "Thông Tin Đặt Chỗ",
+            "deliveryCollapse": "Thông Tin Giao Hàng",
+            "currentBooking": "Thông Tin Đặt Chỗ Hiện Tại",
+            "currentDelivery": "Thông Tin Giao Hàng Hiện Tại",
+            "noBooking": "Không có thông tin đặt chỗ hiện tại",
+            "noDelivery": "Không có thông tin giao hàng hiện tại"
+        },
+        "labels": {
+            "date": "Ngày",
+            "time": "Thời Gian",
+            "branch": "Chi Nhánh",
+            "people": "Số Người",
+            "children": "Trẻ Em",
+            "status": "Trạng Thái",
+            "message": "Tin Nhắn",
+            "preOrderedItems": "Món Ăn Đặt Trước",
+            "location": "Địa Điểm",
+            "phoneNumber": "Số Điện Thoại"
+        },
+        "buttons": {
+            "cancel": "Hủy",
+            "edit": "Chỉnh Sửa"
+        },
+        "card":{
+            "name": "Tên",
+            "quantity": "Số Lượng",
+            "price": "Giá"
+        },
+        "messages": {
+            "fetchDeliveryError": "Không thể lấy thông tin giao hàng.",
+            "fetchBookingError": "Không thể lấy thông tin đặt chỗ.",
+            "cancelBookingSuccess": "Đã hủy đặt chỗ thành công.",
+            "cancelBookingError": "Hủy đặt chỗ thất bại."
+        }
+    },
     "delivery": {
         "form": {
             "title": "Thông Tin Giao Hàng",
@@ -386,7 +423,8 @@
                     "quantity": "Số lượng"
                 }
             }
-        },"disableCalendarPage": {
+        },
+        "disableCalendarPage": {
             "branchSelected": "Chi nhánh đã chọn:",
             "modalTitle": "Ngày đã chọn:",
             "timeMode": {
@@ -496,6 +534,100 @@
             "messages": {
                 "success": "Cập nhật chi nhánh thành công!",
                 "error": "Không thể cập nhật chi nhánh. Vui lòng thử lại."
+            }
+        }
+    },
+    "food": {
+        "management": {
+            "placeholders": {
+                "search": "Tìm kiếm món ăn"
+            },
+            "buttons": {
+                "createFood": "Tạo món ăn",
+                "options": "Tùy chọn",
+                "edit": "Chỉnh sửa",
+                "delete": "Xóa"
+            },
+            "messages": {
+                "fetchError": "Không thể tải dữ liệu món ăn.",
+                "deleteSuccess": "Xóa món ăn thành công.",
+                "deleteError": "Xóa món ăn thất bại."
+            },
+            "popconfirm": {
+                "deleteTitle": "Bạn có chắc chắn muốn xóa món ăn này không?",
+                "okText": "Có",
+                "cancelText": "Không"
+            },
+            "card": {
+                "noDescription": "Không có mô tả",
+                "price": "Giá"
+            }
+        },
+        "createFoodModal": {
+            "titles": {
+                "modalTitle": "Tạo Món Ăn Mới"
+            },
+            "labels": {
+                "name": "Tên Món Ăn",
+                "basePrice": "Giá Cơ Bản",
+                "description": "Mô Tả",
+                "image": "Hình Ảnh"
+            },
+            "placeholders": {
+                "name": "Nhập tên món ăn",
+                "basePrice": "Nhập giá cơ bản",
+                "description": "Nhập mô tả"
+            },
+            "buttons": {
+                "selectImage": "Chọn Hình Ảnh",
+                "create": "Tạo Món Ăn"
+            },
+            "messages": {
+                "uploadError": "Tải lên tệp không thành công. Vui lòng thử lại.",
+                "imageRemoved": "Đã xóa hình ảnh.",
+                "noImage": "Vui lòng tải lên và cắt hình ảnh trước khi gửi.",
+                "createSuccess": "Tạo món ăn thành công!",
+                "createError": "Tạo món ăn thất bại.",
+                "rules": {
+                    "nameRequired": "Vui lòng nhập tên món ăn",
+                    "nameMaxLength": "Tên món ăn không được vượt quá 50 ký tự",
+                    "priceRequired": "Vui lòng nhập giá cơ bản",
+                    "descriptionRequired": "Vui lòng nhập mô tả",
+                    "descriptionMaxLength": "Mô tả không được vượt quá 500 ký tự",
+                    "imageRequired": "Vui lòng tải lên hình ảnh"
+                }
+            }
+        },
+        "editFoodModal": {
+            "titles": {
+                "modalTitle": "Chỉnh sửa món ăn"
+            },
+            "labels": {
+                "name": "Tên món ăn",
+                "description": "Mô tả",
+                "basePrice": "Giá cơ bản",
+                "image": "Hình ảnh món ăn"
+            },
+            "placeholders": {
+                "name": "Nhập tên món ăn",
+                "description": "Nhập mô tả",
+                "basePrice": "Nhập giá cơ bản"
+            },
+            "buttons": {
+                "uploadImage": "Tải hình ảnh mới (không bắt buộc)",
+                "updateFood": "Cập nhật món ăn"
+            },
+            "messages": {
+                "uploadError": "Tải tệp lên thất bại. Vui lòng thử lại.",
+                "imageRemoved": "Hình ảnh đã được xóa.",
+                "updateSuccess": "Cập nhật món ăn thành công!",
+                "updateError": "Cập nhật món ăn thất bại.",
+                "rules": {
+                    "nameRequired": "Vui lòng nhập tên món ăn",
+                    "nameMaxLength": "Tên món ăn không được vượt quá 50 ký tự",
+                    "descriptionMaxLength": "Mô tả không được vượt quá 200 ký tự",
+                    "priceRequired": "Vui lòng nhập giá cơ bản"
+                }
             }
         }
     }

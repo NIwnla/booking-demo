@@ -79,7 +79,7 @@ const GuestLayout = ({ children }) => {
     };
 
     return (
-        <Layout style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+        <Layout style={{ minHeight: '100vh', backgroundColor: '#eeeeee' }}>
             {/* Header */}
             <Header
                 style={{

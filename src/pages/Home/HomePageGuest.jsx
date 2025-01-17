@@ -6,10 +6,12 @@ import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
 import { AuthContext } from "../../context/AuthContext";
 import axiosInstance from "../../service/axios";
+import { useTranslation } from "react-i18next";
 
 const { Content } = Layout;
 
 const HomePageGuest = () => {
+    const { t } = useTranslation('global');
     const { userId } = useContext(AuthContext);
     const [bookingInfo, setBookingInfo] = useState(null);
     const [deliveryInfo, setDeliveryInfo] = useState(null);
@@ -29,7 +31,7 @@ const HomePageGuest = () => {
                     const response = await axiosInstance.get(apiEndPoints.DELIVERY_INFORMATION.GET_CURRENT);
                     setDeliveryInfo(response.data);
                 } catch (error) {
-                    console.error("Failed to fetch delivery information:", error);
+                    message.error(t("homePageGuest.messages.fetchDeliveryError"));
                 } finally {
                     setLoading(false);
                 }
@@ -47,7 +49,7 @@ const HomePageGuest = () => {
                     const response = await axiosInstance.get(apiEndPoints.BOOKING_INFORMATION.GET_CURRENT_BOOKING);
                     setBookingInfo(response.data);
                 } catch (error) {
-                    console.error("Failed to fetch booking information:", error);
+                    message.error(t("homePageGuest.messages.fetchBookingError"));
                 } finally {
                     setLoading(false);
                 }
@@ -63,11 +65,10 @@ const HomePageGuest = () => {
         setCanceling(true);
         try {
             await axiosInstance.put(apiEndPoints.BOOKING_INFORMATION.EDIT_STATUS(bookingInfo.id, 0));
-            message.success('Booking canceled successfully');
+            message.success(t("homePageGuest.messages.cancelBookingSuccess"));
             setBookingInfo(null); // Clear booking info after cancellation
         } catch (error) {
-            console.error("Failed to cancel booking:", error);
-            message.error('Failed to cancel booking');
+            message.error(t("homePageGuest.messages.cancelBookingError"));
         } finally {
             setCanceling(false);
         }
@@ -85,22 +86,24 @@ const HomePageGuest = () => {
                 <Spin spinning={loading}>
                     {deliveryInfo ? (
                         <Card
-                            title="Current Delivery Information"
+                            title={t("homePageGuest.titles.currentDelivery")}
+                            style={{ backgroundColor: '#eeeeee' }}
+
                         >
-                            <p><strong>Date:</strong> {new Date(deliveryInfo.time).toLocaleDateString()}</p>
-                            <p><strong>Time:</strong> {new Date(deliveryInfo.time).toLocaleTimeString()}</p>
-                            <p><strong>Location:</strong> {deliveryInfo.location}</p>
-                            <p><strong>Phone Number:</strong> {deliveryInfo.phoneNumber}</p>
-                            <p><strong>Status:</strong> {deliveryInfo.status}</p>
-                            {deliveryInfo.message && (<p><strong>Message:</strong> {deliveryInfo.message}</p>)}
+                            <p><strong>{t("homePageGuest.labels.date")}:</strong> {new Date(deliveryInfo.time).toLocaleDateString()}</p>
+                            <p><strong>{t("homePageGuest.labels.time")}:</strong> {new Date(deliveryInfo.time).toLocaleTimeString()}</p>
+                            <p><strong>{t("homePageGuest.labels.location")}:</strong> {deliveryInfo.location}</p>
+                            <p><strong>{t("homePageGuest.labels.phoneNumber")}:</strong> {deliveryInfo.phoneNumber}</p>
+                            <p><strong>{t("homePageGuest.labels.status")}:</strong> {deliveryInfo.status}</p>
+                            {deliveryInfo.message && (<p><strong>{t("homePageGuest.labels.message")}:</strong> {deliveryInfo.message}</p>)}
                             {deliveryInfo.preOrderItems && deliveryInfo.preOrderItems.length > 0 && (
                                 <>
-                                    <p><strong>Preordered Items:</strong></p>
-                                    <div className="preorder-items-container">
+                                    <p><strong>{t("homePageGuest.labels.preOrderedItems")}:</strong></p>
+                                    <div>
                                         <Row gutter={[16, 16]}>
                                             {deliveryInfo.preOrderItems.map((item, index) => (
                                                 <Col key={index} xs={24} sm={12} md={8} lg={6} xl={4}>
-                                                    <div className="preorder-item">
+                                                    <div style={{ padding: '8px', background: '#ffffff', borderRadius: '20px' }}>
                                                         <Image
                                                             src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}  // Ensure the correct path for images
                                                             alt={item.name}
@@ -112,9 +115,9 @@ const HomePageGuest = () => {
                                                                 marginBottom: '10px',
                                                             }}
                                                         />
-                                                        <p><strong>Name:</strong> {item.name}</p>
-                                                        <p><strong>Quantity:</strong> {item.quantity}</p>
-                                                        <p><strong>Price:</strong> {item.price}</p>
+                                                        <p><strong>{t("homePageGuest.card.name")}:</strong> {item.name}</p>
+                                                        <p><strong>{t("homePageGuest.card.quantity")}:</strong> {item.quantity}</p>
+                                                        <p><strong>{t("homePageGuest.card.price")}:</strong> {item.price}</p>
                                                     </div>
                                                 </Col>
                                             ))}
@@ -124,7 +127,7 @@ const HomePageGuest = () => {
                             )}
                         </Card>
                     ) : (
-                        !loading && <Card title="No current delivery information available" />
+                        !loading && <Card title={t("homePageGuest.titles.noDelivery")} />
                     )}
                 </Spin>
             </div>
@@ -137,35 +140,36 @@ const HomePageGuest = () => {
                 <Spin spinning={loading || canceling}>
                     {bookingInfo ? (
                         <Card
-                            title="Current Booking Information"
+                            title={t("homePageGuest.titles.currentBooking")}
+                            style={{ backgroundColor: '#eeeeee' }}
                             extra={
                                 !isSmallScreen && (
                                     <>
                                         <Button key="cancel" onClick={handleCancelBooking} disabled={canceling} danger style={{ marginRight: '8px' }}>
-                                            Cancel
+                                            {t("homePageGuest.buttons.cancel")}
                                         </Button>
                                         <Button key="edit" onClick={handleEditBooking} type="primary">
-                                            Edit
+                                            {t("homePageGuest.buttons.edit")}
                                         </Button>
                                     </>
                                 )
                             }
                         >
-                            <p><strong>Date:</strong> {new Date(bookingInfo.time).toLocaleDateString()}</p>
-                            <p><strong>Time:</strong> {new Date(bookingInfo.time).toLocaleTimeString()}</p>
-                            <p><strong>Branch:</strong> {bookingInfo.branchName}</p>
-                            <p><strong>People:</strong> {bookingInfo.numberOfPeople}</p>
-                            {bookingInfo.numberOfChildren && (<p><strong>Children:</strong> {bookingInfo.numberOfChildren}</p>)}
-                            <p><strong>Status:</strong> {bookingInfo.bookingStatus}</p>
-                            {bookingInfo.message && (<p><strong>Message:</strong> {bookingInfo.message}</p>)}
+                            <p><strong>{t("homePageGuest.labels.date")}:</strong> {new Date(bookingInfo.time).toLocaleDateString()}</p>
+                            <p><strong>{t("homePageGuest.labels.time")}:</strong> {new Date(bookingInfo.time).toLocaleTimeString()}</p>
+                            <p><strong>{t("homePageGuest.labels.branch")}:</strong> {bookingInfo.branchName}</p>
+                            <p><strong>{t("homePageGuest.labels.people")}:</strong> {bookingInfo.numberOfPeople}</p>
+                            {bookingInfo.numberOfChildren && (<p><strong>{t("homePageGuest.labels.children")}:</strong> {bookingInfo.numberOfChildren}</p>)}
+                            <p><strong>{t("homePageGuest.labels.status")}:</strong> {bookingInfo.bookingStatus}</p>
+                            {bookingInfo.message && (<p><strong>{t("homePageGuest.labels.message")}:</strong> {bookingInfo.message}</p>)}
                             {bookingInfo.preOrderItems && bookingInfo.preOrderItems.length > 0 && (
                                 <>
-                                    <p><strong>Preordered Items:</strong></p>
-                                    <div className="preorder-items-container">
+                                    <p><strong>{t("homePageGuest.labels.preOrderedItems")}:</strong></p>
+                                    <div>
                                         <Row gutter={[16, 16]}>
                                             {bookingInfo.preOrderItems.map((item, index) => (
                                                 <Col key={index} xs={24} sm={12} md={8} lg={6} xl={4}>
-                                                    <div className="preorder-item">
+                                                    <div style={{ padding: '8px', background: '#ffffff', borderRadius: '20px' }}>
                                                         <Image
                                                             src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}  // Ensure the correct path for images
                                                             alt={item.name}
@@ -177,9 +181,9 @@ const HomePageGuest = () => {
                                                                 marginBottom: '10px',
                                                             }}
                                                         />
-                                                        <p><strong>Name:</strong> {item.name}</p>
-                                                        <p><strong>Quantity:</strong> {item.quantity}</p>
-                                                        <p><strong>Price:</strong> {item.price}</p>
+                                                        <p><strong>{t("homePageGuest.card.name")}:</strong> {item.name}</p>
+                                                        <p><strong>{t("homePageGuest.card.quantity")}:</strong> {item.quantity}</p>
+                                                        <p><strong>{t("homePageGuest.card.price")}:</strong> {item.price}</p>
                                                     </div>
                                                 </Col>
                                             ))}
@@ -193,19 +197,19 @@ const HomePageGuest = () => {
                                 <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
                                     <Col span={12}>
                                         <Button block onClick={handleCancelBooking} danger disabled={canceling}>
-                                            Cancel
+                                            {t("homePageGuest.buttons.cancel")}
                                         </Button>
                                     </Col>
                                     <Col span={12}>
                                         <Button block type="primary" onClick={handleEditBooking}>
-                                            Edit
+                                            {t("homePageGuest.buttons.edit")}
                                         </Button>
                                     </Col>
                                 </Row>
                             )}
                         </Card>
                     ) : (
-                        !loading && <Card title="No current booking information available" />
+                        !loading && <Card title={t("homePageGuest.titles.noBooking")} />
                     )}
                 </Spin>
             </div>

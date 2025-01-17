@@ -127,7 +127,7 @@ const AdminLayout = ({ children }) => {
     };
 
     return (
-        <Layout style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+        <Layout style={{ minHeight: '100vh', backgroundColor: '#eeeeee' }}>
             {/* Header */}
             <Header
                 style={{
@@ -208,10 +208,9 @@ const AdminLayout = ({ children }) => {
             <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
                 <div
                     style={{
-                        background: '#ffffff',
+                        background: '#eeeeee',
                         padding: '24px',
                         minHeight: '280px',
-                        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
                     }}
                 >
                     {children}

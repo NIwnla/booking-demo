@@ -1,12 +1,13 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { App, Button, Form, Input, InputNumber, Modal, Upload } from "antd";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
 import axiosInstance from "../../../service/axios";
 import CropImageModal from "../image/CropImageModal";
-import { AxiosConstants } from "../../../constaints/axiosContaint";
 
 const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
+    const { t } = useTranslation('global');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { message } = App.useApp();
@@ -23,14 +24,14 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
                 basePrice: food.basePrice,
             });
         }
-    }, [food, loading])
+    }, [food]);
 
     const handleImageUpload = (info) => {
         if (info.fileList.length === 0) {
             setImageSrc(null);
             setCroppedImage(null);
             setFileList([]);
-            message.info("Hình ảnh đã được xóa.");
+            message.info(t("food.editFoodModal.messages.imageRemoved"));
             return;
         }
 
@@ -43,7 +44,7 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
             };
             reader.readAsDataURL(file);
         } else {
-            message.error("Tải tệp lên thất bại. Vui lòng thử lại.");
+            message.error(t("food.editFoodModal.messages.uploadError"));
         }
     };
 
@@ -81,14 +82,14 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            message.success("Cập nhật món ăn thành công!");
+            message.success(t("food.editFoodModal.messages.updateSuccess"));
             onFoodUpdated();
             onClose();
             form.resetFields();
             setFileList([]);
             setCroppedImage(null);
         } catch (error) {
-            message.error("Cập nhật món ăn thất bại.");
+            message.error(t("food.editFoodModal.messages.updateError"));
         } finally {
             setLoading(false);
         }
@@ -97,44 +98,42 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
     return (
         <>
             <Modal
-                title="Chỉnh sửa món ăn"
+                title={t("food.editFoodModal.titles.modalTitle")}
                 open={visible}
                 onCancel={onClose}
                 footer={null}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={handleFinish}
-                >
+                <Form form={form} layout="vertical" onFinish={handleFinish}>
                     <Form.Item
                         name="name"
-                        label="Tên món ăn"
+                        label={t("food.editFoodModal.labels.name")}
                         rules={[
-                            { required: true, message: "Vui lòng nhập tên món ăn" },
-                            { max: 50, message: "Tên món ăn không được vượt quá 50 ký tự" },
+                            { required: true, message: t("food.editFoodModal.messages.rules.nameRequired") },
+                            { max: 50, message: t("food.editFoodModal.messages.rules.nameMaxLength") },
                         ]}
                     >
-                        <Input placeholder="Nhập tên món ăn" />
+                        <Input placeholder={t("food.editFoodModal.placeholders.name")} />
                     </Form.Item>
                     <Form.Item
                         name="description"
-                        label="Mô tả"
+                        label={t("food.editFoodModal.labels.description")}
                         rules={[
-                            { max: 200, message: "Mô tả không được vượt quá 200 ký tự" },
+                            { max: 200, message: t("food.editFoodModal.messages.rules.descriptionMaxLength") },
                         ]}
                     >
-                        <Input.TextArea placeholder="Nhập mô tả" />
+                        <Input.TextArea placeholder={t("food.editFoodModal.placeholders.description")} />
                     </Form.Item>
                     <Form.Item
                         name="basePrice"
-                        label="Giá cơ bản"
-                        rules={[{ required: true, message: "Vui lòng nhập giá cơ bản" }]}
+                        label={t("food.editFoodModal.labels.basePrice")}
+                        rules={[
+                            { required: true, message: t("food.editFoodModal.messages.rules.priceRequired") },
+                        ]}
                     >
-                        <InputNumber min={0} style={{ width: "100%" }} placeholder="Nhập giá cơ bản" />
+                        <InputNumber min={0} style={{ width: "100%" }} placeholder={t("food.editFoodModal.placeholders.basePrice")} />
                     </Form.Item>
 
-                    <Form.Item name="imageFile" label="Hình ảnh món ăn" valuePropName="file">
+                    <Form.Item name="imageFile" label={t("food.editFoodModal.labels.image")} valuePropName="file">
                         <Upload
                             name="image"
                             listType="picture"
@@ -143,13 +142,13 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
                             onChange={handleImageUpload}
                             fileList={fileList}
                         >
-                            <Button icon={<UploadOutlined />}>Tải hình ảnh mới (không bắt buộc)</Button>
+                            <Button icon={<UploadOutlined />}>{t("food.editFoodModal.buttons.uploadImage")}</Button>
                         </Upload>
                     </Form.Item>
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" loading={loading}>
-                            Cập nhật món ăn
+                            {t("food.editFoodModal.buttons.updateFood")}
                         </Button>
                     </Form.Item>
                 </Form>

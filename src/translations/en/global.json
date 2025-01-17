@@ -50,6 +50,43 @@
         "googleButton": "Sign in with Google",
         "facebookButton": "Sign in with Facebook"
     },
+    "homePageGuest": {
+        "titles": {
+            "bookingCollapse": "Toggle Booking Information",
+            "deliveryCollapse": "Toggle Delivery Information",
+            "currentBooking": "Current Booking Information",
+            "currentDelivery": "Current Delivery Information",
+            "noBooking": "No current booking information available",
+            "noDelivery": "No current delivery information available"
+        },
+        "labels": {
+            "date": "Date",
+            "time": "Time",
+            "branch": "Branch",
+            "people": "People",
+            "children": "Children",
+            "status": "Status",
+            "message": "Message",
+            "preOrderedItems": "Preordered Items",
+            "location": "Location",
+            "phoneNumber": "Phone Number"
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "edit": "Edit"
+        },
+        "card": {
+            "name": "Name",
+            "price": "Price",
+            "quantity": "Quantity"
+        },
+        "messages": {
+            "fetchDeliveryError": "Failed to fetch delivery information.",
+            "fetchBookingError": "Failed to fetch booking information.",
+            "cancelBookingSuccess": "Booking canceled successfully.",
+            "cancelBookingError": "Failed to cancel booking."
+        }
+    },
     "delivery": {
         "form": {
             "title": "Delivery Information",
@@ -497,6 +534,100 @@
             "messages": {
                 "success": "Branch updated successfully!",
                 "error": "Failed to update branch. Please try again."
+            }
+        }
+    },
+    "food": {
+        "management": {
+            "placeholders": {
+                "search": "Search food"
+            },
+            "buttons": {
+                "createFood": "Create Food",
+                "options": "Options",
+                "edit": "Edit",
+                "delete": "Delete"
+            },
+            "messages": {
+                "fetchError": "Failed to fetch foods.",
+                "deleteSuccess": "Food deleted successfully.",
+                "deleteError": "Failed to delete food."
+            },
+            "popconfirm": {
+                "deleteTitle": "Are you sure you want to delete this food?",
+                "okText": "Yes",
+                "cancelText": "No"
+            },
+            "card": {
+                "noDescription": "No description available",
+                "price": "Price"
+            }
+        },
+        "createFoodModal": {
+            "titles": {
+                "modalTitle": "Create New Food"
+            },
+            "labels": {
+                "name": "Food Name",
+                "basePrice": "Base Price",
+                "description": "Description",
+                "image": "Image"
+            },
+            "placeholders": {
+                "name": "Enter food name",
+                "basePrice": "Enter base price",
+                "description": "Enter description"
+            },
+            "buttons": {
+                "selectImage": "Select Image",
+                "create": "Create Food"
+            },
+            "messages": {
+                "uploadError": "File upload failed. Please try again.",
+                "imageRemoved": "Image removed.",
+                "noImage": "Please upload and crop an image before submitting.",
+                "createSuccess": "Food created successfully!",
+                "createError": "Failed to create food.",
+                "rules": {
+                    "nameRequired": "Please enter the food name",
+                    "nameMaxLength": "Food name cannot exceed 50 characters",
+                    "priceRequired": "Please enter the base price",
+                    "descriptionRequired": "Please enter a description",
+                    "descriptionMaxLength": "Description cannot exceed 500 characters",
+                    "imageRequired": "Please upload an image"
+                }
+            }
+        },
+        "editFoodModal": {
+            "titles": {
+                "modalTitle": "Edit Food"
+            },
+            "labels": {
+                "name": "Food Name",
+                "description": "Description",
+                "basePrice": "Base Price",
+                "image": "Food Image"
+            },
+            "placeholders": {
+                "name": "Enter food name",
+                "description": "Enter description",
+                "basePrice": "Enter base price"
+            },
+            "buttons": {
+                "uploadImage": "Upload New Image (Optional)",
+                "updateFood": "Update Food"
+            },
+            "messages": {
+                "uploadError": "File upload failed. Please try again.",
+                "imageRemoved": "Image has been removed.",
+                "updateSuccess": "Food updated successfully!",
+                "updateError": "Failed to update food.",
+                "rules": {
+                    "nameRequired": "Please enter the food name",
+                    "nameMaxLength": "Food name cannot exceed 50 characters",
+                    "descriptionMaxLength": "Description cannot exceed 200 characters",
+                    "priceRequired": "Please enter the base price"
+                }
             }
         }
     }
