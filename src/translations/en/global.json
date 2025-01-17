@@ -39,6 +39,17 @@
             "delivery": "Delivery"
         }
     },
+    "notFoundPage": {
+        "title": "404",
+        "subtitle": "Oops! The page you're looking for doesn't exist.",
+        "description": "It looks like you may have taken a wrong turn. Don't worry, it happens to the best of us.",
+        "button": "Back to Home"
+    },
+    "signInPage": {
+        "title": "Sign In",
+        "googleButton": "Sign in with Google",
+        "facebookButton": "Sign in with Facebook"
+    },
     "delivery": {
         "form": {
             "title": "Delivery Information",
@@ -135,6 +146,18 @@
                 "updateSuccess": "Delivery information updated successfully!",
                 "updateError": "An error occurred while updating delivery information."
             }
+        },
+        "detailModal": {
+            "titles": {
+                "modalTitle": "{foodName}"
+            },
+            "labels": {
+                "description": "Description",
+                "price": "Price"
+            },
+            "buttons": {
+                "orderFood": "Order Food"
+            }
         }
     },
     "career": {
@@ -184,6 +207,29 @@
                 "success": "Your application has been successfully submitted!",
                 "error": "Application submission failed.",
                 "formError": "Please check the fields in the form and try again."
+            }
+        },
+        "management": {
+            "titles": {
+                "pageTitle": "Application List"
+            },
+            "placeholders": {
+                "search": "Search applications"
+            },
+            "columns": {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email",
+                "phoneNumber": "Phone Number",
+                "socialNumber": "ID Card Number",
+                "currentEducation": "Current School",
+                "resume": "Resume"
+            },
+            "messages": {
+                "socialNumberMissing": "Not provided",
+                "currentEducationMissing": "Not provided",
+                "viewResume": "View Resume",
+                "fetchError": "Failed to fetch data."
             }
         }
     },
@@ -339,6 +385,22 @@
                     "price": "Price",
                     "quantity": "Quantity"
                 }
+            }
+        },
+        "disableCalendarPage": {
+            "branchSelected": "Branch selected:",
+            "modalTitle": "Selected Date:",
+            "timeMode": {
+                "day": "Day",
+                "night": "Night"
+            },
+            "tags": {
+                "inactive": "Inactive",
+                "available": "Available:"
+            },
+            "buttons": {
+                "disable": "Disable",
+                "enable": "Enable"
             }
         }
     },

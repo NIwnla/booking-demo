@@ -39,6 +39,17 @@
             "delivery": "Giao Hàng"
         }
     },
+    "notFoundPage": {
+        "title": "404",
+        "subtitle": "Rất tiếc! Trang bạn đang tìm không tồn tại.",
+        "description": "Có vẻ bạn đã đi sai đường. Đừng lo, điều này vẫn thường xảy ra.",
+        "button": "Quay lại Trang Chủ"
+    },
+    "signInPage": {
+        "title": "Đăng Nhập",
+        "googleButton": "Đăng nhập bằng Google",
+        "facebookButton": "Đăng nhập bằng Facebook"
+    },
     "delivery": {
         "form": {
             "title": "Thông Tin Giao Hàng",
@@ -135,6 +146,18 @@
                 "updateSuccess": "Cập nhật thông tin giao hàng thành công!",
                 "updateError": "Có lỗi xảy ra khi cập nhật thông tin giao hàng."
             }
+        },
+        "detailModal": {
+            "titles": {
+                "modalTitle": "{foodName}"
+            },
+            "labels": {
+                "description": "Mô tả",
+                "price": "Giá"
+            },
+            "buttons": {
+                "orderFood": "Đặt món"
+            }
         }
     },
     "career": {
@@ -184,6 +207,29 @@
                 "success": "Đơn ứng tuyển của bạn đã được gửi thành công!",
                 "error": "Gửi đơn ứng tuyển thất bại.",
                 "formError": "Vui lòng kiểm tra lại các trường trong biểu mẫu và thử lại."
+            }
+        },
+        "management": {
+            "titles": {
+                "pageTitle": "Danh sách ứng tuyển"
+            },
+            "placeholders": {
+                "search": "Tìm kiếm đơn ứng tuyển"
+            },
+            "columns": {
+                "firstName": "Họ",
+                "lastName": "Tên",
+                "email": "Email",
+                "phoneNumber": "Số điện thoại",
+                "socialNumber": "Căn cước công dân",
+                "currentEducation": "Trường đang theo học",
+                "resume": "Hồ sơ"
+            },
+            "messages": {
+                "socialNumberMissing": "Chưa cung cấp",
+                "currentEducationMissing": "Chưa cung cấp",
+                "viewResume": "Xem hồ sơ",
+                "fetchError": "Lỗi khi lấy dữ liệu."
             }
         }
     },
@@ -339,6 +385,21 @@
                     "price": "Giá",
                     "quantity": "Số lượng"
                 }
+            }
+        },"disableCalendarPage": {
+            "branchSelected": "Chi nhánh đã chọn:",
+            "modalTitle": "Ngày đã chọn:",
+            "timeMode": {
+                "day": "Ngày",
+                "night": "Đêm"
+            },
+            "tags": {
+                "inactive": "Không hoạt động",
+                "available": "Sẵn có:"
+            },
+            "buttons": {
+                "disable": "Vô hiệu hóa",
+                "enable": "Kích hoạt"
             }
         }
     },

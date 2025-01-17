@@ -3,8 +3,10 @@ import { Table, Input } from "antd";
 import axiosInstance from "../../service/axios";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
+import { useTranslation } from "react-i18next";
 
 const ApplicationManagementPageAdmin = () => {
+    const { t } = useTranslation('global');
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pageIndex, setPageIndex] = useState(1);
@@ -28,7 +30,7 @@ const ApplicationManagementPageAdmin = () => {
             setData(items);
             setTotal(totalCount);
         } catch (error) {
-            console.error("Lỗi khi lấy dữ liệu:", error);
+            console.error(t("career.management.messages.fetchError"), error);
         } finally {
             setLoading(false);
         }
@@ -40,51 +42,51 @@ const ApplicationManagementPageAdmin = () => {
 
     const columns = [
         {
-            title: "Họ",
+            title: t("career.management.columns.firstName"),
             dataIndex: "firstName",
             key: "firstName",
             ellipsis: true,
             responsive: ['md'],
         },
         {
-            title: "Tên",
+            title: t("career.management.columns.lastName"),
             dataIndex: "lastName",
             key: "lastName",
             ellipsis: true,
             responsive: ['xl'],
         },
         {
-            title: "Email",
+            title: t("career.management.columns.email"),
             dataIndex: "email",
             key: "email",
             ellipsis: true,
         },
         {
-            title: "Số điện thoại",
+            title: t("career.management.columns.phoneNumber"),
             dataIndex: "phoneNumber",
             key: "phoneNumber",
         },
         {
-            title: "Căn cước công dân",
+            title: t("career.management.columns.socialNumber"),
             dataIndex: "socialNumber",
             key: "socialNumber",
-            render: (text) => text || "Chưa cung cấp",
+            render: (text) => text || t("career.management.messages.socialNumberMissing"),
         },
         {
-            title: "Trường đang theo học",
+            title: t("career.management.columns.currentEducation"),
             dataIndex: "currentEducation",
             key: "currentEducation",
-            responsive: ['xl'], 
-            render: (text) => text || "Chưa cung cấp",
+            responsive: ['xl'],
+            render: (text) => text || t("career.management.messages.currentEducationMissing"),
         },
         {
-            title: "Hồ sơ",
+            title: t("career.management.columns.resume"),
             dataIndex: "resumePath",
             key: "resumePath",
             render: (text) => (
-                <a href={`${AxiosConstants.AXIOS_BASEURL}/${text}`} target = "_blank" rel = "noopener noreferrer" >
-                    Xem hồ sơ
-                </a >
+                <a href={`${AxiosConstants.AXIOS_BASEURL}/${text}`} target="_blank" rel="noopener noreferrer">
+                    {t("career.management.messages.viewResume")}
+                </a>
             ),
         },
     ];
@@ -99,9 +101,9 @@ const ApplicationManagementPageAdmin = () => {
 
     return (
         <div>
-            <h1>Danh sách ứng tuyển</h1>
+            <h1>{t("career.management.titles.pageTitle")}</h1>
             <Input.Search
-                placeholder="Tìm kiếm đơn ứng tuyển"
+                placeholder={t("career.management.placeholders.search")}
                 onSearch={(value) => setSearch(value)}
                 style={{ marginBottom: 16, width: 300 }}
             />

@@ -1,20 +1,22 @@
+import React, { useEffect, useState } from 'react';
 import { Button, Calendar, Col, Modal, Row, Select, Space, Spin, Switch, Tag } from 'antd';
 import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import './DisableCalendarPage.css';
 
 const DisableCalendarPage = () => {
+    const { t } = useTranslation("global");
     const location = useLocation();
     const { branchId, branchName } = location.state || {};
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [timeMode, setTimeMode] = useState('night'); // New state for time mode
-    const [selectedMonth, setSelectedMonth] = useState(dayjs().month())
-    const [isFetching, setIsFetching] = useState(false)
+    const [timeMode, setTimeMode] = useState('night');
+    const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
+    const [isFetching, setIsFetching] = useState(false);
     const [disabledTimes, setDisabledTimes] = useState([]);
     const [isDisabling, setIsDisabling] = useState(false);
 
@@ -45,7 +47,7 @@ const DisableCalendarPage = () => {
                             onChange={(newMonth) => {
                                 const now = value.clone().month(newMonth);
                                 onChange(now);
-                                setSelectedMonth(newMonth)
+                                setSelectedMonth(newMonth);
                             }}
                         >
                             {monthOptions}
@@ -57,19 +59,21 @@ const DisableCalendarPage = () => {
     };
 
     const getTimes = async () => {
-        setIsFetching(true)
+        setIsFetching(true);
+        const currentYear = dayjs().year();
         try {
-            const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(2024, selectedMonth + 1, branchId))
-            setDisabledTimes(response.data)
+            const response = await axiosInstance.get(apiEndPoints.DISABLED_TIME.GET_BY_MONTH(currentYear, selectedMonth + 1, branchId));
+            setDisabledTimes(response.data);
         } catch (error) {
-
+            console.error(error);
         } finally {
-            setIsFetching(false)
+            setIsFetching(false);
         }
-    }
+    };
+
     useEffect(() => {
         getTimes();
-    }, [selectedMonth])
+    }, [selectedMonth]);
 
     const dateFullCellRender = (current) => {
         const isPast = current.isBefore(dayjs(), 'day');
@@ -79,7 +83,6 @@ const DisableCalendarPage = () => {
 
         const className = `date-cell ${isPast || !isCurrentMonth ? 'disable' : ''} ${isFuture && isCurrentMonth ? 'enable' : ''}`;
 
-
         const handleClick = () => {
             if (!isPast || !isCurrentMonth) {
                 setSelectedDate(current);
@@ -87,14 +90,11 @@ const DisableCalendarPage = () => {
             }
         };
 
-
         return (
             <div className={className} onClick={handleClick}>
                 {current.date()}
             </div>
         );
-
-
     };
 
     const handleModalClose = () => {
@@ -110,7 +110,7 @@ const DisableCalendarPage = () => {
                 branchId,
                 available: 0
             };
-            const response = await axiosInstance.post(apiEndPoints.DISABLED_TIME.CREATE, payload);
+            await axiosInstance.post(apiEndPoints.DISABLED_TIME.CREATE, payload);
             getTimes();
         } catch (error) {
             console.error(error);
@@ -120,14 +120,14 @@ const DisableCalendarPage = () => {
     };
 
     const handleEnableTime = async (time) => {
-        setIsDisabling(true)
+        setIsDisabling(true);
         try {
-            const response = await axiosInstance.delete(apiEndPoints.DISABLED_TIME.DELETE(time.format('YYYY-MM-DDTHH:mm')))
+            await axiosInstance.delete(apiEndPoints.DISABLED_TIME.DELETE(time.format('YYYY-MM-DDTHH:mm')));
             getTimes();
         } catch (error) {
-
+            console.error(error);
         } finally {
-            setIsDisabling(false)
+            setIsDisabling(false);
         }
     };
 
@@ -141,29 +141,33 @@ const DisableCalendarPage = () => {
         }
 
         return times.map((time, index) => {
-            const disabledTime = disabledTimes.find(bookedTime => dayjs(bookedTime.time).isSame(time, 'minute') && dayjs(bookedTime.time).isSame(time, 'date') );
+            const disabledTime = disabledTimes.find(bookedTime => dayjs(bookedTime.time).isSame(time, 'minute') && dayjs(bookedTime.time).isSame(time, 'date'));
             const availableCount = disabledTime ? disabledTime.available : 10;
 
             return (
                 <div key={index} className="hour-row">
                     <span>{time.format('HH:mm')}</span>
                     <Tag color={availableCount === 0 ? 'red' : 'green'}>
-                        {availableCount === 0 ? 'Inactive' : `Available: ${availableCount}`}
+                        {availableCount === 0
+                            ? t('booking.disableCalendarPage.tags.inactive')
+                            : `${t('booking.disableCalendarPage.tags.available')} ${availableCount}`}
                     </Tag>
                     <Space wrap>
                         <Button
                             type="primary"
                             disabled={availableCount === 0}
                             onClick={() => handleDisableTime(time)}
+                            loading={isFetching}
                         >
-                            Disable
+                            {t('booking.disableCalendarPage.buttons.disable')}
                         </Button>
                         <Button
                             type="primary"
                             disabled={availableCount > 0}
                             onClick={() => handleEnableTime(time)}
+                            loading={isFetching}
                         >
-                            Enable
+                            {t('booking.disableCalendarPage.buttons.enable')}
                         </Button>
                     </Space>
                 </div>
@@ -171,17 +175,16 @@ const DisableCalendarPage = () => {
         });
     };
 
-
     return (
         <div style={{ padding: 24 }}>
-            <div>Branch choosed : {branchName}</div>
-            <Spin spinning={isFetching} >
+            <div>{`${t('booking.disableCalendarPage.branchSelected')} ${branchName}`}</div>
+            <Spin spinning={isFetching}>
                 <Calendar
                     headerRender={customHeader}
                     fullCellRender={dateFullCellRender}
                 />
                 <Modal
-                    title={`Selected Date: ${selectedDate ? selectedDate.format('YYYY-MM-DD') : ''}`}
+                    title={`${t('booking.disableCalendarPage.modalTitle')} ${selectedDate?.format('YYYY-MM-DD') }`}
                     open={isModalVisible}
                     onCancel={handleModalClose}
                     footer={null}
@@ -190,8 +193,8 @@ const DisableCalendarPage = () => {
                         <Switch
                             checked={timeMode === 'night'}
                             onChange={(checked) => setTimeMode(checked ? 'night' : 'day')}
-                            checkedChildren="Night"
-                            unCheckedChildren="Day"
+                            checkedChildren={t('booking.disableCalendarPage.timeMode.night')}
+                            unCheckedChildren={t('booking.disableCalendarPage.timeMode.day')}
                         />
                     </div>
                     {renderHourRows(selectedDate)}
