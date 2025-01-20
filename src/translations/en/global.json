@@ -582,7 +582,8 @@
             },
             "buttons": {
                 "selectImage": "Select Image",
-                "create": "Create Food"
+                "create": "Create Food",
+                "selectCategories": "Select Categories"
             },
             "messages": {
                 "uploadError": "File upload failed. Please try again.",
@@ -617,7 +618,8 @@
             },
             "buttons": {
                 "uploadImage": "Upload New Image (Optional)",
-                "updateFood": "Update Food"
+                "updateFood": "Update Food",
+                                "selectCategories": "Select Categories"
             },
             "messages": {
                 "uploadError": "File upload failed. Please try again.",

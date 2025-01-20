@@ -582,7 +582,8 @@
             },
             "buttons": {
                 "selectImage": "Chọn Hình Ảnh",
-                "create": "Tạo Món Ăn"
+                "create": "Tạo Món Ăn",
+                "selectCategories": "Chọn Loại"
             },
             "messages": {
                 "uploadError": "Tải lên tệp không thành công. Vui lòng thử lại.",
@@ -617,7 +618,8 @@
             },
             "buttons": {
                 "uploadImage": "Tải hình ảnh mới (không bắt buộc)",
-                "updateFood": "Cập nhật món ăn"
+                "updateFood": "Cập nhật món ăn",
+                "selectCategories": "Chọn Loại"
             },
             "messages": {
                 "uploadError": "Tải tệp lên thất bại. Vui lòng thử lại.",

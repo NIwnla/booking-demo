@@ -37,7 +37,7 @@ const CategoryPickerModal = ({ isOpen, onClose, onSelect, selectedList }) => {
             setCategories(items);
             setTotalCount(totalCount);
         } catch (error) {
-            console.error(t('categoryPickerModal.messages.fetchError'), error);
+            console.error(t('category.categoryPickerModal.messages.fetchError'), error);
         } finally {
             setLoading(false);
         }
@@ -73,21 +73,21 @@ const CategoryPickerModal = ({ isOpen, onClose, onSelect, selectedList }) => {
 
     return (
         <Modal
-            title={t('categoryPickerModal.titles.modalTitle')}
+            title={t('category.categoryPickerModal.titles.modalTitle')}
             open={isOpen}
             onCancel={onClose}
             footer={[
                 <Button key="cancel" onClick={onClose}>
-                    {t('categoryPickerModal.buttons.cancel')}
+                    {t('category.categoryPickerModal.buttons.cancel')}
                 </Button>,
                 <Button key="confirm" type="primary" onClick={handleConfirm}>
-                    {t('categoryPickerModal.buttons.confirm')}
+                    {t('category.categoryPickerModal.buttons.confirm')}
                 </Button>,
             ]}
         >
             <Spin spinning={loading}>
                 <Input.Search
-                    placeholder={t('categoryPickerModal.placeholders.search')}
+                    placeholder={t('category.categoryPickerModal.placeholders.search')}
                     value={searchName}
                     onChange={(e) => setSearchName(e.target.value)}
                     onSearch={handleSearch}
