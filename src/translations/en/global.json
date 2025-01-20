@@ -26,6 +26,7 @@
             "booking": "Booking",
             "users": "Users",
             "foods": "Foods",
+            "categories": "Categories",
             "delivery": "Delivery",
             "application": "Application"
         },
@@ -560,7 +561,8 @@
             },
             "card": {
                 "noDescription": "No description available",
-                "price": "Price"
+                "price": "Price",
+                "noCategories": "No category available"
             }
         },
         "createFoodModal": {
@@ -628,6 +630,94 @@
                     "descriptionMaxLength": "Description cannot exceed 200 characters",
                     "priceRequired": "Please enter the base price"
                 }
+            }
+        }
+    },
+    "category": {
+        "categoryManagement": {
+            "titles": {
+                "pageTitle": "Category Management",
+                "createButton": "Create New Category"
+            },
+            "columns": {
+                "name": "Name",
+                "action": "Action"
+            },
+            "buttons": {
+                "edit": "Edit",
+                "delete": "Delete"
+            },
+            "messages": {
+                "fetchError": "Failed to fetch categories.",
+                "deleteSuccess": "Category deleted successfully.",
+                "deleteError": "Failed to delete category.",
+                "loading": "Loading..."
+            },
+            "search": {
+                "placeholder": "Search categories"
+            }
+        },
+        "categoryEditModal": {
+            "titles": {
+                "modalTitle": "Edit Category"
+            },
+            "labels": {
+                "name": "Name",
+                "description": "Description"
+            },
+            "placeholders": {
+                "name": "Enter category name",
+                "description": "Enter category description"
+            },
+            "buttons": {
+                "updateCategory": "Update Category"
+            },
+            "messages": {
+                "updateSuccess": "Category updated successfully!",
+                "updateError": "Failed to update category.",
+                "rules": {
+                    "nameRequired": "Please enter the category name",
+                    "nameMaxLength": "Category name cannot exceed 50 characters"
+                }
+            }
+        },
+        "categoryCreationModal": {
+            "titles": {
+                "modalTitle": "Create New Category"
+            },
+            "labels": {
+                "name": "Name",
+                "description": "Description"
+            },
+            "placeholders": {
+                "name": "Enter category name",
+                "description": "Enter category description"
+            },
+            "buttons": {
+                "create": "Create Category"
+            },
+            "messages": {
+                "createSuccess": "Category created successfully!",
+                "createError": "Failed to create category.",
+                "rules": {
+                    "nameRequired": "Please enter the category name",
+                    "nameMaxLength": "Category name cannot exceed 50 characters"
+                }
+            }
+        },
+        "categoryPickerModal": {
+            "titles": {
+                "modalTitle": "Select Categories"
+            },
+            "placeholders": {
+                "search": "Search by name"
+            },
+            "buttons": {
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            },
+            "messages": {
+                "fetchError": "Error fetching categories."
             }
         }
     }

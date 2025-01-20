@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin, Typography } from "antd";
+import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Space, Spin, Tag, Typography } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -74,13 +74,6 @@ const FoodManagementPageAdmin = () => {
         <div style={{ padding: 24 }}>
             <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
                 <Col xs={24} md={12}>
-                    <Input.Search
-                        placeholder={t("food.management.placeholders.search")}
-                        onSearch={(value) => setSearch(value)}
-                        style={{ width: '100%' }}
-                    />
-                </Col>
-                <Col xs={24} md={12}>
                     <Button
                         type="primary"
                         onClick={() => setCreateModalVisible(true)}
@@ -88,6 +81,13 @@ const FoodManagementPageAdmin = () => {
                     >
                         {t("food.management.buttons.createFood")}
                     </Button>
+                </Col>
+                <Col xs={24} md={12}>
+                    <Input.Search
+                        placeholder={t("food.management.placeholders.search")}
+                        onSearch={(value) => setSearch(value)}
+                        style={{ width: '100%' }}
+                    />
                 </Col>
             </Row>
             <Spin spinning={loading}>
@@ -113,6 +113,14 @@ const FoodManagementPageAdmin = () => {
                                     <ShoppingCartOutlined />
                                     <strong>{t("food.management.card.price")}: {food.basePrice}đ</strong>
                                 </Typography>
+               
+                                    {food.categories.length > 0 ? (
+                                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                            {food.categories.map(category => (
+                                                <Tag key={category.id} color="blue">{category.name}</Tag>
+                                            ))}
+                                        </div>
+                                    ) : t("food.management.card.noCategories")}
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
                                     <Space wrap>
                                         <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleOptions(food.id)}>

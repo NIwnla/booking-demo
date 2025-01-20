@@ -83,6 +83,10 @@ const AdminLayout = ({ children }) => {
                     label: <Link to={routeNames.food.management}>{t('leftMenuItems.management.foods')}</Link>,
                 },
                 {
+                    key: '20',
+                    label: <Link to={routeNames.category.management}>{t('leftMenuItems.management.categories')}</Link>,
+                },
+                {
                     key: '10',
                     label: <Link to={routeNames.deliveryInformation.management}>{t('leftMenuItems.management.delivery')}</Link>,
                 },

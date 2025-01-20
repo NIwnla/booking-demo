@@ -26,6 +26,7 @@
             "booking": "Đặt Chỗ",
             "users": "Người Dùng",
             "foods": "Món Ăn",
+            "categories": "Loại Món",
             "delivery": "Giao Hàng",
             "application": "Xin Việc"
         },
@@ -75,7 +76,7 @@
             "cancel": "Hủy",
             "edit": "Chỉnh Sửa"
         },
-        "card":{
+        "card": {
             "name": "Tên",
             "quantity": "Số Lượng",
             "price": "Giá"
@@ -560,7 +561,8 @@
             },
             "card": {
                 "noDescription": "Không có mô tả",
-                "price": "Giá"
+                "price": "Giá",
+                "noCategories": "Không có loại"
             }
         },
         "createFoodModal": {
@@ -628,6 +630,94 @@
                     "descriptionMaxLength": "Mô tả không được vượt quá 200 ký tự",
                     "priceRequired": "Vui lòng nhập giá cơ bản"
                 }
+            }
+        }
+    },
+    "category": {
+        "categoryManagement": {
+            "titles": {
+                "pageTitle": "Quản Lý Loại Món",
+                "createButton": "Tạo Loại Món Mới"
+            },
+            "columns": {
+                "name": "Tên",
+                "action": "Hành Động"
+            },
+            "buttons": {
+                "edit": "Chỉnh Sửa",
+                "delete": "Xóa"
+            },
+            "messages": {
+                "fetchError": "Không thể tải dữ liệu loại món.",
+                "deleteSuccess": "Xóa loại món thành công.",
+                "deleteError": "Xóa loại món thất bại.",
+                "loading": "Đang tải..."
+            },
+            "search": {
+                "placeholder": "Tìm kiếm loại món"
+            }
+        },
+        "categoryEditModal": {
+            "titles": {
+                "modalTitle": "Chỉnh Sửa Loại Món"
+            },
+            "labels": {
+                "name": "Tên",
+                "description": "Mô Tả"
+            },
+            "placeholders": {
+                "name": "Nhập tên loại món",
+                "description": "Nhập mô tả loại món"
+            },
+            "buttons": {
+                "updateCategory": "Cập Nhật Loại Món"
+            },
+            "messages": {
+                "updateSuccess": "Cập nhật loại món thành công!",
+                "updateError": "Cập nhật loại món thất bại.",
+                "rules": {
+                    "nameRequired": "Vui lòng nhập tên loại món",
+                    "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự"
+                }
+            }
+        },
+        "categoryCreationModal": {
+            "titles": {
+                "modalTitle": "Tạo Loại Món Mới"
+            },
+            "labels": {
+                "name": "Tên",
+                "description": "Mô Tả"
+            },
+            "placeholders": {
+                "name": "Nhập tên loại món",
+                "description": "Nhập mô tả loại món"
+            },
+            "buttons": {
+                "create": "Tạo Loại Món"
+            },
+            "messages": {
+                "createSuccess": "Tạo loại món thành công!",
+                "createError": "Tạo loại món thất bại.",
+                "rules": {
+                    "nameRequired": "Vui lòng nhập tên loại món",
+                    "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự"
+                }
+            }
+        },
+        "categoryPickerModal": {
+            "titles": {
+                "modalTitle": "Chọn danh mục"
+            },
+            "placeholders": {
+                "search": "Tìm kiếm theo tên"
+            },
+            "buttons": {
+                "cancel": "Hủy",
+                "confirm": "Xác nhận"
+            },
+            "messages": {
+                "fetchError": "Lỗi khi tải danh mục."
             }
         }
     }

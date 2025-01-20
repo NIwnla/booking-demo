@@ -27,6 +27,7 @@ import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
 import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
 import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
 import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
+import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
 
 
 
@@ -114,6 +115,11 @@ const AppRoutes = () => {
                 <Route
                     path={routeNames.deliveryInformation.management}
                     element={<PrivateRoute element={<DeliveryManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route
+                    path={routeNames.category.management}
+                    element={<PrivateRoute element={<CategoryManagementAdminPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
 
                 <Route path={routeNames.login} element={<SignInPage />} />

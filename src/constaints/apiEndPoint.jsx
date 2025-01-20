@@ -65,4 +65,11 @@ export const apiEndPoints = {
         CHECK_PENDING: (id) => `/delivery-informations/${id}/pending`,
         GET_CURRENT: '/delivery-informations/current',
     },
+    CATEGORY: {
+        GET_ALL: '/categories',
+        GET_BY_ID: (id) => `/categories/${id}`,
+        CREATE: '/categories',
+        DELETE: (id) => `/categories/${id}`,
+        EDIT: (id) => `/categories/${id}`,
+    }
 }
