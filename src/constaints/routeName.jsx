@@ -48,4 +48,8 @@ export const routeNames = {
     category: {
         management: '/categories/management',
     }
+    ,
+    foodMenu: {
+        main: '/food-menu/main'
+    }
 }

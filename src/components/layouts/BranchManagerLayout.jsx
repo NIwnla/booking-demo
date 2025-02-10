@@ -83,7 +83,7 @@ const BranchManagerLayout = ({ children }) => {
                     type="primary"
                     icon={<MenuOutlined />}
                     onClick={showDrawer}
-                    style={{ display: 'none', background: 'transparent', border: 'none', color: '#fff' }}
+                    style={{ display: 'none', background: 'transparent', color: '#fff', border: 'none', marginBottom: '4vh' }}
                 />
 
                 {/* Horizontal Menu for Large Screens */}

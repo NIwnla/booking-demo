@@ -13,8 +13,10 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
 
     const handleFinish = async (values) => {
         const formData = new FormData();
-        formData.append('Name', values.name);
-        formData.append('Description', values.description);
+        formData.append('NameVN', values.nameVN);
+        formData.append('NameEN', values.nameEN);
+        formData.append('DescriptionVN', values.descriptionVN);
+        formData.append('DescriptionEN', values.descriptionEN);
         formData.append('ImageFile', values.imageFile.file);
 
         setLoading(true);
@@ -51,19 +53,35 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    label={t('branch.creationModal.form.name.label')}
-                    name="name"
-                    rules={[{ required: true, message: t('branch.creationModal.form.name.required') }]}
+                    label={t('branch.creationModal.form.nameVN.label')}
+                    name="nameVN"
+                    rules={[{ required: true, message: t('branch.creationModal.form.nameVN.required') }]}
                 >
-                    <Input placeholder={t('branch.creationModal.form.name.placeholder')} />
+                    <Input placeholder={t('branch.creationModal.form.nameVN.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('branch.creationModal.form.description.label')}
-                    name="description"
-                    rules={[{ required: true, message: t('branch.creationModal.form.description.required') }]}
+                    label={t('branch.creationModal.form.nameEN.label')}
+                    name="nameEN"
+                    rules={[{ required: true, message: t('branch.creationModal.form.nameEN.required') }]}
                 >
-                    <Input.TextArea rows={4} placeholder={t('branch.creationModal.form.description.placeholder')} />
+                    <Input placeholder={t('branch.creationModal.form.nameEN.placeholder')} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.creationModal.form.descriptionVN.label')}
+                    name="descriptionVN"
+                    rules={[{ required: true, message: t('branch.creationModal.form.descriptionVN.required') }]}
+                >
+                    <Input.TextArea rows={4} placeholder={t('branch.creationModal.form.descriptionVN.placeholder')} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.creationModal.form.descriptionEN.label')}
+                    name="descriptionEN"
+                    rules={[{ required: true, message: t('branch.creationModal.form.descriptionEN.required') }]}
+                >
+                    <Input.TextArea rows={4} placeholder={t('branch.creationModal.form.descriptionEN.placeholder')} />
                 </Form.Item>
 
                 <Form.Item

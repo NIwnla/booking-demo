@@ -7,11 +7,12 @@ import BranchEditModal from '../../components/modals/branch/BranchEditModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import axiosInstance from '../../service/axios';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
 
 const { Title } = Typography;
 
 const BranchManagementAdminPage = () => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const [branches, setBranches] = useState([]);
     const [selectedBranch, setSelectedBranch] = useState(null);
     const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
@@ -94,6 +95,7 @@ const BranchManagementAdminPage = () => {
             title: t('branch.branchManagement.columns.name'),
             dataIndex: 'name',
             key: 'name',
+            render: (_, branch) => getLocalizedText(branch, 'name', i18n.language),
         },
         {
             title: t('branch.branchManagement.columns.description'),
@@ -101,6 +103,7 @@ const BranchManagementAdminPage = () => {
             key: 'description',
             ellipsis: true,
             responsive: ['md'],
+            render: (_, branch) => getLocalizedText(branch, 'description', i18n.language),
         },
         {
             title: t('branch.branchManagement.columns.status'),

@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { useTranslation } from 'react-i18next';
+import { getLocalizedText } from '../../../helpers/getLocalizedText';
 
 const CategoryPickerModal = ({ isOpen, onClose, onSelect, selectedList }) => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState({}); // Use an object with id as the key
     const [pageIndex, setPageIndex] = useState(1);
@@ -49,7 +50,7 @@ const CategoryPickerModal = ({ isOpen, onClose, onSelect, selectedList }) => {
             if (newSelectedCategories[category.id]) {
                 delete newSelectedCategories[category.id];
             } else {
-                newSelectedCategories[category.id] = category.name;
+                newSelectedCategories[category.id] = { nameVN: category.nameVN, nameEN: category.nameEN };
             }
             return newSelectedCategories;
         });
@@ -101,7 +102,7 @@ const CategoryPickerModal = ({ isOpen, onClose, onSelect, selectedList }) => {
                                 checked={selectedCategories[category.id] !== undefined} // Check if category id exists in the selected object
                                 onChange={() => handleCategorySelect(category)}
                             >
-                                {category.name}
+                                {getLocalizedText(category, 'name', i18n.language)}
                             </Checkbox>
                         </List.Item>
                     )}

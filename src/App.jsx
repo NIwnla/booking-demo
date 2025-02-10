@@ -13,7 +13,6 @@ dayjs.extend(utc);
 
 const customTheme = {
   token: {
-    colorPrimary: '#ff0000',     // Red as the primary color
     colorBgLayout: '#ffffff',    // White background
     colorBgContainer: '#ffffff', // White component background
     colorTableHeader: '#ff0000', // Custom color for table header
@@ -24,7 +23,8 @@ const customTheme = {
       headerColor: '#ffffff',    // Set table header text color to white
     },
     Menu: {
-      itemBg: '#ff00000',          // Red background for menu items
+      colorPrimary:'#ffffff',
+      itemBg: '#ff0000',          // Red background for menu items
       itemColor: '#ffffff',       // White text for menu items
       itemHoverBg: '#cc0000',     // Slightly darker red on hover
       itemHoverColor: '#ffffff',  // White text on hover

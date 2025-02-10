@@ -37,7 +37,8 @@
         "applications": {
             "label": "Ứng Dụng",
             "booking": "Đặt Chỗ",
-            "delivery": "Giao Hàng"
+            "delivery": "Giao Hàng",
+            "foodMenu": "Thực Đơn"
         }
     },
     "notFoundPage": {
@@ -485,15 +486,25 @@
                 "modalTitle": "Tạo Chi Nhánh Mới"
             },
             "form": {
-                "name": {
-                    "label": "Tên",
-                    "placeholder": "Nhập tên chi nhánh",
-                    "required": "Vui lòng nhập tên chi nhánh"
+                "nameVN": {
+                    "label": "Tên (VN)",
+                    "placeholder": "Nhập tên chi nhánh bằng tiếng Việt",
+                    "required": "Vui lòng nhập tên chi nhánh bằng tiếng Việt"
                 },
-                "description": {
-                    "label": "Mô Tả",
-                    "placeholder": "Nhập mô tả chi nhánh",
-                    "required": "Vui lòng nhập mô tả chi nhánh"
+                "nameEN": {
+                    "label": "Tên (EN)",
+                    "placeholder": "Nhập tên chi nhánh bằng tiếng Anh",
+                    "required": "Vui lòng nhập tên chi nhánh bằng tiếng Anh"
+                },
+                "descriptionVN": {
+                    "label": "Mô Tả (VN)",
+                    "placeholder": "Nhập mô tả chi nhánh bằng tiếng Việt",
+                    "required": "Vui lòng nhập mô tả chi nhánh bằng tiếng Việt"
+                },
+                "descriptionEN": {
+                    "label": "Mô Tả (EN)",
+                    "placeholder": "Nhập mô tả chi nhánh bằng tiếng Anh",
+                    "required": "Vui lòng nhập mô tả chi nhánh bằng tiếng Anh"
                 },
                 "image": {
                     "label": "Hình Ảnh",
@@ -664,12 +675,13 @@
                 "modalTitle": "Chỉnh Sửa Loại Món"
             },
             "labels": {
-                "name": "Tên",
-                "description": "Mô Tả"
+                "nameVN": "Tên (VN)",
+                "nameEN": "Tên (EN)",
+                "image": "Hình Ảnh"
             },
             "placeholders": {
-                "name": "Nhập tên loại món",
-                "description": "Nhập mô tả loại món"
+                "nameVN": "Nhập tên loại món bằng tiếng Việt",
+                "nameEN": "Nhập tên loại món bằng tiếng Anh"
             },
             "buttons": {
                 "updateCategory": "Cập Nhật Loại Món"
@@ -678,7 +690,8 @@
                 "updateSuccess": "Cập nhật loại món thành công!",
                 "updateError": "Cập nhật loại món thất bại.",
                 "rules": {
-                    "nameRequired": "Vui lòng nhập tên loại món",
+                    "nameVNRequired": "Vui lòng nhập tên loại món bằng tiếng Việt",
+                    "nameENRequired": "Vui lòng nhập tên loại món bằng tiếng Anh",
                     "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự"
                 }
             }
@@ -688,12 +701,13 @@
                 "modalTitle": "Tạo Loại Món Mới"
             },
             "labels": {
-                "name": "Tên",
-                "description": "Mô Tả"
+                "nameVN": "Tên (VN)",
+                "nameEN": "Tên (EN)",
+                "image": "Hình Ảnh"
             },
             "placeholders": {
-                "name": "Nhập tên loại món",
-                "description": "Nhập mô tả loại món"
+                "nameVN": "Nhập tên loại món bằng tiếng Việt",
+                "nameEN": "Nhập tên loại món bằng tiếng Anh"
             },
             "buttons": {
                 "create": "Tạo Loại Món"
@@ -702,8 +716,10 @@
                 "createSuccess": "Tạo loại món thành công!",
                 "createError": "Tạo loại món thất bại.",
                 "rules": {
-                    "nameRequired": "Vui lòng nhập tên loại món",
-                    "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự"
+                    "nameVNRequired": "Vui lòng nhập tên loại món bằng tiếng Việt",
+                    "nameENRequired": "Vui lòng nhập tên loại món bằng tiếng Anh",
+                    "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự",
+                    "imageRequired": "Vui lòng tải lên hình ảnh"
                 }
             }
         },

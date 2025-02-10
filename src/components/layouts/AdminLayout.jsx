@@ -1,5 +1,5 @@
 import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
-import { Button, Drawer, Dropdown, Layout, Menu, Space, Typography } from 'antd';
+import { Button, Drawer, Dropdown, Flex, Layout, Menu, Space, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
@@ -35,12 +35,12 @@ const AdminLayout = ({ children }) => {
                 {
                     key: 'english',
                     label: 'English',
-                    onClick: () => changeLanguage(i18n,'en'),
+                    onClick: () => changeLanguage(i18n, 'en'),
                 },
                 {
                     key: 'vietnamese',
                     label: 'Tiếng Việt',
-                    onClick: () => changeLanguage(i18n,'vi'),
+                    onClick: () => changeLanguage(i18n, 'vi'),
                 },
             ],
         },
@@ -118,6 +118,10 @@ const AdminLayout = ({ children }) => {
                     key: '9',
                     label: <Link to={routeNames.deliveryInformation.create}>{t('leftMenuItems.applications.delivery')}</Link>,
                 },
+                {
+                    key: '11',
+                    label: <Link to={routeNames.foodMenu.main}>{t('leftMenuItems.applications.foodMenu')}</Link>,
+                },
             ],
         },
     ];
@@ -147,15 +151,6 @@ const AdminLayout = ({ children }) => {
                     {t('header.title')}
                 </Title>
 
-                {/* Hamburger Button for Small Screens */}
-                <Button
-                    className="menu-toggle-button"
-                    type="primary"
-                    icon={<MenuOutlined />}
-                    onClick={showDrawer}
-                    style={{ display: 'none', background: 'transparent', border: 'none', color: '#fff' }}
-                />
-
                 {/* Horizontal Menu for Large Screens */}
                 <Menu
                     theme="light"
@@ -170,22 +165,33 @@ const AdminLayout = ({ children }) => {
                     items={leftMenuItems}
                 />
 
-                {/* Dropdown for Logged-in User */}
-                {email ? (
-                    <Dropdown
-                        menu={{ items: rightMenuItems }}
-                        placement="bottomRight"
-                        trigger={['click']}
-                    >
-                        <Space style={{ cursor: 'pointer' }}>
-                            <Text style={{ color: '#ffffff' }}>{email}</Text>
-                        </Space>
-                    </Dropdown>
-                ) : (
-                    <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }}>
-                        {t('header.login')}
-                    </Link>
-                )}
+                {/* Hamburger Button for Small Screens */}
+                    <Button
+                        className="menu-toggle-button"
+                        type="primary"
+                        icon={<MenuOutlined />}
+                        onClick={showDrawer}
+                        style={{ display: 'none', background: 'transparent', color: '#fff', border:'none', marginBottom:'4vh' }}
+                    />
+
+
+                    {/* Dropdown for Logged-in User */}
+                    {email ? (
+                        <Dropdown
+                            menu={{ items: rightMenuItems }}
+                            placement="bottomRight"
+                            trigger={['click']}
+                        >
+                            <Space style={{ cursor: 'pointer' }}>
+                                <Text style={{ color: '#ffffff' }}>{email}</Text>
+                            </Space>
+                        </Dropdown>
+                    ) : (
+                        <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }}>
+                            {t('header.login')}
+                        </Link>
+                    )}
+
             </Header>
 
             {/* Drawer for Small Screens */}

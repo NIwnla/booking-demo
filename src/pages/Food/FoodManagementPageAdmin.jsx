@@ -9,9 +9,10 @@ import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
 import axiosInstance from "../../service/axios";
 import './FoodManagementPageAdmin.css';
+import { getLocalizedText } from "../../helpers/getLocalizedText";
 
 const FoodManagementPageAdmin = () => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pageIndex, setPageIndex] = useState(1);
@@ -106,21 +107,21 @@ const FoodManagementPageAdmin = () => {
                                 }
                             >
                                 <Card.Meta
-                                    title={food.name}
-                                    description={food.description || t("food.management.card.noDescription")}
+                                    title={getLocalizedText(food, 'name', i18n.language)}
+                                    description={getLocalizedText(food, 'description', i18n.language) || t("food.management.card.noDescription")}
                                 />
                                 <Typography style={{ marginTop: "2vh", display: "flex", alignItems: "center" }}>
                                     <ShoppingCartOutlined />
                                     <strong>{t("food.management.card.price")}: {food.basePrice}đ</strong>
                                 </Typography>
-               
-                                    {food.categories.length > 0 ? (
-                                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                                            {food.categories.map(category => (
-                                                <Tag key={category.id} color="blue">{category.name}</Tag>
-                                            ))}
-                                        </div>
-                                    ) : t("food.management.card.noCategories")}
+
+                                {food.categories.length > 0 ? (
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                        {food.categories.map(category => (
+                                            <Tag key={category.id} color="blue">{getLocalizedText(category, 'name', i18n.language)}</Tag>
+                                        ))}
+                                    </div>
+                                ) : t("food.management.card.noCategories")}
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
                                     <Space wrap>
                                         <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleOptions(food.id)}>

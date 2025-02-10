@@ -16,8 +16,10 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
     useEffect(() => {
         if (branch) {
             form.setFieldsValue({
-                name: branch.name,
-                description: branch.description,
+                nameVN: branch.nameVN,
+                nameEN: branch.nameEN,
+                descriptionVN: branch.descriptionVN,
+                descriptionEN: branch.descriptionEN,
             });
 
             setFileList(branch.imagePath ? [
@@ -33,8 +35,10 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
 
     const handleFinish = async (values) => {
         const formData = new FormData();
-        formData.append('Name', values.name);
-        formData.append('Description', values.description);
+        formData.append('NameVN', values.nameVN);
+        formData.append('NameEN', values.nameEN);
+        formData.append('DescriptionVN', values.descriptionVN);
+        formData.append('DescriptionEN', values.descriptionEN);
 
         if (fileList.length > 0 && fileList[0].originFileObj) {
             formData.append('ImageFile', fileList[0].originFileObj);
@@ -79,19 +83,35 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    label={t('branch.editModal.form.name.label')}
-                    name="name"
-                    rules={[{ required: true, message: t('branch.editModal.form.name.required') }]}
+                    label={t('branch.editModal.form.nameVN.label')}
+                    name="nameVN"
+                    rules={[{ required: true, message: t('branch.editModal.form.nameVN.required') }]}
                 >
-                    <Input placeholder={t('branch.editModal.form.name.placeholder')} />
+                    <Input placeholder={t('branch.editModal.form.nameVN.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('branch.editModal.form.description.label')}
-                    name="description"
-                    rules={[{ required: true, message: t('branch.editModal.form.description.required') }]}
+                    label={t('branch.editModal.form.nameEN.label')}
+                    name="nameEN"
+                    rules={[{ required: true, message: t('branch.editModal.form.nameEN.required') }]}
                 >
-                    <Input.TextArea rows={4} placeholder={t('branch.editModal.form.description.placeholder')} />
+                    <Input placeholder={t('branch.editModal.form.nameEN.placeholder')} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.editModal.form.descriptionVN.label')}
+                    name="descriptionVN"
+                    rules={[{ required: true, message: t('branch.editModal.form.descriptionVN.required') }]}
+                >
+                    <Input.TextArea rows={4} placeholder={t('branch.editModal.form.descriptionVN.placeholder')} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.editModal.form.descriptionEN.label')}
+                    name="descriptionEN"
+                    rules={[{ required: true, message: t('branch.editModal.form.descriptionEN.required') }]}
+                >
+                    <Input.TextArea rows={4} placeholder={t('branch.editModal.form.descriptionEN.placeholder')} />
                 </Form.Item>
 
                 <Form.Item

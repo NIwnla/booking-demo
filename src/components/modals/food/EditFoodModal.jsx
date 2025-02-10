@@ -8,7 +8,7 @@ import CropImageModal from "../image/CropImageModal";
 import CategoryPickerModal from "../category/CategoryPickerModal";
 
 const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { message } = App.useApp();
@@ -21,10 +21,15 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
     const [categoryIds, setCategoryIds] = useState([]);
 
     useEffect(() => {
+        form.resetFields();
+        setFileList([]);
+        setCroppedImage(null);
         if (food) {
             form.setFieldsValue({
-                name: food.name,
-                description: food.description,
+                nameVN: food.nameVN,
+                nameEN: food.nameEN,
+                descriptionVN: food.descriptionVN,
+                descriptionEN: food.descriptionEN,
                 basePrice: food.basePrice,
             });
             if (food.categories) {
@@ -37,7 +42,6 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
             }
         }
     }, [food]);
-
 
     const handleImageUpload = (info) => {
         if (info.fileList.length === 0) {
@@ -83,13 +87,17 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
     const handleFinish = async (values) => {
         setLoading(true);
         const formData = new FormData();
-        formData.append("Name", values.name);
-        formData.append("BasePrice", values.basePrice);
-        formData.append("Description", values.description);
+        formData.append("nameVN", values.nameVN);
+        formData.append("nameEN", values.nameEN);
+        formData.append("descriptionVN", values.descriptionVN);
+        formData.append("descriptionEN", values.descriptionEN);
+        formData.append("basePrice", values.basePrice);
+
         if (croppedImage) {
             formData.append("imageFile", croppedImage);
         }
         categoryIds.forEach((id) => formData.append("CategoryIds", id));
+
         try {
             await axiosInstance.put(apiEndPoints.FOOD.EDIT(food.id), formData, {
                 headers: {
@@ -99,9 +107,6 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
             message.success(t("food.editFoodModal.messages.updateSuccess"));
             onFoodUpdated();
             onClose();
-            form.resetFields();
-            setFileList([]);
-            setCroppedImage(null);
         } catch (error) {
             message.error(t("food.editFoodModal.messages.updateError"));
         } finally {
@@ -139,23 +144,36 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
             >
                 <Form form={form} layout="vertical" onFinish={handleFinish}>
                     <Form.Item
-                        name="name"
-                        label={t("food.editFoodModal.labels.name")}
+                        name="nameVN"
+                        label={t("food.editFoodModal.labels.nameVN")}
                         rules={[
                             { required: true, message: t("food.editFoodModal.messages.rules.nameRequired") },
                             { max: 50, message: t("food.editFoodModal.messages.rules.nameMaxLength") },
                         ]}
                     >
-                        <Input placeholder={t("food.editFoodModal.placeholders.name")} />
+                        <Input placeholder={t("food.editFoodModal.placeholders.nameVN")} />
                     </Form.Item>
                     <Form.Item
-                        name="description"
-                        label={t("food.editFoodModal.labels.description")}
+                        name="nameEN"
+                        label={t("food.editFoodModal.labels.nameEN")}
                         rules={[
-                            { max: 200, message: t("food.editFoodModal.messages.rules.descriptionMaxLength") },
+                            { required: true, message: t("food.editFoodModal.messages.rules.nameRequired") },
+                            { max: 50, message: t("food.editFoodModal.messages.rules.nameMaxLength") },
                         ]}
                     >
-                        <Input.TextArea placeholder={t("food.editFoodModal.placeholders.description")} />
+                        <Input placeholder={t("food.editFoodModal.placeholders.nameEN")} />
+                    </Form.Item>
+                    <Form.Item
+                        name="descriptionVN"
+                        label={t("food.editFoodModal.labels.descriptionVN")}
+                    >
+                        <Input.TextArea placeholder={t("food.editFoodModal.placeholders.descriptionVN")} />
+                    </Form.Item>
+                    <Form.Item
+                        name="descriptionEN"
+                        label={t("food.editFoodModal.labels.descriptionEN")}
+                    >
+                        <Input.TextArea placeholder={t("food.editFoodModal.placeholders.descriptionEN")} />
                     </Form.Item>
                     <Form.Item
                         name="basePrice"
@@ -180,7 +198,7 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
                                 onClose={() => removeCategory(id)}
                                 closeIcon={<CloseCircleOutlined />}
                             >
-                                {selectedCategories[id]}
+                                {i18n.language === 'vi' ? selectedCategories[id].nameVN || selectedCategories[id].nameEN : selectedCategories[id].nameEN || selectedCategories[id].nameVN}
                             </Tag>
                         ))}
                     </div>
@@ -225,13 +243,3 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
 };
 
 export default EditFoodModal;
-
-
-
-
-
-
-
-
-
-

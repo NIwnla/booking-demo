@@ -37,7 +37,8 @@
         "applications": {
             "label": "Applications",
             "booking": "Booking",
-            "delivery": "Delivery"
+            "delivery": "Delivery",
+            "foodMenu": "Menu"
         }
     },
     "notFoundPage": {
@@ -485,15 +486,25 @@
                 "modalTitle": "Create New Branch"
             },
             "form": {
-                "name": {
-                    "label": "Name",
-                    "placeholder": "Enter branch name",
-                    "required": "Please enter the branch name"
+                "nameVN": {
+                    "label": "Name (VN)",
+                    "placeholder": "Enter branch name in Vietnamese",
+                    "required": "Please enter the branch name in Vietnamese"
                 },
-                "description": {
-                    "label": "Description",
-                    "placeholder": "Enter branch description",
-                    "required": "Please enter the branch description"
+                "nameEN": {
+                    "label": "Name (EN)",
+                    "placeholder": "Enter branch name in English",
+                    "required": "Please enter the branch name in English"
+                },
+                "descriptionVN": {
+                    "label": "Description (VN)",
+                    "placeholder": "Enter branch description in Vietnamese",
+                    "required": "Please enter the branch description in Vietnamese"
+                },
+                "descriptionEN": {
+                    "label": "Description (EN)",
+                    "placeholder": "Enter branch description in English",
+                    "required": "Please enter the branch description in English"
                 },
                 "image": {
                     "label": "Image",
@@ -619,7 +630,7 @@
             "buttons": {
                 "uploadImage": "Upload New Image (Optional)",
                 "updateFood": "Update Food",
-                                "selectCategories": "Select Categories"
+                "selectCategories": "Select Categories"
             },
             "messages": {
                 "uploadError": "File upload failed. Please try again.",
@@ -664,22 +675,26 @@
                 "modalTitle": "Edit Category"
             },
             "labels": {
-                "name": "Name",
-                "description": "Description"
+                "nameVN": "Name (VN)",
+                "nameEN": "Name (EN)",
+                "image": "Image"
             },
             "placeholders": {
-                "name": "Enter category name",
-                "description": "Enter category description"
+                "nameVN": "Enter category name in Vietnamese",
+                "nameEN": "Enter category name in English"
             },
             "buttons": {
-                "updateCategory": "Update Category"
+                "updateCategory": "Update Category",
+                "uploadImage": "Upload New Image (Optional)"
             },
             "messages": {
                 "updateSuccess": "Category updated successfully!",
                 "updateError": "Failed to update category.",
                 "rules": {
-                    "nameRequired": "Please enter the category name",
-                    "nameMaxLength": "Category name cannot exceed 50 characters"
+                    "nameVNRequired": "Please enter the category name in Vietnamese",
+                    "nameVNMaxLength": "Category name in Vietnamese cannot exceed 50 characters",
+                    "nameENRequired": "Please enter the category name in English",
+                    "nameENMaxLength": "Category name in English cannot exceed 50 characters"
                 }
             }
         },
@@ -688,22 +703,28 @@
                 "modalTitle": "Create New Category"
             },
             "labels": {
-                "name": "Name",
-                "description": "Description"
+                "nameVN": "Name (VN)",
+                "nameEN": "Name (EN)",
+                "image": "Image"
             },
             "placeholders": {
-                "name": "Enter category name",
-                "description": "Enter category description"
+                "nameVN": "Enter category name in Vietnamese",
+                "nameEN": "Enter category name in English"
             },
             "buttons": {
-                "create": "Create Category"
+                "create": "Create Category",
+                "selectImage": "Select Image"
             },
             "messages": {
                 "createSuccess": "Category created successfully!",
                 "createError": "Failed to create category.",
+                "imageRemoved": "Image removed.",
+                "uploadError": "File upload failed. Please try again.",
+                "noImage": "Please upload and crop an image before submitting.",
                 "rules": {
                     "nameRequired": "Please enter the category name",
-                    "nameMaxLength": "Category name cannot exceed 50 characters"
+                    "nameMaxLength": "Category name cannot exceed 50 characters",
+                    "imageRequired": "Please upload an image"
                 }
             }
         },

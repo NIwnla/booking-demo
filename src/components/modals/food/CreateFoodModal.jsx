@@ -8,7 +8,7 @@ import CropImageModal from "../image/CropImageModal";
 import CategoryPickerModal from "../category/CategoryPickerModal";
 
 const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
-    const { t } = useTranslation("global");
+    const { t , i18n} = useTranslation("global");
     const [form] = Form.useForm();
     const { message } = App.useApp();
     const [imageSrc, setImageSrc] = useState(null);
@@ -19,6 +19,16 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
     const [isFetching, setIsFetching] = useState(false);
     const [categoryIds, setCategoryIds] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    useEffect(() => {
+        if (visible) {
+            form.resetFields();
+            setFileList([]);
+            setCroppedImage(null);
+            setCategoryIds([]);
+            setSelectedCategories([]);
+        }
+    }, [visible]);
 
     const handleImageUpload = (info) => {
         if (info.fileList.length === 0) {
@@ -62,9 +72,12 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
 
     const handleCreate = async (values) => {
         const formData = new FormData();
-        formData.append("name", values.name);
+        formData.append("nameVN", values.nameVN);
+        formData.append("nameEN", values.nameEN);
+        formData.append("descriptionVN", values.descriptionVN);
+        formData.append("descriptionEN", values.descriptionEN);
         formData.append("basePrice", values.basePrice);
-        formData.append("description", values.description);
+
         if (croppedImage) {
             formData.append("imageFile", croppedImage);
         } else {
@@ -83,11 +96,6 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
             message.success(t("food.createFoodModal.messages.createSuccess"));
             onFoodCreated();
             onClose();
-            form.resetFields();
-            setFileList([]);
-            setCroppedImage(null);
-            setCategoryIds([]);
-            setSelectedCategories([]);
         } catch (error) {
             message.error(t("food.createFoodModal.messages.createError"));
         } finally {
@@ -105,7 +113,7 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
 
     const handleCategorySelect = (categories) => {
         setSelectedCategories(categories);
-        setCategoryIds(Object.keys(categories)); 
+        setCategoryIds(Object.keys(categories));
     };
 
     const removeCategory = (id) => {
@@ -125,14 +133,24 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
             >
                 <Form layout="vertical" form={form} onFinish={handleCreate}>
                     <Form.Item
-                        label={t("food.createFoodModal.labels.name")}
-                        name="name"
+                        label={t("food.createFoodModal.labels.nameVN")}
+                        name="nameVN"
                         rules={[
                             { required: true, message: t("food.createFoodModal.messages.rules.nameRequired") },
                             { max: 50, message: t("food.createFoodModal.messages.rules.nameMaxLength") },
                         ]}
                     >
-                        <Input placeholder={t("food.createFoodModal.placeholders.name")} />
+                        <Input placeholder={t("food.createFoodModal.placeholders.nameVN")} />
+                    </Form.Item>
+                    <Form.Item
+                        label={t("food.createFoodModal.labels.nameEN")}
+                        name="nameEN"
+                        rules={[
+                            { required: true, message: t("food.createFoodModal.messages.rules.nameRequired") },
+                            { max: 50, message: t("food.createFoodModal.messages.rules.nameMaxLength") },
+                        ]}
+                    >
+                        <Input placeholder={t("food.createFoodModal.placeholders.nameEN")} />
                     </Form.Item>
                     <Form.Item
                         label={t("food.createFoodModal.labels.basePrice")}
@@ -144,14 +162,24 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
                         <Input placeholder={t("food.createFoodModal.placeholders.basePrice")} type="number" />
                     </Form.Item>
                     <Form.Item
-                        label={t("food.createFoodModal.labels.description")}
-                        name="description"
+                        label={t("food.createFoodModal.labels.descriptionVN")}
+                        name="descriptionVN"
                         rules={[
                             { required: true, message: t("food.createFoodModal.messages.rules.descriptionRequired") },
                             { max: 500, message: t("food.createFoodModal.messages.rules.descriptionMaxLength") },
                         ]}
                     >
-                        <Input.TextArea placeholder={t("food.createFoodModal.placeholders.description")} rows={4} />
+                        <Input.TextArea placeholder={t("food.createFoodModal.placeholders.descriptionVN")} rows={4} />
+                    </Form.Item>
+                    <Form.Item
+                        label={t("food.createFoodModal.labels.descriptionEN")}
+                        name="descriptionEN"
+                        rules={[
+                            { required: true, message: t("food.createFoodModal.messages.rules.descriptionRequired") },
+                            { max: 500, message: t("food.createFoodModal.messages.rules.descriptionMaxLength") },
+                        ]}
+                    >
+                        <Input.TextArea placeholder={t("food.createFoodModal.placeholders.descriptionEN")} rows={4} />
                     </Form.Item>
                     <Form.Item>
                         <Button onClick={handlePickerOpen}>
@@ -166,7 +194,7 @@ const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
                                 onClose={() => removeCategory(id)}
                                 closeIcon={<CloseCircleOutlined />}
                             >
-                                {selectedCategories[id]}
+                                {i18n.language === 'vi' ? selectedCategories[id].nameVN || selectedCategories[id].nameEN : selectedCategories[id].nameEN || selectedCategories[id].nameVN}
                             </Tag>
                         ))}
                     </div>

@@ -1,19 +1,19 @@
-import { App, Button, Modal, Space, Spin, Table, Typography, Input, Row, Col } from 'antd';
+import { App, Button, Card, Col, Image, Input, Row, Space, Spin, Typography } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CategoryCreationModal from '../../components/modals/category/CreateCategoryModal';
-import CategoryEditModal from '../../components/modals/category/EditCategoryModal';
-import { apiEndPoints } from '../../constaints/apiEndPoint';
-import axiosInstance from '../../service/axios';
 import CreateCategoryModal from '../../components/modals/category/CreateCategoryModal';
 import EditCategoryModal from '../../components/modals/category/EditCategoryModal';
+import { apiEndPoints } from '../../constaints/apiEndPoint';
+import axiosInstance from '../../service/axios';
+import { AxiosConstants } from '../../constaints/axiosContaint';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 const CategoryManagementAdminPage = () => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isCreationModalVisible, setIsCreationModalVisible] = useState(false);
@@ -117,7 +117,6 @@ const CategoryManagementAdminPage = () => {
                         type="primary"
                         onClick={handleCreateCategoryClick}
                         style={{ width: '100%' }}
-
                     >
                         {t('category.categoryManagement.titles.createButton')}
                     </Button>
@@ -127,30 +126,44 @@ const CategoryManagementAdminPage = () => {
                         placeholder={t('category.categoryManagement.search.placeholder')}
                         onSearch={(value) => setSearchName(value)}
                         style={{ width: '100%' }}
-
                     />
                 </Col>
-
             </Row>
             <Spin spinning={isFetching} tip={t('category.categoryManagement.messages.loading')}>
-                <Table
-                    columns={columns}
-                    dataSource={categories}
-                    rowKey="id"
-                    pagination={{
-                        current: pageIndex,
-                        pageSize: pageSize,
-                        total: totalCount,
-                        onChange: (page, pageSize) => {
-                            setPageIndex(page);
-                            setPageSize(pageSize);
-                        },
-                    }}
-                />
+                <Row gutter={[16, 16]}>
+                    {categories.map((category) => (
+                        <Col key={category.id} xs={24} sm={12} md={12} lg={6}>
+                            <Card
+                                hoverable
+                                cover={
+                                    <div style={{ overflow: "hidden", height: "30vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <Image
+                                            alt={category.name}
+                                            src={category.imagePath ? `${AxiosConstants.AXIOS_BASEURL}/${category.imagePath}` : 'placeholder-image-url'}
+                                        />
+                                    </div>
+                                }
+                            >
+                                <Card.Meta
+                                    title={getLocalizedText(category, 'name', i18n.language)}
+                                />
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                                    <Space wrap>
+                                        <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleEditClick(category)}>
+                                            {t('category.categoryManagement.buttons.edit')}
+                                        </Button>
+                                        <Button danger style={{ maxWidth: "15vw" }} onClick={() => handleDeleteClick(category.id)}>
+                                            {t('category.categoryManagement.buttons.delete')}
+                                        </Button>
+                                    </Space>
+                                </div>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
             </Spin>
-
             <CreateCategoryModal
-                open={isCreationModalVisible}
+                visible={isCreationModalVisible}
                 onClose={handleCreationModalClose}
                 onCategoryCreated={handleCategoryCreated}
             />

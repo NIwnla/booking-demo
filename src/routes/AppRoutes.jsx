@@ -28,6 +28,7 @@ import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagemen
 import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
 import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
 import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
+import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
 
 
 
@@ -111,7 +112,7 @@ const AppRoutes = () => {
                     element={<PrivateRoute element={<ApplicationManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
-                <Route path={routeNames.deliveryInformation.create} element={<DeliveryCreationPage />}/>
+                <Route path={routeNames.deliveryInformation.create} element={<DeliveryCreationPage />} />
                 <Route
                     path={routeNames.deliveryInformation.management}
                     element={<PrivateRoute element={<DeliveryManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
@@ -121,6 +122,8 @@ const AppRoutes = () => {
                     path={routeNames.category.management}
                     element={<PrivateRoute element={<CategoryManagementAdminPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route path={routeNames.foodMenu.main} element={<FoodMenuMainPage />} />'
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />
