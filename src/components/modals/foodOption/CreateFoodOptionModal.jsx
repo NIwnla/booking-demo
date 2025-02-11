@@ -3,15 +3,18 @@ import { App, Button, Form, Input, Modal, Upload } from "antd";
 import React, { useState } from "react";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
 import axiosInstance from "../../../service/axios";
+import { useTranslation } from "react-i18next";
 
 const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) => {
+    const { t } = useTranslation('global');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { message } = App.useApp();
 
     const handleFinish = async (values) => {
         const formData = new FormData();
-        formData.append("Name", values.name);
+        formData.append("NameVN", values.nameVN);
+        formData.append("NameEN", values.nameEN);
         formData.append("Price", values.price);
         formData.append("ImageFile", values.imageFile.file);
         formData.append("FoodId", foodId);
@@ -24,12 +27,12 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                     "Content-Type": "multipart/form-data",
                 },
             });
-            message.success("Option created successfully!")
+            message.success(t('foodOption.createModal.messages.createSuccess'));
             form.resetFields();
             onOptionCreated();
             onClose();
         } catch (error) {
-            message.error("Failed to create option.");
+            message.error(t('foodOption.createModal.messages.createError'));
         } finally {
             setLoading(false);
         }
@@ -37,7 +40,7 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
 
     return (
         <Modal
-            title="Create Food Option"
+            title={t('foodOption.createModal.titles.modalTitle')}
             open={visible}
             onCancel={onClose}
             footer={null}
@@ -48,31 +51,40 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    name="name"
-                    label="Option Name"
-                    rules={
-                        [
-                            { required: true, message: "Please enter the option name" },
-                            { max: 50, message: "Option name cannot exceed 50 characters" },
-                        ]
-                    }
+                    name="nameVN"
+                    label={t('foodOption.createModal.labels.nameVN')}
+                    rules={[
+                        { required: true, message: t('foodOption.createModal.messages.rules.nameVNRequired') },
+                        { max: 50, message: t('foodOption.createModal.messages.rules.nameVNMaxLength') },
+                    ]}
                 >
-                    <Input placeholder="Enter option name" />
+                    <Input placeholder={t('foodOption.createModal.placeholders.nameVN')} />
+                </Form.Item>
+
+                <Form.Item
+                    name="nameEN"
+                    label={t('foodOption.createModal.labels.nameEN')}
+                    rules={[
+                        { required: true, message: t('foodOption.createModal.messages.rules.nameENRequired') },
+                        { max: 50, message: t('foodOption.createModal.messages.rules.nameENMaxLength') },
+                    ]}
+                >
+                    <Input placeholder={t('foodOption.createModal.placeholders.nameEN')} />
                 </Form.Item>
 
                 <Form.Item
                     name="price"
-                    label="Additional Price"
-                    rules={[{ required: true, message: "Please enter the additional price" }]}
+                    label={t('foodOption.createModal.labels.price')}
+                    rules={[{ required: true, message: t('foodOption.createModal.messages.rules.priceRequired') }]}
                 >
-                    <Input placeholder="Enter additional price" type="number" />
+                    <Input placeholder={t('foodOption.createModal.placeholders.price')} type="number" />
                 </Form.Item>
 
                 <Form.Item
                     name="imageFile"
-                    label="Image"
+                    label={t('foodOption.createModal.labels.imageFile')}
                     valuePropName="file"
-                    rules={[{ required: true, message: "Please upload an image for the option" }]}
+                    rules={[{ required: true, message: t('foodOption.createModal.messages.rules.imageFileRequired') }]}
                 >
                     <Upload
                         name="imageFile"
@@ -80,13 +92,13 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
                         maxCount={1}
                         beforeUpload={() => false} // Prevent automatic upload
                     >
-                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                        <Button icon={<UploadOutlined />}>{t('foodOption.createModal.buttons.uploadImage')}</Button>
                     </Upload>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Create Option
+                        {t('foodOption.createModal.buttons.createOption')}
                     </Button>
                 </Form.Item>
             </Form>
@@ -95,4 +107,3 @@ const CreateFoodOptionModal = ({ visible, onClose, onOptionCreated, foodId }) =>
 };
 
 export default CreateFoodOptionModal;
-

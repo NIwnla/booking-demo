@@ -1,10 +1,13 @@
-import { Carousel, Col, Row, Typography, Spin, Card, Image } from 'antd';
+import { Carousel, Col, Row, Typography, Spin, Card, Image, Breadcrumb } from 'antd';
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../service/axios';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { routeNames } from '../../constaints/routeName';
+import './ScrollableCategories.css'
 
 const { Title, Paragraph } = Typography;
 
@@ -21,7 +24,8 @@ const ImageCarousel = () => {
 };
 
 const FoodMenuMainPage = () => {
-    const {i18n} = useTranslation('global');
+    const navigate = useNavigate();
+    const { i18n } = useTranslation('global');
     const [categories, setCategories] = useState([]);
     const [foods, setFoods] = useState([]);
     const [loadingCategories, setLoadingCategories] = useState(false);
@@ -86,28 +90,38 @@ const FoodMenuMainPage = () => {
             <div style={{ marginTop: '20px' }}>
                 <Title level={3} style={{ textAlign: 'start' }}>Categories</Title>
                 <Spin spinning={loadingCategories}>
-                    <Row gutter={[16, 16]} justify="start">
-                        {categories.map((category) => (
-                            <Col key={category.id} xs={12} sm={8} md={6} lg={3}>
-                                <Card
-                                    hoverable
-                                    cover={
-                                        <Image
-                                            preview={false}
-                                            alt={category.name}
-                                            src={`${AxiosConstants.AXIOS_BASEURL}/${category.imagePath}`}
-                                            style={{ height: '120px', objectFit: 'cover', borderRadius: '10px 10px 0 0' }}
-                                        />
-                                    }
-                                    style={{ textAlign: 'center', borderRadius: '10px', height: '225px' }}
-                                >
-                                    <Title level={5}>{getLocalizedText(category, 'name', i18n.language)}</Title>
-                                </Card>
-                            </Col>
-                        ))}
-                    </Row>
+                    <div className="scroll-container">
+                        <Row gutter={20} wrap={false} style={{margin:' 4px'}}>
+                            {categories.map((category) => (
+                                <Col key={category.id} md={12} lg={5} xl={4} xxl={3}>
+                                    <Card
+                                        onClick={() => navigate(`${routeNames.foodMenu.menu}?categoryId=${category.id}`)}
+                                        onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 8px red'}
+                                        onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)'}
+                                        style={{ height: '175px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', transition: 'box-shadow 0.3s ease-out' }}
+                                        styles={{ body: { padding: '10px' } }}
+                                        cover={
+                                            <Image
+                                                preview={false}
+                                                alt={getLocalizedText(category, 'name', i18n.language)}
+                                                src={`${AxiosConstants.AXIOS_BASEURL}/${category.imagePath}`}
+                                                style={{ height: "100px", objectFit: "cover", borderRadius: "10px 10px 0 0" }}
+                                            />
+                                        }
+                                    >
+                                        <Title level={5} style={{ fontSize: '0.75vw', textAlign: 'center' }}>
+                                            {getLocalizedText(category, 'name', i18n.language)}
+                                        </Title>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
+                    </div>
+
                 </Spin>
             </div>
+
+
 
             {/* Available Foods Grid */}
             <div style={{ marginTop: '40px' }}>
@@ -118,19 +132,24 @@ const FoodMenuMainPage = () => {
                             <Col key={food.id} xs={12} sm={12} md={12} lg={6} >
                                 <Card
                                     hoverable
+                                    onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMain}${food.id}`)}
                                     cover={
                                         <Image
                                             preview={false}
-                                            alt={food.name}
+                                            alt={getLocalizedText(food, 'name', i18n.language)}
                                             src={`${AxiosConstants.AXIOS_BASEURL}/${food.imagePath}`}
-                                            style={{ height: '30vh', objectFit: 'cover', borderRadius: '10px 10px 0 0', padding:'20px 10px 10px 10px' }}
+                                            style={{ height: '30vh', objectFit: 'cover', borderRadius: '10px 10px 0 0', padding: '20px 10px 10px 10px' }}
                                         />
                                     }
-                                    style={{ textAlign: 'center', borderRadius: '10px' }}
+                                    style={{
+                                        textAlign: 'center',
+                                        borderRadius: '10px',
+                                    }}
+                                    styles={{ body: { padding: '20px' } }}
                                 >
-                                    <Title level={5} style={{ marginBottom: 0 }}>{food.name}</Title>
+                                    <Title level={5} style={{ marginBottom: 0 }}>{getLocalizedText(food, 'name', i18n.language)}</Title>
                                     <Paragraph style={{ fontWeight: 'bold', color: 'red' }}>
-                                        {food.basePrice}đ
+                                        {food.basePrice}VND
                                     </Paragraph>
                                 </Card>
                             </Col>

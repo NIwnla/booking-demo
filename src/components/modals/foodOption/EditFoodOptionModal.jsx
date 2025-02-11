@@ -3,8 +3,10 @@ import { App, Button, Form, Input, Modal, Upload } from "antd";
 import React, { useState } from "react";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
 import axiosInstance from "../../../service/axios";
+import { useTranslation } from "react-i18next";
 
 const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId }) => {
+    const { t } = useTranslation('global');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { message } = App.useApp();
@@ -12,7 +14,8 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
     const handleFinish = async (values) => {
         setLoading(true);
         const formData = new FormData();
-        formData.append("Name", values.name);
+        formData.append("NameVN", values.nameVN);
+        formData.append("NameEN", values.nameEN);
         formData.append("Price", values.price);
         formData.append("FoodId", foodId);
         if (values.imageFile) {
@@ -24,11 +27,11 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            message.success("Option updated successfully!");
+            message.success(t('foodOption.editModal.messages.updateSuccess'));
             onOptionUpdated();
             onClose();
         } catch (error) {
-            message.error("Failed to update option.");
+            message.error(t('foodOption.editModal.messages.updateError'));
         } finally {
             setLoading(false);
         }
@@ -36,7 +39,7 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
 
     return (
         <Modal
-            title="Edit Food Option"
+            title={t('foodOption.editModal.titles.modalTitle')}
             open={visible}
             onCancel={onClose}
             footer={null}
@@ -46,34 +49,44 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
                 layout="vertical"
                 onFinish={handleFinish}
                 initialValues={{
-                    name: option.name,
+                    nameVN: option.nameVN,
+                    nameEN: option.nameEN,
                     price: option.price,
                 }}
             >
                 <Form.Item
-                    name="name"
-                    label="Option Name"
-                    rules={
-                        [
-                            { required: true, message: "Please enter the option name" },
-                            { max: 50, message: "Option name cannot exceed 50 characters" },
-                        ]
-                    }
+                    name="nameVN"
+                    label={t('foodOption.editModal.labels.nameVN')}
+                    rules={[
+                        { required: true, message: t('foodOption.editModal.messages.rules.nameVNRequired') },
+                        { max: 50, message: t('foodOption.editModal.messages.rules.nameVNMaxLength') },
+                    ]}
                 >
-                    <Input placeholder="Enter option name" />
+                    <Input placeholder={t('foodOption.editModal.placeholders.nameVN')} />
+                </Form.Item>
+
+                <Form.Item
+                    name="nameEN"
+                    label={t('foodOption.editModal.labels.nameEN')}
+                    rules={[
+                        { required: true, message: t('foodOption.editModal.messages.rules.nameENRequired') },
+                        { max: 50, message: t('foodOption.editModal.messages.rules.nameENMaxLength') },
+                    ]}
+                >
+                    <Input placeholder={t('foodOption.editModal.placeholders.nameEN')} />
                 </Form.Item>
 
                 <Form.Item
                     name="price"
-                    label="Additional Price"
-                    rules={[{ required: true, message: "Please enter the additional price" }]}
+                    label={t('foodOption.editModal.labels.price')}
+                    rules={[{ required: true, message: t('foodOption.editModal.messages.rules.priceRequired') }]}
                 >
-                    <Input placeholder="Enter additional price" />
+                    <Input placeholder={t('foodOption.editModal.placeholders.price')} />
                 </Form.Item>
 
                 <Form.Item
                     name="imageFile"
-                    label="Option Image"
+                    label={t('foodOption.editModal.labels.imageFile')}
                     valuePropName="file"
                 >
                     <Upload
@@ -82,13 +95,13 @@ const EditFoodOptionModal = ({ visible, onClose, option, onOptionUpdated, foodId
                         maxCount={1}
                         beforeUpload={() => false} // Prevent automatic upload
                     >
-                        <Button icon={<UploadOutlined />}>Upload New Image (optional)</Button>
+                        <Button icon={<UploadOutlined />}>{t('foodOption.editModal.buttons.uploadImage')}</Button>
                     </Upload>
                 </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" loading={loading}>
-                        Update Option
+                        {t('foodOption.editModal.buttons.updateOption')}
                     </Button>
                 </Form.Item>
             </Form>

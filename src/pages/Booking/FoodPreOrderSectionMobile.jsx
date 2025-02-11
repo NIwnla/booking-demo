@@ -17,9 +17,10 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
 import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
 
 const FoodPreOrderSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -86,7 +87,8 @@ const FoodPreOrderSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {
             [food.id]: {
                 ...(prevPreorders[food.id] || {
                     quantity: 0,
-                    name: food.name,
+                    nameVN: food.nameVN,
+                    nameEN: food.nameEN,
                     basePrice: food.basePrice,
                     imagePath: food.imagePath,
                 }),
@@ -134,10 +136,10 @@ const FoodPreOrderSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {
                                         preview={false}
                                         width={80}
                                         src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
-                                        alt={food.name}
+                                        alt={getLocalizedText(food,'name', i18n.language)}
                                     />
                                 }
-                                title={food.name}
+                                title={getLocalizedText(food,'name', i18n.language)}
                                 description={
                                     <div>
                                         <Typography.Text>

@@ -10,6 +10,7 @@ import { AxiosConstants } from "../../constaints/axiosContaint";
 import axiosInstance from "../../service/axios";
 import './FoodManagementPageAdmin.css';
 import { getLocalizedText } from "../../helpers/getLocalizedText";
+import { routeNames } from "../../constaints/routeName";
 
 const FoodManagementPageAdmin = () => {
     const { t, i18n } = useTranslation('global');
@@ -45,7 +46,7 @@ const FoodManagementPageAdmin = () => {
     };
 
     const handleOptions = (foodId) => {
-        navigate(`/food-options/management/${foodId}`);
+        navigate(`${routeNames.foodOption.management}${foodId}`);
     };
 
     const handleEdit = (food) => {

@@ -21,9 +21,10 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import { AuthContext } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
 
 const FoodPreorderSection = ({ onPreorder, onFinish, isFormValid }) => {
-    const { t } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -82,7 +83,8 @@ const FoodPreorderSection = ({ onPreorder, onFinish, isFormValid }) => {
             [food.id]: {
                 ...(prevPreorders[food.id] || {
                     quantity: 0,
-                    name: food.name,
+                    nameVN: food.nameVN,
+                    nameEN: food.nameEN,
                     basePrice: food.basePrice,
                     imagePath: food.imagePath,
                 }),
@@ -134,7 +136,10 @@ const FoodPreorderSection = ({ onPreorder, onFinish, isFormValid }) => {
                                         style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', transition: 'transform 0.3s ease' }}
                                         cover={
                                             <div style={{ overflow: 'hidden', height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                                <Image preview={false} alt={food.name} src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`} />
+                                                <Image
+                                                    preview={false}
+                                                    alt={getLocalizedText(food, 'name', i18n.language)}
+                                                    src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`} />
                                             </div>
                                         }
                                         onMouseEnter={(e) => {
@@ -144,7 +149,9 @@ const FoodPreorderSection = ({ onPreorder, onFinish, isFormValid }) => {
                                             e.currentTarget.style.transform = 'scale(1)';
                                         }}
                                     >
-                                        <Card.Meta title={food.name} description={food.description || t('booking.foodChoice.messages.noDescription')} />
+                                        <Card.Meta
+                                            title={getLocalizedText(food, 'name', i18n.language)}
+                                            description={food.description || t('booking.foodChoice.messages.noDescription')} />
                                         <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between' }}>
                                             <strong>
                                                 <ShoppingCartOutlined />

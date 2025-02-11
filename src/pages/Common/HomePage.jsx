@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { routeNames } from "../../constaints/routeName";
 import { userRoles } from "../../constaints/userRoles";
 import { AuthContext } from "../../context/AuthContext";
-import { Button, Tooltip } from "antd";
 
 const HomePage = () => {
     const location = useLocation();

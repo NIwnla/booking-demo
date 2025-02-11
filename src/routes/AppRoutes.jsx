@@ -29,6 +29,8 @@ import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
 import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
 import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
 import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
+import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
+import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
 
 
 
@@ -102,7 +104,7 @@ const AppRoutes = () => {
                 <Route path={routeNames.food.management} element={<FoodManagementPageAdmin />} />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
-                    path={routeNames.foodOption.management}
+                    path={`${routeNames.foodOption.management}:id`}
                     element={<PrivateRoute element={<FoodOptionPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
@@ -123,7 +125,10 @@ const AppRoutes = () => {
                     element={<PrivateRoute element={<CategoryManagementAdminPage />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
-                <Route path={routeNames.foodMenu.main} element={<FoodMenuMainPage />} />'
+                <Route path={routeNames.foodMenu.main} element={<FoodMenuMainPage />} />
+                <Route path={routeNames.foodMenu.menu} element={<DetailedMenuPage />} />
+                <Route path={`${routeNames.foodMenu.detailed.fromMain}:id`} element={<DetailedFoodPage />} />
+                <Route path={`${routeNames.foodMenu.detailed.fromMenu}:id`} element={<DetailedFoodPage breadcrumb={'Categories'} />} />
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />

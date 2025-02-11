@@ -21,9 +21,10 @@ import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDelive
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
 
 const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
-    const { t } = useTranslation("global");
+    const { t, i18n } = useTranslation("global");
     const { userId } = useContext(AuthContext);
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -89,7 +90,8 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
             [food.id]: {
                 ...(prevPreorders[food.id] || {
                     quantity: 0,
-                    name: food.name,
+                    nameVN: food.nameVN,
+                    nameEN: food.nameEN,
                     basePrice: food.basePrice,
                     imagePath: food.imagePath,
                 }),
@@ -173,7 +175,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                             >
                                                 <Image
                                                     preview={false}
-                                                    alt={food.name}
+                                                    alt={getLocalizedText(food, 'name', i18n.language)}
                                                     src={`${axiosInstance.defaults.baseURL}/${food.imagePath}`}
                                                 />
                                             </div>
@@ -183,7 +185,7 @@ const FoodDeliveryChosingSection = ({ onPreorder, onFinish, isFormValid }) => {
                                         onClick={() => fetchFoodDetails(food.id)}
                                     >
                                         <Card.Meta
-                                            title={food.name}
+                                            title={getLocalizedText(food, 'name', i18n.language)}
                                             description={
                                                 food.description || t('delivery.foodChoice.noDescription')
                                             }

@@ -8,9 +8,12 @@ import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
 import axiosInstance from "../../service/axios";
 import './FoodOptionPageAdmin.css';
+import { useTranslation } from "react-i18next";
+import { getLocalizedText } from "../../helpers/getLocalizedText";
 
-const { Title } = Typography
+const { Title } = Typography;
 const FoodOptionPageAdmin = () => {
+    const { t, i18n } = useTranslation('global');
     const { id } = useParams();
     const [food, setFood] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -31,7 +34,7 @@ const FoodOptionPageAdmin = () => {
             const response = await axiosInstance.get(apiEndPoints.FOOD.GET_BY_ID(id));
             setFood(response.data);
         } catch (error) {
-            message.error("Failed to fetch food options.");
+            message.error(t('foodOption.management.messages.fetchError'));
         } finally {
             setLoading(false);
         }
@@ -45,17 +48,16 @@ const FoodOptionPageAdmin = () => {
     const handleDeleteOption = async (optionId) => {
         try {
             await axiosInstance.delete(apiEndPoints.FOOD_OPTION.DELETE(optionId));
-            message.success('Option deleted successfully.');
+            message.success(t('foodOption.management.messages.deleteSuccess'));
             fetchOptions(); // Refresh the list after deletion
         } catch (error) {
-            message.error('Failed to delete option.');
+            message.error(t('foodOption.management.messages.deleteError'));
         }
     };
 
     const handleOptionCreated = () => {
         fetchOptions();
     };
-
 
     return (
         <div
@@ -72,12 +74,12 @@ const FoodOptionPageAdmin = () => {
                     gap: isSmallScreen ? "16px" : "0", // Add some gap on small screens
                 }}
             >
-                <Title level={3}>{food?.name} Options</Title>
+                <Title level={3}>{t('foodOption.management.titles.pageTitle')}</Title>
                 <Button type="primary" onClick={() => setCreateModalVisible(true)}>
-                    Create Option
+                    {t('foodOption.management.buttons.createOption')}
                 </Button>
             </div>
-            <Spin spinning={loading} size="large">
+            <Spin spinning={loading} size="large" tip={t('foodOption.management.messages.loading')}>
                 <Row gutter={[16, 16]}>
                     {food?.options.map((option) => (
                         <Col key={option.id} xs={24} sm={12} md={8} lg={8}>
@@ -86,26 +88,26 @@ const FoodOptionPageAdmin = () => {
                                 cover={
                                     <div style={{ overflow: "hidden", height: "150px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                         <Image
-                                            alt={option.name}
+                                            alt={getLocalizedText(option, 'name', i18n.language)}
                                             src={`${AxiosConstants.AXIOS_BASEURL}/${option.imagePath}`}
                                             style={{ width: "100%", height: "auto", maxHeight: "150px" }}
                                         />
                                     </div>
                                 }
                             >
-                                <Card.Meta title={option.name} description={`Price: ${option.price}`} />
+                                <Card.Meta title={getLocalizedText(option, 'name', i18n.language)} description={`${t('foodOption.management.columns.price')}: ${option.price}`} />
                                 <div style={{ marginTop: 16, display: "flex", justifyContent: "center", gap: '8px' }}>
                                     <Button type="primary" onClick={() => handleEditOption(option)}>
-                                        Edit
+                                        {t('foodOption.management.buttons.edit')}
                                     </Button>
                                     <Popconfirm
-                                        title="Are you sure you want to delete this option?"
+                                        title={t('foodOption.management.popconfirm.deleteTitle')}
                                         onConfirm={() => handleDeleteOption(option.id)}
-                                        okText="Yes"
-                                        cancelText="No"
+                                        okText={t('foodOption.management.popconfirm.okText')}
+                                        cancelText={t('foodOption.management.popconfirm.cancelText')}
                                     >
                                         <Button danger>
-                                            Delete
+                                            {t('foodOption.management.buttons.delete')}
                                         </Button>
                                     </Popconfirm>
                                 </div>

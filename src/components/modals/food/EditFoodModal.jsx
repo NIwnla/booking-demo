@@ -35,7 +35,7 @@ const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
             if (food.categories) {
                 const categories = {};
                 food.categories.forEach(category => {
-                    categories[category.id] = category.name;
+                    categories[category.id] = { nameVN: category.nameVN, nameEN: category.nameEN };
                 });
                 setSelectedCategories(categories);
                 setCategoryIds(Object.keys(categories));

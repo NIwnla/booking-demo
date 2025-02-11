@@ -31,7 +31,7 @@ export const routeNames = {
         management: '/foods/management'
     },
     foodOption: {
-        management: '/food-options/management/:id'
+        management: '/food-options/management/'
     },
     recruitInformation: {
         signUp: '/recruit/sign-up',
@@ -43,13 +43,17 @@ export const routeNames = {
     deliveryInformation: {
         management: '/delivery-informations/management',
         create: '/delivery-informations/create',
-        infoPage: '/delivery-informations/info/:id',
     },
     category: {
         management: '/categories/management',
     }
     ,
     foodMenu: {
-        main: '/food-menu/main'
+        main: '/food-menu',
+        menu: '/food-menu/categories',
+        detailed: {
+            fromMain: '/food-menu/detail/',
+            fromMenu: '/food-menu/categories/detail/'
+        },
     }
 }
