@@ -143,7 +143,7 @@ const AdminLayout = ({ children }) => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     background: '#ff0000',
-                    padding: '0 20px',
+                    padding: '0 10vw',
                 }}
             >
                 {/* Restaurant Name */}
@@ -215,11 +215,10 @@ const AdminLayout = ({ children }) => {
             </Drawer>
 
             {/* Content */}
-            <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
+            <Content className="content-container">
                 <div
                     style={{
                         background: '#eeeeee',
-                        padding: '24px',
                         minHeight: '280px',
                     }}
                 >

@@ -6,8 +6,11 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import './DisableBranchChoosePage.css';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
+import { useTranslation } from 'react-i18next';
 
 const DisableBranchChoosePage = () => {
+    const {i18n} = useTranslation('global');
     const [branches, setBranches] = useState([]);
     const [isFetching, setIsFetching] = useState(false); // Add a isFetching state
     const navigate = useNavigate();
@@ -40,16 +43,16 @@ const DisableBranchChoosePage = () => {
                         <Col xs={24} sm={12} md={8} lg={6} key={branch.id}>
                             <Card
                                 hoverable
-                                onClick={() => handleCardClick(branch.id, branch.name)}
+                                onClick={() => handleCardClick(branch.id, getLocalizedText(branch,'name',i18n.language))}
                                 cover={
                                     <div className="branch-image-container">
-                                        <img className="branch-image" alt={branch.name} src={`${AxiosConstants.AXIOS_BASEURL}/${branch.imagePath}`} />
+                                        <img className="branch-image" alt={getLocalizedText(branch,'name',i18n.language)} src={`${AxiosConstants.AXIOS_BASEURL}/${branch.imagePath}`} />
                                     </div>
                                 }
                             >
                                 <Card.Meta
-                                    title={<div className="branch-title">{branch.name}</div>}
-                                    description={<div className="branch-description">{branch.description}</div>}
+                                    title={<div className="branch-title">{getLocalizedText(branch,'name',i18n.language)}</div>}
+                                    description={<div className="branch-description">{getLocalizedText(branch,'description', i18n.language)}</div>}
                                 />
                             </Card>
                         </Col>

@@ -5,8 +5,9 @@ import AppRoutes from './routes/AppRoutes';
 import { AuthProvider } from './context/AuthContext';
 import { ConfigProvider, App as AntdApp } from 'antd';
 import dayjs from 'dayjs';
-import isoWeek from 'dayjs/plugin/isoWeek'; 
-import utc from 'dayjs/plugin/utc'; 
+import isoWeek from 'dayjs/plugin/isoWeek';
+import utc from 'dayjs/plugin/utc';
+import { DeliveryContext, DeliveryProvider } from './context/DeliveryContext';
 
 dayjs.extend(isoWeek);
 dayjs.extend(utc);
@@ -23,7 +24,7 @@ const customTheme = {
       headerColor: '#ffffff',    // Set table header text color to white
     },
     Menu: {
-      colorPrimary:'#ffffff',
+      colorPrimary: '#ffffff',
       itemBg: '#ff0000',          // Red background for menu items
       itemColor: '#ffffff',       // White text for menu items
       itemHoverBg: '#cc0000',     // Slightly darker red on hover
@@ -42,9 +43,11 @@ const App = () => {
     <ConfigProvider theme={customTheme}>
       <AntdApp>
         <AuthProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
+          <DeliveryProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </DeliveryProvider>
         </AuthProvider>
       </AntdApp>
     </ConfigProvider>
