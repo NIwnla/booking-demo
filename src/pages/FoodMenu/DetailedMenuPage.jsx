@@ -10,6 +10,7 @@ import axiosInstance from '../../service/axios';
 import RightInformationSection from './RightInformationSection';
 import './ScrollableCategories.css';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
+import FoodCard from '../../components/cards/foodMenu/FoodCard';
 const { Title, Paragraph } = Typography;
 
 
@@ -43,6 +44,8 @@ const DetailedMenuPage = () => {
                 params: { categories: selectedCategory ? selectedCategory.id : categoryId },
             });
             setFoods(response.data.items);
+            console.log(foods);
+
         } catch (error) {
             console.error("Failed to fetch foods", error);
         } finally {
@@ -61,6 +64,8 @@ const DetailedMenuPage = () => {
             const initialCategory = response.data.items.find(category => category.id === categoryId);
             if (initialCategory) {
                 setSelectedCategory(initialCategory);
+            }else {
+                setSelectedCategory(response.data.items[0] || null)
             }
         } catch (error) {
             console.error("Failed to fetch categories", error);
@@ -73,20 +78,27 @@ const DetailedMenuPage = () => {
         <div>
             <MenuNavBar />
             <div style={{ padding: '5vh 10vw' }}>
-                <Breadcrumb
-                    items={[
-                        {
-                            title: <Title level={5}><a href={routeNames.foodMenu.main}>Home</a></Title>,
-                        },
-                        selectedCategory && {
-                            title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
-                        },
-                    ].filter(Boolean)}
-                />
-                <Row gutter={[16, 16]}>
+                <Row>
+                    <Col xs={24} lg={18} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <Breadcrumb
+                            items={[
+                                {
+                                    title: <Title level={5}><a href={routeNames.foodMenu.main}>Home</a></Title>,
+                                },
+                                selectedCategory && {
+                                    title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
+                                },
+                            ].filter(Boolean)}
+                        />
+
+                        <Title style={{ fontSize: '1.5vw', flex: 1, textAlign: 'center' }}>Menu</Title>
+                    </Col>
+                </Row>
+
+                <Row gutter={[24, 16]}>
                     <Col xs={24} lg={18}>
                         {/* Category Grid */}
-                        <div style={{ marginTop: '20px' }}>
+                        <div>
                             <Spin spinning={loadingCategories}>
                                 <div className="scroll-container">
                                     <Row gutter={16} wrap={false} style={{ margin: ' 4px' }}>
@@ -126,28 +138,9 @@ const DetailedMenuPage = () => {
                                 <Row gutter={[16, 16]} justify="start" >
                                     {foods.map((food) => (
                                         <Col key={food.id} xs={12} sm={12} md={12} xl={8} >
-                                            <Card
-                                                hoverable
-                                                onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMenu}${food.id}`)}
-                                                cover={
-                                                    <Image
-                                                        preview={false}
-                                                        alt={getLocalizedText(food, 'name', i18n.language)}
-                                                        src={`${AxiosConstants.AXIOS_BASEURL}/${food.imagePath}`}
-                                                        style={{ height: '30vh', objectFit: 'cover', borderRadius: '10px 10px 0 0', padding: '20px 10px 10px 10px' }}
-                                                    />
-                                                }
-                                                style={{
-                                                    textAlign: 'center',
-                                                    borderRadius: '10px',
-                                                }}
-                                                styles={{ body: { padding: '20px' } }}
-                                            >
-                                                <Title level={5} style={{ marginBottom: 0 }}>{getLocalizedText(food, 'name', i18n.language)}</Title>
-                                                <Paragraph style={{ fontWeight: 'bold', color: 'red' }}>
-                                                    {food.basePrice}VND
-                                                </Paragraph>
-                                            </Card>
+                                            <FoodCard
+                                                food={food}
+                                                onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMenu}${food.id}?categoryId=${categoryId}`)} />
                                         </Col>
                                     ))}
                                 </Row>
@@ -156,7 +149,7 @@ const DetailedMenuPage = () => {
                     </Col >
                     <Col xs={24} lg={6}>
                         {/* Information Section */}
-                        <div style={{ marginTop: '20px' }}>
+                        <div>
                             <RightInformationSection />
                         </div>
                     </Col>

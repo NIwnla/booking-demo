@@ -1,7 +1,7 @@
 import { Breadcrumb, Checkbox, Col, Image, Row, Spin, Typography } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
@@ -16,6 +16,9 @@ const { Title } = Typography;
 const DetailedFoodPage = ({ breadcrumb = null }) => {
     const { id } = useParams();
     const { t, i18n } = useTranslation('global');
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const categoryId = searchParams.get('categoryId');
     const { addToCart } = useContext(DeliveryContext);
     const [food, setFood] = useState(null);
     const [isLoadingFood, setIsLoadingFood] = useState(null);
@@ -39,24 +42,6 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
         }
     };
 
-    const handleAddToCart = () => {
-        if (!food) return;
-
-        const selectedOptionsData = selectedOptions.map(optionId =>
-            food.options.find(opt => opt.id === optionId)
-        );
-
-        const cartItem = {
-            id: food.id,
-            name: getLocalizedText(food, 'name', i18n.language),
-            imagePath: food.imagePath,
-            basePrice: food.basePrice,
-            options: selectedOptionsData,
-            total: food.basePrice + selectedOptionsData.reduce((sum, opt) => sum + opt.price, 0),
-        };        
-
-        addToCart(cartItem);
-    };
 
     const FoodDetails = () => {
         if (!food) return null;
@@ -67,7 +52,7 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                     Description
                 </Title>
                 <Typography style={{ fontSize: '1vw' }}>
-                    {food?.descriptionEN}
+                    {getLocalizedText(food, 'description', i18n.language)}
                 </Typography>
                 <Typography style={{ fontSize: '1vw' }}>
                     Price: {food?.basePrice}VND
@@ -82,14 +67,14 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
             title: <Title level={5}><a href={routeNames.foodMenu.main}>Home</a></Title>,
         },
         breadcrumb && {
-            title: <Title level={5}><a href={routeNames.foodMenu.main}>{breadcrumb}</a></Title>,
+            title: <Title level={5}><a href={`${routeNames.foodMenu.menu}?categoryId=${categoryId}`}>{breadcrumb}</a></Title>,
         },
         food && {
             title: <Title level={5}>{getLocalizedText(food, 'name', i18n.language)}</Title>,
         },
     ].filter(Boolean);
 
- 
+
 
     const handleOptionClick = (optionId) => {
         setSelectedOptions((prevSelected) => {
@@ -100,6 +85,18 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
             }
         });
     };
+
+    const handleAddToCart = () => {
+        if (!food) return;
+
+        const updatedFood = {
+            ...food,
+            options: food.options.filter(opt => selectedOptions.includes(opt.id))
+        };
+
+        addToCart(updatedFood);
+    };
+
 
     return (
         <div>
@@ -173,11 +170,26 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                                                 </div>
 
                                                 {/* Right Side: Text Content */}
-                                                <div style={{ textAlign: "left", marginLeft: '1.5vw' }}>
-                                                    <Title style={{ fontSize: "1vw" }}>
+                                                <div style={{ flex: 1, textAlign: "left", marginLeft: '1.5vw', minWidth: "10vw", maxWidth: "20vw" }}>
+                                                    <Title
+                                                        level={5}
+                                                        style={{
+                                                            fontSize: "1vw",
+                                                            wordWrap: "break-word", // Break words if too long
+                                                            whiteSpace: "normal", // Allow text to wrap into new lines
+                                                            maxWidth: "100%", // Keep it from expanding too much
+                                                        }}
+                                                    >
                                                         {getLocalizedText(option, "name", i18n.language)}
                                                     </Title>
-                                                    <Typography style={{ fontSize: "0.8vw" }}>
+                                                    <Typography
+                                                        style={{
+                                                            fontSize: "0.8vw",
+                                                            wordWrap: "break-word", // Break words if necessary
+                                                            whiteSpace: "normal", // Allow wrapping
+                                                            maxWidth: "10vw", // Restrict excessive expansion
+                                                        }}
+                                                    >
                                                         + {option.price} VND
                                                     </Typography>
                                                 </div>

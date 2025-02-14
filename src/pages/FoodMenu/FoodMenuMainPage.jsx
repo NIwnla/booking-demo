@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import './ScrollableCategories.css'
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
+import FoodCard from '../../components/cards/foodMenu/FoodCard';
 
 const { Title, Paragraph } = Typography;
 
@@ -154,28 +155,7 @@ const FoodMenuMainPage = () => {
                             }}>
                             {foods.map((food) => (
                                 <Col key={food.id} xs={12} sm={12} md={12} lg={6} >
-                                    <Card
-                                        hoverable
-                                        onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMain}${food.id}`)}
-                                        cover={
-                                            <Image
-                                                preview={false}
-                                                alt={getLocalizedText(food, 'name', i18n.language)}
-                                                src={`${AxiosConstants.AXIOS_BASEURL}/${food.imagePath}`}
-                                                style={{ height: '30vh', objectFit: 'cover', borderRadius: '10px 10px 0 0', padding: '20px 10px 10px 10px' }}
-                                            />
-                                        }
-                                        style={{
-                                            textAlign: 'center',
-                                            borderRadius: '10px',
-                                        }}
-                                        styles={{ body: { padding: '20px' } }}
-                                    >
-                                        <Title level={5} style={{ marginBottom: 0 }}>{getLocalizedText(food, 'name', i18n.language)}</Title>
-                                        <Paragraph style={{ fontWeight: 'bold', color: 'red' }}>
-                                            {food.basePrice}VND
-                                        </Paragraph>
-                                    </Card>
+                                    <FoodCard food={food} />
                                 </Col>
                             ))}
                         </Row>

@@ -31,6 +31,7 @@ import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdm
 import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
 import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
 import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
+import MyCartPage from "../pages/FoodMenu/MyCartPage";
 
 
 
@@ -129,6 +130,7 @@ const AppRoutes = () => {
                 <Route path={routeNames.foodMenu.menu} element={<DetailedMenuPage />} />
                 <Route path={`${routeNames.foodMenu.detailed.fromMain}:id`} element={<DetailedFoodPage />} />
                 <Route path={`${routeNames.foodMenu.detailed.fromMenu}:id`} element={<DetailedFoodPage breadcrumb={'Categories'} />} />
+                <Route path={routeNames.foodMenu.myCart} element={<MyCartPage />} />
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />

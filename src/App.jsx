@@ -29,7 +29,7 @@ const customTheme = {
       itemColor: '#ffffff',       // White text for menu items
       itemHoverBg: '#cc0000',     // Slightly darker red on hover
       itemHoverColor: '#ffffff',  // White text on hover
-      itemSelectedBg: '#ffffff',  // white for selected items
+      itemSelectedBg: '#cc0000',  // white for selected items
       itemSelectedColor: '#ffffff', // White text for selected items
       popupBg: '#ff0000',         // Red background for submenu popup
       horizontalItemSelectedBg: '0', // IDK why this work but this make the selected item background transparent,

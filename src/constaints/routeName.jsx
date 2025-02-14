@@ -55,5 +55,6 @@ export const routeNames = {
             fromMain: '/food-menu/detail/',
             fromMenu: '/food-menu/categories/detail/'
         },
+        myCart: '/food-menu/my-cart',
     }
 }
