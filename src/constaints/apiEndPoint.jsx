@@ -38,6 +38,7 @@ export const apiEndPoints = {
         CREATE: '/foods',
         EDIT: (id) => `/foods/${id}`,
         DELETE: (id) => `/foods/${id}`,
+        SUGGESTION: '/foods/suggestions',
     },
     FOOD_OPTION: {
         CREATE: '/food-options',

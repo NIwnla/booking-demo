@@ -1,20 +1,16 @@
+import { DeleteOutlined, RightCircleOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Button, Card, Empty, Typography } from 'antd';
 import React, { useContext } from 'react';
-import { Typography, Empty, Image, Button, Card, Row, Col } from 'antd';
-import { ShoppingCartOutlined, MinusOutlined, PlusOutlined, CloseOutlined, DeleteOutlined, RightOutlined, RightCircleOutlined } from '@ant-design/icons';
-import { DeliveryContext } from '../../context/DeliveryContext';
-import { AxiosConstants } from '../../constaints/axiosContaint';
-import { getLocalizedText } from '../../helpers/getLocalizedText';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { routeNames } from '../../constaints/routeName';
 import CartItemCard from '../../components/cards/foodMenu/CartItemCard';
+import { routeNames } from '../../constaints/routeName';
+import { DeliveryContext } from '../../context/DeliveryContext';
 
 const { Paragraph, Title } = Typography;
 
 const RightInformationSection = () => {
-    const { cart, addToCart, decreaseQuantity, removeFromCart, clearCart } = useContext(DeliveryContext);
+    const { cart, clearCart } = useContext(DeliveryContext);
     const cartIsEmpty = cart.length === 0;
-    const { i18n } = useTranslation('global');
     const navigate = useNavigate();
 
     const totalCartPrice = cart.reduce((sum, item) => sum + item.total, 0);

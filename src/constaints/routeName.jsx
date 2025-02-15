@@ -56,5 +56,7 @@ export const routeNames = {
             fromMenu: '/food-menu/categories/detail/'
         },
         myCart: '/food-menu/my-cart',
+        orderInfo: '/food-menu/order-info',
+        searchResult: '/food-menu/search',
     }
 }

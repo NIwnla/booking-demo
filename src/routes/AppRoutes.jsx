@@ -32,6 +32,8 @@ import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
 import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
 import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
 import MyCartPage from "../pages/FoodMenu/MyCartPage";
+import OrderInformationPage from "../pages/FoodMenu/OrderInformationPage";
+import SearchResultPage from "../pages/FoodMenu/SearchResultPage";
 
 
 
@@ -131,6 +133,9 @@ const AppRoutes = () => {
                 <Route path={`${routeNames.foodMenu.detailed.fromMain}:id`} element={<DetailedFoodPage />} />
                 <Route path={`${routeNames.foodMenu.detailed.fromMenu}:id`} element={<DetailedFoodPage breadcrumb={'Categories'} />} />
                 <Route path={routeNames.foodMenu.myCart} element={<MyCartPage />} />
+                <Route path={routeNames.foodMenu.orderInfo} element={<OrderInformationPage />} />
+                <Route path={routeNames.foodMenu.searchResult} element={<SearchResultPage />} />
+
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />
