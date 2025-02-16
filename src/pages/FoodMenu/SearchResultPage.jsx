@@ -1,6 +1,7 @@
 import { Breadcrumb, Col, Empty, Row, Spin, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FoodCard from "../../components/cards/foodMenu/FoodCard";
 import MenuNavBar from "../../components/navbars/foodMenu/MenuNavBar";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
@@ -8,9 +9,10 @@ import { routeNames } from "../../constaints/routeName";
 import axiosInstance from "../../service/axios";
 import RightInformationSection from "./RightInformationSection";
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const SearchResultPage = () => {
+    const { t } = useTranslation("global");
     const location = useLocation();
     const searchQuery = new URLSearchParams(location.search).get("search"); // Get search query from URL
     const [searchResults, setSearchResults] = useState([]);
@@ -45,13 +47,14 @@ const SearchResultPage = () => {
     return (
         <div>
             <MenuNavBar />
-            <div style={{ 
-                padding: "5vh 10vw", 
-                backgroundColor: "#f4f4f4", 
+            <div style={{
+                padding: "5vh 10vw",
+                backgroundColor: "#f4f4f4",
                 minHeight: "100vh",
                 opacity: visible ? 1 : 0,
                 visibility: visible ? "visible" : "hidden",
-                transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out", }}>
+                transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out",
+            }}>
 
                 <Row gutter={[16, 16]}>
                     <Col span={18} style={{ display: "flex", justifyContent: "center" }}>
@@ -59,16 +62,17 @@ const SearchResultPage = () => {
                             <Breadcrumb
                                 items={[
                                     {
-                                        title: <Title level={5}><a href={routeNames.foodMenu.main}>Home</a></Title>,
+                                        title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.search.breadcrumbs.home')}</a></Title>,
                                     },
                                     {
-                                        title: <Title level={5}>Search</Title>,
+                                        title: <Title level={5}>{t('foodMenu.search.breadcrumbs.search')}</Title>,
                                     }
                                 ]}
                             />
                         </div>
-                        <Title style={{ fontSize: '1.5vw', textAlign: 'center' }}>Search result</Title>
+                        <Title style={{ fontSize: '1.5vw', textAlign: 'center' }}>{t('foodMenu.search.title')}</Title>
                     </Col>
+
                     {/* Left Column (16/24) - Search Results */}
                     <Col xs={24} lg={18}>
                         {loading ? (
@@ -82,7 +86,7 @@ const SearchResultPage = () => {
                                 ))}
                             </Row>
                         ) : (
-                            <Empty description="No results found" style={{ marginTop: "2vh" }} />
+                            <Empty description={t('foodMenu.search.noResults')} style={{ marginTop: "2vh" }} />
                         )}
                     </Col>
 

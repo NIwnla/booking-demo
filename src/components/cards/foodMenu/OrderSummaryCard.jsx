@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 import { Card, Typography, Divider, Button } from "antd";
 import { RightCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { DeliveryContext } from "../../../context/DeliveryContext";
 import { routeNames } from "../../../constaints/routeName";
 
 const { Title, Paragraph } = Typography;
 
-const OrderSummaryCard = ({onProcess = null, onCancel = null}) => {
+const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
     const { cart, location } = useContext(DeliveryContext);
+    const { t } = useTranslation("global");
     const navigate = useNavigate();
 
     // Calculate summary values
@@ -20,8 +22,8 @@ const OrderSummaryCard = ({onProcess = null, onCancel = null}) => {
 
     return (
         <>
-            <Card style={{ textAlign: 'start', borderRadius: '20px', marginBottom: '20px' }}>
-                <Paragraph>📍 <strong>Location:</strong> Your location details here</Paragraph>
+            <Card style={{ textAlign: "start", borderRadius: "20px", marginBottom: "20px" }}>
+                <Paragraph>📍 <strong>{t("foodMenu.orderSummary.location")}:</strong> {t("foodMenu.orderSummary.locationPlaceholder")}</Paragraph>
             </Card>
 
             <Card
@@ -31,25 +33,25 @@ const OrderSummaryCard = ({onProcess = null, onCancel = null}) => {
                     boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
                     backgroundColor: "white",
                 }}
-                title={<Title style={{ margin: 0, textAlign: "center", fontSize: "1vw" }}>Order Summary</Title>}
+                title={<Title style={{ margin: 0, textAlign: "center", fontSize: "1vw" }}>{t("foodMenu.orderSummary.title")}</Title>}
             >
                 <Title style={{ fontSize: "1vw", marginBottom: "2vh" }}>
-                    Instant delivery items ({cartItemCount})
+                    {t("foodMenu.orderSummary.instantDelivery", { count: cartItemCount })}
                 </Title>
 
                 {/* Order Info */}
                 <div style={{ paddingLeft: "1vw" }}>
                     {/* Sub-Total */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>Sub-total:</Paragraph>
+                        <Paragraph style={{ fontSize: "0.7vw" }}>{t("foodMenu.orderSummary.subTotal")}:</Paragraph>
                         <Paragraph style={{ fontSize: "0.7vw" }}>{subTotal.toLocaleString()} VND</Paragraph>
                     </div>
 
                     {/* Shipping */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>Shipping:</Paragraph>
+                        <Paragraph style={{ fontSize: "0.7vw" }}>{t("foodMenu.orderSummary.shipping")}:</Paragraph>
                         <Paragraph style={{ fontSize: "0.7vw" }}>
-                            {shippingCost > 0 ? `${shippingCost.toLocaleString()} VND` : "Free"}
+                            {shippingCost > 0 ? `${shippingCost.toLocaleString()} VND` : t("foodMenu.orderSummary.freeShipping")}
                         </Paragraph>
                     </div>
 
@@ -57,7 +59,7 @@ const OrderSummaryCard = ({onProcess = null, onCancel = null}) => {
 
                     {/* Tax */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>Tax (10%):</Paragraph>
+                        <Paragraph style={{ fontSize: "0.7vw" }}>{t("foodMenu.orderSummary.tax", { taxRate: 10 })}:</Paragraph>
                         <Paragraph style={{ fontSize: "0.7vw" }}>{tax.toLocaleString()} VND</Paragraph>
                     </div>
                 </div>
@@ -67,23 +69,23 @@ const OrderSummaryCard = ({onProcess = null, onCancel = null}) => {
 
                 {/* Total */}
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1vw", fontWeight: "bold" }}>
-                    <Paragraph style={{ fontSize: "0.9vw", fontWeight: "bold" }}>Total:</Paragraph>
+                    <Paragraph style={{ fontSize: "0.9vw", fontWeight: "bold" }}>{t("foodMenu.orderSummary.total")}:</Paragraph>
                     <Paragraph style={{ fontSize: "0.9vw", fontWeight: "bold" }}>{total.toLocaleString()} VND</Paragraph>
                 </div>
 
                 {/* Delivering To */}
-                <Title level={5} style={{ fontSize: "0.9vw", marginTop: "1vh" }}>Delivering to:</Title>
-                <Paragraph style={{ fontSize: "0.8vw", color: "#555" }}>{location || "No location set"}</Paragraph>
+                <Title level={5} style={{ fontSize: "0.9vw", marginTop: "1vh" }}>{t("foodMenu.orderSummary.deliveringTo")}:</Title>
+                <Paragraph style={{ fontSize: "0.8vw", color: "#555" }}>{location || t("foodMenu.orderSummary.noLocation")}</Paragraph>
 
                 {/* Estimated Delivery Time */}
-                <Title level={5} style={{ fontSize: "0.9vw", marginTop: "1vh" }}>Estimated Delivery Time:</Title>
+                <Title level={5} style={{ fontSize: "0.9vw", marginTop: "1vh" }}>{t("foodMenu.orderSummary.estimatedDelivery")}:</Title>
                 <Paragraph style={{ fontSize: "0.8vw", color: "#555" }}>
                     {new Date(Date.now() + 30 * 60000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </Paragraph>
 
                 {/* Terms & Conditions */}
                 <Paragraph style={{ fontSize: "0.8vw", color: "#777", marginTop: "10vh" }}>
-                    By clicking this button, I agree with these <a href="#">General Terms & Conditions</a>.
+                    {t("foodMenu.orderSummary.terms")} <a href="#">{t("foodMenu.orderSummary.termsLink")}</a>.
                 </Paragraph>
 
                 {/* Checkout Button */}
@@ -117,14 +119,14 @@ const OrderSummaryCard = ({onProcess = null, onCancel = null}) => {
                             gap: "0.5vw",
                         }}
                     >
-                        Process <RightCircleOutlined style={{ fontSize: "1.5vw" }} />
+                        {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5vw" }} />
                     </Typography>
                 </div>
 
                 {/* Cancel Button */}
                 <div style={{ textAlign: "center", marginTop: "1vh" }}>
                     <Button type="link" onClick={() => onCancel ? onCancel() : navigate(routeNames.foodMenu.main)} style={{ fontSize: "0.9vw" }}>
-                        Cancel
+                        {t("foodMenu.orderSummary.cancel")}
                     </Button>
                 </div>
             </Card>

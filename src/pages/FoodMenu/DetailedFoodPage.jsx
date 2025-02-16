@@ -1,16 +1,16 @@
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { Breadcrumb, Checkbox, Col, Image, Row, Spin, Typography } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
+import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
+import { DeliveryContext } from '../../context/DeliveryContext';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
 import RightInformationSection from './RightInformationSection';
-import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
-import { PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { DeliveryContext } from '../../context/DeliveryContext';
 const { Title } = Typography;
 
 const DetailedFoodPage = ({ breadcrumb = null }) => {
@@ -49,13 +49,13 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
         return (
             <>
                 <Title style={{ fontSize: '1vw', marginBottom: '2vh' }}>
-                    Description
+                   {t('foodMenu.detailedFoodPage.description')}
                 </Title>
                 <Typography style={{ fontSize: '1vw' }}>
                     {getLocalizedText(food, 'description', i18n.language)}
                 </Typography>
                 <Typography style={{ fontSize: '1vw' }}>
-                    Price: {food?.basePrice}VND
+                   {t('foodMenu.detailedFoodPage.price')}: {food?.basePrice}VND
                 </Typography>
             </>
         );
@@ -64,7 +64,7 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
 
     const breadcrumbItems = [
         {
-            title: <Title level={5}><a href={routeNames.foodMenu.main}>Home</a></Title>,
+            title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.detailedFoodPage.home')}</a></Title>,
         },
         breadcrumb && {
             title: <Title level={5}><a href={`${routeNames.foodMenu.menu}?categoryId=${categoryId}`}>{breadcrumb}</a></Title>,
@@ -138,7 +138,7 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                                 {food?.options && food?.options.length > 0 && (
                                     <div>
                                         <Title style={{ fontSize: '1.5vw', marginBottom: '2vh' }}>
-                                            Options
+                                           {t('foodMenu.detailedFoodPage.options')}
                                         </Title>
                                         {food?.options.map(option => (
                                             <Row
@@ -232,7 +232,7 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                                             alignItems: "center",
                                             gap: "0.5vw",
                                         }}>
-                                        Add to Cart <PlusCircleOutlined style={{ fontSize: "2vw" }} />
+                                       {t('foodMenu.detailedFoodPage.addToCart')} <PlusCircleOutlined style={{ fontSize: "2vw" }} />
                                     </Typography>
                                 </div>
                             </div>

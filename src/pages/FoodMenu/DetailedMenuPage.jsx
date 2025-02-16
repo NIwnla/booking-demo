@@ -11,11 +11,11 @@ import RightInformationSection from './RightInformationSection';
 import './ScrollableCategories.css';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';
-const { Title, Paragraph } = Typography;
 
+const { Title } = Typography;
 
 const DetailedMenuPage = () => {
-    const { i18n } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const categoryId = searchParams.get('categoryId');
@@ -44,8 +44,6 @@ const DetailedMenuPage = () => {
                 params: { categories: selectedCategory ? selectedCategory.id : categoryId },
             });
             setFoods(response.data.items);
-            console.log(foods);
-
         } catch (error) {
             console.error("Failed to fetch foods", error);
         } finally {
@@ -64,8 +62,8 @@ const DetailedMenuPage = () => {
             const initialCategory = response.data.items.find(category => category.id === categoryId);
             if (initialCategory) {
                 setSelectedCategory(initialCategory);
-            }else {
-                setSelectedCategory(response.data.items[0] || null)
+            } else {
+                setSelectedCategory(response.data.items[0] || null);
             }
         } catch (error) {
             console.error("Failed to fetch categories", error);
@@ -78,20 +76,21 @@ const DetailedMenuPage = () => {
         <div>
             <MenuNavBar />
             <div style={{ padding: '5vh 10vw' }}>
-                <Row>
+                <Row style={{ position: "relative" }}>
                     <Col xs={24} lg={18} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ position: "absolute", left: 0, zIndex: 100 }}>
                         <Breadcrumb
                             items={[
-                                {
-                                    title: <Title level={5}><a href={routeNames.foodMenu.main}>Home</a></Title>,
+                                {   
+                                    title: <Title level={5}><a href={routeNames.foodMenu.main}>{t("foodMenu.detailedMenuPage.home")}</a></Title>,
                                 },
                                 selectedCategory && {
                                     title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
                                 },
                             ].filter(Boolean)}
                         />
-
-                        <Title style={{ fontSize: '1.5vw', flex: 1, textAlign: 'center' }}>Menu</Title>
+                        </div>
+                        <Title style={{ fontSize: '1.5vw', flex: 1, textAlign: 'center' }}>{t("foodMenu.detailedMenuPage.menu")}</Title>
                     </Col>
                 </Row>
 
@@ -109,7 +108,7 @@ const DetailedMenuPage = () => {
                                                     onClick={() => setSelectedCategory(category)}
                                                     style={{
                                                         height: '175px',
-                                                        boxShadow: selectedCategory.id === category.id ? '0 4px 8px red' : '0 4px 8px rgba(0, 0, 0, 0.2)'
+                                                        boxShadow: selectedCategory?.id === category.id ? '0 4px 8px red' : '0 4px 8px rgba(0, 0, 0, 0.2)'
                                                     }}
                                                     styles={{ body: { padding: '10px' } }}
                                                     cover={
@@ -133,28 +132,29 @@ const DetailedMenuPage = () => {
                         </div>
                         {/* Food Grid */}
                         <div style={{ marginTop: '20px' }}>
-                            <Title level={3} style={{ textAlign: 'start' }}>Foods</Title>
+                            <Title level={3} style={{ textAlign: 'start' }}>{t("foodMenu.detailedMenuPage.foods")}</Title>
                             <Spin spinning={loadingFoods}>
-                                <Row gutter={[16, 16]} justify="start" >
+                                <Row gutter={[16, 16]} justify="start">
                                     {foods.map((food) => (
-                                        <Col key={food.id} xs={12} sm={12} md={12} xl={8} >
+                                        <Col key={food.id} xs={12} sm={12} md={12} xl={8}>
                                             <FoodCard
                                                 food={food}
-                                                onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMenu}${food.id}?categoryId=${categoryId}`)} />
+                                                onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMenu}${food.id}?categoryId=${categoryId}`)}
+                                            />
                                         </Col>
                                     ))}
                                 </Row>
                             </Spin>
                         </div>
-                    </Col >
+                    </Col>
                     <Col xs={24} lg={6}>
                         {/* Information Section */}
                         <div>
                             <RightInformationSection />
                         </div>
                     </Col>
-                </Row >
-            </div >
+                </Row>
+            </div>
         </div>
     );
 };

@@ -845,5 +845,128 @@
                 "fetchError": "Error fetching categories."
             }
         }
+    },
+    "foodMenu": {
+        "breadcrumbs": {
+            "home": "Home",
+            "myCart": "My Cart"
+        },
+        "navbar": {
+            "searchPlaceholder": "Search...",
+            "noResults": "No results found",
+            "newItemAdded": "A new item has been added to your cart.",
+            "menu": {
+                "sample1": "Sample 1",
+                "sample2": "Sample 2",
+                "sample3": "Sample 3"
+            }
+        },
+        "mainPage": {
+            "deliveryInformationTitle": "Delivery Information",
+            "deliveryDescription": "Welcome to our delivery service. Enjoy fresh and delicious meals delivered to your doorstep.",
+            "deliveryBenefits": "Fast, reliable, and convenient.",
+            "categories": "Categories",
+            "popularFoods": "Popular"
+        },
+        "detailedFoodPage": {
+            "home": "Home",
+            "description": "Description",
+            "price": "Price",
+            "options": "Options",
+            "addToCart": "Add to Cart"
+        },
+        "detailedMenuPage": {
+            "home": "Home",
+            "menu": "Menu",
+            "foods": "Foods"
+        },         
+        "cart": {
+            "title": "My Cart",
+            "productDetails": "Product Details",
+            "condimentSectionTitle": "Condiment & Cutlery",
+            "condimentOptions": "Condiment Options",
+            "condimentDescription": "Condiments are provided as standard. Please adjust the quantity according to your needs.",
+            "condiments": {
+                "ketchup": "Ketchup",
+                "chilli_sauce": "Chilli Sauce",
+                "chilli_oil": "Chilli Oil",
+                "honey": "Honey",
+                "cutlery": "Cutlery",
+                "pizza_reheating_foil": "Pizza Reheating Foil",
+                "heating_instructions": "Heating Instructions"
+            },
+            "sustainableOptions": "Sustainable Options",
+            "sustainableDescription": "Please tick only if you need.",
+            "sustainableItems": {
+                "cutlery": "Cutlery",
+                "pizza_reheating_foil": "Pizza Reheating Foil",
+                "heating_instructions": "Heating Instructions"
+            },
+            "allergenNotice": "If you need to remove any ingredients due to allergens, please let us know.",
+            "allergenPlaceholder": "Enter note here...",
+            "eVoucher": "E-Voucher",
+            "eVoucherDescription": "Input your E-Voucher (if available).",
+            "eVoucherPlaceholder": "Enter your E-Voucher here..."
+        },
+        "orderInformation": {
+            "title": "Order Information",
+            "checkout": "Checkout",
+            "provideDetails": "Please provide your delivery details",
+            "yourName": "Your Name",
+            "phoneNumber": "Phone Number",
+            "recipientInfo": "Recipient information (If applicable)",
+            "recipientName": "Recipient Name",
+            "recipientPhoneNumber": "Recipient Phone Number",
+            "note": "Note",
+            "rules": {
+                "nameRequired": "Please enter your name",
+                "phoneRequired": "Please enter your phone number",
+                "phonePattern": "Phone number must be 9 or 10 digits",
+                "recipientNameRequired": "Please enter the recipient's name",
+                "recipientPhoneRequired": "Please enter the recipient's phone number",
+                "recipientPhonePattern": "Phone number must be 9 or 10 digits"
+            },
+            "placeholders": {
+                "yourName": "Enter your name",
+                "phoneNumber": "Enter your phone number",
+                "recipientName": "Enter recipient name",
+                "recipientPhoneNumber": "Enter recipient phone number",
+                "note": "Enter any additional note (optional)"
+            }
+        },
+        "rightInformation": {
+            "location": "Location",
+            "locationDetails": "Your location details here",
+            "shoppingCart": "Shopping Cart",
+            "clearAll": "Clear All",
+            "emptyCart": "Your shopping cart is empty",
+            "viewCart": "View Cart"
+        },
+        "search": {
+            "breadcrumbs": {
+                "home": "Home",
+                "search": "Search"
+            },
+            "title": "Search Results",
+            "noResults": "No results found"
+        },
+        "orderSummary": {
+            "title": "Order Summary",
+            "location": "Location",
+            "locationPlaceholder": "Your location details here",
+            "instantDelivery": "Instant delivery items ({count})",
+            "subTotal": "Sub-total",
+            "shipping": "Shipping",
+            "freeShipping": "Free",
+            "tax": "Tax (10%)",
+            "total": "Total",
+            "deliveringTo": "Delivering to",
+            "noLocation": "No location set",
+            "estimatedDelivery": "Estimated Delivery Time",
+            "terms": "By clicking this button, I agree with these",
+            "termsLink": "General Terms & Conditions",
+            "process": "Process",
+            "cancel": "Cancel"
+        }
     }
 }

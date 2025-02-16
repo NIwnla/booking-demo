@@ -14,7 +14,7 @@ const { Paragraph } = Typography;
 
 const MenuNavBar = () => {
     const { cart, latestCartItem } = useContext(DeliveryContext);
-    const { i18n } = useTranslation("global");
+    const { t, i18n } = useTranslation("global");
     const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
     const [isPopoverVisible, setIsPopoverVisible] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
@@ -67,7 +67,7 @@ const MenuNavBar = () => {
                                 ])
                             ).values()
                         )
-                        : [{ value: "no-result", label: <span style={{ color: "gray", fontStyle: "italic" }}>No results found</span>, disabled: true }]
+                        : [{ value: "no-result", label: <span style={{ color: "gray", fontStyle: "italic" }}>{t('foodMenu.navbar.noResults')}</span>, disabled: true }]
                 );
             } catch (error) {
                 console.error("Failed to fetch suggestions:", error);
@@ -94,6 +94,7 @@ const MenuNavBar = () => {
         }
         fetchSuggestions(query);
     };
+
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && searchValue.trim()) {
             navigate(`${routeNames.foodMenu.searchResult}?search=${encodeURIComponent(searchValue)}`);
@@ -104,12 +105,12 @@ const MenuNavBar = () => {
     const popoverContent = latestCartItem ? (
         <div>
             <Paragraph style={{ fontSize: "0.8rem", color: "#888", marginTop: 5 }}>
-                A new item has been added to your cart.
+                {t('foodMenu.navbar.newItemAdded')}
             </Paragraph>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "5px" }}>
                 <div>
                     <Paragraph style={{ fontWeight: "bold", marginBottom: 5 }}>
-                        {i18n.language === "vn" ? latestCartItem.nameVN : latestCartItem.nameEN}
+                        {getLocalizedText(latestCartItem, "name", i18n.language)}
                     </Paragraph>
                 </div>
             </div>
@@ -135,9 +136,9 @@ const MenuNavBar = () => {
             >
                 {/* Left - Menu Items */}
                 <div style={{ display: "flex", gap: "3vw" }}>
-                    <a href="#" style={{ color: "black", cursor: "pointer" }}>Sample 1</a>
-                    <a href="#" style={{ color: "black", cursor: "pointer" }}>Sample 2</a>
-                    <a href="#" style={{ color: "black", cursor: "pointer" }}>Sample 3</a>
+                    <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample1')}</a>
+                    <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample2')}</a>
+                    <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample3')}</a>
                 </div>
 
                 {/* Right - Search Bar & Shopping Cart */}
@@ -150,7 +151,7 @@ const MenuNavBar = () => {
                         value={searchValue}
                         onSelect={handleSelect}
                         onKeyDown={handleKeyDown}
-                        placeholder="Search..."
+                        placeholder={t('foodMenu.navbar.searchPlaceholder')}
                         filterOption={false}
                     />
 

@@ -7,7 +7,7 @@ import { getLocalizedText } from '../../helpers/getLocalizedText';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
-import './ScrollableCategories.css'
+import './ScrollableCategories.css';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';
 
@@ -27,7 +27,7 @@ const ImageCarousel = () => {
 
 const FoodMenuMainPage = () => {
     const navigate = useNavigate();
-    const { i18n } = useTranslation('global');
+    const { t, i18n } = useTranslation('global');
     const [categories, setCategories] = useState([]);
     const [foods, setFoods] = useState([]);
     const [loadingCategories, setLoadingCategories] = useState(false);
@@ -92,17 +92,17 @@ const FoodMenuMainPage = () => {
                             opacity: fadeInCategories ? 1 : 0,
                             transition: 'opacity 0.5s ease-out',
                         }}>
-                        <Title level={3}>Delivery Information</Title>
-                        <Paragraph>
-                            Welcome to our delivery service. Enjoy fresh and delicious meals delivered to your doorstep.
+                        <Title style={{fontSize:'1vw'}}>{t("foodMenu.mainPage.deliveryInformationTitle")}</Title>
+                        <Paragraph style={{fontSize:'0.7vw'}}>
+                            {t("foodMenu.mainPage.deliveryDescription")}
                         </Paragraph>
-                        <Paragraph>Fast, reliable, and convenient.</Paragraph>
+                        <Paragraph style={{fontSize:'0.7vw'}}>{t("foodMenu.mainPage.deliveryBenefits")}</Paragraph>
                     </Col>
                 </Row>
 
                 {/* Category Grid */}
                 <div style={{ marginTop: '20px' }}>
-                    <Title level={3} style={{ textAlign: 'start' }}>Categories</Title>
+                    <Title level={3} style={{ textAlign: 'start' }}>{t("foodMenu.mainPage.categories")}</Title>
                     <Spin spinning={loadingCategories}>
                         <div
                             className="scroll-container"
@@ -140,11 +140,9 @@ const FoodMenuMainPage = () => {
                     </Spin>
                 </div>
 
-
-
                 {/* Available Foods Grid */}
                 <div style={{ marginTop: '40px' }}>
-                    <Title level={3} style={{ textAlign: 'start' }}>Popular</Title>
+                    <Title level={3} style={{ textAlign: 'start' }}>{t("foodMenu.mainPage.popularFoods")}</Title>
                     <Spin spinning={loadingFoods}>
                         <Row
                             gutter={[16, 16]}

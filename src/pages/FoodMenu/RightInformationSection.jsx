@@ -5,23 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import CartItemCard from '../../components/cards/foodMenu/CartItemCard';
 import { routeNames } from '../../constaints/routeName';
 import { DeliveryContext } from '../../context/DeliveryContext';
+import { useTranslation } from "react-i18next";
 
 const { Paragraph, Title } = Typography;
 
 const RightInformationSection = () => {
+    const { t } = useTranslation("global");
     const { cart, clearCart } = useContext(DeliveryContext);
     const cartIsEmpty = cart.length === 0;
     const navigate = useNavigate();
-
     const totalCartPrice = cart.reduce((sum, item) => sum + item.total, 0);
 
     return (
         <div>
             <Card style={{ textAlign: 'start', borderRadius: '10px', marginBottom: '20px' }}>
-                <Paragraph>📍 <strong>Location:</strong> Your location details here</Paragraph>
+                <Paragraph>📍 <strong>{t('foodMenu.rightInformation.location')}:</strong> {t('foodMenu.rightInformation.locationDetails')}</Paragraph>
             </Card>
 
-            <Title level={4} style={{ marginBottom: '10px' }}>Shopping Cart</Title>
+            <Title level={4} style={{ marginBottom: '10px' }}>{t('foodMenu.rightInformation.shoppingCart')}</Title>
 
             {!cartIsEmpty && (
                 <Button
@@ -36,7 +37,7 @@ const RightInformationSection = () => {
                         border: 'none'
                     }}
                 >
-                    Clear All
+                    {t('foodMenu.rightInformation.clearAll')}
                 </Button>
             )}
 
@@ -49,7 +50,7 @@ const RightInformationSection = () => {
                     }}>
                     <Empty
                         image={<ShoppingCartOutlined style={{ fontSize: '7rem', color: '#bfbfbf' }} />}
-                        description="Your shopping cart is empty"
+                        description={t('foodMenu.rightInformation.emptyCart')}
                     />
                 </Card>
             ) : (
@@ -88,7 +89,7 @@ const RightInformationSection = () => {
                                 alignItems: "center",
                                 gap: "0.5vw",
                             }}>
-                            View Cart <RightCircleOutlined style={{ fontSize: "2vw" }} />
+                            {t('foodMenu.rightInformation.viewCart')} <RightCircleOutlined style={{ fontSize: "2vw" }} />
                         </Typography>
                     </div>
                 </div>

@@ -840,5 +840,128 @@
                 "fetchError": "Lỗi khi tải danh mục."
             }
         }
+    },
+    "foodMenu": {
+        "breadcrumbs": {
+            "home": "Trang Chủ",
+            "myCart": "Giỏ Hàng"
+        },
+        "navbar": {
+            "searchPlaceholder": "Tìm kiếm...",
+            "noResults": "Không tìm thấy kết quả",
+            "newItemAdded": "Một sản phẩm mới đã được thêm vào giỏ hàng của bạn.",
+            "menu": {
+                "sample1": "Mẫu 1",
+                "sample2": "Mẫu 2",
+                "sample3": "Mẫu 3"
+            }
+        },
+        "mainPage": {
+            "deliveryInformationTitle": "Thông Tin Giao Hàng",
+            "deliveryDescription": "Chào mừng đến với dịch vụ giao hàng của chúng tôi. Tận hưởng những bữa ăn tươi ngon và hấp dẫn được giao đến tận cửa nhà bạn.",
+            "deliveryBenefits": "Nhanh chóng, đáng tin cậy và tiện lợi.",
+            "categories": "Danh Mục",
+            "popularFoods": "Món Ăn Phổ Biến"
+        },
+        "detailedFoodPage": {
+            "home": "Trang chủ",
+            "description": "Mô tả",
+            "price": "Giá",
+            "options": "Tùy chọn",
+            "addToCart": "Thêm vào giỏ hàng"
+        },
+        "detailedMenuPage": {
+            "home": "Trang chủ",
+            "menu": "Thực đơn",
+            "foods": "Món ăn"
+        },
+        "cart": {
+            "title": "Giỏ Hàng Của Tôi",
+            "productDetails": "Chi Tiết Sản Phẩm",
+            "condimentSectionTitle": "Gia Vị & Dụng Cụ Ăn",
+            "condimentOptions": "Tùy Chọn Gia Vị",
+            "condimentDescription": "Gia vị được cung cấp theo tiêu chuẩn. Vui lòng điều chỉnh số lượng theo nhu cầu của bạn.",
+            "condiments": {
+                "ketchup": "Tương Cà",
+                "chilli_sauce": "Tương Ớt",
+                "chilli_oil": "Dầu Ớt",
+                "honey": "Mật Ong",
+                "cutlery": "Dụng cụ ăn",
+                "pizza_reheating_foil": "Giấy bạc hâm nóng pizza",
+                "heating_instructions": "Hướng dẫn hâm nóng"
+            },
+            "sustainableOptions": "Tùy Chọn Bền Vững",
+            "sustainableDescription": "Vui lòng chọn nếu bạn cần.",
+            "sustainableItems": {
+                "cutlery": "Dụng Cụ Ăn",
+                "pizza_reheating_foil": "Giấy Nhôm Hâm Nóng Pizza",
+                "heating_instructions": "Hướng Dẫn Hâm Nóng"
+            },
+            "allergenNotice": "Nếu bạn cần loại bỏ bất kỳ thành phần nào do dị ứng, vui lòng cho chúng tôi biết.",
+            "allergenPlaceholder": "Nhập ghi chú tại đây...",
+            "eVoucher": "Mã Giảm Giá",
+            "eVoucherDescription": "Nhập mã giảm giá của bạn (nếu có).",
+            "eVoucherPlaceholder": "Nhập mã giảm giá tại đây..."
+        },
+        "orderInformation": {
+            "title": "Thông tin đơn hàng",
+            "checkout": "Thanh toán",
+            "provideDetails": "Vui lòng cung cấp thông tin giao hàng",
+            "yourName": "Tên của bạn",
+            "phoneNumber": "Số điện thoại",
+            "recipientInfo": "Thông tin người nhận (Nếu có)",
+            "recipientName": "Tên người nhận",
+            "recipientPhoneNumber": "Số điện thoại người nhận",
+            "note": "Ghi chú",
+            "rules": {
+                "nameRequired": "Vui lòng nhập tên của bạn",
+                "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
+                "phonePattern": "Số điện thoại phải có 9 hoặc 10 chữ số",
+                "recipientNameRequired": "Vui lòng nhập tên người nhận",
+                "recipientPhoneRequired": "Vui lòng nhập số điện thoại người nhận",
+                "recipientPhonePattern": "Số điện thoại phải có 9 hoặc 10 chữ số"
+            },
+            "placeholders": {
+                "yourName": "Nhập tên của bạn",
+                "phoneNumber": "Nhập số điện thoại của bạn",
+                "recipientName": "Nhập tên người nhận",
+                "recipientPhoneNumber": "Nhập số điện thoại người nhận",
+                "note": "Nhập ghi chú bổ sung (tùy chọn)"
+            }
+        },
+        "rightInformation": {
+            "location": "Vị trí",
+            "locationDetails": "Chi tiết vị trí của bạn ở đây",
+            "shoppingCart": "Giỏ hàng",
+            "clearAll": "Xóa tất cả",
+            "emptyCart": "Giỏ hàng của bạn đang trống",
+            "viewCart": "Xem giỏ hàng"
+        },
+        "search": {
+            "breadcrumbs": {
+                "home": "Trang chủ",
+                "search": "Tìm kiếm"
+            },
+            "title": "Kết quả tìm kiếm",
+            "noResults": "Không tìm thấy kết quả nào"
+        },
+        "orderSummary": {
+            "title": "Tóm tắt đơn hàng",
+            "location": "Địa điểm",
+            "locationPlaceholder": "Chi tiết địa điểm của bạn ở đây",
+            "instantDelivery": "Sản phẩm giao ngay ({count})",
+            "subTotal": "Tạm tính",
+            "shipping": "Phí giao hàng",
+            "freeShipping": "Miễn phí",
+            "tax": "Thuế (10%)",
+            "total": "Tổng cộng",
+            "deliveringTo": "Giao hàng đến",
+            "noLocation": "Chưa đặt địa điểm",
+            "estimatedDelivery": "Thời gian giao hàng dự kiến",
+            "terms": "Bằng cách nhấn nút này, tôi đồng ý với",
+            "termsLink": "Điều khoản & Điều kiện",
+            "process": "Tiến hành",
+            "cancel": "Hủy"
+        }
     }
 }
