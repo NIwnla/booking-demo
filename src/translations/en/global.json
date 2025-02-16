@@ -1,7 +1,6 @@
 {
     "header": {
         "title": "Nollowa Chicken",
-        "menu": "Menu",
         "reservation": "Reservation",
         "delivery": "Delivery",
         "career": "Career",
@@ -954,7 +953,7 @@
             "title": "Order Summary",
             "location": "Location",
             "locationPlaceholder": "Your location details here",
-            "instantDelivery": "Instant delivery items ({count})",
+            "instantDelivery": "Instant delivery items",
             "subTotal": "Sub-total",
             "shipping": "Shipping",
             "freeShipping": "Free",

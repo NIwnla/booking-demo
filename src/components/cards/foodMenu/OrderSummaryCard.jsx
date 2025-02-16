@@ -36,7 +36,7 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                 title={<Title style={{ margin: 0, textAlign: "center", fontSize: "1vw" }}>{t("foodMenu.orderSummary.title")}</Title>}
             >
                 <Title style={{ fontSize: "1vw", marginBottom: "2vh" }}>
-                    {t("foodMenu.orderSummary.instantDelivery", { count: cartItemCount })}
+                    {t("foodMenu.orderSummary.instantDelivery")} ({cartItemCount})
                 </Title>
 
                 {/* Order Info */}

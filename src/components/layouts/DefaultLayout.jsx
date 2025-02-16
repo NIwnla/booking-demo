@@ -16,16 +16,12 @@ const DefaultLayout = ({ children }) => {
 
     const rightMenuItems = [
         {
-            key: 'menu',
-            label: <Link to={routeNames.food.management}>{t('header.menu')}</Link>,
-        },
-        {
             key: 'reservation',
             label: <Link to={routeNames.booking.branchChoose}>{t('header.reservation')}</Link>,
         },
         {
             key: 'delivery',
-            label: <Link to={routeNames.deliveryInformation.create}>{t('header.delivery')}</Link>,
+            label: <Link to={routeNames.foodMenu.main}>{t('header.delivery')}</Link>,
         },
         {
             key: 'career',
@@ -70,7 +66,7 @@ const DefaultLayout = ({ children }) => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     background: '#ff0000',
-                    padding: '0 20px'
+                    padding: '0 10vw'
                 }}
             >
                 <Link
@@ -122,10 +118,8 @@ const DefaultLayout = ({ children }) => {
             <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
                 <div
                     style={{
-                        background: '#ffffff',
-                        padding: '24px',
+                        background: '#eeeeee',
                         minHeight: '280px',
-                        boxShadow: '0 0 10px rgba(0,0,0,0.1)'
                     }}
                 >
                     {children}

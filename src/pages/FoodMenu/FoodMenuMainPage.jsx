@@ -15,7 +15,7 @@ const { Title, Paragraph } = Typography;
 
 const ImageCarousel = () => {
     return (
-        <div style={{ backgroundColor: '#000000', padding: '10px', textAlign: 'center', borderRadius: '10px' }}>
+        <div style={{ backgroundColor: '#000000', padding: '10px', textAlign: 'center', borderRadius: '10px', minHeight: "30vh" }}>
             <Carousel autoplay arrows infinite>
                 <img src={'/images/image1.jpg'} alt={'Slide 1'} />
                 <img src={'/images/image2.jpg'} alt={'Slide 2'} />
@@ -91,12 +91,14 @@ const FoodMenuMainPage = () => {
                             backgroundColor: 'white',
                             opacity: fadeInCategories ? 1 : 0,
                             transition: 'opacity 0.5s ease-out',
+                            borderRadius: '20px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'
                         }}>
-                        <Title style={{fontSize:'1vw'}}>{t("foodMenu.mainPage.deliveryInformationTitle")}</Title>
-                        <Paragraph style={{fontSize:'0.7vw'}}>
+                        <Title style={{ fontSize: '1vw' }}>{t("foodMenu.mainPage.deliveryInformationTitle")}</Title>
+                        <Paragraph style={{ fontSize: '0.7vw' }}>
                             {t("foodMenu.mainPage.deliveryDescription")}
                         </Paragraph>
-                        <Paragraph style={{fontSize:'0.7vw'}}>{t("foodMenu.mainPage.deliveryBenefits")}</Paragraph>
+                        <Paragraph style={{ fontSize: '0.7vw' }}>{t("foodMenu.mainPage.deliveryBenefits")}</Paragraph>
                     </Col>
                 </Row>
 

@@ -1,7 +1,6 @@
 {
     "header": {
         "title": "Nollowa Chicken",
-        "menu": "Thực Đơn",
         "reservation": "Đặt Chỗ",
         "delivery": "Giao Hàng",
         "career": "Nghề Nghiệp",
@@ -949,7 +948,7 @@
             "title": "Tóm tắt đơn hàng",
             "location": "Địa điểm",
             "locationPlaceholder": "Chi tiết địa điểm của bạn ở đây",
-            "instantDelivery": "Sản phẩm giao ngay ({count})",
+            "instantDelivery": "Sản phẩm giao ngay",
             "subTotal": "Tạm tính",
             "shipping": "Phí giao hàng",
             "freeShipping": "Miễn phí",

@@ -69,7 +69,7 @@ const BranchManagerLayout = ({ children }) => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     background: '#ff0000',
-                    padding: '0 20px',
+                    padding: '0 10vw',
                 }}
             >
                 {/* Restaurant Name */}
@@ -150,9 +150,7 @@ const BranchManagerLayout = ({ children }) => {
                 <div
                     style={{
                         background: '#ffffff',
-                        padding: '24px',
                         minHeight: '280px',
-                        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
                     }}
                 >
                     {children}

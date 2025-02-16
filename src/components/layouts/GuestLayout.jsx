@@ -53,10 +53,6 @@ const GuestLayout = ({ children }) => {
 
     const leftMenuItems = [
         {
-            key: '1',
-            label: <Link to={routeNames.index}>{t('header.menu')}</Link>,
-        },
-        {
             key: '2',
             label: <Link to={routeNames.booking.branchChoose}>{t('header.reservation')}</Link>,
         },
@@ -66,7 +62,7 @@ const GuestLayout = ({ children }) => {
         },
         {
             key: '4',
-            label: <Link to={routeNames.career}>{t('header.career')}</Link>,
+            label: <Link to={routeNames.recruitInformation.signUp}>{t('header.career')}</Link>,
         }
     ];
 
@@ -159,10 +155,8 @@ const GuestLayout = ({ children }) => {
             <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
                 <div
                     style={{
-                        background: '#ffffff',
-                        padding: '24px',
+                        background: '#eeeeee',
                         minHeight: '280px',
-                        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
                     }}
                 >
                     {children}
