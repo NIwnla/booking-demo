@@ -79,16 +79,16 @@ const DetailedMenuPage = () => {
                 <Row style={{ position: "relative" }}>
                     <Col xs={24} lg={18} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <div style={{ position: "absolute", left: 0, zIndex: 100 }}>
-                        <Breadcrumb
-                            items={[
-                                {   
-                                    title: <Title level={5}><a href={routeNames.foodMenu.main}>{t("foodMenu.detailedMenuPage.home")}</a></Title>,
-                                },
-                                selectedCategory && {
-                                    title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
-                                },
-                            ].filter(Boolean)}
-                        />
+                            <Breadcrumb
+                                items={[
+                                    {
+                                        title: <Title level={5}><a href={routeNames.foodMenu.main}>{t("foodMenu.detailedMenuPage.home")}</a></Title>,
+                                    },
+                                    selectedCategory && {
+                                        title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
+                                    },
+                                ].filter(Boolean)}
+                            />
                         </div>
                         <Title style={{ fontSize: '1.5vw', flex: 1, textAlign: 'center' }}>{t("foodMenu.detailedMenuPage.menu")}</Title>
                     </Col>
@@ -100,7 +100,7 @@ const DetailedMenuPage = () => {
                         <div>
                             <Spin spinning={loadingCategories}>
                                 <div className="scroll-container">
-                                    <Row gutter={16} wrap={false} style={{ margin: ' 4px' }}>
+                                    <Row gutter={16} wrap={false} style={{ margin: ' 4px', width: '100vw' }}>
                                         {categories.map((category) => (
                                             <Col key={category.id} md={12} lg={5} xl={5} xxl={3}>
                                                 <Card

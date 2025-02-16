@@ -112,7 +112,7 @@ const FoodMenuMainPage = () => {
                                 opacity: fadeInCategories ? 1 : 0,
                                 transition: 'opacity 0.5s ease-out',
                             }}>
-                            <Row gutter={20} wrap={false} style={{ margin: ' 4px' }}>
+                            <Row gutter={20} wrap={false} style={{ margin: ' 4px', width: '100vw' }}>
                                 {categories.map((category) => (
                                     <Col key={category.id} md={12} lg={5} xl={4} xxl={3}>
                                         <Card
