@@ -89,39 +89,41 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                 </Paragraph>
 
                 {/* Checkout Button */}
-                <div
-                    style={{
-                        backgroundColor: "#d32f2f",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "1vh 1vw",
-                        marginTop: "2vh",
-                        borderRadius: "2vw",
-                        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-                        cursor: "pointer",
-                        transition: "background 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e64a4a")}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d32f2f")}
-                    onClick={() => onProcess ? onProcess() : navigate(routeNames.foodMenu.orderInfo)}
-                >
-                    <Title level={4} style={{ fontSize: "0.7vw", margin: 0, color: "white" }}>
-                        {total.toLocaleString()} VND
-                    </Title>
-                    <Typography
+                {cartItemCount > 0 &&
+                    <div
                         style={{
-                            fontSize: "0.7vw",
-                            color: "white",
-                            paddingRight: "0.1vw",
+                            backgroundColor: "#d32f2f",
                             display: "flex",
+                            justifyContent: "space-between",
                             alignItems: "center",
-                            gap: "0.5vw",
+                            padding: "1vh 1vw",
+                            marginTop: "2vh",
+                            borderRadius: "2vw",
+                            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+                            cursor: "pointer",
+                            transition: "background 0.3s ease",
                         }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e64a4a")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d32f2f")}
+                        onClick={() => onProcess ? onProcess() : navigate(routeNames.foodMenu.orderInfo)}
                     >
-                        {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5vw" }} />
-                    </Typography>
-                </div>
+                        <Title level={4} style={{ fontSize: "0.7vw", margin: 0, color: "white" }}>
+                            {total.toLocaleString()} VND
+                        </Title>
+                        <Typography
+                            style={{
+                                fontSize: "0.7vw",
+                                color: "white",
+                                paddingRight: "0.1vw",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5vw",
+                            }}
+                        >
+                            {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5vw" }} />
+                        </Typography>
+                    </div>}
+
 
                 {/* Cancel Button */}
                 <div style={{ textAlign: "center", marginTop: "1vh" }}>
