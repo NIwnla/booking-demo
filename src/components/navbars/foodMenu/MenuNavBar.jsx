@@ -1,5 +1,5 @@
 import { LoadingOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { AutoComplete, Badge, Popover, Spin, Typography } from "antd";
+import { AutoComplete, Badge, Popover, Spin, Typography, Image } from "antd";
 import debounce from "lodash/debounce";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ import { routeNames } from "../../../constaints/routeName";
 import { DeliveryContext } from "../../../context/DeliveryContext";
 import { getLocalizedText } from "../../../helpers/getLocalizedText";
 import axiosInstance from "../../../service/axios";
+import { AxiosConstants } from "../../../constaints/axiosContaint";
 
 const { Paragraph } = Typography;
 
@@ -108,9 +109,18 @@ const MenuNavBar = () => {
                 {t('foodMenu.navbar.newItemAdded')}
             </Paragraph>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "5px" }}>
+                <Image
+                    preview={false}
+                    src={`${AxiosConstants.AXIOS_BASEURL}/${latestCartItem.imagePath}`}
+                    alt={getLocalizedText(latestCartItem, "name", i18n.language)}
+                    style={{ width: "50px", height: "50px", borderRadius: "5px" }}
+                />
                 <div>
                     <Paragraph style={{ fontWeight: "bold", marginBottom: 5 }}>
                         {getLocalizedText(latestCartItem, "name", i18n.language)}
+                    </Paragraph>
+                    <Paragraph style={{ margin: 0 }}>
+                        <strong>{latestCartItem.total.toLocaleString()} VND</strong>
                     </Paragraph>
                 </div>
             </div>
