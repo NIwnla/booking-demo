@@ -43,9 +43,25 @@ const LandingPageThirdPart = () => {
                     </Title>
                     <Button
                         shape="round"
-                        style={{ backgroundColor: 'red', color: 'white', height: '10vh', width: '8vw', fontSize: '1vw' }}>
+                        style={{
+                            backgroundColor: 'red',
+                            color: 'white',
+                            height: '10vh',
+                            width: '8vw',
+                            fontSize: '1vw',
+                            transition: 'background-color 0.3s ease, color 0.3s ease', // Adding transition for smooth color change
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'white';
+                            e.currentTarget.style.color = 'red';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'red';
+                            e.currentTarget.style.color = 'white';
+                        }}
+                    >
                         <p style={{ margin: 0 }}>
-                            View <br></br>
+                            View <br />
                             Library
                         </p>
                     </Button>

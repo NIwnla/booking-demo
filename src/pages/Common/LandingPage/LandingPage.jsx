@@ -6,6 +6,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import LandingPageFirstPart from "./LandingPageFirstPart";
 import LandingPageSecondPart from "./LandingPageSecondPart";
 import LandingPageThirdPart from "./LandingPageThirdPart";
+import LandingPageFourthPart from "./LandingPageFourthPart";
 
 const { Title, Text } = Typography;
 
@@ -36,6 +37,7 @@ const LandingPage = () => {
             <LandingPageFirstPart />
             <LandingPageSecondPart />
             <LandingPageThirdPart />
+            <LandingPageFourthPart/>
         </div>
     );
 };
