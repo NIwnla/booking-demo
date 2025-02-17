@@ -1,91 +1,148 @@
-import { Button, Dropdown, Layout, Menu, Typography } from 'antd';
-import React, { useState } from 'react';
+import { Button, Col, Layout, Row, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import './Layout.css';
-import { BookOutlined, GlobalOutlined, PhoneOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { BookOutlined, GlobalOutlined, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, CloseOutlined, FacebookOutlined, InstagramOutlined, LinkedinOutlined, PinterestOutlined, YoutubeOutlined, YoutubeFilled } from '@ant-design/icons';
 import { changeLanguage } from '../../helpers/changeLanguage';
 import { routeNames } from '../../constaints/routeName';
-
+import './LandingPageLayout.css';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
 const LandingPageLayout = ({ children }) => {
     const navigate = useNavigate();
-    const [drawerVisible, setDrawerVisible] = useState(false);
     const { t, i18n } = useTranslation("global");
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? "hidden" : "auto";
+        return () => { document.body.style.overflow = "auto"; };
+    }, [menuOpen]);
+
+
+    // Function to handle scroll event
+    const handleScroll = () => {
+        if (window.scrollY >= window.innerHeight) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
-        <Layout style={{ minHeight: '100vh', backgroundColor: '#eeeeee' }}>
+        <Layout className="landing-page">
             {/* Header */}
-            <Header
-                style={{
-                    width: '100vw',
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    zIndex: 1000,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    backgroundColor: 'transparent',
-                    padding: '5vh 2vw'
-                }}
-            >
+            <Header className={`header ${menuOpen ? "header-open" : ""} ${isScrolled ? 'scrolled-background': '' }`} >
                 {/* Left - Title */}
-                <Title level={3} style={{ margin: 0, cursor: 'pointer', color: 'White', fontSize: '2vw' }} onClick={() => navigate('/')}>
-                    {t('header.title')}
+                <Title className={`header-title ${menuOpen ? "header-title-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate("/")}>
+                    {t("header.title")}
                 </Title>
 
-                {/* Right - link and language */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '3vw' }}>
-                    <Text style={{ color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5vw', fontSize: '1.5vw' }} onClick={() => navigate(routeNames.booking.branchChoose)}>
-                        <BookOutlined />
-                        {t('header.reservation')}
+                {/* Right - links & language toggle */}
+                <div className="header-right">
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate(routeNames.booking.branchChoose)}>
+                        <BookOutlined /> {t("header.reservation")}
                     </Text>
-                    <Text style={{ color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5vw', fontSize: '1.5vw' }} onClick={() => navigate(routeNames.foodMenu.main)}>
-                        <ShoppingCartOutlined />
-                        {t('header.delivery')}
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate(routeNames.foodMenu.main)}>
+                        <ShoppingCartOutlined /> {t("header.delivery")}
                     </Text>
-                    <Text style={{ color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5vw', fontSize: '1.5vw' }} onClick={() => navigate(routeNames.recruitInformation.signUp)}>
-                        <PhoneOutlined />
-                        {t('header.career')}
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate(routeNames.recruitInformation.signUp)}>
+                        <PhoneOutlined /> {t("header.career")}
                     </Text>
                     <Button
                         type="text"
                         icon={<GlobalOutlined />}
                         onClick={() => changeLanguage(i18n, i18n.language === "en" ? "vi" : "en")}
-                        style={{
-                            color: 'white',
-                            fontSize: '1.5vw',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            padding: '0 0.5vw', // Reduce padding to match text height
-                            height: 'auto', // Prevent button from increasing row height
-                        }}
+                        className={`language-button ${menuOpen ? "language-button-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`}
                     >
                         {i18n.language === "en" ? "VI" : "EN"}
                     </Button>
-                </div>
 
+                    {/* Menu button */}
+                    <Button
+                        type="text"
+                        icon={menuOpen ? <CloseOutlined /> : <MenuOutlined />}
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        className={`menu-button ${menuOpen ? "menu-button-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`}
+                    />
+                </div>
             </Header>
 
+            {/* Fullscreen Menu */}
+            <div className={`menu-overlay ${menuOpen ? "menu-overlay-open" : ""}`}>
+                <Row gutter={16} className="menu-container">
+                    <Col span={8}>
+                        <div className="column-container column-padding">
+                            <p className="title-text">Location</p>
+                            <p className="title-text">Menu</p>
+                            <p className="title-text">Vision</p>
+                            <p className="title-text">Sustainability</p>
+                            <p className="title-text">Other Brand</p>
+                        </div>
+                    </Col>
+                    <Col span={8}>
+                        <div className="column-container column-padding" style={{ paddingLeft: '0' }}>
+                            <p className="title-text">Library</p>
+                            <p className="title-text">Career</p>
+                        </div>
+                    </Col>
+                    <Col span={8}>
+                        <div className="column-container column-padding">
+                            <Text className="text column-padding-left">Company Profile</Text>
+                            <Text className="text column-padding-left">Privacy Policy</Text>
+                            <Text className="text column-padding-left">E-Invoice</Text>
+                            <div className="column-padding-left" style={{ display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
+                                <Text className="follow-us-text">Follow Us!</Text>
+                                <Row gutter={16}>
+                                    <Col>
+                                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                                            <YoutubeFilled className="social-icon youtube" />
+                                        </a>
+                                    </Col>
+                                    <Col>
+                                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                                            <InstagramOutlined className="social-icon instagram" />
+                                        </a>
+                                    </Col>
+                                    <Col>
+                                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                                            <FacebookOutlined className="social-icon facebook" />
+                                        </a>
+                                    </Col>
+                                    <Col>
+                                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                                            <LinkedinOutlined className="social-icon linkedin" />
+                                        </a>
+                                    </Col>
+                                    <Col>
+                                        <a href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer">
+                                            <PinterestOutlined className="social-icon pinterest" />
+                                        </a>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+
             {/* Content */}
-            <Content className="content-container" style={{ minHeight: 'calc(100vh - 133px)' }}>
-                <div
-                    style={{
-                        background: '#ffffff'
-                    }}
-                >
-                    {children}
-                </div>
+            <Content className={`content ${menuOpen ? "content-hidden" : ""}`}>
+                {children}
             </Content>
 
             {/* Footer */}
-            <Footer style={{ textAlign: 'center', backgroundColor: '#ff0000', color: '#ffffff' }}>
-                <Text style={{ color: '#ffffff' }}>{t('footer.copyright')}</Text>
+            <Footer className="footer">
+                <Text>{t("footer.copyright")}</Text>
             </Footer>
         </Layout>
     );

@@ -10,6 +10,7 @@ import { routeNames } from '../../constaints/routeName';
 import './ScrollableCategories.css';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';
+import LandingPageThirdPart from '../Common/LandingPage/LandingPageThirdPart';
 
 const { Title, Paragraph } = Typography;
 

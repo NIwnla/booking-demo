@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 import React, { useContext } from "react";
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import UnavailableTimeAlert from "../components/alerts/UnavailableTimeAlert";
 import RoleLayout from "../components/layouts/RoleLayout";
 import { routeNames } from "../constaints/routeName";
@@ -12,28 +12,28 @@ import BookingPage from "../pages/Booking/BookingPage";
 import BranchChoosePage from "../pages/Booking/BranchChoosePage";
 import CalendarPage from "../pages/Booking/CalendarPage";
 import BranchManagementAdminPage from "../pages/Branch/BranchManagementAdminPage";
-import HomePage from "../pages/Common/HomePage";
+import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
+import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
+import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
+import LandingPage from "../pages/Common/LandingPage/LandingPage";
 import NotFoundPage from "../pages/Common/NotFoundPage";
 import SignInPage from "../pages/Common/SignInPage";
+import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
+import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
 import DisableBranchChoosePage from "../pages/DisableBookingTime/DisableBranchChoosePage";
 import DisableCalendarPage from "../pages/DisableBookingTime/DisableCalendarPage";
 import FoodManagementPageAdmin from "../pages/Food/FoodManagementPageAdmin";
+import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
+import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
+import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
+import MyCartPage from "../pages/FoodMenu/MyCartPage";
+import OrderInformationPage from "../pages/FoodMenu/OrderInformationPage";
+import SearchResultPage from "../pages/FoodMenu/SearchResultPage";
 import FoodOptionPageAdmin from "../pages/FoodOption/FoodOptionPageAdmin";
 import HomePageAdmin from "../pages/Home/HomePageAdmin";
 import HomePageBranchManager from "../pages/Home/HomePageBranchManager";
 import HomePageGuest from "../pages/Home/HomePageGuest";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
-import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
-import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
-import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
-import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
-import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
-import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
-import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
-import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
-import MyCartPage from "../pages/FoodMenu/MyCartPage";
-import OrderInformationPage from "../pages/FoodMenu/OrderInformationPage";
-import SearchResultPage from "../pages/FoodMenu/SearchResultPage";
 
 
 
@@ -57,7 +57,7 @@ const AppRoutes = () => {
     return (
         <RoleLayout>
             <Routes>
-                <Route path={routeNames.index} element={<HomePage />} />
+                <Route path={routeNames.index} element={<LandingPage />} />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.homepage.admin}

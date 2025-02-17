@@ -1,0 +1,215 @@
+/* Landing Page Layout */
+.landing-page {
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Header */
+.header {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    transition: background 0.3s ease, background-color 0.3s ease;
+    padding: 5vh 2vw;
+}
+
+.header-open {
+    background-color: white;
+}
+
+/* Title */
+.header-title {
+    margin: 0;
+    cursor: pointer;
+    color: white !important;
+    font-size: 2vw;
+    transition: color 0.3s ease;
+}
+
+.header-title-open {
+    color: black !important;
+}
+
+/* Scrolled past video */
+.scrolled-background{
+    background-color: #ffffff;
+}
+
+.scrolled-text{
+    color: #000 !important;
+}
+
+/* Right Section (Links & Language) */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 3vw;
+}
+
+/* Nav Links */
+.nav-link {
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    font-size: 1.5vw;
+    transition: color 0.3s ease;
+}
+
+.nav-link-open {
+    color: black;
+}
+
+/* Language Button */
+.language-button {
+    color: white;
+    font-size: 1.5vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5vw;
+    height: auto;
+    transition: color 0.3s ease;
+}
+
+.language-button-open {
+    color: black;
+}
+
+/* Menu Button */
+.menu-button {
+    color: white;
+    font-size: 1.5vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5vw;
+    height: auto;
+    transition: color 0.3s ease;
+}
+
+.menu-button-open {
+    color: black;
+}
+
+/* Fullscreen Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-overlay-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Menu Title */
+.menu-title {
+    color: black;
+    font-size: 3vw;
+}
+
+/* Content */
+.content {
+    background: #ffffff;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.content-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    background-color: #ff0000;
+    color: #ffffff;
+    z-index: 0;
+}
+
+
+/* General layout */
+.menu-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 3vh;
+}
+
+.column-padding-left {
+    padding-left: 5vw;
+}
+
+.column-padding {
+    padding: 10vh 6vw;
+}
+
+/* Text Styles */
+.title-text {
+    font-size: 2vw;
+    text-align: left;
+    font-weight: 500;
+    margin: 0;
+}
+
+.text {
+    font-size: 1vw;
+    text-align: left;
+    margin: 0;
+}
+
+.follow-us-text {
+    font-size: 1.5vw;
+    text-align: left;
+}
+
+/* Icon Styles */
+.social-icon {
+    font-size: 1.75vw;
+    margin-right: 10px;
+}
+
+.social-icon.youtube {
+    color: red;
+}
+
+.social-icon.instagram {
+    color: brown;
+}
+
+.social-icon.facebook {
+    color: blue;
+}
+
+.social-icon.linkedin {
+    color: rgba(45, 8, 255, 0.8);
+}
+
+.social-icon.pinterest {
+    color: red;
+}
