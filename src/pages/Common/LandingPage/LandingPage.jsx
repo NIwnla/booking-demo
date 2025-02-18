@@ -3,12 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LandingPageLoading from "../../../components/loadings/LandingPageLoading";
 import { AuthContext } from "../../../context/AuthContext";
+import LandingPageEighthPart from "./LandingPageEighthPart";
+import LandingPageFifthPart from "./LandingPageFifthPart";
 import LandingPageFirstPart from "./LandingPageFirstPart";
-import LandingPageSecondPart from "./LandingPageSecondPart";
-import LandingPageThirdPart from "./LandingPageThirdPart";
 import LandingPageFourthPart from "./LandingPageFourthPart";
-
-const { Title, Text } = Typography;
+import LandingPageSecondPart from "./LandingPageSecondPart";
+import LandingPageSeventhPart from "./LandingPageSeventhPart";
+import LandingPageSixthPart from "./LandingPageSixthPart";
+import LandingPageThirdPart from "./LandingPageThirdPart";
 
 const LandingPage = () => {
     const location = useLocation();
@@ -37,7 +39,11 @@ const LandingPage = () => {
             <LandingPageFirstPart />
             <LandingPageSecondPart />
             <LandingPageThirdPart />
-            <LandingPageFourthPart/>
+            <LandingPageFourthPart />
+            <LandingPageFifthPart />
+            <LandingPageSixthPart />
+            <LandingPageSeventhPart />
+            <LandingPageEighthPart/>
         </div>
     );
 };

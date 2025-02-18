@@ -1,4 +1,6 @@
 import React from "react";
+// @ts-ignore
+import video from "../../../assets/LandingPageVideo.mp4";
 
 const LandingPageFirstPart = () => {
     return (
@@ -19,7 +21,7 @@ const LandingPageFirstPart = () => {
                     zIndex: 0
                 }}
             >
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                <source src={video} type="video/mp4" />
                 <img
                     src="https://via.placeholder.com/1920x1080"
                     alt="Fallback Background"

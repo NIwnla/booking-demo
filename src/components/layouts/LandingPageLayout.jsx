@@ -2,7 +2,7 @@ import { Button, Col, Layout, Row, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { BookOutlined, GlobalOutlined, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, CloseOutlined, FacebookOutlined, InstagramOutlined, LinkedinOutlined, PinterestOutlined, YoutubeOutlined, YoutubeFilled } from '@ant-design/icons';
+import { BookOutlined, GlobalOutlined, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, CloseOutlined, FacebookOutlined, InstagramOutlined, LinkedinOutlined, PinterestOutlined, YoutubeOutlined, YoutubeFilled, TwitterOutlined } from '@ant-design/icons';
 import { changeLanguage } from '../../helpers/changeLanguage';
 import { routeNames } from '../../constaints/routeName';
 import './LandingPageLayout.css';
@@ -41,28 +41,28 @@ const LandingPageLayout = ({ children }) => {
     return (
         <Layout className="landing-page">
             {/* Header */}
-            <Header className={`header ${menuOpen ? "header-open" : ""} ${isScrolled ? 'scrolled-background': '' }`} >
+            <Header className={`header ${menuOpen ? "header-open" : ""} ${isScrolled ? 'scrolled-background' : ''}`} >
                 {/* Left - Title */}
-                <Title className={`header-title ${menuOpen ? "header-title-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate("/")}>
+                <Title className={`header-title ${menuOpen ? "header-title-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate("/")}>
                     {t("header.title")}
                 </Title>
 
                 {/* Right - links & language toggle */}
                 <div className="header-right">
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate(routeNames.booking.branchChoose)}>
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.booking.branchChoose)}>
                         <BookOutlined /> {t("header.reservation")}
                     </Text>
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate(routeNames.foodMenu.main)}>
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.foodMenu.main)}>
                         <ShoppingCartOutlined /> {t("header.delivery")}
                     </Text>
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`} onClick={() => navigate(routeNames.recruitInformation.signUp)}>
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.recruitInformation.signUp)}>
                         <PhoneOutlined /> {t("header.career")}
                     </Text>
                     <Button
                         type="text"
                         icon={<GlobalOutlined />}
                         onClick={() => changeLanguage(i18n, i18n.language === "en" ? "vi" : "en")}
-                        className={`language-button ${menuOpen ? "language-button-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`}
+                        className={`language-button ${menuOpen ? "language-button-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`}
                     >
                         {i18n.language === "en" ? "VI" : "EN"}
                     </Button>
@@ -72,7 +72,7 @@ const LandingPageLayout = ({ children }) => {
                         type="text"
                         icon={menuOpen ? <CloseOutlined /> : <MenuOutlined />}
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className={`menu-button ${menuOpen ? "menu-button-open" : ""} ${isScrolled ? 'scrolled-text' : '' }`}
+                        className={`menu-button ${menuOpen ? "menu-button-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`}
                     />
                 </div>
             </Header>
@@ -141,8 +141,40 @@ const LandingPageLayout = ({ children }) => {
             </Content>
 
             {/* Footer */}
-            <Footer className="footer">
-                <Text>{t("footer.copyright")}</Text>
+            <Footer style={{ backgroundColor: 'red', color: "white", padding: "3vh 0", position: 'relative', zIndex: 1, }}>
+                <Row align="middle">
+
+                    <Col span={8}>
+                        {/* Add content later */}
+                    </Col>
+
+                    <Col span={8} style={{ display: "flex", flexDirection: "column", gap: "0.8vh", alignItems: 'flex-end' }}>
+                        <a href="/about" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>About Us</a>
+                        <a href="/careers" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>Careers</a>
+                        <a href="/contact" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>Contact</a>
+                        <a href="/privacy" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>Privacy Policy</a>
+                    </Col>
+
+                    <Col span={8} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingLeft: '4vw' }} >
+                        <Text style={{ color: 'white', fontSize: '1.5vw' }}>Follow Us!</Text>
+                        <div style={{ display: "flex", gap: "1vw" }}>
+                            <YoutubeOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
+                            <InstagramOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
+                            <FacebookOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
+                            <LinkedinOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
+                            <PinterestOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
+                        </div>
+                    </Col>
+                </Row>
+
+                {/* Copyright Text */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', textAlign: "center", marginTop: "2vh", padding: '0 2vw' }}>
+                    <div>
+                        <Text style={{ color: "white", fontSize: "0.9vw", paddingRight:'5vw' }}>For Inquiry</Text>
+                        <Text style={{ color: "white", fontSize: "0.9vw" }}>For FeedBack</Text>
+                    </div>
+                    <Text style={{ color: "white", fontSize: "0.9vw" }}>{t("footer.copyright")}</Text>
+                </div>
             </Footer>
         </Layout>
     );
