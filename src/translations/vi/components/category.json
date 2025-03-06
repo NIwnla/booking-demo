@@ -1,0 +1,93 @@
+{
+  "categoryManagement": {
+    "titles": {
+      "pageTitle": "Quản Lý Loại Món",
+      "createButton": "Tạo Loại Món Mới"
+    },
+    "columns": {
+      "name": "Tên",
+      "action": "Hành Động"
+    },
+    "buttons": {
+      "edit": "Chỉnh Sửa",
+      "delete": "Xóa"
+    },
+    "messages": {
+      "fetchError": "Không thể tải dữ liệu loại món.",
+      "deleteSuccess": "Xóa loại món thành công.",
+      "deleteError": "Xóa loại món thất bại.",
+      "loading": "Đang tải..."
+    },
+    "search": {
+      "placeholder": "Tìm kiếm loại món"
+    }
+  },
+  "categoryEditModal": {
+    "titles": {
+      "modalTitle": "Chỉnh Sửa Loại Món"
+    },
+    "labels": {
+      "nameVN": "Tên (VN)",
+      "nameEN": "Tên (EN)",
+      "image": "Hình Ảnh"
+    },
+    "placeholders": {
+      "nameVN": "Nhập tên loại món bằng tiếng Việt",
+      "nameEN": "Nhập tên loại món bằng tiếng Anh"
+    },
+    "buttons": {
+      "updateCategory": "Cập Nhật Loại Món"
+    },
+    "messages": {
+      "updateSuccess": "Cập nhật loại món thành công!",
+      "updateError": "Cập nhật loại món thất bại.",
+      "rules": {
+        "nameVNRequired": "Vui lòng nhập tên loại món bằng tiếng Việt",
+        "nameENRequired": "Vui lòng nhập tên loại món bằng tiếng Anh",
+        "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự"
+      }
+    }
+  },
+  "categoryCreationModal": {
+    "titles": {
+      "modalTitle": "Tạo Loại Món Mới"
+    },
+    "labels": {
+      "nameVN": "Tên (VN)",
+      "nameEN": "Tên (EN)",
+      "image": "Hình Ảnh"
+    },
+    "placeholders": {
+      "nameVN": "Nhập tên loại món bằng tiếng Việt",
+      "nameEN": "Nhập tên loại món bằng tiếng Anh"
+    },
+    "buttons": {
+      "create": "Tạo Loại Món"
+    },
+    "messages": {
+      "createSuccess": "Tạo loại món thành công!",
+      "createError": "Tạo loại món thất bại.",
+      "rules": {
+        "nameVNRequired": "Vui lòng nhập tên loại món bằng tiếng Việt",
+        "nameENRequired": "Vui lòng nhập tên loại món bằng tiếng Anh",
+        "nameMaxLength": "Tên loại món không được vượt quá 50 ký tự",
+        "imageRequired": "Vui lòng tải lên hình ảnh"
+      }
+    }
+  },
+  "categoryPickerModal": {
+    "titles": {
+      "modalTitle": "Chọn danh mục"
+    },
+    "placeholders": {
+      "search": "Tìm kiếm theo tên"
+    },
+    "buttons": {
+      "cancel": "Hủy",
+      "confirm": "Xác nhận"
+    },
+    "messages": {
+      "fetchError": "Lỗi khi tải danh mục."
+    }
+  }
+}

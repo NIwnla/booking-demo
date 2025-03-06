@@ -1,0 +1,171 @@
+{
+    "calendar": {
+        "header": {
+            "branchTitle": "Branch"
+        },
+        "modal": {
+            "title": "Selected Date",
+            "switch": {
+                "day": "Day",
+                "night": "Night"
+            }
+        },
+        "tooltip": {
+            "booked": "booked",
+            "noBookings": "0 slot booked"
+        },
+        "buttons": {
+            "available": "Available",
+            "notAvailable": "Not Available"
+        },
+        "messages": {
+            "fetchError": "Failed to fetch data.",
+            "loading": "Loading..."
+        }
+    },
+    "bookingPage": {
+        "title": "Booking Information for",
+        "form": {
+            "fullname": {
+                "label": "Full Name",
+                "placeholder": "Enter your full name",
+                "required": "Please enter your full name"
+            },
+            "numberOfPeople": {
+                "label": "Number of People",
+                "placeholder": "Enter the number of people",
+                "required": "Please select the number of people"
+            },
+            "numberOfChildren": {
+                "label": "Number of Children",
+                "placeholder": "Enter the number of children"
+            },
+            "phoneNumber": {
+                "label": "Phone Number",
+                "placeholder": "Enter your phone number",
+                "required": "Please enter your phone number",
+                "pattern": "Phone number must be 9 to 10 digits"
+            },
+            "message": {
+                "label": "Message",
+                "placeholder": "Message (Optional)"
+            }
+        },
+        "warnings": {
+            "largeGroup": "For groups of 6 or more, please message us via Fanpage for assistance: ",
+            "fanpageLink": "Fanpage"
+        },
+        "messages": {
+            "success": "Booked successfully",
+            "error": "An error occurred while booking"
+        }
+    },
+    "foodChoice": {
+        "titles": {
+            "availableFoods": "Choose foods to preorder"
+        },
+        "placeholders": {
+            "searchFood": "Search for foods"
+        },
+        "buttons": {
+            "addToCart": "Add to cart",
+            "clearCart": "Clear All",
+            "completeBooking": "Complete Booking",
+            "havePendingBooking": "Last order is still pending"
+        },
+        "messages": {
+            "noDescription": "No description available",
+            "fetchFoodsError": "Failed to fetch food data.",
+            "emptyCart": "Your cart is empty, please add foods to preorder!",
+            "pendingBooking": "You currently have a pending booking request. Please confirm it before making another booking.",
+            "confirmInfo": "Please double-check the information before booking.",
+            "arriveOnTime": "Please arrive on time. We will only hold the table for 10 minutes past the booking time!"
+        },
+        "labels": {
+            "confirmArrival": "I confirm that I will arrive on time."
+        },
+        "cart": {
+            "title": "Cart",
+            "price": "Price",
+            "totalPrice": "Total Price",
+            "emptyText": "Your cart is empty, please add foods to preorder!",
+            "quantity": "Quantity",
+            "hide": "Hide Cart"
+        }
+    },
+    "bookingManagement": {
+        "titles": {
+            "pageTitle": "Booking Information",
+            "modalTitle": "Booking Details",
+            "preOrderItems": "Pre-ordered Items",
+            "total": "Total"
+        },
+        "placeholders": {
+            "search": "Search by name, phone number, email",
+            "statusFilter": "Filter by status"
+        },
+        "buttons": {
+            "detail": "Detail",
+            "accept": "Accept",
+            "cancel": "Cancel",
+            "close": "Close"
+        },
+        "messages": {
+            "fetchError": "Failed to fetch data.",
+            "acceptError": "Failed to accept the booking.",
+            "cancelError": "Failed to cancel the booking.",
+            "loading": "Loading..."
+        },
+        "statuses": {
+            "all": "All",
+            "cancelled": "Cancelled",
+            "pending": "Pending",
+            "confirmed": "Confirmed"
+        },
+        "columns": {
+            "userFullName": "User Full Name",
+            "email": "Email",
+            "branchName": "Branch",
+            "time": "Time",
+            "numberOfPeople": "Number of Adults",
+            "numberOfChildren": "Number of Children",
+            "phoneNumber": "Phone Number",
+            "status": "Status",
+            "action": "Action"
+        },
+        "modal": {
+            "fields": {
+                "userFullName": "User Full Name",
+                "email": "Email",
+                "branchName": "Branch",
+                "time": "Time",
+                "numberOfPeople": "Number of Adults",
+                "numberOfChildren": "Number of Children",
+                "phoneNumber": "Phone Number",
+                "status": "Status",
+                "message": "Message"
+            },
+            "preOrderItems": {
+                "name": "Item Name",
+                "price": "Price",
+                "quantity": "Quantity"
+            }
+        }
+    },
+    "disableCalendarPage": {
+        "branchSelected": "Branch selected:",
+        "modalTitle": "Selected Date:",
+        "timeMode": {
+            "day": "Day",
+            "night": "Night"
+        },
+        "tags": {
+            "inactive": "Inactive",
+            "available": "Available:"
+        },
+        "buttons": {
+            "disable": "Disable",
+            "enable": "Enable"
+        }
+    }
+}

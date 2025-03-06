@@ -1,16 +1,15 @@
-import { Carousel, Col, Row, Typography, Spin, Card, Image, Breadcrumb } from 'antd';
+import { Card, Carousel, Col, Image, Row, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../service/axios';
-import { apiEndPoints } from '../../constaints/apiEndPoint';
-import { AxiosConstants } from '../../constaints/axiosContaint';
-import { getLocalizedText } from '../../helpers/getLocalizedText';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { routeNames } from '../../constaints/routeName';
-import './ScrollableCategories.css';
-import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';
-import LandingPageThirdPart from '../Common/LandingPage/LandingPageThirdPart';
+import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
+import { apiEndPoints } from '../../constaints/apiEndPoint';
+import { AxiosConstants } from '../../constaints/axiosContaint';
+import { routeNames } from '../../constaints/routeName';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
+import axiosInstance from '../../service/axios';
+import './ScrollableCategories.css';
 
 const { Title, Paragraph } = Typography;
 

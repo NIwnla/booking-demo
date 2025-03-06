@@ -1,0 +1,123 @@
+{
+  "breadcrumbs": {
+    "home": "Trang Chủ",
+    "myCart": "Giỏ Hàng Của Tôi"
+  },
+  "navbar": {
+    "searchPlaceholder": "Tìm kiếm...",
+    "noResults": "Không tìm thấy kết quả",
+    "newItemAdded": "Một món mới đã được thêm vào giỏ hàng của bạn.",
+    "menu": {
+      "sample1": "Mẫu 1",
+      "sample2": "Mẫu 2",
+      "sample3": "Mẫu 3"
+    }
+  },
+  "mainPage": {
+    "deliveryInformationTitle": "Thông Tin Giao Hàng",
+    "deliveryDescription": "Chào mừng đến với dịch vụ giao hàng của chúng tôi. Thưởng thức các món ăn tươi ngon được giao tận nơi.",
+    "deliveryBenefits": "Nhanh chóng, đáng tin cậy và tiện lợi.",
+    "categories": "Danh Mục",
+    "popularFoods": "Phổ Biến"
+  },
+  "detailedFoodPage": {
+    "home": "Trang Chủ",
+    "description": "Mô Tả",
+    "price": "Giá",
+    "options": "Tùy Chọn",
+    "addToCart": "Thêm Vào Giỏ Hàng"
+  },
+  "detailedMenuPage": {
+    "home": "Trang Chủ",
+    "menu": "Thực Đơn",
+    "foods": "Món Ăn"
+  },
+  "cart": {
+    "title": "Giỏ Hàng Của Tôi",
+    "productDetails": "Chi Tiết Sản Phẩm",
+    "condimentSectionTitle": "Gia Vị & Đồ Dùng",
+    "condimentOptions": "Tùy Chọn Gia Vị",
+    "condimentDescription": "Gia vị được cung cấp theo tiêu chuẩn. Vui lòng điều chỉnh số lượng theo nhu cầu của bạn.",
+    "condiments": {
+      "ketchup": "Tương Cà",
+      "chilli_sauce": "Tương Ớt",
+      "chilli_oil": "Dầu Ớt",
+      "honey": "Mật Ong",
+      "cutlery": "Đồ Dùng Ăn Uống",
+      "pizza_reheating_foil": "Giấy Bạc Hâm Nóng Pizza",
+      "heating_instructions": "Hướng Dẫn Hâm Nóng"
+    },
+    "sustainableOptions": "Tùy Chọn Bền Vững",
+    "sustainableDescription": "Vui lòng chỉ đánh dấu nếu bạn cần.",
+    "sustainableItems": {
+      "cutlery": "Đồ Dùng Ăn Uống",
+      "pizza_reheating_foil": "Giấy Bạc Hâm Nóng Pizza",
+      "heating_instructions": "Hướng Dẫn Hâm Nóng"
+    },
+    "allergenNotice": "Nếu bạn cần loại bỏ bất kỳ thành phần nào do dị ứng, vui lòng cho chúng tôi biết.",
+    "allergenPlaceholder": "Nhập ghi chú tại đây...",
+    "eVoucher": "E-Voucher",
+    "eVoucherDescription": "Nhập E-Voucher của bạn (nếu có).",
+    "eVoucherPlaceholder": "Nhập E-Voucher của bạn tại đây..."
+  },
+  "orderInformation": {
+    "title": "Thông Tin Đơn Hàng",
+    "checkout": "Thanh Toán",
+    "provideDetails": "Vui lòng cung cấp thông tin giao hàng của bạn",
+    "yourName": "Tên Của Bạn",
+    "phoneNumber": "Số Điện Thoại",
+    "recipientInfo": "Thông tin người nhận (Nếu có)",
+    "recipientName": "Tên Người Nhận",
+    "recipientPhoneNumber": "Số Điện Thoại Người Nhận",
+    "note": "Ghi Chú",
+    "rules": {
+      "nameRequired": "Vui lòng nhập tên của bạn",
+      "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
+      "phonePattern": "Số điện thoại phải có 9 hoặc 10 chữ số",
+      "recipientNameRequired": "Vui lòng nhập tên người nhận",
+      "recipientPhoneRequired": "Vui lòng nhập số điện thoại người nhận",
+      "recipientPhonePattern": "Số điện thoại phải có 9 hoặc 10 chữ số"
+    },
+    "placeholders": {
+      "yourName": "Nhập tên của bạn",
+      "phoneNumber": "Nhập số điện thoại của bạn",
+      "recipientName": "Nhập tên người nhận",
+      "recipientPhoneNumber": "Nhập số điện thoại người nhận",
+      "note": "Nhập ghi chú bổ sung (không bắt buộc)"
+    }
+  },
+  "rightInformation": {
+    "location": "Địa Điểm",
+    "locationDetails": "Chi tiết địa điểm của bạn ở đây",
+    "shoppingCart": "Giỏ Hàng",
+    "clearAll": "Xóa Tất Cả",
+    "emptyCart": "Giỏ hàng của bạn đang trống",
+    "viewCart": "Xem Giỏ Hàng"
+  },
+  "search": {
+    "breadcrumbs": {
+      "home": "Trang Chủ",
+      "search": "Tìm Kiếm"
+    },
+    "title": "Kết Quả Tìm Kiếm",
+    "noResults": "Không tìm thấy kết quả"
+  },
+  "orderSummary": {
+    "title": "Tóm Tắt Đơn Hàng",
+    "location": "Địa Điểm",
+    "locationPlaceholder": "Chi tiết địa điểm của bạn ở đây",
+    "instantDelivery": "Các món giao ngay",
+    "subTotal": "Tổng phụ",
+    "shipping": "Phí giao hàng",
+    "freeShipping": "Miễn phí",
+    "tax": "Thuế (10%)",
+    "total": "Tổng cộng",
+    "deliveringTo": "Giao đến",
+    "noLocation": "Chưa đặt địa điểm",
+    "estimatedDelivery": "Thời Gian Giao Hàng Dự Kiến",
+    "terms": "Bằng cách nhấp vào nút này, tôi đồng ý với",
+    "termsLink": "Điều Khoản & Điều Kiện Chung",
+    "process": "Xử Lý",
+    "cancel": "Hủy"
+  }
+}

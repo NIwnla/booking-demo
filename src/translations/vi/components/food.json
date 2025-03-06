@@ -1,0 +1,105 @@
+{
+  "management": {
+    "placeholders": {
+      "search": "Tìm kiếm món ăn"
+    },
+    "buttons": {
+      "createFood": "Tạo món ăn",
+      "options": "Tùy chọn",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa"
+    },
+    "messages": {
+      "fetchError": "Không thể tải dữ liệu món ăn.",
+      "deleteSuccess": "Xóa món ăn thành công.",
+      "deleteError": "Xóa món ăn thất bại."
+    },
+    "popconfirm": {
+      "deleteTitle": "Bạn có chắc chắn muốn xóa món ăn này không?",
+      "okText": "Có",
+      "cancelText": "Không"
+    },
+    "card": {
+      "noDescription": "Không có mô tả",
+      "price": "Giá",
+      "noCategories": "Không có loại"
+    }
+  },
+  "createFoodModal": {
+    "titles": {
+      "modalTitle": "Tạo Món Ăn Mới"
+    },
+    "labels": {
+      "nameVN": "Tên Món Ăn (VN)",
+      "nameEN": "Tên Món Ăn (EN)",
+      "basePrice": "Giá Cơ Bản",
+      "descriptionVN": "Mô Tả (VN)",
+      "descriptionEN": "Mô Tả (EN)",
+      "image": "Hình Ảnh"
+    },
+    "placeholders": {
+      "nameVN": "Nhập tên món ăn bằng tiếng Việt",
+      "nameEN": "Nhập tên món ăn bằng tiếng Anh",
+      "basePrice": "Nhập giá cơ bản",
+      "descriptionVN": "Nhập mô tả bằng tiếng Việt",
+      "descriptionEN": "Nhập mô tả bằng tiếng Anh"
+    },
+    "buttons": {
+      "selectImage": "Chọn Hình Ảnh",
+      "create": "Tạo Món Ăn",
+      "selectCategories": "Chọn Loại"
+    },
+    "messages": {
+      "uploadError": "Tải tệp lên thất bại. Vui lòng thử lại.",
+      "imageRemoved": "Hình ảnh đã được xóa.",
+      "noImage": "Vui lòng tải lên và cắt hình ảnh trước khi gửi.",
+      "createSuccess": "Tạo món ăn thành công!",
+      "createError": "Tạo món ăn thất bại.",
+      "rules": {
+        "nameRequired": "Vui lòng nhập tên món ăn",
+        "nameMaxLength": "Tên món ăn không được vượt quá 50 ký tự",
+        "priceRequired": "Vui lòng nhập giá cơ bản",
+        "descriptionRequired": "Vui lòng nhập mô tả",
+        "descriptionMaxLength": "Mô tả không được vượt quá 500 ký tự",
+        "imageRequired": "Vui lòng tải lên hình ảnh"
+      }
+    }
+  },
+  "editFoodModal": {
+    "titles": {
+      "modalTitle": "Chỉnh Sửa Món Ăn"
+    },
+    "labels": {
+      "nameVN": "Tên Món Ăn (VN)",
+      "nameEN": "Tên Món Ăn (EN)",
+      "descriptionVN": "Mô Tả (VN)",
+      "descriptionEN": "Mô Tả (EN)",
+      "basePrice": "Giá Cơ Bản",
+      "image": "Hình Ảnh Món Ăn"
+    },
+    "placeholders": {
+      "nameVN": "Nhập tên món ăn bằng tiếng Việt",
+      "nameEN": "Nhập tên món ăn bằng tiếng Anh",
+      "descriptionVN": "Nhập mô tả bằng tiếng Việt",
+      "descriptionEN": "Nhập mô tả bằng tiếng Anh",
+      "basePrice": "Nhập giá cơ bản"
+    },
+    "buttons": {
+      "uploadImage": "Tải Hình Ảnh Mới (Không Bắt Buộc)",
+      "updateFood": "Cập Nhật Món Ăn",
+      "selectCategories": "Chọn Loại"
+    },
+    "messages": {
+      "uploadError": "Tải tệp lên thất bại. Vui lòng thử lại.",
+      "imageRemoved": "Hình ảnh đã được xóa.",
+      "updateSuccess": "Cập nhật món ăn thành công!",
+      "updateError": "Cập nhật món ăn thất bại.",
+      "rules": {
+        "nameRequired": "Vui lòng nhập tên món ăn",
+        "nameMaxLength": "Tên món ăn không được vượt quá 50 ký tự",
+        "descriptionMaxLength": "Mô tả không được vượt quá 200 ký tự",
+        "priceRequired": "Vui lòng nhập giá cơ bản"
+      }
+    }
+  }
+}

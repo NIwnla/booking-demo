@@ -1,0 +1,110 @@
+{
+  "form": {
+    "title": "Thông Tin Giao Hàng",
+    "fullname": {
+      "label": "Họ và Tên",
+      "placeholder": "Họ và tên",
+      "required": "Vui lòng nhập họ và tên"
+    },
+    "time": {
+      "label": "Thời Gian",
+      "placeholder": "ASAP",
+      "required": "Vui lòng chọn thời gian giao hàng",
+      "extra": "Nếu không chọn, chúng tôi sẽ giao hàng ngay khi có thể."
+    },
+    "location": {
+      "label": "Địa Chỉ",
+      "placeholder": "Địa chỉ giao hàng",
+      "required": "Vui lòng nhập địa chỉ giao hàng"
+    },
+    "phoneNumber": {
+      "label": "Số Điện Thoại",
+      "placeholder": "Số điện thoại",
+      "required": "Vui lòng nhập số điện thoại",
+      "pattern": "Số điện thoại phải có từ 9 đến 10 chữ số"
+    },
+    "message": {
+      "label": "Lời Nhắn",
+      "placeholder": "Thông tin cần lưu ý"
+    },
+    "messages": {
+      "success": "Tạo đơn giao hàng thành công",
+      "error": "Có lỗi xảy ra khi tạo đơn giao hàng"
+    }
+  },
+  "foodChoice": {
+    "title": "Chọn Món Ăn",
+    "searchFood": "Tìm kiếm món ăn",
+    "noDescription": "Không có mô tả",
+    "fetchError": "Lỗi khi lấy dữ liệu",
+    "fetchFoodDetailsError": "Lỗi khi lấy thông tin món ăn",
+    "shoppingCart": "Giỏ Hàng",
+    "emptyCart": " Giỏ hàng trống, hãy thêm món ăn để đặt trước!",
+    "hideCart": "Ẩn Giỏ Hàng",
+    "clearAll": "Xóa Tất Cả",
+    "price": "Giá",
+    "quantity": "Số Lượng",
+    "total": "Tổng Cộng",
+    "proceedToCheckout": "Tiến Hành Thanh Toán",
+    "pendingDelivery": "Đơn hàng trước chưa được xử lý"
+  },
+  "management": {
+    "title": "Quản Lý Giao Hàng",
+    "filterPlaceholder": "Lọc theo Trạng Thái",
+    "statuses": {
+      "all": "Tất Cả",
+      "cancelled": "Hủy",
+      "waiting": "Đang Đợi",
+      "inProgress": "Đang giao",
+      "completed": "Đã giao",
+      "unknown": "Không xác định"
+    },
+    "actions": {
+      "details": "Chi Tiết",
+      "assign": "Phân Công",
+      "cancel": "Hủy",
+      "close": "Đóng"
+    },
+    "columns": {
+      "userFullName": "Tên Người Dùng",
+      "email": "Email",
+      "time": "Thời Gian",
+      "location": "Địa Chỉ",
+      "phoneNumber": "Số Điện Thoại",
+      "status": "Trạng Thái",
+      "action": "Hành Động"
+    },
+    "modal": {
+      "title": "Chi Tiết Giao Hàng",
+      "userFullName": "Tên Người Dùng",
+      "email": "Email",
+      "time": "Thời Gian",
+      "location": "Địa Chỉ",
+      "phoneNumber": "Số Điện Thoại",
+      "status": "Trạng Thái",
+      "message": "Lời Nhắn",
+      "preOrderItems": "Danh Sách Món",
+      "total": "Tổng",
+      "quantity": "Số Lượng"
+    },
+    "messages": {
+      "fetchError": "Không thể tải dữ liệu.",
+      "deleteSuccess": "Xóa thông tin giao hàng thành công!",
+      "deleteError": "Có lỗi xảy ra khi xóa thông tin giao hàng.",
+      "updateSuccess": "Cập nhật thông tin giao hàng thành công!",
+      "updateError": "Có lỗi xảy ra khi cập nhật thông tin giao hàng."
+    }
+  },
+  "detailModal": {
+    "titles": {
+      "modalTitle": "{foodName}"
+    },
+    "labels": {
+      "description": "Mô tả",
+      "price": "Giá"
+    },
+    "buttons": {
+      "orderFood": "Đặt món"
+    }
+  }
+}

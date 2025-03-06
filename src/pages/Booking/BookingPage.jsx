@@ -1,14 +1,14 @@
-import { App, Button, Card, Checkbox, Col, Collapse, Form, Image, Input, Modal, Row, Space, Typography } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { App, Col, Form, Input, Row, Space, Typography } from 'antd';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
+import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
 import './BookingPage.css';
 import FoodPreorderSection from './FoodPreOrderSection';
-import { useWindowSize } from '../../helpers/useWindowSize';
 import FoodPreOrderSectionMobile from './FoodPreOrderSectionMobile';
 
 const { Title, Text } = Typography;

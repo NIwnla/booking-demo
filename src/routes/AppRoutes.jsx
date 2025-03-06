@@ -34,6 +34,8 @@ import HomePageAdmin from "../pages/Home/HomePageAdmin";
 import HomePageBranchManager from "../pages/Home/HomePageBranchManager";
 import HomePageGuest from "../pages/Home/HomePageGuest";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
+import ReservationPage from "../pages/Reservation/ReservationPage";
+import ReservationForm from "../pages/Reservation/ReservationForm";
 
 
 
@@ -135,6 +137,11 @@ const AppRoutes = () => {
                 <Route path={routeNames.foodMenu.myCart} element={<MyCartPage />} />
                 <Route path={routeNames.foodMenu.orderInfo} element={<OrderInformationPage />} />
                 <Route path={routeNames.foodMenu.searchResult} element={<SearchResultPage />} />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route path={routeNames.reservation.main} element={<ReservationPage />} />
+                <Route path={routeNames.reservation.form} element={<ReservationForm />} />
+
+
 
 
                 <Route path={routeNames.login} element={<SignInPage />} />

@@ -1,0 +1,94 @@
+{
+    "management": {
+        "titles": {
+            "pageTitle": "Food Option Management"
+        },
+        "placeholders": {
+            "search": "Search food options"
+        },
+        "columns": {
+            "name": "Option Name",
+            "price": "Price",
+            "action": "Action"
+        },
+        "buttons": {
+            "createOption": "Create Option",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "messages": {
+            "fetchError": "Failed to fetch food options.",
+            "deleteSuccess": "Food option deleted successfully.",
+            "deleteError": "Failed to delete food option.",
+            "loading": "Loading..."
+        },
+        "popconfirm": {
+            "deleteTitle": "Are you sure you want to delete this food option?",
+            "okText": "Yes",
+            "cancelText": "No"
+        }
+    },
+    "createModal": {
+        "titles": {
+            "modalTitle": "Create Food Option"
+        },
+        "labels": {
+            "nameVN": "Option Name (VN)",
+            "nameEN": "Option Name (EN)",
+            "price": "Additional Price",
+            "imageFile": "Image"
+        },
+        "placeholders": {
+            "nameVN": "Enter option name in Vietnamese",
+            "nameEN": "Enter option name in English",
+            "price": "Enter additional price"
+        },
+        "buttons": {
+            "uploadImage": "Upload Image",
+            "createOption": "Create Option"
+        },
+        "messages": {
+            "createSuccess": "Option created successfully!",
+            "createError": "Failed to create option.",
+            "rules": {
+                "nameVNRequired": "Please enter the option name in Vietnamese",
+                "nameVNMaxLength": "Option name cannot exceed 50 characters",
+                "nameENRequired": "Please enter the option name in English",
+                "nameENMaxLength": "Option name cannot exceed 50 characters",
+                "priceRequired": "Please enter the additional price",
+                "imageFileRequired": "Please upload an image for the option"
+            }
+        }
+    },
+    "editModal": {
+        "titles": {
+            "modalTitle": "Edit Food Option"
+        },
+        "labels": {
+            "nameVN": "Option Name (VN)",
+            "nameEN": "Option Name (EN)",
+            "price": "Additional Price",
+            "imageFile": "Option Image"
+        },
+        "placeholders": {
+            "nameVN": "Enter option name in Vietnamese",
+            "nameEN": "Enter option name in English",
+            "price": "Enter additional price"
+        },
+        "buttons": {
+            "uploadImage": "Upload New Image (optional)",
+            "updateOption": "Update Option"
+        },
+        "messages": {
+            "updateSuccess": "Option updated successfully!",
+            "updateError": "Failed to update option.",
+            "rules": {
+                "nameVNRequired": "Please enter the option name in Vietnamese",
+                "nameVNMaxLength": "Option name cannot exceed 50 characters",
+                "nameENRequired": "Please enter the option name in English",
+                "nameENMaxLength": "Option name cannot exceed 50 characters",
+                "priceRequired": "Please enter the additional price"
+            }
+        }
+    }
+}

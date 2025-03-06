@@ -46,8 +46,7 @@ export const routeNames = {
     },
     category: {
         management: '/categories/management',
-    }
-    ,
+    },
     foodMenu: {
         main: '/food-menu',
         menu: '/food-menu/categories',
@@ -58,5 +57,9 @@ export const routeNames = {
         myCart: '/food-menu/my-cart',
         orderInfo: '/food-menu/order-info',
         searchResult: '/food-menu/search',
-    }
+    },
+    reservation: {
+        main: '/reservation',
+        form: '/reservation/form',
+    },
 }

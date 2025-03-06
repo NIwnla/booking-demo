@@ -1,0 +1,37 @@
+{
+  "titles": {
+    "bookingCollapse": "Toggle Booking Information",
+    "deliveryCollapse": "Toggle Delivery Information",
+    "currentBooking": "Current Booking Information",
+    "currentDelivery": "Current Delivery Information",
+    "noBooking": "No current booking information available",
+    "noDelivery": "No current delivery information available"
+  },
+  "labels": {
+    "date": "Date",
+    "time": "Time",
+    "branch": "Branch",
+    "people": "People",
+    "children": "Children",
+    "status": "Status",
+    "message": "Message",
+    "preOrderedItems": "Preordered Items",
+    "location": "Location",
+    "phoneNumber": "Phone Number"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "edit": "Edit"
+  },
+  "card": {
+    "name": "Name",
+    "price": "Price",
+    "quantity": "Quantity"
+  },
+  "messages": {
+    "fetchDeliveryError": "Failed to fetch delivery information.",
+    "fetchBookingError": "Failed to fetch booking information.",
+    "cancelBookingSuccess": "Booking canceled successfully.",
+    "cancelBookingError": "Failed to cancel booking."
+  }
+}

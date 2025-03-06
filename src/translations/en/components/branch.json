@@ -1,0 +1,106 @@
+{
+    "branchManagement": {
+        "titles": {
+            "pageTitle": "Branch Management",
+            "detailModalTitle": "Branch Details",
+            "createButton": "Create New Branch"
+        },
+        "columns": {
+            "name": "Name",
+            "description": "Description",
+            "status": "Status",
+            "action": "Action"
+        },
+        "buttons": {
+            "detail": "Detail",
+            "edit": "Edit",
+            "disable": "Disable",
+            "reenable": "Renable"
+        },
+        "tags": {
+            "active": "Active",
+            "disabled": "Disabled"
+        },
+        "messages": {
+            "fetchError": "Error fetching branches.",
+            "deleteSuccess": "Branch disabled/enabled successfully!",
+            "loading": "Loading..."
+        },
+        "modals": {
+            "detail": {
+                "fields": {
+                    "name": "Name",
+                    "description": "Description",
+                    "status": "Status"
+                }
+            }
+        }
+    },
+    "creationModal": {
+        "titles": {
+            "modalTitle": "Create New Branch"
+        },
+        "form": {
+            "nameVN": {
+                "label": "Name (VN)",
+                "placeholder": "Enter branch name in Vietnamese",
+                "required": "Please enter the branch name in Vietnamese"
+            },
+            "nameEN": {
+                "label": "Name (EN)",
+                "placeholder": "Enter branch name in English",
+                "required": "Please enter the branch name in English"
+            },
+            "descriptionVN": {
+                "label": "Description (VN)",
+                "placeholder": "Enter branch description in Vietnamese",
+                "required": "Please enter the branch description in Vietnamese"
+            },
+            "descriptionEN": {
+                "label": "Description (EN)",
+                "placeholder": "Enter branch description in English",
+                "required": "Please enter the branch description in English"
+            },
+            "image": {
+                "label": "Image",
+                "placeholder": "Select Image",
+                "required": "Please upload an image"
+            }
+        },
+        "buttons": {
+            "submit": "Create Branch"
+        },
+        "messages": {
+            "success": "Branch created successfully!",
+            "error": "Failed to create branch. Please try again."
+        }
+    },
+    "editModal": {
+        "titles": {
+            "modalTitle": "Edit Branch"
+        },
+        "form": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Enter branch name",
+                "required": "Please enter the branch name"
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Enter branch description",
+                "required": "Please enter the branch description"
+            },
+            "image": {
+                "label": "Image",
+                "placeholder": "Select Image"
+            }
+        },
+        "buttons": {
+            "submit": "Update Branch"
+        },
+        "messages": {
+            "success": "Branch updated successfully!",
+            "error": "Failed to update branch. Please try again."
+        }
+    }
+}

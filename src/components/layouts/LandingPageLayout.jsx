@@ -49,7 +49,7 @@ const LandingPageLayout = ({ children }) => {
 
                 {/* Right - links & language toggle */}
                 <div className="header-right">
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.booking.branchChoose)}>
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.reservation.main)}>
                         <BookOutlined /> {t("header.reservation")}
                     </Text>
                     <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.foodMenu.main)}>

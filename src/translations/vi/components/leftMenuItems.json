@@ -1,0 +1,26 @@
+{
+  "general": {
+    "label": "Chung",
+    "home": "Trang Chủ"
+  },
+  "management": {
+    "label": "Quản Lý",
+    "branches": "Chi Nhánh",
+    "booking": "Đặt Chỗ",
+    "users": "Người Dùng",
+    "foods": "Món Ăn",
+    "categories": "Loại Món",
+    "delivery": "Giao Hàng",
+    "application": "Xin Việc"
+  },
+  "configuration": {
+    "label": "Cấu Hình",
+    "disableTime": "Tắt thời gian đặt chỗ"
+  },
+  "applications": {
+    "label": "Ứng Dụng",
+    "booking": "Đặt Chỗ",
+    "delivery": "Giao Hàng",
+    "foodMenu": "Thực Đơn"
+  }
+}

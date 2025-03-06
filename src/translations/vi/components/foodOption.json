@@ -1,0 +1,94 @@
+{
+  "management": {
+    "titles": {
+      "pageTitle": "Quản Lý Tùy Chọn Món Ăn"
+    },
+    "placeholders": {
+      "search": "Tìm kiếm tùy chọn món ăn"
+    },
+    "columns": {
+      "name": "Tên Tùy Chọn",
+      "price": "Giá",
+      "action": "Hành Động"
+    },
+    "buttons": {
+      "createOption": "Tạo Tùy Chọn",
+      "edit": "Chỉnh Sửa",
+      "delete": "Xóa"
+    },
+    "messages": {
+      "fetchError": "Không thể tải dữ liệu tùy chọn món ăn.",
+      "deleteSuccess": "Xóa tùy chọn món ăn thành công.",
+      "deleteError": "Xóa tùy chọn món ăn thất bại.",
+      "loading": "Đang tải..."
+    },
+    "popconfirm": {
+      "deleteTitle": "Bạn có chắc chắn muốn xóa tùy chọn món ăn này không?",
+      "okText": "Có",
+      "cancelText": "Không"
+    }
+  },
+  "createModal": {
+    "titles": {
+      "modalTitle": "Tạo Tùy Chọn Món Ăn"
+    },
+    "labels": {
+      "nameVN": "Tên Tùy Chọn (VN)",
+      "nameEN": "Tên Tùy Chọn (EN)",
+      "price": "Giá Thêm",
+      "imageFile": "Hình Ảnh"
+    },
+    "placeholders": {
+      "nameVN": "Nhập tên tùy chọn bằng tiếng Việt",
+      "nameEN": "Nhập tên tùy chọn bằng tiếng Anh",
+      "price": "Nhập giá thêm"
+    },
+    "buttons": {
+      "uploadImage": "Tải Lên Hình Ảnh",
+      "createOption": "Tạo Tùy Chọn"
+    },
+    "messages": {
+      "createSuccess": "Tạo tùy chọn thành công!",
+      "createError": "Tạo tùy chọn thất bại.",
+      "rules": {
+        "nameVNRequired": "Vui lòng nhập tên tùy chọn bằng tiếng Việt",
+        "nameVNMaxLength": "Tên tùy chọn không được vượt quá 50 ký tự",
+        "nameENRequired": "Vui lòng nhập tên tùy chọn bằng tiếng Anh",
+        "nameENMaxLength": "Tên tùy chọn không được vượt quá 50 ký tự",
+        "priceRequired": "Vui lòng nhập giá thêm",
+        "imageFileRequired": "Vui lòng tải lên hình ảnh cho tùy chọn"
+      }
+    }
+  },
+  "editModal": {
+    "titles": {
+      "modalTitle": "Chỉnh Sửa Tùy Chọn Món Ăn"
+    },
+    "labels": {
+      "nameVN": "Tên Tùy Chọn (VN)",
+      "nameEN": "Tên Tùy Chọn (EN)",
+      "price": "Giá Thêm",
+      "imageFile": "Hình Ảnh Tùy Chọn"
+    },
+    "placeholders": {
+      "nameVN": "Nhập tên tùy chọn bằng tiếng Việt",
+      "nameEN": "Nhập tên tùy chọn bằng tiếng Anh",
+      "price": "Nhập giá thêm"
+    },
+    "buttons": {
+      "uploadImage": "Tải Lên Hình Ảnh Mới (Không Bắt Buộc)",
+      "updateOption": "Cập Nhật Tùy Chọn"
+    },
+    "messages": {
+      "updateSuccess": "Cập nhật tùy chọn thành công!",
+      "updateError": "Cập nhật tùy chọn thất bại.",
+      "rules": {
+        "nameVNRequired": "Vui lòng nhập tên tùy chọn bằng tiếng Việt",
+        "nameVNMaxLength": "Tên tùy chọn không được vượt quá 50 ký tự",
+        "nameENRequired": "Vui lòng nhập tên tùy chọn bằng tiếng Anh",
+        "nameENMaxLength": "Tên tùy chọn không được vượt quá 50 ký tự",
+        "priceRequired": "Vui lòng nhập giá thêm"
+      }
+    }
+  }
+}

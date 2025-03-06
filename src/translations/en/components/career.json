@@ -1,0 +1,73 @@
+{
+  "form": {
+    "title": "Application Form",
+    "firstName": {
+      "label": "First Name",
+      "placeholder": "Enter your first name",
+      "required": "Please enter your first name",
+      "maxLength": "First name cannot exceed 50 characters"
+    },
+    "lastName": {
+      "label": "Last Name",
+      "placeholder": "Enter your last name",
+      "required": "Please enter your last name",
+      "maxLength": "Last name cannot exceed 50 characters"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": "Please enter your email",
+      "invalid": "Please enter a valid email address"
+    },
+    "phoneNumber": {
+      "label": "Phone Number",
+      "placeholder": "Enter your phone number",
+      "required": "Please enter your phone number",
+      "pattern": "Phone number must have 9 to 10 digits"
+    },
+    "socialNumber": {
+      "label": "ID Card Number",
+      "placeholder": "Enter your ID card number",
+      "required": "Please enter your ID card number",
+      "pattern": "ID card number must have exactly 12 digits"
+    },
+    "currentEducation": {
+      "label": "Current School",
+      "placeholder": "Enter your current school (if any)"
+    },
+    "resumeFile": {
+      "label": "Resume",
+      "required": "Please upload your resume",
+      "invalid": "Only Word or PDF files are allowed"
+    },
+    "submitButton": "Submit Application",
+    "messages": {
+      "success": "Your application has been successfully submitted!",
+      "error": "Application submission failed.",
+      "formError": "Please check the fields in the form and try again."
+    }
+  },
+  "management": {
+    "titles": {
+      "pageTitle": "Application List"
+    },
+    "placeholders": {
+      "search": "Search applications"
+    },
+    "columns": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "socialNumber": "ID Card Number",
+      "currentEducation": "Current School",
+      "resume": "Resume"
+    },
+    "messages": {
+      "socialNumberMissing": "Not provided",
+      "currentEducationMissing": "Not provided",
+      "viewResume": "View Resume",
+      "fetchError": "Failed to fetch data."
+    }
+  }
+}

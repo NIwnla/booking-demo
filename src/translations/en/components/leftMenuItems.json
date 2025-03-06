@@ -1,0 +1,26 @@
+{
+  "general": {
+    "label": "General",
+    "home": "Home"
+  },
+  "management": {
+    "label": "Management",
+    "branches": "Branches",
+    "booking": "Booking",
+    "users": "Users",
+    "foods": "Foods",
+    "categories": "Categories",
+    "delivery": "Delivery",
+    "application": "Application"
+  },
+  "configuration": {
+    "label": "Configuration",
+    "disableTime": "Disable booking time"
+  },
+  "applications": {
+    "label": "Applications",
+    "booking": "Booking",
+    "delivery": "Delivery",
+    "foodMenu": "Menu"
+  }
+}

@@ -1,0 +1,98 @@
+{
+    "categoryManagement": {
+        "titles": {
+            "pageTitle": "Category Management",
+            "createButton": "Create New Category"
+        },
+        "columns": {
+            "name": "Name",
+            "action": "Action"
+        },
+        "buttons": {
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "messages": {
+            "fetchError": "Failed to fetch categories.",
+            "deleteSuccess": "Category deleted successfully.",
+            "deleteError": "Failed to delete category.",
+            "loading": "Loading..."
+        },
+        "search": {
+            "placeholder": "Search categories"
+        }
+    },
+    "categoryEditModal": {
+        "titles": {
+            "modalTitle": "Edit Category"
+        },
+        "labels": {
+            "nameVN": "Name (VN)",
+            "nameEN": "Name (EN)",
+            "image": "Image"
+        },
+        "placeholders": {
+            "nameVN": "Enter category name in Vietnamese",
+            "nameEN": "Enter category name in English"
+        },
+        "buttons": {
+            "updateCategory": "Update Category",
+            "uploadImage": "Upload New Image (Optional)"
+        },
+        "messages": {
+            "updateSuccess": "Category updated successfully!",
+            "updateError": "Failed to update category.",
+            "rules": {
+                "nameVNRequired": "Please enter the category name in Vietnamese",
+                "nameVNMaxLength": "Category name in Vietnamese cannot exceed 50 characters",
+                "nameENRequired": "Please enter the category name in English",
+                "nameENMaxLength": "Category name in English cannot exceed 50 characters"
+            }
+        }
+    },
+    "categoryCreationModal": {
+        "titles": {
+            "modalTitle": "Create New Category"
+        },
+        "labels": {
+            "nameVN": "Name (VN)",
+            "nameEN": "Name (EN)",
+            "image": "Image"
+        },
+        "placeholders": {
+            "nameVN": "Enter category name in Vietnamese",
+            "nameEN": "Enter category name in English"
+        },
+        "buttons": {
+            "create": "Create Category",
+            "selectImage": "Select Image"
+        },
+        "messages": {
+            "createSuccess": "Category created successfully!",
+            "createError": "Failed to create category.",
+            "imageRemoved": "Image removed.",
+            "uploadError": "File upload failed. Please try again.",
+            "noImage": "Please upload and crop an image before submitting.",
+            "rules": {
+                "nameRequired": "Please enter the category name",
+                "nameMaxLength": "Category name cannot exceed 50 characters",
+                "imageRequired": "Please upload an image"
+            }
+        }
+    },
+    "categoryPickerModal": {
+        "titles": {
+            "modalTitle": "Select Categories"
+        },
+        "placeholders": {
+            "search": "Search by name"
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "confirm": "Confirm"
+        },
+        "messages": {
+            "fetchError": "Error fetching categories."
+        }
+    }
+}

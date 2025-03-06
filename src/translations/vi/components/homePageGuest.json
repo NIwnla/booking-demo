@@ -1,0 +1,37 @@
+{
+  "titles": {
+    "bookingCollapse": "Thông Tin Đặt Chỗ",
+    "deliveryCollapse": "Thông Tin Giao Hàng",
+    "currentBooking": "Thông Tin Đặt Chỗ Hiện Tại",
+    "currentDelivery": "Thông Tin Giao Hàng Hiện Tại",
+    "noBooking": "Không có thông tin đặt chỗ hiện tại",
+    "noDelivery": "Không có thông tin giao hàng hiện tại"
+  },
+  "labels": {
+    "date": "Ngày",
+    "time": "Thời Gian",
+    "branch": "Chi Nhánh",
+    "people": "Số Người",
+    "children": "Trẻ Em",
+    "status": "Trạng Thái",
+    "message": "Tin Nhắn",
+    "preOrderedItems": "Món Ăn Đặt Trước",
+    "location": "Địa Điểm",
+    "phoneNumber": "Số Điện Thoại"
+  },
+  "buttons": {
+    "cancel": "Hủy",
+    "edit": "Chỉnh Sửa"
+  },
+  "card": {
+    "name": "Tên",
+    "quantity": "Số Lượng",
+    "price": "Giá"
+  },
+  "messages": {
+    "fetchDeliveryError": "Không thể lấy thông tin giao hàng.",
+    "fetchBookingError": "Không thể lấy thông tin đặt chỗ.",
+    "cancelBookingSuccess": "Đã hủy đặt chỗ thành công.",
+    "cancelBookingError": "Hủy đặt chỗ thất bại."
+  }
+}

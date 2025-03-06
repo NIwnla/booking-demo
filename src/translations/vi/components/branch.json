@@ -1,0 +1,106 @@
+{
+  "branchManagement": {
+    "titles": {
+      "pageTitle": "Quản Lý Chi Nhánh",
+      "detailModalTitle": "Chi Tiết Chi Nhánh",
+      "createButton": "Tạo Chi Nhánh Mới"
+    },
+    "columns": {
+      "name": "Tên",
+      "description": "Mô Tả",
+      "status": "Trạng Thái",
+      "action": "Hành Động"
+    },
+    "buttons": {
+      "detail": "Chi Tiết",
+      "edit": "Chỉnh Sửa",
+      "disable": "Ngưng",
+      "reenable": "Kích Hoạt"
+    },
+    "tags": {
+      "active": "Hoạt Động",
+      "disabled": "Ngưng Hoạt Động"
+    },
+    "messages": {
+      "fetchError": "Lỗi khi tải dữ liệu chi nhánh.",
+      "deleteSuccess": "Đã vô hiệu hóa/kích hoạt chi nhánh thành công!",
+      "loading": "Đang tải..."
+    },
+    "modals": {
+      "detail": {
+        "fields": {
+          "name": "Tên",
+          "description": "Mô Tả",
+          "status": "Trạng Thái"
+        }
+      }
+    }
+  },
+  "creationModal": {
+    "titles": {
+      "modalTitle": "Tạo Chi Nhánh Mới"
+    },
+    "form": {
+      "nameVN": {
+        "label": "Tên (VN)",
+        "placeholder": "Nhập tên chi nhánh bằng tiếng Việt",
+        "required": "Vui lòng nhập tên chi nhánh bằng tiếng Việt"
+      },
+      "nameEN": {
+        "label": "Tên (EN)",
+        "placeholder": "Nhập tên chi nhánh bằng tiếng Anh",
+        "required": "Vui lòng nhập tên chi nhánh bằng tiếng Anh"
+      },
+      "descriptionVN": {
+        "label": "Mô Tả (VN)",
+        "placeholder": "Nhập mô tả chi nhánh bằng tiếng Việt",
+        "required": "Vui lòng nhập mô tả chi nhánh bằng tiếng Việt"
+      },
+      "descriptionEN": {
+        "label": "Mô Tả (EN)",
+        "placeholder": "Nhập mô tả chi nhánh bằng tiếng Anh",
+        "required": "Vui lòng nhập mô tả chi nhánh bằng tiếng Anh"
+      },
+      "image": {
+        "label": "Hình Ảnh",
+        "placeholder": "Chọn Hình Ảnh",
+        "required": "Vui lòng tải lên hình ảnh"
+      }
+    },
+    "buttons": {
+      "submit": "Tạo Chi Nhánh"
+    },
+    "messages": {
+      "success": "Tạo chi nhánh thành công!",
+      "error": "Không thể tạo chi nhánh. Vui lòng thử lại."
+    }
+  },
+  "editModal": {
+    "titles": {
+      "modalTitle": "Chỉnh Sửa Chi Nhánh"
+    },
+    "form": {
+      "name": {
+        "label": "Tên",
+        "placeholder": "Nhập tên chi nhánh",
+        "required": "Vui lòng nhập tên chi nhánh"
+      },
+      "description": {
+        "label": "Mô Tả",
+        "placeholder": "Nhập mô tả chi nhánh",
+        "required": "Vui lòng nhập mô tả chi nhánh"
+      },
+      "image": {
+        "label": "Hình Ảnh",
+        "placeholder": "Chọn Hình Ảnh"
+      }
+    },
+    "buttons": {
+      "submit": "Cập Nhật Chi Nhánh"
+    },
+    "messages": {
+      "success": "Cập nhật chi nhánh thành công!",
+      "error": "Không thể cập nhật chi nhánh. Vui lòng thử lại."
+    }
+  }
+}

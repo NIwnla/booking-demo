@@ -1,8 +1,8 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import global_vn from "./translations/vi/global.json";
-import global_en from "./translations/en/global.json";
+import enTranslations from './translations/en/index';
+import vnTranslations from './translations/vi/index';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import Cookies from 'js-cookie';
@@ -14,10 +14,10 @@ i18next.init({
   lng: defaultLanguage,
   resources: {
     en: {
-      global: global_en
+      global: enTranslations
     },
     vi: {
-      global: global_vn
+      global: vnTranslations
     },
   },
 });
