@@ -11,7 +11,8 @@
     "foods": "Foods",
     "categories": "Categories",
     "delivery": "Delivery",
-    "application": "Application"
+    "application": "Application",
+    "jobOffers": "Job Offers"
   },
   "configuration": {
     "label": "Configuration",

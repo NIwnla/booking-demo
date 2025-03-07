@@ -94,6 +94,10 @@ const AdminLayout = ({ children }) => {
                     key: '8',
                     label: <Link to={routeNames.recruitInformation.management}>{t('leftMenuItems.management.application')}</Link>,
                 },
+                {
+                    key: '30',
+                    label: <Link to={routeNames.career.management}>{t('leftMenuItems.management.jobOffers')}</Link>,
+                },
             ],
         },
         {

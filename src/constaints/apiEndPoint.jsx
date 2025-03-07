@@ -72,5 +72,12 @@ export const apiEndPoints = {
         CREATE: '/categories',
         DELETE: (id) => `/categories/${id}`,
         EDIT: (id) => `/categories/${id}`,
-    }
+    },
+    JOB_OFFER: {
+        GET_ALL: '/job-offers',
+        GET_BY_ID: (id) => `/job-offers/${id}`,
+        CREATE: '/job-offers',
+        EDIT: (id) => `/job-offers/${id}`,
+        DELETE: (id) => `/job-offers/${id}`,
+    },
 }

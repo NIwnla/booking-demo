@@ -62,4 +62,15 @@ export const routeNames = {
         main: '/reservation',
         form: '/reservation/form',
     },
+    career: {
+        main: '/career',
+        management: '/career/management',
+        findJobs: '/career/find',
+        about: '/career/about',
+        detail: {
+            admin: '/career/detail/admin/:id',
+            default: '/career/detail/:id'
+        },
+        create: '/career/create/',
+    },
 }

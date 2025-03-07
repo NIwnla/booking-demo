@@ -55,7 +55,7 @@ const LandingPageLayout = ({ children }) => {
                     <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.foodMenu.main)}>
                         <ShoppingCartOutlined /> {t("header.delivery")}
                     </Text>
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.recruitInformation.signUp)}>
+                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} ${isScrolled ? 'scrolled-text' : ''}`} onClick={() => navigate(routeNames.career.main)}>
                         <PhoneOutlined /> {t("header.career")}
                     </Text>
                     <Button

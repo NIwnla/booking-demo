@@ -24,6 +24,7 @@
     "react-easy-crop": "^5.2.0",
     "react-horizontal-scrolling-menu": "^8.2.0",
     "react-i18next": "^15.4.0",
+    "react-quill": "^2.0.0",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.26.0",
     "recharts": "^2.13.0-alpha.5"

@@ -36,6 +36,10 @@ import HomePageGuest from "../pages/Home/HomePageGuest";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
 import ReservationPage from "../pages/Reservation/ReservationPage";
 import ReservationForm from "../pages/Reservation/ReservationForm";
+import JobOfferManagementPage from "../pages/Career/JobOfferManagementPage";
+import CreateJobOffer from "../pages/Career/CreateJobOffer";
+import JobOfferDetailAdmin from "../pages/Career/JobOfferDetailAdmin";
+import CareerMainPage from "../pages/Career/MainPage/CareerMainPage";
 
 
 
@@ -140,9 +144,20 @@ const AppRoutes = () => {
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.reservation.main} element={<ReservationPage />} />
                 <Route path={routeNames.reservation.form} element={<ReservationForm />} />
-
-
-
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route path={routeNames.career.main} element={<CareerMainPage />} />
+                <Route
+                    path={routeNames.career.management}
+                    element={<PrivateRoute element={<JobOfferManagementPage />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+                <Route
+                    path={routeNames.career.create}
+                    element={<PrivateRoute element={<CreateJobOffer />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+                <Route
+                    path={routeNames.career.detail.admin}
+                    element={<PrivateRoute element={<JobOfferDetailAdmin />} allowedRoles={[userRoles.ADMIN]} />}
+                />
 
                 <Route path={routeNames.login} element={<SignInPage />} />
                 <Route path="*" element={<NotFoundPage />} />

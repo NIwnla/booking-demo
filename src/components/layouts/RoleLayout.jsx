@@ -16,7 +16,7 @@ const RoleLayout = ({ children }) => {
 
 
     // If the current route is the home page, use LandingPageLayout
-    if (location.pathname === routeNames.index) {
+    if (location.pathname === routeNames.index || location.pathname === routeNames.career.main) {
         return <LandingPageLayout>{children}</LandingPageLayout>;
     }
 
