@@ -1,36 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Card, Switch, Typography, message } from 'antd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
-import { routeNames } from '../../constaints/routeName';
-import axiosInstance from '../../service/axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { routeNames } from '../../../constaints/routeName';
+import axiosInstance from '../../../service/axios';
+import JobTypeFilterBox from '../components/JobTypeFilterBox';
+import { apiEndPoints } from '../../../constaints/apiEndPoint';
+import EditJobTypeFilterBox from '../components/EditJobTypeFilterBox';
 
 const { Title } = Typography;
 
-const CreateJobOffer = () => {
+const EditJobOffer = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    useEffect(() => {
+        const fetchJobOffer = async () => {
+            try {
+                const response = await axiosInstance.get(apiEndPoints.JOB_OFFER.GET_BY_ID(id));
+                form.setFieldsValue({
+                    ...response.data,
+                    typeId: response.data.typeId
+                });
+            } catch (error) {
+                message.error('Failed to fetch job offer');
+                console.error('Error fetching job offer:', error);
+            } finally {
+                setInitialLoading(false);
+            }
+        };
+
+        fetchJobOffer();
+    }, [id, form]);
 
     const onFinish = async (values) => {
         try {
             setLoading(true);
-            await axiosInstance.post('job-offers', values);
-            message.success('Job offer created successfully');
+            await axiosInstance.put(`job-offers/${id}`, values);
+            message.success('Job offer updated successfully');
             navigate(routeNames.career.management);
         } catch (error) {
-            message.error('Failed to create job offer');
-            console.error('Error creating job offer:', error);
+            message.error('Failed to update job offer');
+            console.error('Error updating job offer:', error);
         } finally {
             setLoading(false);
         }
     };
 
+    if (initialLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div style={{ padding: '24px' }}>
             <Card>
-                <Title level={2}>Create New Job Offer</Title>
+                <Title level={2}>Edit Job Offer</Title>
                 <Form
                     form={form}
                     layout="vertical"
@@ -62,10 +90,19 @@ const CreateJobOffer = () => {
                     </Form.Item>
 
                     <Form.Item
+                        label="Job Type"
+                        name="typeId"
+                        rules={[{ required: true, message: 'Please select a job type!' }]}
+                    >
+                        <EditJobTypeFilterBox 
+                            onTypeChange={(value) => form.setFieldValue('typeId', value)}
+                            defaultValue={() => form.getFieldValue('typeId')}
+                        />
+                    </Form.Item>
+                    <Form.Item
                         label="Employment Type"
                         name="isFullTime"
                         valuePropName="checked"
-                        initialValue={true}
                     >
                         <Switch 
                             checkedChildren="Full Time" 
@@ -126,7 +163,7 @@ const CreateJobOffer = () => {
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" loading={loading}>
-                            Create Job Offer
+                            Update Job Offer
                         </Button>
                         <Button 
                             style={{ marginLeft: '10px' }}
@@ -141,4 +178,4 @@ const CreateJobOffer = () => {
     );
 };
 
-export default CreateJobOffer;
+export default EditJobOffer;

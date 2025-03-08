@@ -36,10 +36,12 @@ import HomePageGuest from "../pages/Home/HomePageGuest";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
 import ReservationPage from "../pages/Reservation/ReservationPage";
 import ReservationForm from "../pages/Reservation/ReservationForm";
-import JobOfferManagementPage from "../pages/Career/JobOfferManagementPage";
-import CreateJobOffer from "../pages/Career/CreateJobOffer";
-import JobOfferDetailAdmin from "../pages/Career/JobOfferDetailAdmin";
+import JobOfferManagementPage from "../pages/Career/Management/JobOfferManagementPage";
+import CreateJobOffer from "../pages/Career/Management/CreateJobOffer";
+import JobOfferDetailAdmin from "../pages/Career/Management/JobOfferDetailAdmin";
 import CareerMainPage from "../pages/Career/MainPage/CareerMainPage";
+import EditJobOffer from "../pages/Career/Management/EditJobOffer";
+import FindJobsPage from "../pages/Career/FindJobs/FindJobsPage";
 
 
 
@@ -146,6 +148,7 @@ const AppRoutes = () => {
                 <Route path={routeNames.reservation.form} element={<ReservationForm />} />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.career.main} element={<CareerMainPage />} />
+                <Route path={routeNames.career.findJobs} element={<FindJobsPage />} />
                 <Route
                     path={routeNames.career.management}
                     element={<PrivateRoute element={<JobOfferManagementPage />} allowedRoles={[userRoles.ADMIN]} />}
@@ -153,6 +156,10 @@ const AppRoutes = () => {
                 <Route
                     path={routeNames.career.create}
                     element={<PrivateRoute element={<CreateJobOffer />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+                <Route
+                    path={routeNames.career.edit}
+                    element={<PrivateRoute element={<EditJobOffer />} allowedRoles={[userRoles.ADMIN]} />}
                 />
                 <Route
                     path={routeNames.career.detail.admin}

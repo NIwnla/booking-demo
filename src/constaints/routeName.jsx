@@ -72,5 +72,6 @@ export const routeNames = {
             default: '/career/detail/:id'
         },
         create: '/career/create/',
+        edit: '/career/edit/:id',
     },
 }

@@ -80,4 +80,11 @@ export const apiEndPoints = {
         EDIT: (id) => `/job-offers/${id}`,
         DELETE: (id) => `/job-offers/${id}`,
     },
+    JOB_TYPE: {
+        GET_ALL: '/job-types',
+        GET_BY_ID: (id) => `/job-types/${id}`,
+        CREATE: '/job-types',
+        EDIT: (id) => `/job-types/${id}`,
+        DELETE: (id) => `/job-types/${id}`,
+    },
 }

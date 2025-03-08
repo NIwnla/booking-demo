@@ -9,6 +9,7 @@ import DefaultLayout from './DefaultLayout';
 import GuestLayout from './GuestLayout';
 import LandingPageLayout from './LandingPageLayout';
 import { Spin } from 'antd';
+import LandingPageLayoutWhite from './LandingPageLayoutWhite';
 
 const RoleLayout = ({ children }) => {
     const { role } = useContext(AuthContext);
@@ -18,6 +19,10 @@ const RoleLayout = ({ children }) => {
     // If the current route is the home page, use LandingPageLayout
     if (location.pathname === routeNames.index || location.pathname === routeNames.career.main) {
         return <LandingPageLayout>{children}</LandingPageLayout>;
+    }
+
+    if (location.pathname === routeNames.career.findJobs) {
+        return <LandingPageLayoutWhite>{children}</LandingPageLayoutWhite>;
     }
 
     // Otherwise, use the role-based layout

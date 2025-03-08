@@ -16,7 +16,7 @@
     justify-content: space-between;
     background-color: transparent;
     transition: background 0.3s ease, background-color 0.3s ease;
-    padding: 5vh 2vw;
+    padding: 30px 2vw;
 }
 
 .header-open {
@@ -30,6 +30,7 @@
     color: white !important;
     font-size: 2vw;
     transition: color 0.3s ease;
+    font-weight: bold;
 }
 
 .header-title-open {

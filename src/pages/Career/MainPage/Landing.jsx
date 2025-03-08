@@ -1,0 +1,185 @@
+import { DownOutlined } from '@ant-design/icons';
+import { Button, Card, Dropdown, Input, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+// @ts-ignore
+import CareerBackground from '../../../assets/LandingPageVideo.mp4';
+import HoverLink from '../../../components/animatedSection.jsx/HoverLink';
+import { apiEndPoints } from '../../../constaints/apiEndPoint';
+import axiosInstance from '../../../service/axios';
+import { routeNames } from '../../../constaints/routeName';
+import CustomDropdown from '../components/CustomDropdown';
+const { Title, Text } = Typography;
+
+const Landing = () => {
+    const [selectedWhat, setSelectedWhat] = useState(null);
+    const [selectedWhere, setSelectedWhere] = useState(null);
+    const [jobTypes, setJobTypes] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchJobTypes = async () => {
+            try {
+                const response = await axiosInstance.get(apiEndPoints.JOB_TYPE.GET_ALL);
+                setJobTypes(response.data);
+            } catch (error) {
+                console.error('Error fetching job types:', error);
+            }
+        };
+
+        fetchJobTypes();
+    }, []);
+
+    const whatItems = {
+        items: jobTypes.map(type => ({
+            key: type.id,
+            label: type.name,
+            onClick: () => setSelectedWhat(type.name),
+        })),
+    };
+
+    const whereItems = {
+        items: [
+            {
+                key: '1',
+                label: 'Ha Noi',
+                onClick: () => setSelectedWhere('Ha Noi'),
+            },
+            {
+                key: '2',
+                label: 'Ho Chi Minh',
+                onClick: () => setSelectedWhere('Ho Chi Minh'),
+            },
+            {
+                key: '3',
+                label: 'Da Nang',
+                onClick: () => setSelectedWhere('Da Nang'),
+            },
+        ],
+    };
+    return (
+        <div style={{ position: 'relative', minHeight: '100vh' }}>
+            {/* Background Video */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    zIndex: 0
+                }}
+            >
+                <source src={CareerBackground} type="video/mp4" />
+                <img
+                    src="https://via.placeholder.com/1920x1080"
+                    alt="Fallback Background"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+            </video>
+
+            {/* Overlay */}
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'rgba(0, 0, 0, 0.5)',
+                zIndex: 1
+            }} />``
+
+            {/* Content */}
+            <div style={{
+                position: 'relative',
+                zIndex: 2,
+                padding: '15vh 0 0 5vw',
+                color: 'white'
+            }}>
+                <Title style={{
+                    color: 'white',
+                    fontSize: '8rem',
+                    marginBottom: '4rem'
+                }}>
+                    Career
+                </Title>
+                <HoverLink to="/about" fontSize="2rem" color="white">About Us</HoverLink>
+                <HoverLink to={routeNames.career.findJobs} fontSize="2rem" color="white">Find Jobs</HoverLink>
+            </div>
+
+            <div style={{
+                position: 'absolute',
+                zIndex: 2,
+                padding: '2rem',
+                width: '30rem',
+                right: '3vw',
+                bottom: '2vh',
+            }}>
+                <Card
+                    title="Find Jobs"
+                    styles={{
+                        header: {
+                            textAlign: 'center',
+                            fontSize: '2rem'
+                        }
+                    }}
+                    style={{
+                        background: 'rgb(255, 255, 255)',
+                        borderRadius: '15px',
+                        textAlign: 'center'
+                    }}
+                >
+                    <Input
+                        placeholder="Search..."
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        style={{
+                            marginBottom: '1rem',
+                            fontSize: '2rem',
+                            border: 'none',
+                            borderBottom: '3px solid rgb(252, 162, 162)',
+                            borderRadius: 0,
+                        }}
+                    />
+                    <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1rem' }}>
+                        <CustomDropdown
+                            menu={whatItems}
+                            value={selectedWhat}
+                            placeholder="What"
+                        />
+                    </div>
+                    <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1.5rem' }}>
+                        <CustomDropdown
+                            menu={whereItems}
+                            value={selectedWhere}
+                            placeholder="Where"
+                        />
+                    </div>
+                    <Button
+                        type="link"
+                        style={{ textDecoration: 'underline', fontSize: '1.5rem' }}
+                        onClick={() => {
+                            navigate(routeNames.career.findJobs, {
+                                state: {
+                                    search: searchValue,
+                                    type: selectedWhat,
+                                    location: selectedWhere
+                                }
+                            });
+                        }}
+                    >
+                        Find Jobs
+                    </Button>
+                </Card>
+            </div>
+        </div>
+    );
+};
+
+export default Landing;

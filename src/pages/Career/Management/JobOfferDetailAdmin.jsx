@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Row, Col, Card, List, Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useParams, Link } from 'react-router-dom';
-import axiosInstance from '../../service/axios';
-import { routeNames } from '../../constaints/routeName';
+import axiosInstance from '../../../service/axios';
+import { routeNames } from '../../../constaints/routeName';
 import { useTranslation } from 'react-i18next';
 
 const { Title, Paragraph } = Typography;
