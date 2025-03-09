@@ -42,6 +42,7 @@ import JobOfferDetailAdmin from "../pages/Career/Management/JobOfferDetailAdmin"
 import CareerMainPage from "../pages/Career/MainPage/CareerMainPage";
 import EditJobOffer from "../pages/Career/Management/EditJobOffer";
 import FindJobsPage from "../pages/Career/FindJobs/FindJobsPage";
+import JobOfferDetail from "../pages/Career/FindJobs/JobOfferDetail";
 
 
 
@@ -149,6 +150,7 @@ const AppRoutes = () => {
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.career.main} element={<CareerMainPage />} />
                 <Route path={routeNames.career.findJobs} element={<FindJobsPage />} />
+                <Route path={routeNames.career.detail.default} element={<JobOfferDetail />} />
                 <Route
                     path={routeNames.career.management}
                     element={<PrivateRoute element={<JobOfferManagementPage />} allowedRoles={[userRoles.ADMIN]} />}

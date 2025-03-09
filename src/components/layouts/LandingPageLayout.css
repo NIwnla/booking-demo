@@ -59,7 +59,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5vw;
+    gap: 0.5rem;
     font-size: 1.5vw;
     transition: color 0.3s ease;
 }
@@ -71,7 +71,7 @@
 /* Language Button */
 .language-button {
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -87,7 +87,7 @@
 /* Menu Button */
 .menu-button {
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -125,7 +125,7 @@
 /* Menu Title */
 .menu-title {
     color: black;
-    font-size: 3vw;
+    font-size: 3rem;
 }
 
 /* Content */
@@ -172,26 +172,26 @@
 
 /* Text Styles */
 .title-text {
-    font-size: 2vw;
+    font-size: 2rem;
     text-align: left;
     font-weight: 500;
     margin: 0;
 }
 
 .text {
-    font-size: 1vw;
+    font-size: 1rem;
     text-align: left;
     margin: 0;
 }
 
 .follow-us-text {
-    font-size: 1.5vw;
+    font-size: 1.5rem;
     text-align: left;
 }
 
 /* Icon Styles */
 .social-icon {
-    font-size: 1.75vw;
+    font-size: 1.75rem;
     margin-right: 10px;
 }
 

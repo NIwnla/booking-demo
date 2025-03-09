@@ -21,7 +21,7 @@ const RoleLayout = ({ children }) => {
         return <LandingPageLayout>{children}</LandingPageLayout>;
     }
 
-    if (location.pathname === routeNames.career.findJobs) {
+    if (location.pathname.includes(routeNames.career.main)) {
         return <LandingPageLayoutWhite>{children}</LandingPageLayoutWhite>;
     }
 
