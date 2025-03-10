@@ -5,9 +5,9 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { routeNames } from '../../../constaints/routeName';
 import axiosInstance from '../../../service/axios';
-import JobTypeFilterBox from '../components/JobTypeFilterBox';
+import JobTypeFilterBox from './components/JobTypeFilterBox';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
-import EditJobTypeFilterBox from '../components/EditJobTypeFilterBox';
+import EditJobTypeFilterBox from './components/EditJobTypeFilterBox';
 
 const { Title } = Typography;
 

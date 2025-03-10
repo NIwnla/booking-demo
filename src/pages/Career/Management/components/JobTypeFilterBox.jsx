@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Select, Modal, Input, Form, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import axiosInstance from '../../../service/axios';
-import { apiEndPoints } from '../../../constaints/apiEndPoint';
+import axiosInstance from '../../../../service/axios';
+import { apiEndPoints } from '../../../../constaints/apiEndPoint';
 
 const JobTypeFilterBox = ({ onTypeChange, defaultValue = null }) => {
     const [jobTypes, setJobTypes] = useState([]);

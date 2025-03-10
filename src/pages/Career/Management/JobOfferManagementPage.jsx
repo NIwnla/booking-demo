@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, Tag, Typography, Card, Popconfirm } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, ZoomInOutlined } from '@ant-design/icons';
-import JobTypeFilterBox from '../components/JobTypeFilterBox';
+import JobTypeFilterBox from './components/JobTypeFilterBox';
 import axiosInstance from '../../../service/axios';
 import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';

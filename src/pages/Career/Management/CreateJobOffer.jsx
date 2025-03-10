@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Card, Switch, Typography, message, Select } from 'antd';
-import JobTypeFilterBox from '../components/JobTypeFilterBox';
+import JobTypeFilterBox from './components/JobTypeFilterBox';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';

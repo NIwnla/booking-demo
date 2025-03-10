@@ -1,11 +1,10 @@
+import { BookOutlined, CloseOutlined, FacebookOutlined, GlobalOutlined, InstagramOutlined, LinkedinOutlined, MenuOutlined, PhoneOutlined, PinterestOutlined, ShoppingCartOutlined, YoutubeFilled, YoutubeOutlined } from '@ant-design/icons';
 import { Button, Col, Layout, Row, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { BookOutlined, GlobalOutlined, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, CloseOutlined, FacebookOutlined, InstagramOutlined, LinkedinOutlined, PinterestOutlined, YoutubeOutlined, YoutubeFilled, TwitterOutlined } from '@ant-design/icons';
-import { changeLanguage } from '../../helpers/changeLanguage';
 import { routeNames } from '../../constaints/routeName';
-import './LandingPageLayout.css';
+import { changeLanguage } from '../../helpers/changeLanguage';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -14,99 +13,236 @@ const LandingPageLayoutWhite = ({ children }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation("global");
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "auto";
         return () => { document.body.style.overflow = "auto"; };
     }, [menuOpen]);
 
+
+    // Function to handle scroll event
+    const handleScroll = () => {
+        if (window.scrollY >= window.innerHeight) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     return (
-        <Layout className="landing-page">
+        <Layout style={{ minHeight: '100vh', backgroundColor: '#ffffff', }}>
             {/* Header */}
-            <Header className={`header ${menuOpen ? "header-open" : ""} scrolled-background`} >
-                {/* Left - Title */}
-                <Text className={`header-title ${menuOpen ? "header-title-open" : ""} scrolled-text`} onClick={() => navigate("/")}>
+            <Header style={{
+                width: '100vw',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                zIndex: 1000,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: 'white',
+                transition: 'background 0.3s ease, background-color 0.3s ease',
+                padding: '30px 2vw'
+            }}>
+                <Text style={{
+                    margin: 0,
+                    cursor: 'pointer',
+                    color: 'black',
+                    fontSize: '2rem',
+                    transition: 'color 0.3s ease',
+                    fontWeight: 'bold'
+                }} onClick={() => navigate("/")}>
                     {t("header.title")}
                 </Text>
 
-                {/* Right - links & language toggle */}
-                <div className="header-right">
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} scrolled-text`} onClick={() => navigate(routeNames.reservation.main)}>
-                        <BookOutlined /> {t("header.reservation")}
-                    </Text>
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} scrolled-text`} onClick={() => navigate(routeNames.foodMenu.main)}>
-                        <ShoppingCartOutlined /> {t("header.delivery")}
-                    </Text>
-                    <Text className={`nav-link ${menuOpen ? "nav-link-open" : ""} scrolled-text`} onClick={() => navigate(routeNames.career.main)}>
-                        <PhoneOutlined /> {t("header.career")}
-                    </Text>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '3vw'
+                }}>
+                    {isLargeScreen && (<>
+                        <Text style={{
+                            color: 'black',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '1.5rem',
+                            transition: 'color 0.3s ease'
+                        }} onClick={() => navigate(routeNames.reservation.main)}>
+                            <BookOutlined /> {t("header.reservation")}
+                        </Text>
+                        <Text style={{
+                            color: 'black',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '1.5rem',
+                            transition: 'color 0.3s ease'
+                        }} onClick={() => navigate(routeNames.foodMenu.main)}>
+                            <ShoppingCartOutlined /> {t("header.delivery")}
+                        </Text>
+                        <Text style={{
+                            color: 'black',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '1.5rem',
+                            transition: 'color 0.3s ease'
+                        }} onClick={() => navigate(routeNames.career.main)}>
+                            <PhoneOutlined /> {t("header.career")}
+                        </Text>
+                    </>)}
                     <Button
                         type="text"
                         icon={<GlobalOutlined />}
                         onClick={() => changeLanguage(i18n, i18n.language === "en" ? "vi" : "en")}
-                        className={`language-button ${menuOpen ? "language-button-open" : ""} scrolled-text`}
+                        style={{
+                            color: 'black',
+                            fontSize: '1.5rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            padding: '0 0.5vw',
+                            height: 'auto',
+                            transition: 'color 0.3s ease'
+                        }}
                     >
                         {i18n.language === "en" ? "VI" : "EN"}
                     </Button>
 
-                    {/* Menu button */}
                     <Button
                         type="text"
                         icon={menuOpen ? <CloseOutlined /> : <MenuOutlined />}
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className={`menu-button ${menuOpen ? "menu-button-open" : ""} scrolled-text`}
+                        style={{
+                            color: 'black',
+                            fontSize: '1.5rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            padding: '0 0.5vw',
+                            height: 'auto',
+                            transition: 'color 0.3s ease'
+                        }}
                     />
                 </div>
+
             </Header>
 
-            {/* Fullscreen Menu */}
-            <div className={`menu-overlay ${menuOpen ? "menu-overlay-open" : ""}`}>
-                <Row gutter={16} className="menu-container">
-                    <Col span={8}>
-                        <div className="column-container column-padding">
-                            <p className="title-text">Location</p>
-                            <p className="title-text">Menu</p>
-                            <p className="title-text">Vision</p>
-                            <p className="title-text">Sustainability</p>
-                            <p className="title-text">Other Brand</p>
+
+
+            <div style={{
+                position: 'fixed',
+                top: 100,
+                left: 0,
+                height: 'calc(100vh - 100px)', // Adjust height to account for header
+                width: '100vw',
+                display: 'block',  // Changed from flex to block
+                backgroundColor: 'white',
+                opacity: menuOpen ? 1 : 0,
+                visibility: menuOpen ? 'visible' : 'hidden',
+                transition: 'opacity 0.3s ease, visibility 0.3s ease',
+                overflowY: 'auto',
+                overflowX: 'hidden'
+            }}>
+                <Row gutter={16} style={{
+                    width: '100%',
+                    minHeight: '100%',
+                    margin: 0,
+                    padding: '2rem 0'
+                }}>
+                    <Col xs={24} lg={8}>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-end',
+                            height: '100%',
+                            gap: '0.75rem',
+                            paddingLeft: '6vw',
+                            paddingBottom: '10vh',
+                        }}>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Location</p>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Menu</p>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Vision</p>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Sustainability</p>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Other Brand</p>
                         </div>
                     </Col>
-                    <Col span={8}>
-                        <div className="column-container column-padding" style={{ paddingLeft: '0' }}>
-                            <p className="title-text">Library</p>
-                            <p className="title-text">Career</p>
+                    <Col xs={24} lg={8}>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: menuOpen ? 'flex-end' : 'flex-start',
+                            height: '100%',
+                            gap: '0.75rem',
+                            paddingLeft: '6vw',
+                            paddingBottom: '10vh'
+                        }}>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Library</p>
+                            <p style={{ fontSize: '2rem', textAlign: 'left', fontWeight: 500, margin: 0 }}>Career</p>
                         </div>
                     </Col>
-                    <Col span={8}>
-                        <div className="column-container column-padding">
-                            <Text className="text column-padding-left">Company Profile</Text>
-                            <Text className="text column-padding-left">Privacy Policy</Text>
-                            <Text className="text column-padding-left">E-Invoice</Text>
-                            <div className="column-padding-left" style={{ display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
-                                <Text className="follow-us-text">Follow Us!</Text>
+                    <Col xs={24} lg={8}>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-end',
+                            height: '100%',
+                            gap: '0.75rem',
+                            paddingLeft: '6vw',
+                            paddingBottom: '10vh'
+                        }}>
+                            <Text style={{ fontSize: '1rem', textAlign: 'left', margin: 0 }}>Company Profile</Text>
+                            <Text style={{ fontSize: '1rem', textAlign: 'left', margin: 0 }}>Privacy Policy</Text>
+                            <Text style={{ fontSize: '1rem', textAlign: 'left', margin: 0 }}>E-Invoice</Text>
+                            <div style={{ display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
+                                <Text style={{ fontSize: '1.5rem', textAlign: 'left' }}>Follow Us!</Text>
                                 <Row gutter={16}>
                                     <Col>
                                         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
-                                            <YoutubeFilled className="social-icon youtube" />
+                                            <YoutubeFilled style={{ fontSize: '1.75rem', marginRight: '10px', color: 'red' }} />
                                         </a>
                                     </Col>
                                     <Col>
                                         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-                                            <InstagramOutlined className="social-icon instagram" />
+                                            <InstagramOutlined style={{ fontSize: '1.75rem', marginRight: '10px', color: 'brown' }} />
                                         </a>
                                     </Col>
                                     <Col>
                                         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-                                            <FacebookOutlined className="social-icon facebook" />
+                                            <FacebookOutlined style={{ fontSize: '1.75rem', marginRight: '10px', color: 'blue' }} />
                                         </a>
                                     </Col>
                                     <Col>
                                         <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-                                            <LinkedinOutlined className="social-icon linkedin" />
+                                            <LinkedinOutlined style={{ fontSize: '1.75rem', marginRight: '10px', color: 'rgba(45, 8, 255, 0.8)' }} />
                                         </a>
                                     </Col>
                                     <Col>
                                         <a href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer">
-                                            <PinterestOutlined className="social-icon pinterest" />
+                                            <PinterestOutlined style={{ fontSize: '1.75rem', marginRight: '10px', color: 'red' }} />
                                         </a>
                                     </Col>
                                 </Row>
@@ -116,10 +252,79 @@ const LandingPageLayoutWhite = ({ children }) => {
                 </Row>
             </div>
 
-            {/* Content */}
-            <Content className={`content ${menuOpen ? "content-hidden" : ""}`}>
+            <Content style={{
+                background: '#ffffff',
+                transition: 'opacity 0.3s ease-in-out, visibility 0.3s ease-in-out',
+                opacity: menuOpen ? 0 : 1,
+                visibility: menuOpen ? 'hidden' : 'visible'
+            }}>
                 {children}
             </Content>
+
+            {/* Mobile Bottom Navigation */}
+            {!isLargeScreen && (
+                <div style={{
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    backgroundColor: 'white',
+                    padding: '15px 0',
+                    boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+                    zIndex: 1000
+                }}>
+                    <Row justify="space-around" align="middle">
+                        <Col span={8} style={{ textAlign: 'center' }}>
+                            <Text
+                                onClick={() => navigate(routeNames.reservation.main)}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                <BookOutlined style={{ fontSize: '1.5rem' }} />
+                                {t("header.reservation")}
+                            </Text>
+                        </Col>
+                        <Col span={8} style={{ textAlign: 'center' }}>
+                            <Text
+                                onClick={() => navigate(routeNames.foodMenu.main)}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                <ShoppingCartOutlined style={{ fontSize: '1.5rem' }} />
+                                {t("header.delivery")}
+                            </Text>
+                        </Col>
+                        <Col span={8} style={{ textAlign: 'center' }}>
+                            <Text
+                                onClick={() => navigate(routeNames.career.main)}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                <PhoneOutlined style={{ fontSize: '1.5rem' }} />
+                                {t("header.career")}
+                            </Text>
+                        </Col>
+                    </Row>
+                </div>
+            )}
 
             {/* Footer */}
             <Footer style={{ backgroundColor: 'red', color: "white", padding: "3vh 0", position: 'relative', zIndex: 1, }}>
@@ -157,7 +362,7 @@ const LandingPageLayoutWhite = ({ children }) => {
                     <Text style={{ color: "white", fontSize: "0.9vw" }}>{t("footer.copyright")}</Text>
                 </div>
             </Footer>
-        </Layout>
+        </Layout >
     );
 };
 

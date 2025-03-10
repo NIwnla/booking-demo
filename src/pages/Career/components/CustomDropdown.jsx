@@ -4,19 +4,20 @@ import { DownOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
-const CustomDropdown = ({ menu, value, placeholder = 'Select' }) => {
+const CustomDropdown = ({ menu, value, placeholder = 'Select', fontSize = '2rem' }) => {
     return (
         <Dropdown menu={menu} trigger={['click']}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '0.5rem 0'
+                padding: '0.5rem 0',
+                background:'white'
             }}>
-                <Text style={{ margin: 0, fontSize: '2rem' }}>
+                <Text style={{ margin: 0, fontSize: fontSize }}>
                     {value || placeholder}
                 </Text>
-                <DownOutlined style={{ fontSize: '1.5rem' }} />
+                <DownOutlined style={{ fontSize: fontSize }} />
             </div>
         </Dropdown>
     );

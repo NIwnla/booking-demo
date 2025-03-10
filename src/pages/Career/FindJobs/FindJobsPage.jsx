@@ -7,6 +7,7 @@ import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import CareerNavBar from '../components/CareerNavBar';
 import CustomDropdown from '../components/CustomDropdown';
 import { useTranslation } from 'react-i18next';
+import JobSearchBar from '../components/JobSearchBar';
 
 const { Title } = Typography;
 
@@ -23,6 +24,17 @@ const FindJobsPage = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
+
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchJobTypes = async () => {
@@ -104,77 +116,26 @@ const FindJobsPage = () => {
             <div style={{ padding: '225px 10vw' }}>
                 <Title level={1} style={{ marginBottom: '4rem', textAlign: 'center' }}>Find Jobs</Title>
 
-                <Row style={{ marginBottom: '24px' }}>
-                    <Col span={6}>
-                        <Input
-                            placeholder="Search jobs..."
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
-                            style={{
-                                fontSize: '2rem',
-                                borderRadius: '24px 0 0 24px',
-                                border: '2px solid rgb(0, 0, 0)',
-                                height: '100%',
-                            }}
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <div style={{
-                            border: '2px solid rgb(0, 0, 0)',
-                            borderLeft: 'none',
-                            padding: '0 1rem',
-                            height: '100%'
-                        }}>
-                            <CustomDropdown
-                                menu={whatItems}
-                                value={selectedWhat}
-                                placeholder="What"
-                            />
-                        </div>
-                    </Col>
-                    <Col span={6}>
-                        <div style={{
-                            border: '2px solid rgb(0, 0, 0)',
-                            borderLeft: 'none',
-                            padding: '0 1rem',
-                            height: '100%'
-                        }}>
-                            <CustomDropdown
-                                menu={whereItems}
-                                value={selectedWhere}
-                                placeholder="Where"
-                            />
-                        </div>
-                    </Col>
-                    <Col span={6}>
-                        <div style={{ width: "100%", height: '100%' }}>
-                            <Button
-                                type="primary"
-                                loading={isSearching}
-                                style={{
-                                    width: '100%',
-                                    borderRadius: '0 24px 24px 0',
-                                    fontSize: '2rem',
-                                    border: 'none',
-                                    background: '#1a365d',
-                                    height: '100%'
-                                }}
-                                onClick={fetchJobOffers}
-                            >
-                                {isSearching ? 'Searching...' : 'Search Jobs'}
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
+                <JobSearchBar 
+                    searchValue={searchValue}
+                    onSearchChange={(e) => setSearchValue(e.target.value)}
+                    whatItems={whatItems}
+                    whereItems={whereItems}
+                    selectedWhat={selectedWhat}
+                    selectedWhere={selectedWhere}
+                    onSearch={fetchJobOffers}
+                    isSearching={isSearching}
+                    isLargeScreen={isLargeScreen}
+                />
 
-                <Row gutter={[64, 64]} style={{ marginTop: '32px' }}>
+                <Row gutter={[isLargeScreen ? 64 : 16, isLargeScreen ? 64 : 16]} style={{ marginTop: '32px' }}>
                     {isSearching ? (
                         <Col span={24} style={{ textAlign: 'center', padding: '2rem' }}>
                             <Spin size="large" />
                         </Col>
                     ) : (
                         jobOffers.map(job => (
-                            <Col md={24} lg={8} key={job.id}>
+                            <Col xs={24} lg={8} key={job.id}>
                                 <div style={{
                                     background: '#FAF3E7',
                                     padding: '2rem 2rem',

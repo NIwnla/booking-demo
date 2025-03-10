@@ -9,6 +9,7 @@ import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import axiosInstance from '../../../service/axios';
 import { routeNames } from '../../../constaints/routeName';
 import CustomDropdown from '../components/CustomDropdown';
+import JobSearchBar from '../components/JobSearchBar';
 const { Title, Text } = Typography;
 
 const Landing = () => {
@@ -58,6 +59,17 @@ const Landing = () => {
             },
         ],
     };
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div style={{ position: 'relative', minHeight: '100vh' }}>
             {/* Background Video */}
@@ -104,8 +116,8 @@ const Landing = () => {
             }}>
                 <Title style={{
                     color: 'white',
-                    fontSize: '8rem',
-                    marginBottom: '4rem'
+                    fontSize: '6rem',
+                    marginBottom: '2rem'
                 }}>
                     Career
                 </Title>
@@ -113,58 +125,90 @@ const Landing = () => {
                 <HoverLink to={routeNames.career.findJobs} fontSize="2rem" color="white">Find Jobs</HoverLink>
             </div>
 
-            <div style={{
-                position: 'absolute',
-                zIndex: 2,
-                padding: '2rem',
-                width: '30rem',
-                right: '3vw',
-                bottom: '2vh',
-            }}>
-                <Card
-                    title="Find Jobs"
-                    styles={{
-                        header: {
-                            textAlign: 'center',
-                            fontSize: '2rem'
-                        }
-                    }}
-                    style={{
-                        background: 'rgb(255, 255, 255)',
-                        borderRadius: '15px',
-                        textAlign: 'center'
-                    }}
-                >
-                    <Input
-                        placeholder="Search..."
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        style={{
-                            marginBottom: '1rem',
-                            fontSize: '2rem',
-                            border: 'none',
-                            borderBottom: '3px solid rgb(252, 162, 162)',
-                            borderRadius: 0,
+            {isLargeScreen ? (
+                <div style={{
+                    position: 'absolute',
+                    zIndex: 2,
+                    padding: '2rem',
+                    width: '30rem',
+                    right: '3vw',
+                    bottom: '2vh',
+                }}>
+                    <Card
+                        title="Find Jobs"
+                        styles={{
+                            header: {
+                                textAlign: 'center',
+                                fontSize: '2rem'
+                            }
                         }}
-                    />
-                    <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1rem' }}>
-                        <CustomDropdown
-                            menu={whatItems}
-                            value={selectedWhat}
-                            placeholder="What"
+                        style={{
+                            background: 'rgb(255, 255, 255)',
+                            borderRadius: '15px',
+                            textAlign: 'center'
+                        }}
+                    >
+                        <Input
+                            placeholder="Search..."
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            style={{
+                                marginBottom: '1rem',
+                                fontSize: '2rem',
+                                border: 'none',
+                                borderBottom: '3px solid rgb(252, 162, 162)',
+                                borderRadius: 0,
+                            }}
                         />
-                    </div>
-                    <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1.5rem' }}>
-                        <CustomDropdown
-                            menu={whereItems}
-                            value={selectedWhere}
-                            placeholder="Where"
-                        />
-                    </div>
-                    <Button
-                        type="link"
-                        style={{ textDecoration: 'underline', fontSize: '1.5rem' }}
-                        onClick={() => {
+                        <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1rem' }}>
+                            <CustomDropdown
+                                menu={whatItems}
+                                value={selectedWhat}
+                                placeholder="What"
+                            />
+                        </div>
+                        <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1.5rem' }}>
+                            <CustomDropdown
+                                menu={whereItems}
+                                value={selectedWhere}
+                                placeholder="Where"
+                            />
+                        </div>
+                        <Button
+                            type="link"
+                            style={{ textDecoration: 'underline', fontSize: '1.5rem' }}
+                            onClick={() => {
+                                navigate(routeNames.career.findJobs, {
+                                    state: {
+                                        search: searchValue,
+                                        type: selectedWhat,
+                                        location: selectedWhere
+                                    }
+                                });
+                            }}
+                        >
+                            Find Jobs
+                        </Button>
+                    </Card>
+                </div>
+            ) : (
+                <div style={{
+                    position: 'absolute',
+                    bottom: 100,
+                    left: 0,
+                    width: '100%',
+                    padding: '1rem',
+                    background: 'transparent',
+                    zIndex: 2,
+                }}>
+                    <JobSearchBar
+                        searchValue={searchValue}
+                        onSearchChange={(e) => setSearchValue(e.target.value)}
+                        whatItems={whatItems}
+                        whereItems={whereItems}
+                        selectedWhat={selectedWhat}
+                        selectedWhere={selectedWhere}
+                        onSearch={() => {
                             navigate(routeNames.career.findJobs, {
                                 state: {
                                     search: searchValue,
@@ -173,11 +217,11 @@ const Landing = () => {
                                 }
                             });
                         }}
-                    >
-                        Find Jobs
-                    </Button>
-                </Card>
-            </div>
+                        isSearching={false}
+                        isLargeScreen={isLargeScreen}
+                    />
+                </div>
+            )}
         </div>
     );
 };
