@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import video from "../../../assets/LandingPageVideo.mp4";
 
-const LandingPageFirstPart = () => {
+const Landing = () => {
     return (
         <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
             {/* Background Video */}
@@ -78,4 +78,4 @@ const LandingPageFirstPart = () => {
 
 }
 
-export default LandingPageFirstPart;
+export default Landing;

@@ -1,12 +1,24 @@
 import { CaretDownOutlined, DownOutlined } from '@ant-design/icons';
 import { Carousel, Col, Dropdown, Row, Typography } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 const { Title, Text } = Typography;
 
 const LandingPageSecondPart = () => {
     const [selectedLocation, setSelectedLocation] = useState(null);
+
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const locations = ["Location 1", "Location 2", "Location 3", "Location 4", "Location 5"];
     const items = [
         {
@@ -49,25 +61,26 @@ const LandingPageSecondPart = () => {
         <div>
             <Row>
                 <Col
-                    span={12}
+                    xs={24} lg={12}
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         backgroundColor: 'rgb(48, 102, 202)',
-                        height: '80vh'
+                        height: '40rem',
+                        width: '100%'
                     }}
                 >
-                    <Title style={{ paddingTop: '5vh', fontSize: '3vw', color: 'white' }}>Location</Title>
+                    <Title style={{ paddingTop: '5vh', fontSize: '3rem', color: 'white' }}>Location</Title>
 
                     {/* Line of words with arrow when clicked */}
                     <div style={{
                         marginBottom: '3vh',
                         display: 'flex',
                         justifyContent: 'space-between',
-                        width: '40vw',
-                        paddingTop: '1vh',
+                        minWidth: isLargeScreen ? '80%' : '90%',
+                        paddingTop: '0.75rem',
                         position: 'relative',
                     }}>
                         {locations.map((location, index) => (
@@ -75,7 +88,7 @@ const LandingPageSecondPart = () => {
                                 <Text
                                     style={{
                                         color: 'white',
-                                        fontSize: '1vw',
+                                        fontSize: '1rem',
                                         cursor: 'pointer',
                                     }}
                                     onClick={() => handleLocationClick(index)} // Handle click on location
@@ -90,7 +103,7 @@ const LandingPageSecondPart = () => {
                                         top: '-5vh',
                                         left: '50%',
                                         transform: 'translateX(-50%)',
-                                        fontSize: '1.5vw',
+                                        fontSize: '1.5rem',
                                         color: 'white',
                                     }}>
                                         <CaretDownOutlined />
@@ -102,19 +115,19 @@ const LandingPageSecondPart = () => {
 
 
                     {/* Dropdown without border */}
-                    <div style={{ borderBottom: '2px solid white' }}>
+                    <div style={{ borderBottom: '2px solid white', minWidth: isLargeScreen ? '80%' : '90%', }}>
                         <Dropdown menu={{ items }} trigger={['click']}>
-                            <div style={{ display: 'flex', alignItems: 'center', width: '40vw', justifyContent: 'space-between', paddingBottom: '1vh' }}>
-                                <Text style={{ color: 'white', fontSize: '1vw', margin: 0 }}>Select location</Text>
-                                <DownOutlined style={{ color: 'white', fontSize: '1.5vw' }} />
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '1vh' }}>
+                                <Text style={{ color: 'white', fontSize: '1rem', margin: 0 }}>Select location</Text>
+                                <DownOutlined style={{ color: 'white', fontSize: '1.5rem' }} />
                             </div>
                         </Dropdown>
                     </div>
 
                     <div style={{
                         backgroundColor: 'white',
-                        height: '40vh',
-                        width: '30vw',
+                        height: '100%',
+                        width: '80%',
                         borderRadius: '8px',
                         margin: '10vh 0',
                         position: 'relative',
@@ -130,8 +143,8 @@ const LandingPageSecondPart = () => {
                                 left: '50%',
                                 transform: 'translate(-50%, -50%)',
                                 color: 'black',
-                                fontSize: '1.5vw',
-                                padding: '0.5vw 1vw',
+                                fontSize: '1.5rem',
+                                padding: '0.5rem 1rem',
                                 textDecoration: "underline"
                             }}>
                             Click Here
@@ -140,21 +153,21 @@ const LandingPageSecondPart = () => {
 
                 </Col>
                 <Col
-                    span={12}
+                    xs={24} lg={12}
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
                         flexDirection: 'column',
                         alignItems: 'center',
                         backgroundColor: 'rgb(204, 204, 204)',
-                        height: '80vh'
+                        height: '40rem'
                     }}>
-                    <Title style={{ paddingTop: '5vh', fontSize: '3vw' }}>Menu</Title>
+                    <Title style={{ paddingTop: '5vh', fontSize: '3rem' }}>Menu</Title>
                     <div style={{
                         background: 'rgb(99, 99, 99)',
                         position: "relative",
-                        height: "80vh",
-                        width: "30vw",
+                        height: "100%",
+                        width: isLargeScreen ? '80%' : '90%',
                         borderRadius: "8px",
                         overflow: "hidden",
                         marginBottom: "10vh",
@@ -180,10 +193,10 @@ const LandingPageSecondPart = () => {
                                 top: "50%",
                                 left: "50%",
                                 transform: "translate(-50%, -50%)",
-                                fontSize: "1.5vw",
+                                fontSize: "1.5rem",
                                 color: "black",
                                 backgroundColor: "rgb(255, 255, 255)", // Optional background for visibility
-                                padding: "0.5vw 1vw",
+                                padding: "0.5rem 1rem",
                                 borderRadius: "50px",
                                 textDecoration: "underline"
                             }}>
@@ -214,7 +227,7 @@ const LandingPageSecondPart = () => {
                     }}>
                         {/* Title */}
                         <Title style={{
-                            fontSize: "3vw",
+                            fontSize: "3rem",
                             fontWeight: "bold",
                             marginBottom: "1vh",
                             color: "white"
@@ -224,9 +237,9 @@ const LandingPageSecondPart = () => {
 
                         {/* Description */}
                         <Text style={{
-                            fontSize: "1.5vw",
+                            fontSize: "1.5rem",
                             color: "white",
-                            width: '40vw'
+                            width: '60%'
                         }}>
                             Earth to People is our expression of gratitude to these ingredients,
                             from their origin, their growers, our chefs, and lastly to our guests.
@@ -235,7 +248,7 @@ const LandingPageSecondPart = () => {
 
                     {/* View More Link (Positioned at the bottom) */}
                     <div>
-                        <a href="/about-us" style={{ fontSize: "2vw", color: "white", textDecoration: "underline" }}>
+                        <a href="/about-us" style={{ fontSize: "2rem", color: "white", textDecoration: "underline" }}>
                             View More
                         </a>
                     </div>

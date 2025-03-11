@@ -1,16 +1,15 @@
-import { Typography } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LandingPageLoading from "../../../components/loadings/LandingPageLoading";
 import { AuthContext } from "../../../context/AuthContext";
+import Landing from "./Landing";
 import LandingPageEighthPart from "./LandingPageEighthPart";
 import LandingPageFifthPart from "./LandingPageFifthPart";
-import LandingPageFirstPart from "./LandingPageFirstPart";
 import LandingPageFourthPart from "./LandingPageFourthPart";
-import LandingPageSecondPart from "./LandingPageSecondPart";
 import LandingPageSeventhPart from "./LandingPageSeventhPart";
 import LandingPageSixthPart from "./LandingPageSixthPart";
-import LandingPageThirdPart from "./LandingPageThirdPart";
+import Library from "./Library";
+import LocationAndMenu from "./LocationAndMenu";
 
 const LandingPage = () => {
     const location = useLocation();
@@ -23,7 +22,7 @@ const LandingPage = () => {
 
 
     useEffect(() => {
-        setTimeout(() => setLoading(false), 2000);
+        setTimeout(() => setLoading(false), 1000);
     }, []);
 
     useEffect(() => {
@@ -36,9 +35,9 @@ const LandingPage = () => {
     return (
         <div>
             <LandingPageLoading loading={loading} />
-            <LandingPageFirstPart />
-            <LandingPageSecondPart />
-            <LandingPageThirdPart />
+            <Landing />
+            <LocationAndMenu />
+            <Library />
             <LandingPageFourthPart />
             <LandingPageFifthPart />
             <LandingPageSixthPart />
