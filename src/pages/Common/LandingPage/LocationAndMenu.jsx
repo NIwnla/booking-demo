@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
 
-const LandingPageSecondPart = () => {
+const LocationAndMenu = () => {
     const [selectedLocation, setSelectedLocation] = useState(null);
 
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
@@ -259,4 +259,4 @@ const LandingPageSecondPart = () => {
     )
 }
 
-export default LandingPageSecondPart
+export default LocationAndMenu
