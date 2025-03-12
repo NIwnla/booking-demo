@@ -146,15 +146,9 @@ const Library = () => {
             <style>
                 {`
                     .ant-carousel .slick-dots li button {
-                        width: 6px;
-                        height: 6px;
-                        border-radius: 100%;
                         border: 1px solid black;
                     }
                     .ant-carousel .slick-dots li.slick-active button {
-                        width: 6px;
-                        height: 6px;
-                        border-radius: 100%;
                         background: red !important;
                         border: 1px solid red;
                     }

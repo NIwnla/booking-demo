@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LandingPageLoading from "../../../components/loadings/LandingPageLoading";
 import { AuthContext } from "../../../context/AuthContext";
+import FollowSocialMedia from "./FollowSocialMedia";
 import Landing from "./Landing";
-import LandingPageEighthPart from "./LandingPageEighthPart";
-import LandingPageFifthPart from "./LandingPageFifthPart";
-import LandingPageFourthPart from "./LandingPageFourthPart";
-import LandingPageSeventhPart from "./LandingPageSeventhPart";
-import LandingPageSixthPart from "./LandingPageSixthPart";
 import Library from "./Library";
 import LocationAndMenu from "./LocationAndMenu";
+import News from "./News";
+import OriginalProduct from "./OriginalProduct";
+import OurVision from "./OurVision";
+import SustainabilityReport from "./SustainabilityReport";
 
 const LandingPage = () => {
     const location = useLocation();
@@ -38,11 +38,11 @@ const LandingPage = () => {
             <Landing />
             <LocationAndMenu />
             <Library />
-            <LandingPageFourthPart />
-            <LandingPageFifthPart />
-            <LandingPageSixthPart />
-            <LandingPageSeventhPart />
-            <LandingPageEighthPart/>
+            <SustainabilityReport />
+            <FollowSocialMedia />
+            <OurVision />
+            <OriginalProduct />
+            <News/>
         </div>
     );
 };

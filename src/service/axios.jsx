@@ -44,10 +44,14 @@ axiosInstance.interceptors.response.use(
     (error) => {
         console.error("Error :", error);
 
-        if (!error.response) {
+        if (error.response && error.response.status === 401) {
             console.error('Unauthorized, redirecting to index...');
             Cookies.remove('authToken');  // Remove the authentication token
             window.location.href = routeNames.index;  // Redirect to index
+            return Promise.reject(new Error('Unauthorized access'));
+        }
+
+        if (!error.response) {
             return Promise.reject(new Error('Network error, unable to connect to API'));
         }
 

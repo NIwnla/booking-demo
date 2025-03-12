@@ -1,9 +1,19 @@
 import { Row, Col, Button } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @ts-ignore
 import loadingIcon from './../../../assets/LoadingIcon.png';
 
-const LandingPageEighthPart = () => {
+const News = () => {
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth > 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     // Sample news data (11 news + 1 "View More" button)
     const newsItems = [
         { img: loadingIcon, date: "Jan 1, 2025", title: "News Title 1" },
@@ -21,42 +31,50 @@ const LandingPageEighthPart = () => {
 
     return (
         <div style={{ padding: "5vh 10vw", position: 'relative', zIndex: 1, backgroundColor: 'white', borderTop: "1px solid black" }}>
-            {/* News Title */}
-            <h1 style={{ fontSize: "3vw", marginBottom: "3vh" }}>News</h1>
-
-            {/* News Grid */}
+            <h1 style={{ fontSize: "3vw", marginBottom: "3vh", width: '100%', textAlign: 'center' }}>News</h1>
             <Row gutter={[16, 16]}>
                 {newsItems.map((news, index) => (
-                    <Col key={index} span={6}>
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            {/* Image */}
+                    <Col key={index} xs={24} lg={6}>
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: '16px' }}>
                             <img
                                 src={news.img}
                                 alt={news.title}
-                                style={{ width: "40%", height: "8vw", objectFit: "cover", borderRadius: "8px" }}
+                                style={{
+                                    width: isLargeScreen ? "40%" : '15rem',
+                                    height: isLargeScreen ? "8vw" : '15rem',
+                                    objectFit: "cover",
+                                    borderRadius: "8px",
+                                    border: '1px solid black'
+                                }}
                             />
-
-                            {/* Text */}
                             <div style={{ marginLeft: "1vw" }}>
-                                <p style={{ fontSize: "0.8vw", margin: "0", color: "gray" }}>{news.date}</p>
-                                <p style={{ fontSize: "1vw", fontWeight: "bold", margin: "0" }}>{news.title}</p>
+                                <p style={{ fontSize: isLargeScreen ? "0.8vw" : "1rem", margin: "0", color: "gray" }}>
+                                    {news.date}
+                                </p>
+                                <p style={{ fontSize: isLargeScreen ? "1vw" : "1.5rem", fontWeight: "bold", margin: "0" }}>
+                                    {news.title}
+                                </p>
                             </div>
                         </div>
                     </Col>
                 ))}
-
-                {/* View More Button (12th Div) */}
-                <Col span={6}>
-                    <div style={{ height: '100%', alignItems:'center', display:'flex'}}>
+                <Col xs={24} lg={6}>
+                    <div style={{
+                        height: '100%',
+                        alignItems: 'center',
+                        justifyContent: isLargeScreen ? 'flex-start' : 'center',
+                        display: 'flex',
+                        width: '100%'
+                    }}>
                         <Button
                             shape="circle"
                             style={{
-                                width: "8vw",
-                                height: "4vw",
-                                fontSize: "1vw",
+                                width: isLargeScreen ? "8vw" : '6rem',
+                                height: isLargeScreen ? "4vw" : '4rem',
+                                fontSize: isLargeScreen ? "1vw" : '1rem',
                                 background: "red",
                                 transition: "0.3s ease",
-                                color:'white'
+                                color: 'white'
                             }}
                             onMouseOver={(e) => (e.currentTarget.style.background = "white", e.currentTarget.style.color = "red")}
                             onMouseOut={(e) => (e.currentTarget.style.background = "red", e.currentTarget.style.color = "white")}
@@ -71,4 +89,4 @@ const LandingPageEighthPart = () => {
     );
 };
 
-export default LandingPageEighthPart;
+export default News;

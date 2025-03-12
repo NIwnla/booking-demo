@@ -1,0 +1,106 @@
+import { Row, Col, Carousel } from "antd";
+import React, { useEffect, useState } from "react";
+// @ts-ignore
+import loadingIcon from './../../../assets/LoadingIcon.png';
+
+const OriginalProduct = () => {
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    // Sample product data
+    const products = [
+        { img: loadingIcon, title: "Product 1" },
+        { img: loadingIcon, title: "Product 2" },
+        { img: loadingIcon, title: "Product 3" },
+        { img: loadingIcon, title: "Product 4" },
+    ];
+
+    return (
+        <div style={{ padding: "50px 7vw", position: 'relative', zIndex: 1, backgroundColor: 'white' }}>
+            <Row gutter={[16, 16]} style={{ padding: "50px 3vw" }}>
+                <Col xs={24} lg={6} style={{ display: 'flex', alignItems: 'center' }}>
+                    <h1 style={{ fontSize: "4vw", margin: 0, width: '100%', textAlign: isLargeScreen ? 'start' : 'center' }}>
+                        Original Products
+                    </h1>
+                </Col>
+                <Col xs={24} lg={18} style={{ display: 'flex', alignItems: 'center' }}>
+                    <p style={{ fontSize: "1.25vw", lineHeight: "1.5", margin: 0 }}>
+                        4P's Originals are goods that offer a variety of products that are artisanal and high-quality foods,
+                        prepared meals, as well as a selection of items produced by our like-minded business partners.
+                        You can certainly "bring peace home" with 4P's Originals.
+                    </p>
+                </Col>
+            </Row>
+
+            {isLargeScreen ? (
+                <Row gutter={[16, 16]} justify="space-between">
+                    {products.map((product, index) => (
+                        <Col key={index} span={6}>
+                            <div style={{ height: "40vh", textAlign: "left" }}>
+                                <img
+                                    src={product.img}
+                                    alt={product.title}
+                                    style={{
+                                        width: "100%",
+                                        height: "90%",
+                                        objectFit: "cover",
+                                        borderRadius: "8px",
+                                        border: '1px solid black'
+                                    }}
+                                />
+                                <p style={{ fontSize: "1rem", marginTop: "0.5vh" }}>{product.title}</p>
+                            </div>
+                        </Col>
+                    ))}
+                </Row>
+            ) : (
+                <Carousel>
+                    {products.map((product, index) => (
+                        <div key={index}>
+                            <div style={{
+                                height: "40rem",
+                                textAlign: "center",
+                                padding: "0 2rem"
+                            }}>
+                                <img
+                                    src={product.img}
+                                    alt={product.title}
+                                    style={{
+                                        width: "100%",
+                                        height: "90%",
+                                        objectFit: "cover",
+                                        borderRadius: "8px",
+                                        border: '1px solid black'
+                                    }}
+                                />
+                                <p style={{ fontSize: "1.2rem", marginTop: "1rem" }}>{product.title}</p>
+                            </div>
+                            <div style={{ height: '40px' }}></div>
+                        </div>
+                    ))}
+                </Carousel>
+            )}
+
+            <style>
+                {`
+                    .ant-carousel .slick-dots li button {
+                        border: 1px solid black;
+                    }
+                    .ant-carousel .slick-dots li.slick-active button {
+                        background: red !important;
+                        border: 1px solid red;
+                    }
+                `}
+            </style>
+        </div>
+    );
+};
+
+export default OriginalProduct;
