@@ -1,8 +1,13 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 // @ts-ignore
 import video from "../../../assets/LandingPageVideo.mp4";
 
 const Landing = () => {
+    const { t } = useTranslation('global');
+    
+    const branches = ['branch1', 'branch2', 'branch3', 'branch4'];
+
     return (
         <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
             {/* Background Video */}
@@ -55,10 +60,10 @@ const Landing = () => {
                     zIndex: 2,
                 }}
             >
-                {["Branch 1", "Branch 2", "Branch 3", "Branch 4"].map((branch, index) => (
+                {branches.map((branch, index) => (
                     <a
                         key={index}
-                        href={`#${branch.replace(" ", "").toLowerCase()}`}
+                        href={`#${branch.toLowerCase()}`}
                         style={{
                             color: "white",
                             fontSize: "3vw",
@@ -69,13 +74,12 @@ const Landing = () => {
                         onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(211, 13, 13, 0.86)")}
                         onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
                     >
-                        {branch}
+                        {t(`landing.branches.${branch}`)}
                     </a>
                 ))}
             </div>
         </div>
-    )
-
-}
+    );
+};
 
 export default Landing;

@@ -1,0 +1,20 @@
+{
+    "title": "Chi Nhánh",
+    "locations": {
+        "location1": "Chi Nhánh 1",
+        "location2": "Chi Nhánh 2",
+        "location3": "Chi Nhánh 3",
+        "location4": "Chi Nhánh 4",
+        "location5": "Chi Nhánh 5"
+    },
+    "menu": {
+        "location1": "Chi Nhánh 1",
+        "location2": "Chi Nhánh 2",
+        "location3": "Chi Nhánh 3"
+    },
+    "footer": {
+        "title": "Từ Trái Đất Đến Con Người - Sự Hợp Nhất -",
+        "description": "Từ Trái Đất Đến Con Người là cách chúng tôi bày tỏ lòng biết ơn đối với những nguyên liệu, từ nguồn gốc, người trồng, đầu bếp của chúng tôi và cuối cùng là đến thực khách.",
+        "viewMore": "Xem Thêm"
+    }
+}

@@ -1,9 +1,11 @@
 import { Row, Col, Carousel } from "antd";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 // @ts-ignore
 import loadingIcon from './../../../assets/LoadingIcon.png';
 
 const OriginalProduct = () => {
+    const { t } = useTranslation('global');
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     useEffect(() => {
@@ -14,12 +16,13 @@ const OriginalProduct = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
     // Sample product data
     const products = [
-        { img: loadingIcon, title: "Product 1" },
-        { img: loadingIcon, title: "Product 2" },
-        { img: loadingIcon, title: "Product 3" },
-        { img: loadingIcon, title: "Product 4" },
+        { img: loadingIcon, title: t('originalProduct.products.product1') },
+        { img: loadingIcon, title: t('originalProduct.products.product2') },
+        { img: loadingIcon, title: t('originalProduct.products.product3') },
+        { img: loadingIcon, title: t('originalProduct.products.product4') },
     ];
 
     return (
@@ -27,18 +30,17 @@ const OriginalProduct = () => {
             <Row gutter={[16, 16]} style={{ padding: "50px 3vw" }}>
                 <Col xs={24} lg={6} style={{ display: 'flex', alignItems: 'center' }}>
                     <h1 style={{ fontSize: "4vw", margin: 0, width: '100%', textAlign: isLargeScreen ? 'start' : 'center' }}>
-                        Original Products
+                        {t('originalProduct.title')}
                     </h1>
                 </Col>
                 <Col xs={24} lg={18} style={{ display: 'flex', alignItems: 'center' }}>
                     <p style={{ fontSize: "1.25vw", lineHeight: "1.5", margin: 0 }}>
-                        4P's Originals are goods that offer a variety of products that are artisanal and high-quality foods,
-                        prepared meals, as well as a selection of items produced by our like-minded business partners.
-                        You can certainly "bring peace home" with 4P's Originals.
+                        {t('originalProduct.description')}
                     </p>
                 </Col>
             </Row>
 
+            {/* Rest of the component remains the same */}
             {isLargeScreen ? (
                 <Row gutter={[16, 16]} justify="space-between">
                     {products.map((product, index) => (

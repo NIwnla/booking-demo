@@ -1,13 +1,13 @@
 import { CaretDownOutlined, DownOutlined } from '@ant-design/icons';
 import { Carousel, Col, Dropdown, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-
+import { useTranslation } from 'react-i18next';
 
 const { Title, Text } = Typography;
 
 const LocationAndMenu = () => {
+    const { t } = useTranslation('global');
     const [selectedLocation, setSelectedLocation] = useState(null);
-
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     useEffect(() => {
@@ -19,13 +19,13 @@ const LocationAndMenu = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const locations = ["Location 1", "Location 2", "Location 3", "Location 4", "Location 5"];
+    const locations = ["location1", "location2", "location3", "location4", "location5"];
     const items = [
         {
             key: '1',
             label: (
                 <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    Location 1
+                    {t('locationAndMenu.menu.location1')}
                 </a>
             ),
         },
@@ -33,7 +33,7 @@ const LocationAndMenu = () => {
             key: '2',
             label: (
                 <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                    Location 2
+                    {t('locationAndMenu.menu.location2')}
                 </a>
             ),
         },
@@ -41,7 +41,7 @@ const LocationAndMenu = () => {
             key: '3',
             label: (
                 <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                    Location 3
+                    {t('locationAndMenu.menu.location3')}
                 </a>
             ),
         }
@@ -72,9 +72,10 @@ const LocationAndMenu = () => {
                         width: '100%'
                     }}
                 >
-                    <Title style={{ paddingTop: '5vh', fontSize: '3rem', color: 'white' }}>Location</Title>
+                    <Title style={{ paddingTop: '5vh', fontSize: '3rem', color: 'white' }}>
+                        {t('locationAndMenu.title')}
+                    </Title>
 
-                    {/* Line of words with arrow when clicked */}
                     <div style={{
                         marginBottom: '3vh',
                         display: 'flex',
@@ -91,12 +92,11 @@ const LocationAndMenu = () => {
                                         fontSize: '1rem',
                                         cursor: 'pointer',
                                     }}
-                                    onClick={() => handleLocationClick(index)} // Handle click on location
+                                    onClick={() => handleLocationClick(index)}
                                 >
-                                    {location}
+                                    {t(`locationAndMenu.locations.${location}`)}
                                 </Text>
 
-                                {/* Arrow pointing to the selected text */}
                                 {selectedLocation === index && (
                                     <div style={{
                                         position: 'absolute',
@@ -232,7 +232,7 @@ const LocationAndMenu = () => {
                             marginBottom: "1vh",
                             color: "white"
                         }}>
-                            Earth to People - Oneness -
+                            {t('locationAndMenu.footer.title')}
                         </Title>
 
                         {/* Description */}
@@ -241,15 +241,14 @@ const LocationAndMenu = () => {
                             color: "white",
                             width: '60%'
                         }}>
-                            Earth to People is our expression of gratitude to these ingredients,
-                            from their origin, their growers, our chefs, and lastly to our guests.
+                            {t('locationAndMenu.footer.description')}
                         </Text>
                     </div>
 
                     {/* View More Link (Positioned at the bottom) */}
                     <div>
                         <a href="/about-us" style={{ fontSize: "2rem", color: "white", textDecoration: "underline" }}>
-                            View More
+                            {t('locationAndMenu.footer.viewMore')}
                         </a>
                     </div>
                 </Col>

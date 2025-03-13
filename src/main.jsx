@@ -1,8 +1,8 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import enTranslations from './translations/en/index';
-import vnTranslations from './translations/vi/index';
+import enTranslations from './translations/en/indexEN';
+import vnTranslations from './translations/vi/indexVI';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import Cookies from 'js-cookie';

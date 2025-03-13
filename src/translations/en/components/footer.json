@@ -1,3 +1,22 @@
 {
-  "copyright": "©2024 Nollowa Chicken"
+  "copyright": "©2024 Nollowa Chicken",
+  "links": {
+    "companyProfile": "Company Profile",
+    "privacyPolicy": "Privacy Policy",
+    "career": "Career",
+    "eInvoice": "E-Invoice"
+  },
+  "social": {
+    "followUs": "Follow Us!"
+  },
+  "contact": {
+    "inquiry": {
+      "label": "For Inquiry",
+      "email": "email@nollowaChicken.com"
+    },
+    "feedback": {
+      "label": "For Feedback",
+      "email": "email@nollowaChicken.com"
+    }
+  }
 }

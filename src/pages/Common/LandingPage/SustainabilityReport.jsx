@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Text } = Typography;
 
 const SustainabilityReport = () => {
+    const { t } = useTranslation('global');
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     useEffect(() => {
@@ -38,7 +40,7 @@ const SustainabilityReport = () => {
                     width: isLargeScreen ? '45%' : '100%',
                     margin: 0 
                 }}>
-                    Sustainability Report
+                    {t('sustainabilityReport.title')}
                 </Title>
             </div>
             <div style={{
@@ -64,7 +66,10 @@ const SustainabilityReport = () => {
                         e.currentTarget.style.color = 'red';
                     }}
                 >
-                    <p style={{ fontSize: isLargeScreen ? '1.5rem' : '1rem', margin: 0 }}>View <br />Report</p>
+                    <p style={{ fontSize: isLargeScreen ? '1.5rem' : '1rem', margin: 0 }}>
+                        {t('sustainabilityReport.button.view')} <br />
+                        {t('sustainabilityReport.button.report')}
+                    </p>
                 </Button>
             </div>
             <div style={{
@@ -77,7 +82,7 @@ const SustainabilityReport = () => {
                     width: isLargeScreen ? '45%' : '100%',
                     margin: 0 
                 }}>
-                    This report showcases our dedication to the environment and society.
+                    {t('sustainabilityReport.description')}
                 </p>
             </div>
         </div>

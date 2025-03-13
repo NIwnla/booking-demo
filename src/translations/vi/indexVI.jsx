@@ -13,6 +13,11 @@ import food from './components/food.json';
 import foodOption from './components/foodOption.json';
 import category from './components/category.json';
 import foodMenu from './components/foodMenu.json';
+import landing from './components/landingPage/landing.json';
+import locationAndMenu from './components/landingPage/locationAndMenu.json';
+import sustainabilityReport from './components/landingPage/sustainabilityReport.json';
+import ourVision from './components/landingPage/ourVision.json';
+import originalProduct from './components/landingPage/originalProduct.json';
 
 const translations = {
   header,
@@ -29,7 +34,12 @@ const translations = {
   food,
   foodOption,
   category,
-  foodMenu
+  foodMenu,
+  landing,
+  locationAndMenu,
+  sustainabilityReport,
+  ourVision,
+  originalProduct
 };
 
 export default translations;

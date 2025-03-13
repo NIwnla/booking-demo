@@ -1,3 +1,22 @@
 {
-  "copyright": "©2024 Nollowa Chicken"
+  "copyright": "©2024 Nollowa Chicken",
+  "links": {
+    "companyProfile": "Hồ Sơ Công Ty",
+    "privacyPolicy": "Chính Sách Bảo Mật",
+    "career": "Tuyển Dụng",
+    "eInvoice": "Hóa Đơn Điện Tử"
+  },
+  "social": {
+    "followUs": "Follow Chúng Tôi!"
+  },
+  "contact": {
+    "inquiry": {
+      "label": "Để Liên Hệ",
+      "email": "email@nollowaChicken.com"
+    },
+    "feedback": {
+      "label": "Để Phản Hồi",
+      "email": "email@nollowaChicken.com"
+    }
+  }
 }

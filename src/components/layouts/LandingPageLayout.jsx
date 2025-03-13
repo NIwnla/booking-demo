@@ -342,21 +342,23 @@ const LandingPageLayout = ({ children }) => {
 
                     <Col xs={24} lg={6} style={{ display: "flex", flexDirection: "column", gap: "16px", alignItems: 'flex-start', paddingLeft: '2vw' }}>
                         <a href="/about" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
-                            Company Profile
+                            {t("footer.links.companyProfile")}
                         </a>
                         <a href="/careers" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
-                            Privacy Policy
+                            {t("footer.links.privacyPolicy")}
                         </a>
                         <a href="/contact" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
-                            Career
+                            {t("footer.links.career")}
                         </a>
                         <a href="/privacy" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
-                            E-Invoice
+                            {t("footer.links.eInvoice")}
                         </a>
                     </Col>
 
                     <Col xs={24} lg={8} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', padding: '16px 2vw' }} >
-                        <Text style={{ color: 'white', fontSize: '1.5rem' }}>Follow Us!</Text>
+                        <Text style={{ color: 'white', fontSize: '1.5rem' }}>
+                            {t("footer.social.followUs")}
+                        </Text>
                         <div style={{ display: "flex", gap: "16px" }}>
                             <YoutubeOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
                             <InstagramOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
@@ -382,12 +384,12 @@ const LandingPageLayout = ({ children }) => {
                         alignItems: 'center',
                     }}>
                         <Text style={{ color: "white", fontSize: "0.9rem", paddingRight: '5vw' }}>
-                            For Inquiry {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
-                            <a style={{ color: 'white' }}>email@nollowaChicken.com</a>
+                            {t("footer.contact.inquiry.label")} {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
+                            <a style={{ color: 'white' }}>{t("footer.contact.inquiry.email")}</a>
                         </Text>
                         <Text style={{ color: "white", fontSize: "0.9rem" }}>
-                            For FeedBack {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
-                            <a style={{ color: 'white' }}>email@nollowaChicken.com</a>
+                            {t("footer.contact.feedback.label")} {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
+                            <a style={{ color: 'white' }}>{t("footer.contact.feedback.email")}</a>
                         </Text>
                     </div>
                     <Text style={{ color: "white", fontSize: "0.9rem" }}>{t("footer.copyright")}</Text>

@@ -1,0 +1,10 @@
+{
+    "title": "Original Products",
+    "description": "4P's Originals are goods that offer a variety of products that are artisanal and high-quality foods, prepared meals, as well as a selection of items produced by our like-minded business partners. You can certainly \"bring peace home\" with 4P's Originals.",
+    "products": {
+        "product1": "Product 1",
+        "product2": "Product 2",
+        "product3": "Product 3",
+        "product4": "Product 4"
+    }
+}
