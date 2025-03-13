@@ -68,7 +68,7 @@ const LocationAndMenu = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         backgroundColor: 'rgb(48, 102, 202)',
-                        height: '40rem',
+                        height: '45rem',
                         width: '100%'
                     }}
                 >
@@ -160,7 +160,7 @@ const LocationAndMenu = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                         backgroundColor: 'rgb(204, 204, 204)',
-                        height: '40rem'
+                        height: '45rem',
                     }}>
                     <Title style={{ paddingTop: '5vh', fontSize: '3rem' }}>Menu</Title>
                     <div style={{

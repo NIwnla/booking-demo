@@ -327,39 +327,70 @@ const LandingPageLayoutWhite = ({ children }) => {
             )}
 
             {/* Footer */}
-            <Footer style={{ backgroundColor: 'red', color: "white", padding: "3vh 0", position: 'relative', zIndex: 1, }}>
+            <Footer style={{
+                backgroundColor: 'red',
+                color: "white",
+                padding: "2rem 0",
+                paddingBottom: isLargeScreen ? '1rem' : '85px',
+                position: 'relative',
+                zIndex: 1,
+            }}>
                 <Row align="middle">
-
-                    <Col span={8}>
+                    <Col xs={24} lg={10}>
                         {/* Add content later */}
                     </Col>
 
-                    <Col span={8} style={{ display: "flex", flexDirection: "column", gap: "0.8vh", alignItems: 'flex-end' }}>
-                        <a href="/about" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>About Us</a>
-                        <a href="/careers" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>Careers</a>
-                        <a href="/contact" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>Contact</a>
-                        <a href="/privacy" style={{ color: "white", fontSize: "1vw", textDecoration: "none" }}>Privacy Policy</a>
+                    <Col xs={24} lg={6} style={{ display: "flex", flexDirection: "column", gap: "16px", alignItems: 'flex-start', paddingLeft: '2vw' }}>
+                        <a href="/about" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
+                            Company Profile
+                        </a>
+                        <a href="/careers" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
+                            Privacy Policy
+                        </a>
+                        <a href="/contact" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
+                            Career
+                        </a>
+                        <a href="/privacy" style={{ color: "white", fontSize: "1.25rem", textDecoration: "none" }}>
+                            E-Invoice
+                        </a>
                     </Col>
 
-                    <Col span={8} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingLeft: '4vw' }} >
-                        <Text style={{ color: 'white', fontSize: '1.5vw' }}>Follow Us!</Text>
-                        <div style={{ display: "flex", gap: "1vw" }}>
-                            <YoutubeOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
-                            <InstagramOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
-                            <FacebookOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
-                            <LinkedinOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
-                            <PinterestOutlined style={{ fontSize: "2vw", cursor: "pointer" }} />
+                    <Col xs={24} lg={8} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', padding: '16px 2vw' }} >
+                        <Text style={{ color: 'white', fontSize: '1.5rem' }}>Follow Us!</Text>
+                        <div style={{ display: "flex", gap: "16px" }}>
+                            <YoutubeOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
+                            <InstagramOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
+                            <FacebookOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
+                            <LinkedinOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
+                            <PinterestOutlined style={{ fontSize: "2rem", cursor: "pointer" }} />
                         </div>
                     </Col>
                 </Row>
 
                 {/* Copyright Text */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', textAlign: "center", marginTop: "2vh", padding: '0 2vw' }}>
-                    <div>
-                        <Text style={{ color: "white", fontSize: "0.9vw", paddingRight: '5vw' }}>For Inquiry</Text>
-                        <Text style={{ color: "white", fontSize: "0.9vw" }}>For FeedBack</Text>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: isLargeScreen ? 'row' : 'column',
+                    justifyContent: 'space-between',
+                    gap: '16px',
+                    textAlign: "start",
+                    marginTop: "16px",
+                    padding: '0 2vw',
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>
+                        <Text style={{ color: "white", fontSize: "0.9rem", paddingRight: '5vw' }}>
+                            For Inquiry {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
+                            <a style={{ color: 'white' }}>email@nollowaChicken.com</a>
+                        </Text>
+                        <Text style={{ color: "white", fontSize: "0.9rem" }}>
+                            For FeedBack {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
+                            <a style={{ color: 'white' }}>email@nollowaChicken.com</a>
+                        </Text>
                     </div>
-                    <Text style={{ color: "white", fontSize: "0.9vw" }}>{t("footer.copyright")}</Text>
+                    <Text style={{ color: "white", fontSize: "0.9rem" }}>{t("footer.copyright")}</Text>
                 </div>
             </Footer>
         </Layout >

@@ -156,18 +156,18 @@ const Landing = () => {
                                 marginBottom: '1rem',
                                 fontSize: '2rem',
                                 border: 'none',
-                                borderBottom: '3px solid rgb(252, 162, 162)',
+                                borderBottom: '3px solid black',
                                 borderRadius: 0,
                             }}
                         />
-                        <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1rem' }}>
+                        <div style={{ borderBottom: '3px solid black', marginBottom: '1rem' }}>
                             <CustomDropdown
                                 menu={whatItems}
                                 value={selectedWhat}
                                 placeholder="What"
                             />
                         </div>
-                        <div style={{ borderBottom: '3px solid rgb(252, 162, 162)', marginBottom: '1.5rem' }}>
+                        <div style={{ borderBottom: '3px solid black', marginBottom: '1.5rem' }}>
                             <CustomDropdown
                                 menu={whereItems}
                                 value={selectedWhere}

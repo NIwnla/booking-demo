@@ -1,6 +1,8 @@
 import { Typography, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { RightOutlined } from '@ant-design/icons';
+// @ts-ignore
+import sampleImage from '../../../assets/LoadingIcon.png'
 
 const { Title, Paragraph } = Typography;
 
@@ -28,6 +30,24 @@ const careerPaths = [
         description: "Begin as a Junior Designer and grow into a Design Director. Master user research, interaction design, and visual communication. Create intuitive and beautiful experiences that delight users.",
         color: "#F9F0FF",
         activeColor: "#D3ADF7"
+    }
+];
+
+const features = [
+    {
+        title: "Career Growth",
+        description: "Discover endless opportunities for professional development and advancement within our organization.",
+        image: sampleImage
+    },
+    {
+        title: "Work Culture",
+        description: "Join a collaborative and innovative environment where your ideas are valued and creativity thrives.",
+        image: sampleImage
+    },
+    {
+        title: "Benefits",
+        description: "Enjoy comprehensive benefits package designed to support your professional and personal well-being.",
+        image: sampleImage
     }
 ];
 
@@ -285,6 +305,61 @@ const CareerPath = () => {
                             </Col>
                         </Row>
                     </Col>
+                </Row>
+            </div>
+
+            <div style={{ padding: '0 1vw' }}>
+                <Row gutter={[8, 4]}>
+                    {features.map((feature, index) => (
+                        <Col xs={24} lg={8} key={index}>
+                            <div
+                                style={{
+                                    background: '#f0f0f0',
+                                    overflow: 'hidden',
+                                    height: '100%',
+                                    position: 'relative',
+                                    cursor: 'pointer'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.querySelector('img').style.transform = 'scale(1.1)';
+                                    // @ts-ignore
+                                    e.currentTarget.querySelector('.arrow').style.transform = 'translateX(10px)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.querySelector('img').style.transform = 'scale(1)';
+                                    // @ts-ignore
+                                    e.currentTarget.querySelector('.arrow').style.transform = 'translateX(0)';
+                                }}
+                            >
+                                <div style={{ height: isLargeScreen ? '250px' : '500px', overflow: 'hidden' }}>
+                                    <img
+                                        src={feature.image}
+                                        alt={feature.title}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            transition: 'transform 0.3s ease',
+                                            border: '1px solid black'
+                                        }}
+                                    />
+                                </div>
+                                <div style={{ padding: '1.5rem', position: 'relative' }}>
+                                    <Title style={{ marginRight: '2rem', fontSize: '2rem' }}>{feature.title}</Title>
+                                    <Paragraph style={{ fontSize: '1rem' }}>
+                                        {feature.description}
+                                    </Paragraph>
+                                    <RightOutlined className="arrow" style={{
+                                        position: 'absolute',
+                                        top: '1.7rem',
+                                        right: '1.5rem',
+                                        fontSize: '1.2rem',
+                                        transition: 'transform 0.3s ease'
+                                    }} />
+                                </div>
+                            </div>
+                        </Col>
+                    ))}
                 </Row>
             </div>
         </div >
