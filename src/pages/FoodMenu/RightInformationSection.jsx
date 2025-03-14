@@ -1,25 +1,33 @@
 import { DeleteOutlined, RightCircleOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Button, Card, Empty, Typography } from 'antd';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CartItemCard from '../../components/cards/foodMenu/CartItemCard';
 import { routeNames } from '../../constaints/routeName';
 import { DeliveryContext } from '../../context/DeliveryContext';
 import { useTranslation } from "react-i18next";
+import LocationPickerModal from '../../components/modals/foodMenu/LocationPickerModal';
 
 const { Paragraph, Title } = Typography;
 
 const RightInformationSection = () => {
     const { t } = useTranslation("global");
-    const { cart, clearCart } = useContext(DeliveryContext);
+    const { cart, clearCart, location } = useContext(DeliveryContext);
+    const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
     const cartIsEmpty = cart.length === 0;
     const navigate = useNavigate();
     const totalCartPrice = cart.reduce((sum, item) => sum + item.total, 0);
 
     return (
         <div>
-            <Card style={{ textAlign: 'start', borderRadius: '10px', marginBottom: '20px' }}>
-                <Paragraph>📍 <strong>{t('foodMenu.rightInformation.location')}:</strong> {t('foodMenu.rightInformation.locationDetails')}</Paragraph>
+            <Card 
+                style={{ textAlign: 'start', borderRadius: '10px', marginBottom: '20px', cursor: 'pointer' }}
+                onClick={() => setIsLocationModalOpen(true)}
+            >
+                <Paragraph>
+                    📍 <strong>{t('foodMenu.rightInformation.location')}:</strong>{' '}
+                    {location ? location.formattedAddress : t('foodMenu.mainPage.selectLocation')}
+                </Paragraph>
             </Card>
 
             <Title level={4} style={{ marginBottom: '10px' }}>{t('foodMenu.rightInformation.shoppingCart')}</Title>
@@ -94,6 +102,10 @@ const RightInformationSection = () => {
                     </div>
                 </div>
             )}
+            <LocationPickerModal 
+                isOpen={isLocationModalOpen}
+                onClose={() => setIsLocationModalOpen(false)}
+            />
         </div>
     );
 };

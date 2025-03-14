@@ -69,5 +69,101 @@
       "viewResume": "View Resume",
       "fetchError": "Failed to fetch data."
     }
+  },
+  "landing": {
+    "title": "Career",
+    "links": {
+      "aboutUs": "About Us",
+      "findJobs": "Find Jobs"
+    },
+    "search": {
+      "title": "Find Jobs",
+      "searchPlaceholder": "Search...",
+      "what": "What",
+      "where": "Where",
+      "button": "Find Jobs",
+      "locations": {
+        "hanoi": "Ha Noi",
+        "hochiminh": "Ho Chi Minh",
+        "danang": "Da Nang"
+      }
+    }
+  },
+  "allJobs": {
+    "title": "All Jobs",
+    "loading": "Loading...",
+    "jobTypes": {
+      "fullTime": "Full Time",
+      "partTime": "Part Time"
+    },
+    "applyNow": "Apply Now"
+  },
+  "careerPath": {
+    "title": "Career Path",
+    "paths": {
+      "softwareDev": {
+        "title": "Software Development",
+        "description": "Start your journey as a Junior Developer and grow into a Technical Lead. Master various programming languages, frameworks, and architectural patterns. Lead innovative projects and mentor future developers."
+      },
+      "dataScience": {
+        "title": "Data Science",
+        "description": "Begin as a Data Analyst and progress to Data Science Manager. Develop expertise in machine learning, statistical analysis, and big data technologies. Drive data-driven decision making across the organization."
+      },
+      "productManagement": {
+        "title": "Product Management",
+        "description": "Start as a Product Analyst and advance to Senior Product Manager. Develop product strategy, conduct market research, and lead cross-functional teams. Shape the future of our products and user experience."
+      },
+      "uxDesign": {
+        "title": "UX/UI Design",
+        "description": "Begin as a Junior Designer and grow into a Design Director. Master user research, interaction design, and visual communication. Create intuitive and beautiful experiences that delight users."
+      }
+    },
+    "features": {
+      "careerGrowth": {
+        "title": "Career Growth",
+        "description": "Discover endless opportunities for professional development and advancement within our organization."
+      },
+      "workCulture": {
+        "title": "Work Culture",
+        "description": "Join a collaborative and innovative environment where your ideas are valued and creativity thrives."
+      },
+      "benefits": {
+        "title": "Benefits",
+        "description": "Enjoy comprehensive benefits package designed to support your professional and personal well-being."
+      }
+    },
+    "video": "Video",
+    "hrOrientation": {
+      "title": "HR Orientation Training",
+      "description": "What is the orientation training session full of excitement and excitement by the diversity of new Partners? To start a new journey at Pizza 4P's, a clear orientation and roadmap for Partners is what we 4P's always aim for."
+    },
+    "interviewTips": {
+      "title": "Interview tip at 4Ps",
+      "description": "Beautiful notes for you to get out of the interview to become a Pizza 4P's home partner in just one note, how？？？"
+    }
+  },
+  "lifeAt": {
+    "title": "Life at 4P's",
+    "description": "Here are some articles help you with thinking about your career plan at 4P's. We'd like to introduce various welfare benefits and training programs, as well as events where you can experience the 4P's vision and values.",
+    "viewMore": "View More",
+    "members": "members",
+    "articles": {
+      "culture": {
+        "tag": "Culture",
+        "title": "4P's Culture Day"
+      },
+      "event": {
+        "tag": "Event",
+        "title": "Team Building Event"
+      },
+      "training": {
+        "tag": "Training",
+        "title": "Leadership Workshop"
+      },
+      "welfare": {
+        "tag": "Welfare",
+        "title": "Employee Benefits Update"
+      }
+    }
   }
 }

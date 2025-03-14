@@ -69,5 +69,101 @@
       "viewResume": "Xem hồ sơ",
       "fetchError": "Lỗi khi lấy dữ liệu."
     }
+  },
+  "landing": {
+    "title": "Tuyển Dụng",
+    "links": {
+      "aboutUs": "Về Chúng Tôi",
+      "findJobs": "Tìm Việc Làm"
+    },
+    "search": {
+      "title": "Tìm Việc Làm",
+      "searchPlaceholder": "Tìm kiếm...",
+      "what": "Vị Trí",
+      "where": "Địa Điểm",
+      "button": "Tìm Việc",
+      "locations": {
+        "hanoi": "Hà Nội",
+        "hochiminh": "Hồ Chí Minh",
+        "danang": "Đà Nẵng"
+      }
+    }
+  },
+  "allJobs": {
+    "title": "Tất Cả Công Việc",
+    "loading": "Đang tải...",
+    "jobTypes": {
+      "fullTime": "Toàn Thời Gian",
+      "partTime": "Bán Thời Gian"
+    },
+    "applyNow": "Ứng Tuyển Ngay"
+  },
+  "careerPath": {
+    "title": "Lộ Trình Nghề Nghiệp",
+    "paths": {
+      "softwareDev": {
+        "title": "Phát Triển Phần Mềm",
+        "description": "Bắt đầu hành trình của bạn với vị trí Lập Trình Viên và phát triển thành Trưởng Nhóm Kỹ Thuật. Làm chủ nhiều ngôn ngữ lập trình, framework và mô hình kiến trúc. Dẫn dắt các dự án sáng tạo và hướng dẫn các lập trình viên tương lai."
+      },
+      "dataScience": {
+        "title": "Khoa Học Dữ Liệu",
+        "description": "Bắt đầu với vị trí Phân Tích Dữ Liệu và tiến tới Quản Lý Khoa Học Dữ Liệu. Phát triển chuyên môn về học máy, phân tích thống kê và công nghệ dữ liệu lớn. Thúc đẩy việc ra quyết định dựa trên dữ liệu trong tổ chức."
+      },
+      "productManagement": {
+        "title": "Quản Lý Sản Phẩm",
+        "description": "Bắt đầu với vị trí Phân Tích Sản Phẩm và tiến tới Quản Lý Sản Phẩm Cao Cấp. Phát triển chiến lược sản phẩm, thực hiện nghiên cứu thị trường và lãnh đạo các nhóm đa chức năng. Định hình tương lai của sản phẩm và trải nghiệm người dùng."
+      },
+      "uxDesign": {
+        "title": "Thiết Kế UX/UI",
+        "description": "Bắt đầu với vị trí Thiết Kế Viên và phát triển thành Giám Đốc Thiết Kế. Làm chủ nghiên cứu người dùng, thiết kế tương tác và truyền thông thị giác. Tạo ra trải nghiệm trực quan và đẹp mắt cho người dùng."
+      }
+    },
+    "features": {
+      "careerGrowth": {
+        "title": "Phát Triển Nghề Nghiệp",
+        "description": "Khám phá vô số cơ hội phát triển chuyên môn và thăng tiến trong tổ chức của chúng tôi."
+      },
+      "workCulture": {
+        "title": "Văn Hóa Làm Việc",
+        "description": "Tham gia môi trường hợp tác và sáng tạo, nơi ý tưởng của bạn được đánh giá cao và sự sáng tạo phát triển mạnh mẽ."
+      },
+      "benefits": {
+        "title": "Phúc Lợi",
+        "description": "Tận hưởng gói phúc lợi toàn diện được thiết kế để hỗ trợ sự phát triển chuyên môn và cá nhân của bạn."
+      }
+    },
+    "video": "Video",
+    "hrOrientation": {
+      "title": "Đào Tạo Định Hướng HR",
+      "description": "Buổi đào tạo định hướng đầy hứng khởi và thú vị với sự đa dạng của các đối tác mới là gì? Để bắt đầu hành trình mới tại Pizza 4P's, định hướng rõ ràng và lộ trình cho các Đối tác là điều mà chúng tôi luôn hướng tới."
+    },
+    "interviewTips": {
+      "title": "Mẹo Phỏng Vấn tại 4Ps",
+      "description": "Những ghi chú tuyệt vời để bạn vượt qua buổi phỏng vấn trở thành đối tác của Pizza 4P's chỉ trong một lần ghi chú, làm thế nào？？？"
+    }
+  },
+  "lifeAt": {
+    "title": "Cuộc Sống tại 4P's",
+    "description": "Dưới đây là một số bài viết giúp bạn suy nghĩ về kế hoạch sự nghiệp tại 4P's. Chúng tôi muốn giới thiệu các phúc lợi và chương trình đào tạo, cũng như các sự kiện nơi bạn có thể trải nghiệm tầm nhìn và giá trị của 4P's.",
+    "viewMore": "Xem Thêm",
+    "members": "thành viên",
+    "articles": {
+      "culture": {
+        "tag": "Văn Hóa",
+        "title": "Ngày Văn Hóa 4P's"
+      },
+      "event": {
+        "tag": "Sự Kiện",
+        "title": "Sự Kiện Gắn Kết Đội Ngũ"
+      },
+      "training": {
+        "tag": "Đào Tạo",
+        "title": "Hội Thảo Lãnh Đạo"
+      },
+      "welfare": {
+        "tag": "Phúc Lợi",
+        "title": "Cập Nhật Phúc Lợi Nhân Viên"
+      }
+    }
   }
 }

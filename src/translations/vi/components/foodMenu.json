@@ -16,9 +16,15 @@
   "mainPage": {
     "deliveryInformationTitle": "Thông Tin Giao Hàng",
     "deliveryDescription": "Chào mừng đến với dịch vụ giao hàng của chúng tôi. Thưởng thức các món ăn tươi ngon được giao tận nơi.",
-    "deliveryBenefits": "Nhanh chóng, đáng tin cậy và tiện lợi.",
+    "deliveryBenefits": "Nhanh chóng, đáng tin cậy và thuận tiện.",
     "categories": "Danh Mục",
-    "popularFoods": "Phổ Biến"
+    "popularFoods": "Phổ Biến",
+    "selectLocation": "Chọn địa điểm của bạn",
+    "mapModal": {
+      "cancel": "Hủy",
+      "confirm": "Xác nhận",
+      "selectedLocation": "Địa Điểm Đã Chọn"
+    }
   },
   "detailedFoodPage": {
     "home": "Trang Chủ",

@@ -18,7 +18,13 @@
         "deliveryDescription": "Welcome to our delivery service. Enjoy fresh and delicious meals delivered to your doorstep.",
         "deliveryBenefits": "Fast, reliable, and convenient.",
         "categories": "Categories",
-        "popularFoods": "Popular"
+        "popularFoods": "Popular",
+        "selectLocation": "Select your location",
+        "mapModal": {
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "selectedLocation": "Selected Location"
+        }
     },
     "detailedFoodPage": {
         "home": "Home",

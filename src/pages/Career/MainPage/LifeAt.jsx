@@ -1,5 +1,6 @@
 import { Typography, Row, Col, Button, Carousel, Tag } from 'antd';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 // @ts-ignore
 import sampleImage from '../../../assets/LoadingIcon.png';
 import { useInView } from 'react-intersection-observer';
@@ -8,6 +9,7 @@ import TypedText from './components/TypedText';
 const { Title, Paragraph } = Typography;
 
 const LifeAt = () => {
+    const { t } = useTranslation('global');
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     const [refDelivering, inViewDelivering] = useInView({ triggerOnce: true });
@@ -25,10 +27,30 @@ const LifeAt = () => {
     }, []);
 
     const items = [
-        { image: sampleImage, tag: "Culture", date: "Jan 1, 2024", title: "4P's Culture Day" },
-        { image: sampleImage, tag: "Event", date: "Feb 15, 2024", title: "Team Building Event" },
-        { image: sampleImage, tag: "Training", date: "Mar 20, 2024", title: "Leadership Workshop" },
-        { image: sampleImage, tag: "Welfare", date: "Apr 5, 2024", title: "Employee Benefits Update" },
+        { 
+            image: sampleImage, 
+            tag: t('career.lifeAt.articles.culture.tag'), 
+            date: "Jan 1, 2024", 
+            title: t('career.lifeAt.articles.culture.title') 
+        },
+        { 
+            image: sampleImage, 
+            tag: t('career.lifeAt.articles.event.tag'), 
+            date: "Feb 15, 2024", 
+            title: t('career.lifeAt.articles.event.title') 
+        },
+        { 
+            image: sampleImage, 
+            tag: t('career.lifeAt.articles.training.tag'), 
+            date: "Mar 20, 2024", 
+            title: t('career.lifeAt.articles.training.title') 
+        },
+        { 
+            image: sampleImage, 
+            tag: t('career.lifeAt.articles.welfare.tag'), 
+            date: "Apr 5, 2024", 
+            title: t('career.lifeAt.articles.welfare.title') 
+        },
     ];
 
     return (
@@ -36,11 +58,9 @@ const LifeAt = () => {
             <div style={{ padding: '0 7vw', marginBottom: '3rem' }}>
                 <Row align="middle" gutter={[32, 16]}>
                     <Col xs={24} lg={16}>
-                        <Title level={2} style={{ margin: 0 }}>Life at 4P's</Title>
+                        <Title level={2} style={{ margin: 0 }}>{t('career.lifeAt.title')}</Title>
                         <Paragraph style={{ fontSize: '1.1rem', margin: '1rem 0 0 0' }}>
-                            Here are some articles help you with thinking about your career plan at 4P's.
-                            We'd like to introduce various welfare benefits and training programs, as well as
-                            events where you can experience the 4P's vision and values.
+                            {t('career.lifeAt.description')}
                         </Paragraph>
                     </Col>
                     <Col xs={24} lg={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -65,7 +85,7 @@ const LifeAt = () => {
                                 e.currentTarget.style.borderColor = 'red';
                             }}
                         >
-                            View More
+                            {t('career.lifeAt.viewMore')}
                         </Button>
                     </Col>
                 </Row>
@@ -190,7 +210,7 @@ const LifeAt = () => {
                             e.currentTarget.style.color = 'white';
                         }}
                     >
-                        members
+                        {t('career.lifeAt.members')}
                     </Button>
                 </div >
             </div >

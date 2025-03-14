@@ -1,9 +1,8 @@
 import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Layout, Menu, Typography } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import './Layout.css';
 import { routeNames } from '../../constaints/routeName';
 import { changeLanguage } from '../../helpers/changeLanguage';
 
@@ -13,6 +12,16 @@ const { Text } = Typography;
 const DefaultLayout = ({ children }) => {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const { t, i18n } = useTranslation("global");
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const rightMenuItems = [
         {
@@ -39,12 +48,12 @@ const DefaultLayout = ({ children }) => {
                 {
                     key: 'english',
                     label: 'English',
-                    onClick: () => changeLanguage(i18n,'en'),
+                    onClick: () => changeLanguage(i18n, 'en'),
                 },
                 {
                     key: 'vietnamese',
                     label: 'Tiếng Việt',
-                    onClick: () => changeLanguage(i18n,'vi'),
+                    onClick: () => changeLanguage(i18n, 'vi'),
                 },
             ],
         },
@@ -75,27 +84,27 @@ const DefaultLayout = ({ children }) => {
                 >
                     {t('header.title')}
                 </Link>
-                <Button
-                    className="menu-toggle-button"
-                    type="primary"
-                    icon={<MenuOutlined />}
-                    onClick={showDrawer}
-                    style={{ background: 'transparent', border: 'none', color: '#fff' }}
-                />
-                <Menu
-                    className="desktop-menu"
-                    theme="light"
-                    mode="horizontal"
-                    style={{
-                        display: 'flex',
-                        gap: '20px',
-                        color: '#ffffff',
-                        justifyContent: 'flex-end',
-                        alignItems: 'center',
-                        flex: 1
-                    }}
-                    items={rightMenuItems}
-                />
+                {isLargeScreen ? (
+                    <Menu
+                        theme="light"
+                        mode="horizontal"
+                        style={{
+                            display: 'flex',
+                            gap: '20px',
+                            color: '#ffffff',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                            flex: 1
+                        }}
+                        items={rightMenuItems}
+                    />
+                ) : (
+                    <Button
+                        type="primary"
+                        icon={<MenuOutlined />}
+                        onClick={showDrawer}
+                        style={{ background: 'transparent', border: 'none', color: '#fff', boxShadow: 'none' }}
+                    />)}
             </Header>
 
             <Drawer

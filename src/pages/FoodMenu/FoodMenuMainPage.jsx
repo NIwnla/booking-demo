@@ -1,4 +1,4 @@
-import { Card, Carousel, Col, Image, Row, Spin, Typography } from 'antd';
+import { Card, Carousel, Col, Image, Row, Spin, Typography, Button, Modal, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,10 @@ import { routeNames } from '../../constaints/routeName';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
 import './ScrollableCategories.css';
+import LocationPicker from '../../components/maps/LocationPicker';
+import LocationPickerModal from '../../components/modals/foodMenu/LocationPickerModal';
+import { useContext } from 'react';
+import { DeliveryContext } from '../../context/DeliveryContext';
 
 const { Title, Paragraph } = Typography;
 
@@ -28,12 +32,14 @@ const ImageCarousel = () => {
 const FoodMenuMainPage = () => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation('global');
+    const { location } = useContext(DeliveryContext);
     const [categories, setCategories] = useState([]);
     const [foods, setFoods] = useState([]);
     const [loadingCategories, setLoadingCategories] = useState(false);
     const [loadingFoods, setLoadingFoods] = useState(false);
     const [fadeInFood, setFadeInFood] = useState(false);
     const [fadeInCategories, setFadeInCategories] = useState(false);
+    const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
     useEffect(() => {
         fetchCategories();
@@ -72,14 +78,15 @@ const FoodMenuMainPage = () => {
         }
     };
 
+
     return (
         <div>
             <MenuNavBar />
             <div style={{ padding: '5vh 10vw' }}>
-                <Row gutter={24} style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
+                <Row gutter={[24, 24]} style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
                     {/* Carousel Section */}
                     <Col xs={24} md={18} style={{ display: 'flex', alignItems: 'stretch' }}>
-                        <div style={{ width: '100%', height: '100%' }}>
+                        <div style={{ width: '100%', height: '100%', backgroundColor: '#000000', borderRadius: '20px', padding: '20px' }}>
                             <ImageCarousel />
                         </div>
                     </Col>
@@ -94,11 +101,28 @@ const FoodMenuMainPage = () => {
                             borderRadius: '20px',
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'
                         }}>
-                        <Title style={{ fontSize: '1vw' }}>{t("foodMenu.mainPage.deliveryInformationTitle")}</Title>
-                        <Paragraph style={{ fontSize: '0.7vw' }}>
+                        <Title style={{ fontSize: '1rem' }}>{t("foodMenu.mainPage.deliveryInformationTitle")}</Title>
+                        <Button
+                            onClick={() => setIsLocationModalOpen(true)}
+                            type="primary"
+                            style={{
+                                width: '100%',
+                                marginBottom: '10px',
+                                height: 'auto',
+                                padding: '4px 15px'
+                            }}
+                        >
+                            <Typography.Text
+                                ellipsis={{ tooltip: true }}
+                                style={{ color: 'white', width: '100%', display: 'block' }}
+                            >
+                                {location ? location.formattedAddress : t("foodMenu.mainPage.selectLocation")}
+                            </Typography.Text>
+                        </Button>
+                        <Paragraph style={{ fontSize: '0.875rem' }}>
                             {t("foodMenu.mainPage.deliveryDescription")}
                         </Paragraph>
-                        <Paragraph style={{ fontSize: '0.7vw' }}>{t("foodMenu.mainPage.deliveryBenefits")}</Paragraph>
+                        <Paragraph style={{ fontSize: '0.875rem' }}>{t("foodMenu.mainPage.deliveryBenefits")}</Paragraph>
                     </Col>
                 </Row>
 
@@ -114,7 +138,7 @@ const FoodMenuMainPage = () => {
                             }}>
                             <Row gutter={20} wrap={false} style={{ margin: ' 4px', width: '100vw' }}>
                                 {categories.map((category) => (
-                                    <Col key={category.id} md={12} lg={5} xl={4} xxl={3}>
+                                    <Col key={category.id} xs={10} md={8} lg={5} xl={4} xxl={3}>
                                         <Card
                                             onClick={() => navigate(`${routeNames.foodMenu.menu}?categoryId=${category.id}`)}
                                             onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 8px red'}
@@ -130,7 +154,7 @@ const FoodMenuMainPage = () => {
                                                 />
                                             }
                                         >
-                                            <Title level={5} style={{ fontSize: '0.75vw', textAlign: 'center' }}>
+                                            <Title level={5} style={{ fontSize: '0.875rem', textAlign: 'center' }}>
                                                 {getLocalizedText(category, 'name', i18n.language)}
                                             </Title>
                                         </Card>
@@ -154,7 +178,7 @@ const FoodMenuMainPage = () => {
                                 transition: 'opacity 0.5s ease-out',
                             }}>
                             {foods.map((food) => (
-                                <Col key={food.id} xs={12} sm={12} md={12} lg={6} >
+                                <Col key={food.id} xs={24} sm={12} md={12} lg={6} >
                                     <FoodCard food={food} />
                                 </Col>
                             ))}
@@ -162,6 +186,11 @@ const FoodMenuMainPage = () => {
                     </Spin>
                 </div>
             </div>
+            
+            <LocationPickerModal 
+                isOpen={isLocationModalOpen}
+                onClose={() => setIsLocationModalOpen(false)}
+            />
         </div>
     );
 };

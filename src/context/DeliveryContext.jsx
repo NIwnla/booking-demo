@@ -30,12 +30,12 @@ export const DeliveryProvider = ({ children }) => {
         const storedLocation = localStorage.getItem('location');
 
         if (storedCart) setCart(JSON.parse(storedCart));
-        if (storedLocation) setLocation(storedLocation);
+        if (storedLocation) setLocation(JSON.parse(storedLocation));
     }, []);
 
-    const updateLocation = (newLocation) => {
+    const updateLocation = (newLocation) => {        
         setLocation(newLocation);
-        localStorage.setItem('location', newLocation);
+        localStorage.setItem('location', JSON.stringify(newLocation));
     };
 
     const addToCart = (food) => {

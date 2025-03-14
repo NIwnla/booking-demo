@@ -25,7 +25,7 @@ const FoodCard = ({ food, onClick = null }) => {
                     alt={getLocalizedText(food, 'name', i18n.language)}
                     src={`${AxiosConstants.AXIOS_BASEURL}/${food.imagePath}`}
                     style={{
-                        height: '30vh',
+                        height: '15rem',
                         objectFit: 'cover',
                         borderRadius: '10px 10px 0 0',
                         padding: '20px 10px 10px 10px'
@@ -42,14 +42,10 @@ const FoodCard = ({ food, onClick = null }) => {
             {/* Title with Two-Line Limit */}
             <Title
                 style={{
-                    fontSize: '1vw',
+                    fontSize: '1rem',
                     textAlign: 'center',
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2, 
-                    overflow: 'hidden',
                     maxWidth: '100%',
-                    height: '3vw',
+                    height: '100%',
                 }}
             >
                 {getLocalizedText(food, 'name', i18n.language)}
@@ -65,11 +61,11 @@ const FoodCard = ({ food, onClick = null }) => {
                     addToCart({ ...food, options: [] });
                 }}
                 style={{
-                    width: '3vw',
-                    height: '3vw',
+                    width: '3rem',
+                    height: '3rem',
                     minWidth: '40px',
                     minHeight: '40px',
-                    fontSize: '1.5vw',
+                    fontSize: '1.5rem',
                     border: 'none',
                     color: 'red',
                     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
@@ -78,7 +74,7 @@ const FoodCard = ({ food, onClick = null }) => {
             />
 
             {/* Food Price Below Button */}
-            <Paragraph style={{ fontWeight: 'bold', color: 'rgba(255, 127, 127, 1)', fontSize: '1vw' }}>
+            <Paragraph style={{ fontWeight: 'bold', color: 'rgba(255, 127, 127, 1)', fontSize: '1rem' }}>
                 {food.basePrice.toLocaleString()} VND
             </Paragraph>
         </Card>

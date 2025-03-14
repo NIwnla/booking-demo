@@ -1,60 +1,62 @@
 import { Typography, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { RightOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 // @ts-ignore
 import sampleImage from '../../../assets/LoadingIcon.png'
 
 const { Title, Paragraph } = Typography;
 
-const careerPaths = [
-    {
-        title: "Software Development",
-        description: "Start your journey as a Junior Developer and grow into a Technical Lead. Master various programming languages, frameworks, and architectural patterns. Lead innovative projects and mentor future developers.",
-        color: "#E6F4FF",
-        activeColor: "#BAE0FF"
-    },
-    {
-        title: "Data Science",
-        description: "Begin as a Data Analyst and progress to Data Science Manager. Develop expertise in machine learning, statistical analysis, and big data technologies. Drive data-driven decision making across the organization.",
-        color: "#F6FFED",
-        activeColor: "#B7EB8F"
-    },
-    {
-        title: "Product Management",
-        description: "Start as a Product Analyst and advance to Senior Product Manager. Develop product strategy, conduct market research, and lead cross-functional teams. Shape the future of our products and user experience.",
-        color: "#FFF7E6",
-        activeColor: "#FFD591"
-    },
-    {
-        title: "UX/UI Design",
-        description: "Begin as a Junior Designer and grow into a Design Director. Master user research, interaction design, and visual communication. Create intuitive and beautiful experiences that delight users.",
-        color: "#F9F0FF",
-        activeColor: "#D3ADF7"
-    }
-];
-
-const features = [
-    {
-        title: "Career Growth",
-        description: "Discover endless opportunities for professional development and advancement within our organization.",
-        image: sampleImage
-    },
-    {
-        title: "Work Culture",
-        description: "Join a collaborative and innovative environment where your ideas are valued and creativity thrives.",
-        image: sampleImage
-    },
-    {
-        title: "Benefits",
-        description: "Enjoy comprehensive benefits package designed to support your professional and personal well-being.",
-        image: sampleImage
-    }
-];
-
 const CareerPath = () => {
+    const { t } = useTranslation('global');
     const [activeIndex, setActiveIndex] = useState(0);
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
     const [hoverStates, setHoverStates] = useState({ block1: false, block2: false });
+
+    const careerPaths = [
+        {
+            title: t('career.careerPath.paths.softwareDev.title'),
+            description: t('career.careerPath.paths.softwareDev.description'),
+            color: "#E6F4FF",
+            activeColor: "#BAE0FF"
+        },
+        {
+            title: t('career.careerPath.paths.dataScience.title'),
+            description: t('career.careerPath.paths.dataScience.description'),
+            color: "#F6FFED",
+            activeColor: "#B7EB8F"
+        },
+        {
+            title: t('career.careerPath.paths.productManagement.title'),
+            description: t('career.careerPath.paths.productManagement.description'),
+            color: "#FFF7E6",
+            activeColor: "#FFD591"
+        },
+        {
+            title: t('career.careerPath.paths.uxDesign.title'),
+            description: t('career.careerPath.paths.uxDesign.description'),
+            color: "#F9F0FF",
+            activeColor: "#D3ADF7"
+        }
+    ];
+
+    const features = [
+        {
+            title: t('career.careerPath.features.careerGrowth.title'),
+            description: t('career.careerPath.features.careerGrowth.description'),
+            image: sampleImage
+        },
+        {
+            title: t('career.careerPath.features.workCulture.title'),
+            description: t('career.careerPath.features.workCulture.description'),
+            image: sampleImage
+        },
+        {
+            title: t('career.careerPath.features.benefits.title'),
+            description: t('career.careerPath.features.benefits.description'),
+            image: sampleImage
+        }
+    ];
 
     useEffect(() => {
         const handleResize = () => {
@@ -68,7 +70,7 @@ const CareerPath = () => {
     return (
         <div style={{ padding: '4rem 0', backgroundColor: 'white', position: 'relative', zIndex: 1 }}>
             <Title level={2} style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                Career Path
+                {t('career.careerPath.title')}
             </Title>
 
             {isLargeScreen ? (
@@ -210,7 +212,7 @@ const CareerPath = () => {
                             height: '100%',
                             minHeight: '40vh'
                         }}>
-                            Video
+                            {t('career.careerPath.video')}
                         </div>
                     </Col>
                     <Col xs={24} lg={10}>
@@ -233,7 +235,6 @@ const CareerPath = () => {
                                         cursor: 'pointer',
                                         transition: 'all 0.3s ease'
                                     }}>
-
                                     <RightOutlined style={{
                                         position: 'absolute',
                                         top: isLargeScreen ? '2rem' : '1rem',
@@ -247,7 +248,9 @@ const CareerPath = () => {
                                         fontSize: isLargeScreen ? '2rem' : '1.5rem',
                                         color: hoverStates.block1 ? 'lightgray' : 'white',
                                         transition: 'color 0.3s ease'
-                                    }}>HR Orientation Training</Title>
+                                    }}>
+                                        {t('career.careerPath.hrOrientation.title')}
+                                    </Title>
                                     <Paragraph style={{
                                         fontWeight: 600,
                                         margin: '0.5rem 0 0 0',
@@ -255,7 +258,7 @@ const CareerPath = () => {
                                         color: hoverStates.block1 ? 'lightgray' : 'white',
                                         transition: 'color 0.3s ease'
                                     }}>
-                                        What is the orientation training session full of excitement and excitement by the diversity of new Partners? To start a new journey at Pizza 4P's, a clear orientation and roadmap for Partners is what we 4P's always aim for.
+                                        {t('career.careerPath.hrOrientation.description')}
                                     </Paragraph>
                                 </div>
                             </Col>
@@ -277,7 +280,6 @@ const CareerPath = () => {
                                         cursor: 'pointer',
                                         transition: 'all 0.3s ease'
                                     }}>
-
                                     <RightOutlined style={{
                                         position: 'absolute',
                                         top: isLargeScreen ? '2rem' : '1rem',
@@ -291,7 +293,9 @@ const CareerPath = () => {
                                         fontSize: isLargeScreen ? '2rem' : '1.5rem',
                                         color: hoverStates.block2 ? 'lightgray' : 'white',
                                         transition: 'color 0.3s ease'
-                                    }}>Interview tip at 4Ps</Title>
+                                    }}>
+                                        {t('career.careerPath.interviewTips.title')}
+                                    </Title>
                                     <Paragraph style={{
                                         fontWeight: 600,
                                         margin: '0.5rem 0 0 0',
@@ -299,7 +303,7 @@ const CareerPath = () => {
                                         color: hoverStates.block2 ? 'lightgray' : 'white',
                                         transition: 'color 0.3s ease'
                                     }}>
-                                        Beautiful notes for you to get out of the interview to become a Pizza 4P's home partner in just one note, how？？？
+                                        {t('career.careerPath.interviewTips.description')}
                                     </Paragraph>
                                 </div>
                             </Col>

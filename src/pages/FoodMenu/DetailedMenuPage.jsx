@@ -90,7 +90,7 @@ const DetailedMenuPage = () => {
                                 ].filter(Boolean)}
                             />
                         </div>
-                        <Title style={{ fontSize: '1.5vw', flex: 1, textAlign: 'center' }}>{t("foodMenu.detailedMenuPage.menu")}</Title>
+                        <Title style={{ fontSize: '1.5rem', flex: 1, textAlign: 'center' }}>{t("foodMenu.detailedMenuPage.menu")}</Title>
                     </Col>
                 </Row>
 
@@ -102,7 +102,7 @@ const DetailedMenuPage = () => {
                                 <div className="scroll-container">
                                     <Row gutter={16} wrap={false} style={{ margin: ' 4px', width: '100vw' }}>
                                         {categories.map((category) => (
-                                            <Col key={category.id} md={12} lg={5} xl={5} xxl={3}>
+                                            <Col key={category.id} xs={10} md={8} lg={5} xl={4} xxl={3}>
                                                 <Card
                                                     hoverable
                                                     onClick={() => setSelectedCategory(category)}
@@ -120,7 +120,7 @@ const DetailedMenuPage = () => {
                                                         />
                                                     }
                                                 >
-                                                    <Title level={5} style={{ fontSize: '0.75vw', textAlign: 'center' }}>
+                                                    <Title level={5} style={{ fontSize: '0.875rem', textAlign: 'center' }}>
                                                         {getLocalizedText(category, 'name', i18n.language)}
                                                     </Title>
                                                 </Card>
@@ -136,7 +136,7 @@ const DetailedMenuPage = () => {
                             <Spin spinning={loadingFoods}>
                                 <Row gutter={[16, 16]} justify="start">
                                     {foods.map((food) => (
-                                        <Col key={food.id} xs={12} sm={12} md={12} xl={8}>
+                                        <Col key={food.id} xs={24} sm={12} xl={8}>
                                             <FoodCard
                                                 food={food}
                                                 onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMenu}${food.id}?categoryId=${categoryId}`)}

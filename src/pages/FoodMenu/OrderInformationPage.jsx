@@ -1,10 +1,10 @@
+import { Breadcrumb, Card, Checkbox, Col, Divider, Form, Input, Row, Typography } from "antd";
 import React, { useState } from "react";
-import { Row, Col, Card, Typography, Breadcrumb, Input, Checkbox, Form, Divider } from "antd";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import MenuNavBar from "../../components/navbars/foodMenu/MenuNavBar";
 import { routeNames } from "../../constaints/routeName";
-import OrderSummaryCard from "../../components/cards/foodMenu/OrderSummaryCard";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import OrderSummarySection from "./OrderSummarySection";
 
 const { Title, Paragraph } = Typography;
 
@@ -33,16 +33,15 @@ const OrderInformationPage = () => {
                 />
 
                 <Row gutter={[16, 16]}>
-                    {/* Left Column (18/24) - Main Order Details */}
-                    <Col xs={24} lg={18}>
+                    <Col xs={24} lg={16}>
                         <div style={{ margin: '0 12vw' }}>
                             <div style={{ textAlign: "center", marginBottom: "2vh" }}>
-                                <Title level={3} style={{ display: "inline-block", color: 'rgba(255, 0, 0, 0.8)', fontSize: "1.5vw" }}>
+                                <Title level={3} style={{ display: "inline-block", color: 'rgba(255, 0, 0, 0.8)', fontSize: "1.5rem" }}>
                                     {t('foodMenu.orderInformation.checkout')}
                                 </Title>
                                 <Divider style={{ margin: "1vh auto", width: "50%", borderTop: "1px solid rgba(255, 0, 0, 0.8)" }} />
                             </div>
-                            <Paragraph style={{ fontSize: "1vw" }}>
+                            <Paragraph style={{ fontSize: "1rem" }}>
                                 {t('foodMenu.orderInformation.provideDetails')}
                             </Paragraph>
 
@@ -57,23 +56,23 @@ const OrderInformationPage = () => {
                                 <Form layout="vertical">
                                     {/* Name */}
                                     <Form.Item
-                                        label={<span style={{ fontSize: "0.8vw" }}>{t('foodMenu.orderInformation.yourName')}</span>}
+                                        label={<span style={{ fontSize: "0.875rem" }}>{t('foodMenu.orderInformation.yourName')}</span>}
                                         name="name"
                                         rules={[{ required: true, message: t('foodMenu.orderInformation.rules.nameRequired') }]}
                                     >
-                                        <Input placeholder={t('foodMenu.orderInformation.placeholders.yourName')} style={{ fontSize: "0.8vw" }} />
+                                        <Input placeholder={t('foodMenu.orderInformation.placeholders.yourName')} style={{ fontSize: "0.875rem" }} />
                                     </Form.Item>
 
                                     {/* Phone Number */}
                                     <Form.Item
-                                        label={<span style={{ fontSize: "0.8vw" }}>{t('foodMenu.orderInformation.phoneNumber')}</span>}
+                                        label={<span style={{ fontSize: "0.875rem" }}>{t('foodMenu.orderInformation.phoneNumber')}</span>}
                                         name="phone"
                                         rules={[
                                             { required: true, message: t('foodMenu.orderInformation.rules.phoneRequired') },
                                             { pattern: /^[0-9]{9,10}$/, message: t('foodMenu.orderInformation.rules.phonePattern') }
                                         ]}
                                     >
-                                        <Input placeholder={t('foodMenu.orderInformation.placeholders.phoneNumber')} style={{ fontSize: "0.8vw" }} />
+                                        <Input placeholder={t('foodMenu.orderInformation.placeholders.phoneNumber')} style={{ fontSize: "0.875rem" }} />
                                     </Form.Item>
 
                                     {/* Recipient Checkbox */}
@@ -81,51 +80,50 @@ const OrderInformationPage = () => {
                                         <Checkbox
                                             checked={isRecipientChecked}
                                             onChange={(e) => setIsRecipientChecked(e.target.checked)}
-                                            style={{ fontSize: "0.8vw" }}
+                                            style={{ fontSize: "0.875rem" }}
                                         >
                                             {t('foodMenu.orderInformation.recipientInfo')}
                                         </Checkbox>
                                     </Form.Item>
 
                                     {/* Sliding Recipient Fields with Pure CSS */}
-                                    <div className={`recipient-section ${isRecipientChecked ? "open" : ""}`} style={{ fontSize: "1vw" }}>
+                                    <div className={`recipient-section ${isRecipientChecked ? "open" : ""}`} style={{ fontSize: "1rem" }}>
                                         {/* Recipient Name */}
                                         <Form.Item
-                                            label={<span style={{ fontSize: "0.8vw" }}>{t('foodMenu.orderInformation.recipientName')}</span>}
+                                            label={<span style={{ fontSize: "0.875rem" }}>{t('foodMenu.orderInformation.recipientName')}</span>}
                                             name="recipientName"
                                             rules={[{ required: isRecipientChecked, message: t('foodMenu.orderInformation.rules.recipientNameRequired') }]}
                                         >
-                                            <Input placeholder={t('foodMenu.orderInformation.placeholders.recipientName')} style={{ fontSize: "0.8vw" }} />
+                                            <Input placeholder={t('foodMenu.orderInformation.placeholders.recipientName')} style={{ fontSize: "0.875rem" }} />
                                         </Form.Item>
 
                                         {/* Recipient Phone Number */}
                                         <Form.Item
-                                            label={<span style={{ fontSize: "0.8vw" }}>{t('foodMenu.orderInformation.recipientPhoneNumber')}</span>}
+                                            label={<span style={{ fontSize: "0.875rem" }}>{t('foodMenu.orderInformation.recipientPhoneNumber')}</span>}
                                             name="recipientPhone"
                                             rules={[
                                                 { required: isRecipientChecked, message: t('foodMenu.orderInformation.rules.recipientPhoneRequired') },
                                                 { pattern: /^[0-9]{9,10}$/, message: t('foodMenu.orderInformation.rules.recipientPhonePattern') }
                                             ]}
                                         >
-                                            <Input placeholder={t('foodMenu.orderInformation.placeholders.recipientPhoneNumber')} style={{ fontSize: "0.8vw" }} />
+                                            <Input placeholder={t('foodMenu.orderInformation.placeholders.recipientPhoneNumber')} style={{ fontSize: "0.875rem" }} />
                                         </Form.Item>
                                     </div>
 
                                     {/* Note */}
                                     <Form.Item
-                                        label={<span style={{ fontSize: "0.8vw" }}>{t('foodMenu.orderInformation.note')}</span>}
+                                        label={<span style={{ fontSize: "0.875rem" }}>{t('foodMenu.orderInformation.note')}</span>}
                                         name="note"
                                     >
-                                        <Input.TextArea placeholder={t('foodMenu.orderInformation.placeholders.note')} rows={3} style={{ fontSize: "0.8vw" }} />
+                                        <Input.TextArea placeholder={t('foodMenu.orderInformation.placeholders.note')} rows={3} style={{ fontSize: "0.875rem" }} />
                                     </Form.Item>
                                 </Form>
                             </Card>
                         </div>
                     </Col>
 
-                    {/* Right Column (6/24) - Order Summary */}
-                    <Col xs={24} lg={6}>
-                        <OrderSummaryCard
+                    <Col xs={24} lg={8}>
+                        <OrderSummarySection
                             onCancel={() => navigate(routeNames.foodMenu.myCart)} />
                     </Col>
                 </Row>

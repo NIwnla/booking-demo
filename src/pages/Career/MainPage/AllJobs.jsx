@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Row, Col, Tag } from 'antd';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../../../service/axios';
 import { routeNames } from '../../../constaints/routeName';
 
 const { Title, Text } = Typography;
 
 const AllJobs = () => {
+    const { t, i18n } = useTranslation('global');
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ const AllJobs = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    if(loading) return <div>Loading...</div>;
+    if(loading) return <div>{t('career.allJobs.loading')}</div>;
 
     return (
         <div style={{
@@ -46,12 +47,13 @@ const AllJobs = () => {
             zIndex: 1
         }}>
             <Title style={{ marginBottom: '3rem', textAlign: 'center', fontSize: '3rem' }}>
-                All Jobs
+                {t('career.allJobs.title')}
             </Title>
 
             <div>
                 {jobs.map((job, index) => (
                     <Link
+                        key={job.id}
                         to={`${routeNames.career.detail.default}/${job.id}`}
                         style={{
                             transition: 'opacity 0.3s ease',
@@ -61,7 +63,6 @@ const AllJobs = () => {
                     >
                         <Row
                             gutter={[16, 16]}
-                            key={job.id}
                             style={{
                                 borderTop: index === 0 ? '2px solid rgb(12, 2, 2)' : 'none',
                                 borderBottom: '2px solid rgb(12, 2, 2)',
@@ -71,22 +72,21 @@ const AllJobs = () => {
                         >
                             <Col xs={24} lg={8}>
                                 <Title style={{ margin: 0, fontSize: '1.5rem' }}>
-                                    {job.nameEN}
+                                    {i18n.language === 'en' ? job.nameEN : job.nameVN}
                                 </Title>
                             </Col>
                             <Col xs={24} lg={12}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                    <div >
+                                    <div>
                                         <Text style={{ fontSize: '1rem', fontWeight: '500' }}>
                                             {job.shortDescription}
                                         </Text>
                                     </div>
                                     <div>
                                         <Tag color={job.isFullTime ? 'blue' : 'orange'} style={{ fontSize: '1rem' }}>
-                                            {job.isFullTime ? 'Full Time' : 'Part Time'}
+                                            {t(`career.allJobs.jobTypes.${job.isFullTime ? 'fullTime' : 'partTime'}`)}
                                         </Tag>
                                     </div>
-
                                 </div>
                             </Col>
                             <Col xs={24} lg={4} style={{ textAlign: 'right' }}>
@@ -98,7 +98,7 @@ const AllJobs = () => {
                                         fontSize: '1.1rem'
                                     }}
                                 >
-                                    Apply Now
+                                    {t('career.allJobs.applyNow')}
                                 </Text>
                             </Col>
                         </Row>

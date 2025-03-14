@@ -1,11 +1,10 @@
 import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Dropdown, Flex, Layout, Menu, Space, Typography } from 'antd';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
-import './Layout.css';
 import { changeLanguage } from '../../helpers/changeLanguage';
 
 const { Header, Content, Footer } = Layout;
@@ -16,6 +15,16 @@ const AdminLayout = ({ children }) => {
     const navigate = useNavigate();
     const [drawerVisible, setDrawerVisible] = useState(false);
     const { t, i18n } = useTranslation("global");
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleLogout = () => {
         clearAuthToken();
@@ -140,7 +149,6 @@ const AdminLayout = ({ children }) => {
 
     return (
         <Layout style={{ minHeight: '100vh', backgroundColor: '#eeeeee' }}>
-            {/* Header */}
             <Header
                 style={{
                     display: 'flex',
@@ -150,52 +158,51 @@ const AdminLayout = ({ children }) => {
                     padding: '0 10vw',
                 }}
             >
-                {/* Restaurant Name */}
-                <Title className="header-title" level={4} style={{ color: '#ffffff', margin: 6 }}>
-                    {t('header.title')}
-                </Title>
+                {isLargeScreen && (
+                    <Title level={4} style={{ color: '#ffffff', margin: 6 }}>
+                        {t('header.title')}
+                    </Title>
+                )}
 
-                {/* Horizontal Menu for Large Screens */}
-                <Menu
-                    theme="light"
-                    mode="horizontal"
-                    style={{
-                        display: 'flex',
-                        flex: 1,
-                        color: '#ffffff',
-                        justifyContent: 'flex-start',
-                    }}
-                    className="desktop-menu"
-                    items={leftMenuItems}
-                />
-
-                {/* Hamburger Button for Small Screens */}
+                {isLargeScreen ? (
+                    <Menu
+                        theme="light"
+                        mode="horizontal"
+                        style={{
+                            display: 'flex',
+                            flex: 1,
+                            color: '#ffffff',
+                            justifyContent: 'flex-start',
+                        }}
+                        items={leftMenuItems}
+                    />
+                ) : (
                     <Button
-                        className="menu-toggle-button"
                         type="primary"
                         icon={<MenuOutlined />}
                         onClick={showDrawer}
-                        style={{ display: 'none', background: 'transparent', color: '#fff', border:'none', marginBottom:'4vh' }}
+                        style={{ background: 'transparent', color: '#fff', border: 'none', marginBottom: '4vh' }}
                     />
+                )}
 
 
-                    {/* Dropdown for Logged-in User */}
-                    {email ? (
-                        <Dropdown
-                            menu={{ items: rightMenuItems }}
-                            placement="bottomRight"
-                            trigger={['click']}
-                        >
-                            <Space style={{ cursor: 'pointer' }}>
-                                <Text style={{ color: '#ffffff' }}>{email}</Text>
-                            </Space>
-                        </Dropdown>
-                    ) : (
-                        <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }}>
-                            {t('header.login')}
-                        </Link>
-                    )}
 
+                {/* Dropdown for Logged-in User */}
+                {email ? (
+                    <Dropdown
+                        menu={{ items: rightMenuItems }}
+                        placement="bottomRight"
+                        trigger={['click']}
+                    >
+                        <Space style={{ cursor: 'pointer' }}>
+                            <Text style={{ color: '#ffffff' }}>{email}</Text>
+                        </Space>
+                    </Dropdown>
+                ) : (
+                    <Link to={routeNames.login} style={{ textDecoration: 'none', color: '#ffffff' }}>
+                        {t('header.login')}
+                    </Link>
+                )}
             </Header>
 
             {/* Drawer for Small Screens */}

@@ -105,7 +105,7 @@ const MenuNavBar = () => {
     // Popover Content for New Item Notification
     const popoverContent = latestCartItem ? (
         <div>
-            <Paragraph style={{ fontSize: "0.8rem", color: "#888", marginTop: 5 }}>
+            <Paragraph style={{ fontSize: "0.875rem", color: "#888", marginTop: 5 }}>
                 {t('foodMenu.navbar.newItemAdded')}
             </Paragraph>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "5px" }}>
@@ -138,7 +138,7 @@ const MenuNavBar = () => {
                     color: "black",
                     padding: "1vh 10vw",
                     boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                    fontSize: "0.8vw",
+                    fontSize: "0.875rem",
                     position: "sticky",
                     top: 0,
                     zIndex: 1000,
@@ -168,7 +168,7 @@ const MenuNavBar = () => {
                     {/* Shopping Cart Icon with Popover */}
                     <Popover content={popoverContent} open={isPopoverVisible} placement="bottomRight" trigger="click">
                         <Badge count={cartItemCount} overflowCount={99} size="small">
-                            <ShoppingCartOutlined onClick={() => navigate(routeNames.foodMenu.myCart)} style={{ fontSize: "1.5vw", cursor: "pointer" }} />
+                            <ShoppingCartOutlined onClick={() => navigate(routeNames.foodMenu.myCart)} style={{ fontSize: "1.5rem", cursor: "pointer" }} />
                         </Badge>
                     </Popover>
                 </div>

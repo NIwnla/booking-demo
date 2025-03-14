@@ -8,7 +8,7 @@ import { getLocalizedText } from '../../../helpers/getLocalizedText';
 
 const { Paragraph, Title } = Typography;
 
-const CartItemCard = ({ item }) => {
+const CartItemCard = ({ item, isLargeScreen = true }) => {
     const { i18n } = useTranslation('global');
     const { addToCart, decreaseQuantity, removeFromCart } = useContext(DeliveryContext);
 
@@ -18,7 +18,7 @@ const CartItemCard = ({ item }) => {
                 borderRadius: '10px',
                 boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                 backgroundColor: 'white',
-                padding: '0.7vw',
+                padding: '0.75rem',
                 position: 'relative'
             }}
         >
@@ -33,7 +33,7 @@ const CartItemCard = ({ item }) => {
                 style={{
                     position: 'absolute',
                     top: '0.8vh',
-                    right: '0.4vw',
+                    right: '0.5rem',
                     color: 'red',
                     cursor: 'pointer',
                     zIndex: 10,
@@ -48,7 +48,7 @@ const CartItemCard = ({ item }) => {
                         preview={false}
                         src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
                         alt={item.name}
-                        style={{ width: '3vw', height: '3vw', borderRadius: '5px' }}
+                        style={{ width: isLargeScreen ? '3rem' : '6rem', height: isLargeScreen ? '3rem' : '6rem', borderRadius: '5px' }}
                     />
                 </Col>
 
@@ -62,7 +62,7 @@ const CartItemCard = ({ item }) => {
                             whiteSpace: "normal",
                             overflow: "hidden",
                             maxWidth: "100%",
-                            marginRight: "1vw",
+                            marginRight: "1rem",
                         }}
                     >
                         {getLocalizedText(item, "name", i18n.language)}
@@ -75,7 +75,7 @@ const CartItemCard = ({ item }) => {
                                 <li
                                     key={option.id}
                                     style={{
-                                        fontSize: "0.8vw",
+                                        fontSize: "0.875rem",
                                         color: "#555",
                                         wordWrap: "break-word",
                                         whiteSpace: "normal",
@@ -91,10 +91,10 @@ const CartItemCard = ({ item }) => {
                     {/* Quantity Controls & Total Price in the Same Row */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
                         {/* Quantity Controls (Left) */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5vw' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <Button
                                 style={{
-                                    fontSize: '0.7vw',
+                                    fontSize: '0.75rem',
                                     color: 'red'
                                 }}
                                 shape="circle"
@@ -103,9 +103,9 @@ const CartItemCard = ({ item }) => {
                                 onClick={() => decreaseQuantity(item.cartItemKey)}
                                 disabled={item.quantity <= 1}
                             />
-                            <strong style={{ fontSize: '0.8vw' }}>{item.quantity}</strong>
+                            <strong style={{ fontSize: '0.875rem' }}>{item.quantity}</strong>
                             <Button
-                                style={{ fontSize: '0.7vw' }}
+                                style={{ fontSize: '0.75rem' }}
                                 shape="circle"
                                 icon={<PlusOutlined />}
                                 size="small"
@@ -114,7 +114,7 @@ const CartItemCard = ({ item }) => {
                         </div>
 
                         {/* Total Price (Right) */}
-                        <Paragraph style={{ margin: 0, fontSize: '0.8vw', fontWeight: 'bold' }}>
+                        <Paragraph style={{ margin: 0, fontSize: '0.875rem', fontWeight: 'bold' }}>
                             {item.total.toLocaleString()} VND
                         </Paragraph>
                     </div>

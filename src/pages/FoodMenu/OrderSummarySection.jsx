@@ -1,17 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Card, Typography, Divider, Button } from "antd";
 import { RightCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { DeliveryContext } from "../../../context/DeliveryContext";
-import { routeNames } from "../../../constaints/routeName";
+import { DeliveryContext } from "../../context/DeliveryContext";
+import { routeNames } from "../../constaints/routeName";
+import LocationPickerModal from "../../components/modals/foodMenu/LocationPickerModal";
 
 const { Title, Paragraph } = Typography;
 
-const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
+const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
     const { cart, location } = useContext(DeliveryContext);
     const { t } = useTranslation("global");
     const navigate = useNavigate();
+    const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
     // Calculate summary values
     const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -22,8 +24,14 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
 
     return (
         <>
-            <Card style={{ textAlign: "start", borderRadius: "20px", marginBottom: "20px" }}>
-                <Paragraph>📍 <strong>{t("foodMenu.orderSummary.location")}:</strong> {t("foodMenu.orderSummary.locationPlaceholder")}</Paragraph>
+            <Card
+                style={{ textAlign: 'start', borderRadius: '10px', marginBottom: '20px', cursor: 'pointer' }}
+                onClick={() => setIsLocationModalOpen(true)}
+            >
+                <Paragraph>
+                    📍 <strong>{t("foodMenu.orderSummary.location")}: </strong>
+                    {location ? location.formattedAddress : t("foodMenu.orderSummary.locationPlaceholder")}
+                </Paragraph>
             </Card>
 
             <Card
@@ -33,9 +41,9 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                     boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
                     backgroundColor: "white",
                 }}
-                title={<Title style={{ margin: 0, textAlign: "center", fontSize: "1vw" }}>{t("foodMenu.orderSummary.title")}</Title>}
+                title={<Title style={{ margin: 0, textAlign: "center", fontSize: "1rem" }}>{t("foodMenu.orderSummary.title")}</Title>}
             >
-                <Title style={{ fontSize: "1vw", marginBottom: "2vh" }}>
+                <Title style={{ fontSize: "1rem", marginBottom: "2vh" }}>
                     {t("foodMenu.orderSummary.instantDelivery")} ({cartItemCount})
                 </Title>
 
@@ -43,14 +51,14 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                 <div style={{ paddingLeft: "1vw" }}>
                     {/* Sub-Total */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>{t("foodMenu.orderSummary.subTotal")}:</Paragraph>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>{subTotal.toLocaleString()} VND</Paragraph>
+                        <Paragraph style={{ fontSize: "0.875rem" }}>{t("foodMenu.orderSummary.subTotal")}:</Paragraph>
+                        <Paragraph style={{ fontSize: "0.875rem" }}>{subTotal.toLocaleString()} VND</Paragraph>
                     </div>
 
                     {/* Shipping */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>{t("foodMenu.orderSummary.shipping")}:</Paragraph>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>
+                        <Paragraph style={{ fontSize: "0.875rem" }}>{t("foodMenu.orderSummary.shipping")}:</Paragraph>
+                        <Paragraph style={{ fontSize: "0.875rem" }}>
                             {shippingCost > 0 ? `${shippingCost.toLocaleString()} VND` : t("foodMenu.orderSummary.freeShipping")}
                         </Paragraph>
                     </div>
@@ -59,8 +67,8 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
 
                     {/* Tax */}
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>{t("foodMenu.orderSummary.tax", { taxRate: 10 })}:</Paragraph>
-                        <Paragraph style={{ fontSize: "0.7vw" }}>{tax.toLocaleString()} VND</Paragraph>
+                        <Paragraph style={{ fontSize: "0.875rem" }}>{t("foodMenu.orderSummary.tax", { taxRate: 10 })}:</Paragraph>
+                        <Paragraph style={{ fontSize: "0.875rem" }}>{tax.toLocaleString()} VND</Paragraph>
                     </div>
                 </div>
 
@@ -68,23 +76,23 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                 <Divider style={{ margin: "1vh 0", borderTop: "1px solid rgb(46, 46, 46)" }} />
 
                 {/* Total */}
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1vw", fontWeight: "bold" }}>
-                    <Paragraph style={{ fontSize: "0.9vw", fontWeight: "bold" }}>{t("foodMenu.orderSummary.total")}:</Paragraph>
-                    <Paragraph style={{ fontSize: "0.9vw", fontWeight: "bold" }}>{total.toLocaleString()} VND</Paragraph>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1rem", fontWeight: "bold" }}>
+                    <Paragraph style={{ fontSize: "1rem", fontWeight: "bold" }}>{t("foodMenu.orderSummary.total")}:</Paragraph>
+                    <Paragraph style={{ fontSize: "1rem", fontWeight: "bold" }}>{total.toLocaleString()} VND</Paragraph>
                 </div>
 
                 {/* Delivering To */}
-                <Title level={5} style={{ fontSize: "0.9vw", marginTop: "1vh" }}>{t("foodMenu.orderSummary.deliveringTo")}:</Title>
-                <Paragraph style={{ fontSize: "0.8vw", color: "#555" }}>{location || t("foodMenu.orderSummary.noLocation")}</Paragraph>
+                <Title level={5} style={{ fontSize: "1rem", marginTop: "1vh" }}>{t("foodMenu.orderSummary.deliveringTo")}:</Title>
+                <Paragraph style={{ fontSize: "0.875rem", color: "#555" }}>{location?.formatedAdress || t("foodMenu.orderSummary.noLocation")}</Paragraph>
 
                 {/* Estimated Delivery Time */}
-                <Title level={5} style={{ fontSize: "0.9vw", marginTop: "1vh" }}>{t("foodMenu.orderSummary.estimatedDelivery")}:</Title>
-                <Paragraph style={{ fontSize: "0.8vw", color: "#555" }}>
+                <Title level={5} style={{ fontSize: "1rem", marginTop: "1vh" }}>{t("foodMenu.orderSummary.estimatedDelivery")}:</Title>
+                <Paragraph style={{ fontSize: "0.875rem", color: "#555" }}>
                     {new Date(Date.now() + 30 * 60000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </Paragraph>
 
                 {/* Terms & Conditions */}
-                <Paragraph style={{ fontSize: "0.8vw", color: "#777", marginTop: "10vh" }}>
+                <Paragraph style={{ fontSize: "0.875rem", color: "#777", marginTop: "10vh" }}>
                     {t("foodMenu.orderSummary.terms")} <a href="#">{t("foodMenu.orderSummary.termsLink")}</a>.
                 </Paragraph>
 
@@ -107,12 +115,12 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d32f2f")}
                         onClick={() => onProcess ? onProcess() : navigate(routeNames.foodMenu.orderInfo)}
                     >
-                        <Title level={4} style={{ fontSize: "0.7vw", margin: 0, color: "white" }}>
+                        <Title level={4} style={{ fontSize: "0.875rem", margin: 0, color: "white" }}>
                             {total.toLocaleString()} VND
                         </Title>
                         <Typography
                             style={{
-                                fontSize: "0.7vw",
+                                fontSize: "0.875rem",
                                 color: "white",
                                 paddingRight: "0.1vw",
                                 display: "flex",
@@ -120,20 +128,23 @@ const OrderSummaryCard = ({ onProcess = null, onCancel = null }) => {
                                 gap: "0.5vw",
                             }}
                         >
-                            {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5vw" }} />
+                            {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5rem" }} />
                         </Typography>
                     </div>}
 
-
                 {/* Cancel Button */}
                 <div style={{ textAlign: "center", marginTop: "1vh" }}>
-                    <Button type="link" onClick={() => onCancel ? onCancel() : navigate(routeNames.foodMenu.main)} style={{ fontSize: "0.9vw" }}>
+                    <Button type="link" onClick={() => onCancel ? onCancel() : navigate(routeNames.foodMenu.main)} style={{ fontSize: "1rem" }}>
                         {t("foodMenu.orderSummary.cancel")}
                     </Button>
                 </div>
             </Card>
+            <LocationPickerModal
+                isOpen={isLocationModalOpen}
+                onClose={() => setIsLocationModalOpen(false)}
+            />
         </>
     );
 };
 
-export default OrderSummaryCard;
+export default OrderSummarySection;

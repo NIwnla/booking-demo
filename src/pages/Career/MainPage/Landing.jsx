@@ -1,23 +1,27 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Card, Dropdown, Input, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 // @ts-ignore
 import CareerBackground from '../../../assets/LandingPageVideo.mp4';
 import HoverLink from '../../../components/animatedSection.jsx/HoverLink';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
-import axiosInstance from '../../../service/axios';
 import { routeNames } from '../../../constaints/routeName';
+import axiosInstance from '../../../service/axios';
 import CustomDropdown from '../components/CustomDropdown';
 import JobSearchBar from '../components/JobSearchBar';
+
 const { Title, Text } = Typography;
 
 const Landing = () => {
+    const { t } = useTranslation('global');
+    const navigate = useNavigate();
     const [selectedWhat, setSelectedWhat] = useState(null);
     const [selectedWhere, setSelectedWhere] = useState(null);
     const [jobTypes, setJobTypes] = useState([]);
     const [searchValue, setSearchValue] = useState('');
-    const navigate = useNavigate();
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     useEffect(() => {
         const fetchJobTypes = async () => {
@@ -44,22 +48,21 @@ const Landing = () => {
         items: [
             {
                 key: '1',
-                label: 'Ha Noi',
-                onClick: () => setSelectedWhere('Ha Noi'),
+                label: t('career.landing.search.locations.hanoi'),
+                onClick: () => setSelectedWhere(t('career.landing.search.locations.hanoi')),
             },
             {
                 key: '2',
-                label: 'Ho Chi Minh',
-                onClick: () => setSelectedWhere('Ho Chi Minh'),
+                label: t('career.landing.search.locations.hochiminh'),
+                onClick: () => setSelectedWhere(t('career.landing.search.locations.hochiminh')),
             },
             {
                 key: '3',
-                label: 'Da Nang',
-                onClick: () => setSelectedWhere('Da Nang'),
+                label: t('career.landing.search.locations.danang'),
+                onClick: () => setSelectedWhere(t('career.landing.search.locations.danang')),
             },
         ],
     };
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     useEffect(() => {
         const handleResize = () => {
@@ -119,10 +122,14 @@ const Landing = () => {
                     fontSize: '6rem',
                     marginBottom: '2rem'
                 }}>
-                    Career
+                    {t('career.landing.title')}
                 </Title>
-                <HoverLink to="/about" fontSize="2rem" color="white">About Us</HoverLink>
-                <HoverLink to={routeNames.career.findJobs} fontSize="2rem" color="white">Find Jobs</HoverLink>
+                <HoverLink to="/about" fontSize="2rem" color="white">
+                    {t('career.landing.links.aboutUs')}
+                </HoverLink>
+                <HoverLink to={routeNames.career.findJobs} fontSize="2rem" color="white">
+                    {t('career.landing.links.findJobs')}
+                </HoverLink>
             </div>
 
             {isLargeScreen ? (
@@ -135,7 +142,7 @@ const Landing = () => {
                     bottom: '2vh',
                 }}>
                     <Card
-                        title="Find Jobs"
+                        title={t('career.landing.search.title')}
                         styles={{
                             header: {
                                 textAlign: 'center',
@@ -149,7 +156,7 @@ const Landing = () => {
                         }}
                     >
                         <Input
-                            placeholder="Search..."
+                            placeholder={t('career.landing.search.searchPlaceholder')}
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                             style={{
@@ -164,14 +171,14 @@ const Landing = () => {
                             <CustomDropdown
                                 menu={whatItems}
                                 value={selectedWhat}
-                                placeholder="What"
+                                placeholder={t('career.landing.search.what')}
                             />
                         </div>
                         <div style={{ borderBottom: '3px solid black', marginBottom: '1.5rem' }}>
                             <CustomDropdown
                                 menu={whereItems}
                                 value={selectedWhere}
-                                placeholder="Where"
+                                placeholder={t('career.landing.search.where')}
                             />
                         </div>
                         <Button
@@ -187,7 +194,7 @@ const Landing = () => {
                                 });
                             }}
                         >
-                            Find Jobs
+                            {t('career.landing.search.button')}
                         </Button>
                     </Card>
                 </div>

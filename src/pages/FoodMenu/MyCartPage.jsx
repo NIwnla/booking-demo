@@ -1,12 +1,12 @@
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Checkbox, Col, Input, Row, Typography } from "antd";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import CartItemCard from "../../components/cards/foodMenu/CartItemCard";
-import OrderSummaryCard from "../../components/cards/foodMenu/OrderSummaryCard";
 import MenuNavBar from "../../components/navbars/foodMenu/MenuNavBar";
 import { routeNames } from "../../constaints/routeName";
 import { DeliveryContext } from "../../context/DeliveryContext";
-import { useTranslation } from 'react-i18next';
+import OrderSummarySection from './OrderSummarySection';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const MyCartPage = () => {
     const { t } = useTranslation('global');
-    const { cart, location } = useContext(DeliveryContext);
+    const { cart } = useContext(DeliveryContext);
     const [condimentState, setCondimentState] = useState({
         ketchup: { checked: false, quantity: 1 },
         chilli_sauce: { checked: false, quantity: 1 },
@@ -23,9 +23,18 @@ const MyCartPage = () => {
         honey: { checked: false, quantity: 1 },
     });
 
-    // Calculate Sub-total
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
-    // Toggle checkbox selection
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 992);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
     const handleCheckboxChange = (id) => {
         setCondimentState((prev) => ({
             ...prev,
@@ -33,7 +42,6 @@ const MyCartPage = () => {
         }));
     };
 
-    // Increase quantity
     const increaseQuantity = (id) => {
         setCondimentState((prev) => ({
             ...prev,
@@ -41,7 +49,6 @@ const MyCartPage = () => {
         }));
     };
 
-    // Decrease quantity (minimum of 1)
     const decreaseQuantity = (id) => {
         setCondimentState((prev) => ({
             ...prev,
@@ -54,7 +61,7 @@ const MyCartPage = () => {
             <MenuNavBar />
             <div style={{ padding: "5vh 10vw", backgroundColor: "#f4f4f4", minHeight: "100vh" }}>
                 <Row gutter={[32, 16]}>
-                    <Col span={18}>
+                    <Col xs={24} lg={18}>
                         <Row gutter={[16, 16]} style={{ position: "relative" }}>
                             {/* Title and breadcrumb */}
                             <Col span={24} style={{ display: "flex", justifyContent: "center", borderBottom: "2px solid #ddd", marginBottom: '2vh' }}>
@@ -70,31 +77,30 @@ const MyCartPage = () => {
                                         ]}
                                     />
                                 </div>
-                                <Title style={{ fontSize: '1.5vw', textAlign: 'center' }}>{t('foodMenu.cart.title')} ({cart.length})</Title>
+                                <Title style={{ fontSize: '1.5rem', textAlign: 'center' }}>{t('foodMenu.cart.title')} ({cart.length})</Title>
                             </Col>
-                            {/* Left Side (16/24) - Cart Items */}
                             <Col span={24} style={{ paddingRight: "2vw", position: "relative" }}>
                                 <Row gutter={[64, 16]}>
                                     {/* Product Details Column */}
                                     <Col
-                                        span={12}
+                                        xs={24} lg={12}
                                         style={{
                                             padding: "2vh",
                                             borderRadius: "10px",
                                             borderRight: "2px dashed #ddd"
                                         }}
                                     >
-                                        <Title style={{ fontSize: '1vw' }}>{t('foodMenu.cart.productDetails')}</Title>
+                                        <Title style={{ fontSize: '1rem' }}>{t('foodMenu.cart.productDetails')}</Title>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1vh', marginTop: "2vh" }}>
                                             {cart.map((item) => (
-                                                <CartItemCard key={item.cartItemKey} item={item} />
+                                                <CartItemCard key={item.cartItemKey} item={item} isLargeScreen={isLargeScreen} />
                                             ))}
                                         </div>
                                     </Col>
 
                                     {/* Condiment & Cutlery Column */}
-                                    <Col span={12} style={{ padding: "2vh", borderRadius: "10px" }}>
-                                        <Title style={{ fontSize: '1vw', color: "#d32f2f" }}>{t('foodMenu.cart.condimentSectionTitle')}</Title>
+                                    <Col xs={24} lg={12} style={{ padding: "2vh", borderRadius: "10px" }}>
+                                        <Title style={{ fontSize: '1rem', color: "#d32f2f" }}>{t('foodMenu.cart.condimentSectionTitle')}</Title>
 
                                         {/* Condiment Options Section */}
                                         <div
@@ -106,8 +112,8 @@ const MyCartPage = () => {
                                                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)"
                                             }}
                                         >
-                                            <Title level={5} style={{ fontSize: '0.8vw', color: "#e64a19" }}>{t('foodMenu.cart.condimentOptions')}</Title>
-                                            <Paragraph style={{ fontSize: "0.8vw", color: "#777" }}>
+                                            <Title level={5} style={{ fontSize: '0.875rem', color: "#e64a19" }}>{t('foodMenu.cart.condimentOptions')}</Title>
+                                            <Paragraph style={{ fontSize: "0.875rem", color: "#777" }}>
                                                 {t('foodMenu.cart.condimentDescription')}
                                             </Paragraph>
 
@@ -131,7 +137,7 @@ const MyCartPage = () => {
                                                             onChange={() => handleCheckboxChange(id)}
                                                             style={{ transform: "scale(1.2)" }}
                                                         />
-                                                        <label htmlFor={id} style={{ fontSize: "0.8vw", cursor: "pointer", color: "#b71c1c" }}>
+                                                        <label htmlFor={id} style={{ fontSize: "0.875rem", cursor: "pointer", color: "#b71c1c" }}>
                                                             {t(`foodMenu.cart.condiments.${id}`)}
                                                         </label>
                                                     </div>
@@ -141,7 +147,7 @@ const MyCartPage = () => {
                                                         style={{
                                                             display: "flex",
                                                             alignItems: "center",
-                                                            gap: "0.5vw",
+                                                            gap: "0.5rem",
                                                             opacity: data.checked ? 1 : 0,
                                                             visibility: data.checked ? "visible" : "hidden",
                                                             height: "100%",
@@ -154,13 +160,13 @@ const MyCartPage = () => {
                                                             size="small"
                                                             onClick={() => decreaseQuantity(id)}
                                                             style={{
-                                                                padding: "0.3vw",
-                                                                fontSize: "0.7vw",
+                                                                padding: "0.3rem",
+                                                                fontSize: "0.75rem",
                                                                 color: "#b71c1c",
                                                                 borderColor: "#b71c1c"
                                                             }}
                                                         />
-                                                        <span style={{ textAlign: "center", fontSize: "0.7vw", fontWeight: "bold", color: "#b71c1c" }}>
+                                                        <span style={{ textAlign: "center", fontSize: "0.75rem", fontWeight: "bold", color: "#b71c1c" }}>
                                                             {data.quantity}
                                                         </span>
                                                         <Button
@@ -169,8 +175,8 @@ const MyCartPage = () => {
                                                             size="small"
                                                             onClick={() => increaseQuantity(id)}
                                                             style={{
-                                                                padding: "0.3vw",
-                                                                fontSize: "0.7vw",
+                                                                padding: "0.3rem",
+                                                                fontSize: "0.75rem",
                                                                 color: "#b71c1c",
                                                                 borderColor: "#b71c1c"
                                                             }}
@@ -181,8 +187,8 @@ const MyCartPage = () => {
                                             ))}
 
                                             {/* Sustainable Options Section */}
-                                            <Title level={5} style={{ fontSize: '0.8vw', color: "#e64a19", marginTop: '2vh' }}>{t('foodMenu.cart.sustainableOptions')}</Title>
-                                            <Paragraph style={{ fontSize: "0.8vw", color: "#777" }}>
+                                            <Title level={5} style={{ fontSize: '0.875rem', color: "#e64a19", marginTop: '2vh' }}>{t('foodMenu.cart.sustainableOptions')}</Title>
+                                            <Paragraph style={{ fontSize: "0.875rem", color: "#777" }}>
                                                 {t('foodMenu.cart.sustainableDescription')}
                                             </Paragraph>
 
@@ -202,7 +208,7 @@ const MyCartPage = () => {
                                                     }}
                                                 >
                                                     <Checkbox id={option.id} style={{ transform: "scale(1.2)" }} />
-                                                    <label htmlFor={option.id} style={{ fontSize: "0.8vw", cursor: "pointer", color: "#1565c0" }}>
+                                                    <label htmlFor={option.id} style={{ fontSize: "0.875rem", cursor: "pointer", color: "#1565c0" }}>
                                                         {t(`foodMenu.cart.condiments.${option.id}`)}
                                                     </label>
                                                 </div>
@@ -210,7 +216,7 @@ const MyCartPage = () => {
                                         </div>
 
                                         {/* Allergen Notice */}
-                                        <Paragraph style={{ fontSize: "0.8vw", color: "#d32f2f", marginTop: "2vh" }}>
+                                        <Paragraph style={{ fontSize: "0.875rem", color: "#d32f2f", marginTop: "2vh" }}>
                                             {t('foodMenu.cart.allergenNotice')}
                                         </Paragraph>
 
@@ -227,14 +233,14 @@ const MyCartPage = () => {
                                             <TextArea
                                                 rows={4}
                                                 placeholder={t('foodMenu.cart.allergenPlaceholder')}
-                                                style={{ fontSize: "0.8vw", resize: "none" }}
+                                                style={{ fontSize: "0.875rem", resize: "none" }}
                                             />
                                         </div>
 
                                         {/* E-Voucher Section */}
-                                        <Title level={5} style={{ fontSize: '0.8vw', color: "#d32f2f", marginTop: "2vh" }}>{t('foodMenu.cart.eVoucher')}</Title>
-                                        <Paragraph style={{ fontSize: "0.8vw", color: "#777" }}>
-                                            <Paragraph style={{ fontSize: "0.8vw", color: "#777" }}>{t('foodMenu.cart.eVoucherDescription')}</Paragraph>
+                                        <Title level={5} style={{ fontSize: '0.875rem', color: "#d32f2f", marginTop: "2vh" }}>{t('foodMenu.cart.eVoucher')}</Title>
+                                        <Paragraph style={{ fontSize: "0.875rem", color: "#777" }}>
+                                            {t('foodMenu.cart.eVoucherDescription')}
                                         </Paragraph>
                                         <div
                                             style={{
@@ -247,7 +253,7 @@ const MyCartPage = () => {
                                         >
                                             <Input
                                                 placeholder={t('foodMenu.cart.eVoucherPlaceholder')}
-                                                style={{ fontSize: "0.8vw" }}
+                                                style={{ fontSize: "0.875rem" }}
                                             />
                                         </div>
                                     </Col>
@@ -260,8 +266,8 @@ const MyCartPage = () => {
                         </Row>
                     </Col>
                     {/* Right Side (8/24) - Summary or Checkout */}
-                    <Col span={6}>
-                        <OrderSummaryCard />
+                    <Col xs={24} lg={6}>
+                        <OrderSummarySection />
                     </Col>
                 </Row>
 
