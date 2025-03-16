@@ -40,9 +40,9 @@ const EditJobOffer = () => {
     const onFinish = async (values) => {
         try {
             setLoading(true);
-            await axiosInstance.put(`job-offers/${id}`, values);
+            await axiosInstance.put(apiEndPoints.JOB_OFFER.EDIT(id), values);
             message.success('Job offer updated successfully');
-            navigate(routeNames.career.management);
+            navigate(routeNames.jobOffer.management);
         } catch (error) {
             message.error('Failed to update job offer');
             console.error('Error updating job offer:', error);
@@ -135,6 +135,17 @@ const EditJobOffer = () => {
                     </Form.Item>
 
                     <Form.Item
+                        label="Number of Recruitments"
+                        name="recruitNumber"
+                        rules={[{ 
+                            required: true, 
+                            message: 'Please input the number of recruitments!',
+                        }]}
+                    >
+                        <Input type="number" min={0} />
+                    </Form.Item>
+
+                    <Form.Item
                         label="Salary (Vietnamese)"
                         name="salaryVN"
                         rules={[{ required: true, message: 'Please input the Vietnamese salary!' }]}
@@ -167,7 +178,7 @@ const EditJobOffer = () => {
                         </Button>
                         <Button 
                             style={{ marginLeft: '10px' }}
-                            onClick={() => navigate(routeNames.career.management)}
+                            onClick={() => navigate(routeNames.jobOffer.management)}
                         >
                             Cancel
                         </Button>

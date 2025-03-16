@@ -74,6 +74,7 @@ export const apiEndPoints = {
         EDIT: (id) => `/categories/${id}`,
     },
     JOB_OFFER: {
+        GET_ALL_ADMIN: '/job-offers/admin',
         GET_ALL: '/job-offers',
         GET_BY_ID: (id) => `/job-offers/${id}`,
         CREATE: '/job-offers',

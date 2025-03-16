@@ -12,7 +12,7 @@ import BookingPage from "../pages/Booking/BookingPage";
 import BranchChoosePage from "../pages/Booking/BranchChoosePage";
 import CalendarPage from "../pages/Booking/CalendarPage";
 import BranchManagementAdminPage from "../pages/Branch/BranchManagementAdminPage";
-import ApplicationManagementPageAdmin from "../pages/Career/ApplicationManagementPageAdmin";
+import ApplicationManagementPageAdmin from "../pages/Career/Application/ApplicationManagementPageAdmin";
 import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
 import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
 import LandingPage from "../pages/Common/LandingPage/LandingPage";
@@ -43,6 +43,7 @@ import CareerMainPage from "../pages/Career/MainPage/CareerMainPage";
 import EditJobOffer from "../pages/Career/Management/EditJobOffer";
 import FindJobsPage from "../pages/Career/FindJobs/FindJobsPage";
 import JobOfferDetail from "../pages/Career/FindJobs/JobOfferDetail";
+import RecruitInformationDetail from "../pages/Career/Application/RecruitInformationDetail";
 
 
 
@@ -125,6 +126,10 @@ const AppRoutes = () => {
                     path={routeNames.recruitInformation.management}
                     element={<PrivateRoute element={<ApplicationManagementPageAdmin />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
                 />
+                <Route
+                    path={`${routeNames.recruitInformation.detail}:id`}
+                    element={<PrivateRoute element={<RecruitInformationDetail />} allowedRoles={[userRoles.ADMIN, userRoles.BRANCH_MANAGER]} />}
+                />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.deliveryInformation.create} element={<DeliveryCreationPage />} />
                 <Route
@@ -150,21 +155,22 @@ const AppRoutes = () => {
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.career.main} element={<CareerMainPage />} />
                 <Route path={routeNames.career.findJobs} element={<FindJobsPage />} />
-                <Route path={routeNames.career.detail.default} element={<JobOfferDetail />} />
+                <Route path={`${routeNames.career.detail}:id`} element={<JobOfferDetail />} />                
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
-                    path={routeNames.career.management}
+                    path={routeNames.jobOffer.management}
                     element={<PrivateRoute element={<JobOfferManagementPage />} allowedRoles={[userRoles.ADMIN]} />}
                 />
                 <Route
-                    path={routeNames.career.create}
+                    path={routeNames.jobOffer.create}
                     element={<PrivateRoute element={<CreateJobOffer />} allowedRoles={[userRoles.ADMIN]} />}
                 />
                 <Route
-                    path={routeNames.career.edit}
+                    path={`${routeNames.jobOffer.edit}:id`}
                     element={<PrivateRoute element={<EditJobOffer />} allowedRoles={[userRoles.ADMIN]} />}
                 />
                 <Route
-                    path={routeNames.career.detail.admin}
+                    path={`${routeNames.jobOffer.detail}:id`}
                     element={<PrivateRoute element={<JobOfferDetailAdmin />} allowedRoles={[userRoles.ADMIN]} />}
                 />
 

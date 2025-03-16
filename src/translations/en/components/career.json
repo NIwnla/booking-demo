@@ -59,15 +59,43 @@
       "lastName": "Last Name",
       "email": "Email",
       "phoneNumber": "Phone Number",
-      "socialNumber": "ID Card Number",
-      "currentEducation": "Current School",
-      "resume": "Resume"
+      "desiredJob": "Desired Job",
+      "actions": "Action"
     },
     "messages": {
       "socialNumberMissing": "Not provided",
       "currentEducationMissing": "Not provided",
       "viewResume": "View Resume",
-      "fetchError": "Failed to fetch data."
+      "fetchError": "Failed to fetch data.",
+      "confirmApplication": "Confirm Application",
+      "confirmApplicationDesc": "Are you sure you want to confirm this application?",
+      "denyApplication": "Deny Application",
+      "denyApplicationDesc": "Are you sure you want to deny this application?",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "detail": {
+    "title": "Application Details",
+    "backButton": "Back to List",
+    "confirmButton": "Confirm Application",
+    "denyButton": "Deny Application",
+    "viewResume": "View Resume",
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "socialNumber": "Social Number",
+      "currentEducation": "Current Education",
+      "desiredJob": "Desired Job",
+      "resume": "Resume"
+    },
+    "messages": {
+      "fetchError": "Failed to fetch application details",
+      "confirmSuccess": "Application confirmed successfully",
+      "confirmError": "Failed to confirm application",
+      "denySuccess": "Application denied successfully",
+      "denyError": "Failed to deny application"
     }
   },
   "landing": {

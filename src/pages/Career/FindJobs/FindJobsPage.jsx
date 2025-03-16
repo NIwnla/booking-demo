@@ -15,7 +15,8 @@ const { Title } = Typography;
 const FindJobsPage = () => {
     const location = useLocation();
     const [searchValue, setSearchValue] = useState(location.state?.search || '');
-    const [selectedWhat, setSelectedWhat] = useState(location.state?.type || null);
+    const [selectedWhat, setSelectedWhat] = useState(null);
+    const [selectedWhatId, setSelectedWhatId] = useState(location.state?.type || null);
     const [selectedWhere, setSelectedWhere] = useState(location.state?.location || null);
     const [jobTypes, setJobTypes] = useState([]);
     const [jobOffers, setJobOffers] = useState([]);
@@ -54,7 +55,10 @@ const FindJobsPage = () => {
         items: jobTypes.map(type => ({
             key: type.id,
             label: type.name,
-            onClick: () => setSelectedWhat(type.name),
+            onClick: () => {
+                setSelectedWhat(type.name);
+                setSelectedWhatId(type.id);
+            },
         })),
     };
 
@@ -84,7 +88,7 @@ const FindJobsPage = () => {
             const response = await axiosInstance.get(apiEndPoints.JOB_OFFER.GET_ALL, {
                 params: {
                     search: searchValue,
-                    typeId: selectedWhat,
+                    typeId: selectedWhatId,
                 }
             });
             setJobOffers(response.data);
@@ -122,6 +126,7 @@ const FindJobsPage = () => {
                     whatItems={whatItems}
                     whereItems={whereItems}
                     selectedWhat={selectedWhat}
+                    selectedWhatId={selectedWhatId}
                     selectedWhere={selectedWhere}
                     onSearch={fetchJobOffers}
                     isSearching={isSearching}

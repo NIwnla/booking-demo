@@ -8,6 +8,7 @@ const JobSearchBar = ({
     whatItems, 
     whereItems, 
     selectedWhat, 
+    selectedWhatId, 
     selectedWhere, 
     onSearch, 
     isSearching, 
@@ -39,6 +40,7 @@ const JobSearchBar = ({
                     <CustomDropdown
                         menu={whatItems}
                         value={selectedWhat}
+                        valueId={selectedWhatId}
                         placeholder="What"
                         fontSize={isLargeScreen ? '2rem' : '1rem'}
                     />
@@ -56,6 +58,7 @@ const JobSearchBar = ({
                     <CustomDropdown
                         menu={whereItems}
                         value={selectedWhere}
+                        valueId={selectedWhatId}
                         placeholder="Where"
                         fontSize={isLargeScreen ? '2rem' : '1rem'}
                     />

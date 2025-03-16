@@ -59,15 +59,43 @@
       "lastName": "Tên",
       "email": "Email",
       "phoneNumber": "Số điện thoại",
-      "socialNumber": "Căn cước công dân",
-      "currentEducation": "Trường đang theo học",
-      "resume": "Hồ sơ"
+      "desiredJob": "Công Việc Mong Muốn",
+      "actions": "Hành động"
     },
     "messages": {
       "socialNumberMissing": "Chưa cung cấp",
       "currentEducationMissing": "Chưa cung cấp",
       "viewResume": "Xem hồ sơ",
-      "fetchError": "Lỗi khi lấy dữ liệu."
+      "fetchError": "Lỗi khi lấy dữ liệu",
+      "confirmApplication": "Xác nhận đơn ứng tuyển",
+      "confirmApplicationDesc": "Bạn có chắc chắn muốn xác nhận đơn ứng tuyển này?",
+      "denyApplication": "Từ chối đơn ứng tuyển",
+      "denyApplicationDesc": "Bạn có chắc chắn muốn từ chối đơn ứng tuyển này?",
+      "yes": "Đồng ý",
+      "no": "Hủy"
+    }
+  },
+  "detail": {
+    "title": "Chi Tiết Đơn Ứng Tuyển",
+    "backButton": "Quay Lại Danh Sách",
+    "confirmButton": "Xác Nhận Đơn",
+    "denyButton": "Từ Chối Đơn",
+    "viewResume": "Xem Hồ Sơ",
+    "fields": {
+      "fullName": "Họ và Tên",
+      "email": "Email",
+      "phoneNumber": "Số Điện Thoại",
+      "socialNumber": "Số CCCD",
+      "currentEducation": "Trường Đang Học",
+      "desiredJob": "Vị Trí Ứng Tuyển",
+      "resume": "Hồ Sơ"
+    },
+    "messages": {
+      "fetchError": "Không thể tải thông tin đơn ứng tuyển",
+      "confirmSuccess": "Xác nhận đơn ứng tuyển thành công",
+      "confirmError": "Không thể xác nhận đơn ứng tuyển",
+      "denySuccess": "Từ chối đơn ứng tuyển thành công",
+      "denyError": "Không thể từ chối đơn ứng tuyển"
     }
   },
   "landing": {

@@ -1,12 +1,12 @@
+import { DeleteOutlined, EditOutlined, PlusOutlined, ZoomInOutlined } from '@ant-design/icons';
+import { Button, Card, Popconfirm, Space, Table, Tag, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Space, Tag, Typography, Card, Popconfirm } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, ZoomInOutlined } from '@ant-design/icons';
-import JobTypeFilterBox from './components/JobTypeFilterBox';
-import axiosInstance from '../../../service/axios';
 import { useTranslation } from 'react-i18next';
-import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { useNavigate } from 'react-router-dom';
+import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { routeNames } from '../../../constaints/routeName';
+import axiosInstance from '../../../service/axios';
+import JobTypeFilterBox from './components/JobTypeFilterBox';
 
 const { Title } = Typography;
 
@@ -21,7 +21,7 @@ const JobOfferManagementPage = () => {
         const fetchJobOffers = async () => {
             try {
                 setLoading(true);
-                const response = await axiosInstance.get(apiEndPoints.JOB_OFFER.GET_ALL, {
+                const response = await axiosInstance.get(apiEndPoints.JOB_OFFER.GET_ALL_ADMIN, {
                     params: {
                         typeId: selectedType
                     }
@@ -74,9 +74,21 @@ const JobOfferManagementPage = () => {
             title: 'Description',
             dataIndex: 'shortDescription',
             key: 'shortDescription',
-            width: '35%',
+            width: '25%',
             ellipsis: true,
             responsive: ['lg'],
+        },
+        {
+            title: 'Recruitment',
+            dataIndex: 'recruitNumber',
+            key: 'recruitNumber',
+            responsive: ['lg'],
+            width: '10%',
+            render: (recruitNumber) => (
+                <Tag color={recruitNumber === 0 ? 'red' : 'green'}>
+                    {recruitNumber} positions
+                </Tag>
+            ),
         },
         {
             title: 'Employment',
@@ -98,13 +110,13 @@ const JobOfferManagementPage = () => {
                     <Button
                         icon={<ZoomInOutlined />}
                         type="default"
-                        onClick={() => navigate(`/career/detail/admin/${record.id}`)}
+                        onClick={() => navigate(`${routeNames.jobOffer.detail}${record.id}`)}
                     />
                     <Button
                         icon={<EditOutlined />}
                         type="primary"
                         ghost
-                        onClick={() => navigate(`/career/edit/${record.id}`)}
+                        onClick={() => navigate(`${routeNames.jobOffer.edit}${record.id}`)}
                     />
                     <Popconfirm
                         title="Delete this job offer?"

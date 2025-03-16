@@ -35,7 +35,8 @@ export const routeNames = {
     },
     recruitInformation: {
         signUp: '/recruit/sign-up',
-        management: 'recruit/management',
+        management: '/recruit/management',
+        detail:'/recruit/detail/'
     },
     driver: {
         management: '/drivers/management',
@@ -62,16 +63,16 @@ export const routeNames = {
         main: '/reservation',
         form: '/reservation/form',
     },
+    jobOffer:{
+        management: '/job-offers/management',
+        detail: '/job-offers/detail/',
+        create: '/job-offers/create',
+        edit: '/job-offers/edit/',
+    },
     career: {
         main: '/career',
-        management: '/career/management',
         findJobs: '/career/find',
         about: '/career/about',
-        detail: {
-            admin: '/career/detail/admin/:id',
-            default: '/career/detail/:id'
-        },
-        create: '/career/create/',
-        edit: '/career/edit/:id',
+        detail: '/career/detail/'
     },
 }

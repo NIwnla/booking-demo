@@ -18,6 +18,7 @@ const Landing = () => {
     const { t } = useTranslation('global');
     const navigate = useNavigate();
     const [selectedWhat, setSelectedWhat] = useState(null);
+    const [selectedWhatId, setSelectedWhatId] = useState(null);
     const [selectedWhere, setSelectedWhere] = useState(null);
     const [jobTypes, setJobTypes] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -40,7 +41,10 @@ const Landing = () => {
         items: jobTypes.map(type => ({
             key: type.id,
             label: type.name,
-            onClick: () => setSelectedWhat(type.name),
+            onClick: () => {
+                setSelectedWhat(type.name);
+                setSelectedWhatId(type.id);
+            },
         })),
     };
 
@@ -171,6 +175,7 @@ const Landing = () => {
                             <CustomDropdown
                                 menu={whatItems}
                                 value={selectedWhat}
+                                valueId={selectedWhatId}
                                 placeholder={t('career.landing.search.what')}
                             />
                         </div>
@@ -178,6 +183,7 @@ const Landing = () => {
                             <CustomDropdown
                                 menu={whereItems}
                                 value={selectedWhere}
+                                valueId={selectedWhatId}
                                 placeholder={t('career.landing.search.where')}
                             />
                         </div>
@@ -188,7 +194,7 @@ const Landing = () => {
                                 navigate(routeNames.career.findJobs, {
                                     state: {
                                         search: searchValue,
-                                        type: selectedWhat,
+                                        type: selectedWhatId, // Changed from selectedWhat
                                         location: selectedWhere
                                     }
                                 });
@@ -214,12 +220,13 @@ const Landing = () => {
                         whatItems={whatItems}
                         whereItems={whereItems}
                         selectedWhat={selectedWhat}
+                        selectedWhatId={selectedWhatId}
                         selectedWhere={selectedWhere}
                         onSearch={() => {
                             navigate(routeNames.career.findJobs, {
                                 state: {
                                     search: searchValue,
-                                    type: selectedWhat,
+                                    type: selectedWhatId,
                                     location: selectedWhere
                                 }
                             });

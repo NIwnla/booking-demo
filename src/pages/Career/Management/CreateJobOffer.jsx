@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 import { routeNames } from '../../../constaints/routeName';
 import axiosInstance from '../../../service/axios';
+import { apiEndPoints } from '../../../constaints/apiEndPoint';
 
 const { Title } = Typography;
 
@@ -17,9 +18,9 @@ const CreateJobOffer = () => {
     const onFinish = async (values) => {
         try {
             setLoading(true);
-            await axiosInstance.post('job-offers', values);
+            await axiosInstance.post(apiEndPoints.JOB_OFFER.CREATE, values);
             message.success('Job offer created successfully');
-            navigate(routeNames.career.management);
+            navigate(routeNames.jobOffer.management);
         } catch (error) {
             message.error('Failed to create job offer');
             console.error('Error creating job offer:', error);
@@ -107,6 +108,20 @@ const CreateJobOffer = () => {
                     </Form.Item>
 
                     <Form.Item
+                        label="Number of Recruitments"
+                        name="recruitNumber"
+                        rules={[{ 
+                            required: true, 
+                            message: 'Please input the number of recruitments!',
+                            type: 'number',
+                            min: 0
+                        }]}
+                        initialValue={1}
+                    >
+                        <Input type="number" min={0} />
+                    </Form.Item>
+
+                    <Form.Item
                         label="Salary (Vietnamese)"
                         name="salaryVN"
                         rules={[{ required: true, message: 'Please input the Vietnamese salary!' }]}
@@ -139,7 +154,7 @@ const CreateJobOffer = () => {
                         </Button>
                         <Button 
                             style={{ marginLeft: '10px' }}
-                            onClick={() => navigate(routeNames.career.management)}
+                            onClick={() => navigate(routeNames.jobOffer.management)}
                         >
                             Cancel
                         </Button>

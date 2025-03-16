@@ -105,7 +105,7 @@ const AdminLayout = ({ children }) => {
                 },
                 {
                     key: '30',
-                    label: <Link to={routeNames.career.management}>{t('leftMenuItems.management.jobOffers')}</Link>,
+                    label: <Link to={routeNames.jobOffer.management}>{t('leftMenuItems.management.jobOffers')}</Link>,
                 },
             ],
         },
@@ -181,11 +181,9 @@ const AdminLayout = ({ children }) => {
                         type="primary"
                         icon={<MenuOutlined />}
                         onClick={showDrawer}
-                        style={{ background: 'transparent', color: '#fff', border: 'none', marginBottom: '4vh' }}
+                        style={{ background: 'transparent', color: '#fff', border: 'none', boxShadow: 'none' }}
                     />
                 )}
-
-
 
                 {/* Dropdown for Logged-in User */}
                 {email ? (

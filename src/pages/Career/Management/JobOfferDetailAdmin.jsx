@@ -38,6 +38,7 @@ const JobOfferDetailAdmin = () => {
         { label: 'Application Time', value: jobOffer.applicationTime },
         { label: 'Department', value: jobOffer.department },
         { label: 'Salary', value: i18n.language === 'vi' ? jobOffer.salaryVN : jobOffer.salaryEN },
+        { label: 'Recruitments', value: jobOffer.recruitNumber },
     ];
 
     const jobTitle = i18n.language === 'vi' ? jobOffer.nameVN : jobOffer.nameEN;
@@ -51,7 +52,7 @@ const JobOfferDetailAdmin = () => {
                 </Paragraph>
 
                 <Row gutter={[24, 24]}>
-                    <Col xs={24} md={16}>
+                    <Col xs={24} lg={16}>
                         <Card title="Job Description">
                             <div
                                 dangerouslySetInnerHTML={{ __html: jobOffer.description }}
@@ -62,7 +63,7 @@ const JobOfferDetailAdmin = () => {
                             />
                         </Card>
                     </Col>
-                    <Col xs={24} md={8}>
+                    <Col xs={24} lg={8}>
                         <Card title="Job Details">
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {infoItems.map((item, index) => (
@@ -97,7 +98,7 @@ const JobOfferDetailAdmin = () => {
                 </Row>
 
                 <div style={{ marginTop: '24px' }}>
-                    <Link to={routeNames.career.management}>
+                    <Link to={routeNames.jobOffer.management}>
                         <Button icon={<ArrowLeftOutlined />}>
                             Back to Job Offers
                         </Button>

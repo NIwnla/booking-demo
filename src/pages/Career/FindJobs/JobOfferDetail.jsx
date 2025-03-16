@@ -31,7 +31,7 @@ const JobOfferDetail = () => {
         };
 
         fetchJobOffer();
-    }, [id]);
+    },[]);
 
     if (loading) return <div>Loading...</div>;
     if (!jobOffer) return <div>Job offer not found</div>;
@@ -53,7 +53,7 @@ const JobOfferDetail = () => {
         formData.append("email", values.email);
         formData.append("phoneNumber", values.phoneNumber);
         formData.append("socialNumber", values.socialNumber);
-        formData.append("resumeFile", values.resumeFile[0].originFileObj);
+        formData.append("resume", values.resume[0].originFileObj);
         formData.append("jobOfferId", id);
         if (values.currentEducation) {
             formData.append("currentEducation", values.currentEducation);
@@ -228,13 +228,13 @@ const JobOfferDetail = () => {
 
                                     <Form.Item
                                         label="Resume"
-                                        name="resumeFile"
+                                        name="resume"
                                         valuePropName="fileList"
                                         getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
                                         rules={[{ required: true, message: 'Please upload your resume!' }]}
                                     >
                                         <Upload
-                                            name="resumeFile"
+                                            name="resume"
                                             listType="text"
                                             maxCount={1}
                                             beforeUpload={validateFile}

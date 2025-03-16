@@ -4,7 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
-const CustomDropdown = ({ menu, value, placeholder = 'Select', fontSize = '2rem' }) => {
+const CustomDropdown = ({ menu, value, valueId, placeholder = 'Select', fontSize = '2rem' }) => {
     return (
         <Dropdown menu={menu} trigger={['click']}>
             <div style={{

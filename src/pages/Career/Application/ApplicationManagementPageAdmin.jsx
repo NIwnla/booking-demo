@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input } from "antd";
-import axiosInstance from "../../service/axios";
-import { apiEndPoints } from "../../constaints/apiEndPoint";
-import { AxiosConstants } from "../../constaints/axiosContaint";
+import { Table, Input, Button, Space, Popconfirm } from "antd";
+import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import axiosInstance from "../../../service/axios";
+import { apiEndPoints } from "../../../constaints/apiEndPoint";
+import { AxiosConstants } from "../../../constaints/axiosContaint";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { routeNames } from "../../../constaints/routeName";
 
 const ApplicationManagementPageAdmin = () => {
     const { t } = useTranslation('global');
@@ -14,6 +17,8 @@ const ApplicationManagementPageAdmin = () => {
     const [total, setTotal] = useState(0);
     const [search, setSearch] = useState("");
     const [sortByTime, setSortByTime] = useState("asc");
+    const navigate = useNavigate();
+    const { i18n } = useTranslation();
 
     const fetchData = async () => {
         setLoading(true);
@@ -33,6 +38,24 @@ const ApplicationManagementPageAdmin = () => {
             console.error(t("career.management.messages.fetchError"), error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleConfirm = async (id) => {
+        try {
+            // await axiosInstance.put(`${apiEndPoints.RECRUIT_INFORMATION.CONFIRM}/${id}`);
+            fetchData();
+        } catch (error) {
+            console.error('Error confirming application:', error);
+        }
+    };
+
+    const handleDeny = async (id) => {
+        try {
+            // await axiosInstance.put(`${apiEndPoints.RECRUIT_INFORMATION.DENY}/${id}`);
+            fetchData();
+        } catch (error) {
+            console.error('Error denying application:', error);
         }
     };
 
@@ -67,26 +90,42 @@ const ApplicationManagementPageAdmin = () => {
             key: "phoneNumber",
         },
         {
-            title: t("career.management.columns.socialNumber"),
-            dataIndex: "socialNumber",
-            key: "socialNumber",
-            render: (text) => text || t("career.management.messages.socialNumberMissing"),
+            title: t("career.management.columns.desiredJob"),
+            responsive: ['lg'],
+            key: "desiredJob",
+            render: (text, record) => {
+                return i18n.language === 'vi' ? record.desiredJobVN : record.desiredJobEN;
+            },
+            ellipsis: true,
         },
         {
-            title: t("career.management.columns.currentEducation"),
-            dataIndex: "currentEducation",
-            key: "currentEducation",
-            responsive: ['xl'],
-            render: (text) => text || t("career.management.messages.currentEducationMissing"),
-        },
-        {
-            title: t("career.management.columns.resume"),
-            dataIndex: "resumePath",
-            key: "resumePath",
-            render: (text) => (
-                <a href={`${AxiosConstants.AXIOS_BASEURL}/${text}`} target="_blank" rel="noopener noreferrer">
-                    {t("career.management.messages.viewResume")}
-                </a>
+            title: t("career.management.columns.actions"),
+            key: "actions",
+            render: (_, record) => (
+                <Space>
+                    <Button
+                        icon={<EyeOutlined />}
+                        onClick={() => navigate(`${routeNames.recruitInformation.detail}${record.id}`)}
+                    />
+                    <Popconfirm
+                        title={t("career.management.messages.confirmApplication")}
+                        description={t("career.management.messages.confirmApplicationDesc")}
+                        onConfirm={() => handleConfirm(record.id)}
+                        okText={t("career.management.messages.yes")}
+                        cancelText={t("career.management.messages.no")}
+                    >
+                        <Button type="primary" icon={<CheckOutlined />} />
+                    </Popconfirm>
+                    <Popconfirm
+                        title={t("career.management.messages.denyApplication")}
+                        description={t("career.management.messages.denyApplicationDesc")}
+                        onConfirm={() => handleDeny(record.id)}
+                        okText={t("career.management.messages.yes")}
+                        cancelText={t("career.management.messages.no")}
+                    >
+                        <Button danger icon={<CloseOutlined />} />
+                    </Popconfirm>
+                </Space>
             ),
         },
     ];
@@ -100,7 +139,7 @@ const ApplicationManagementPageAdmin = () => {
     };
 
     return (
-        <div>
+        <div style={{padding:'5vh 10vw'}}>
             <h1>{t("career.management.titles.pageTitle")}</h1>
             <Input.Search
                 placeholder={t("career.management.placeholders.search")}
@@ -125,3 +164,6 @@ const ApplicationManagementPageAdmin = () => {
 };
 
 export default ApplicationManagementPageAdmin;
+
+
+    

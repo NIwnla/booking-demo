@@ -54,7 +54,7 @@ const AllJobs = () => {
                 {jobs.map((job, index) => (
                     <Link
                         key={job.id}
-                        to={`${routeNames.career.detail.default}/${job.id}`}
+                        to={`${routeNames.career.detail}${job.id}`}
                         style={{
                             transition: 'opacity 0.3s ease',
                         }}
