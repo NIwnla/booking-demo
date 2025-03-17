@@ -1,11 +1,9 @@
-import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, MailOutlined, PieChartOutlined } from '@ant-design/icons';
-import React, { useContext, useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Dropdown, Layout, Menu, Space, Typography } from 'antd';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
-import './Layout.css';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text, Paragraph } = Typography;

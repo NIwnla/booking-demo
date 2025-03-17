@@ -19,7 +19,11 @@ const BranchChoosePage = () => {
         const fetchBranches = async () => {
             setIsFetching(true);
             try {
-                const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL(true));
+                const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
+                    params: {
+                        includeDeleted: true,
+                    }
+                });
                 setBranches(response.data);
             } catch (error) {
                 console.error('Error fetching branches:', error);

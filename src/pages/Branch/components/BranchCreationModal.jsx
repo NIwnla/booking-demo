@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { useTranslation } from 'react-i18next';
+import BranchLocationFilterBox from './BranchLocationFilterBox';
 
 const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
     const [form] = Form.useForm();
@@ -18,6 +19,7 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
         formData.append('DescriptionVN', values.descriptionVN);
         formData.append('DescriptionEN', values.descriptionEN);
         formData.append('ImageFile', values.imageFile.file);
+        formData.append('BranchLocationId', values.locationId);
 
         setLoading(true);
 
@@ -82,6 +84,14 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                     rules={[{ required: true, message: t('branch.creationModal.form.descriptionEN.required') }]}
                 >
                     <Input.TextArea rows={4} placeholder={t('branch.creationModal.form.descriptionEN.placeholder')} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.creationModal.form.location.label')}
+                    name="locationId"
+                    rules={[{ required: true, message: t('branch.creationModal.form.location.required') }]}
+                >
+                    <BranchLocationFilterBox onLocationChange={(value) => form.setFieldValue('locationId', value)} />
                 </Form.Item>
 
                 <Form.Item

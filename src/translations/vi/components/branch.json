@@ -8,6 +8,7 @@
     "columns": {
       "name": "Tên",
       "description": "Mô Tả",
+      "location": "Địa Điểm",
       "status": "Trạng Thái",
       "action": "Hành Động"
     },
@@ -30,6 +31,7 @@
       "detail": {
         "fields": {
           "name": "Tên",
+          "location": "Địa Điểm",
           "description": "Mô Tả",
           "status": "Trạng Thái"
         }
@@ -65,6 +67,11 @@
         "label": "Hình Ảnh",
         "placeholder": "Chọn Hình Ảnh",
         "required": "Vui lòng tải lên hình ảnh"
+      },
+      "location": {
+        "label": "Địa Điểm",
+        "placeholder": "Chọn địa điểm chi nhánh",
+        "required": "Vui lòng chọn địa điểm chi nhánh"
       }
     },
     "buttons": {
@@ -80,19 +87,34 @@
       "modalTitle": "Chỉnh Sửa Chi Nhánh"
     },
     "form": {
-      "name": {
-        "label": "Tên",
-        "placeholder": "Nhập tên chi nhánh",
-        "required": "Vui lòng nhập tên chi nhánh"
+      "nameVN": {
+        "label": "Tên (VN)",
+        "placeholder": "Nhập tên chi nhánh bằng tiếng Việt",
+        "required": "Vui lòng nhập tên chi nhánh bằng tiếng Việt"
       },
-      "description": {
-        "label": "Mô Tả",
-        "placeholder": "Nhập mô tả chi nhánh",
-        "required": "Vui lòng nhập mô tả chi nhánh"
+      "nameEN": {
+        "label": "Tên (EN)",
+        "placeholder": "Nhập tên chi nhánh bằng tiếng Anh",
+        "required": "Vui lòng nhập tên chi nhánh bằng tiếng Anh"
+      },
+      "descriptionVN": {
+        "label": "Mô Tả (VN)",
+        "placeholder": "Nhập mô tả chi nhánh bằng tiếng Việt",
+        "required": "Vui lòng nhập mô tả chi nhánh bằng tiếng Việt"
+      },
+      "descriptionEN": {
+        "label": "Mô Tả (EN)",
+        "placeholder": "Nhập mô tả chi nhánh bằng tiếng Anh",
+        "required": "Vui lòng nhập mô tả chi nhánh bằng tiếng Anh"
       },
       "image": {
         "label": "Hình Ảnh",
         "placeholder": "Chọn Hình Ảnh"
+      },
+      "location": {
+        "label": "Địa Điểm",
+        "placeholder": "Chọn địa điểm chi nhánh",
+        "required": "Vui lòng chọn địa điểm chi nhánh"
       }
     },
     "buttons": {

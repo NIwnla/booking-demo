@@ -5,6 +5,7 @@ import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../../constaints/axiosContaint';
 import axiosInstance from '../../../service/axios';
 import { useTranslation } from 'react-i18next';
+import BranchLocationFilterBox from './BranchLocationFilterBox';
 
 const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
     const [form] = Form.useForm();
@@ -20,6 +21,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 nameEN: branch.nameEN,
                 descriptionVN: branch.descriptionVN,
                 descriptionEN: branch.descriptionEN,
+                locationId: branch.branchLocationId
             });
 
             setFileList(branch.imagePath ? [
@@ -39,6 +41,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
         formData.append('NameEN', values.nameEN);
         formData.append('DescriptionVN', values.descriptionVN);
         formData.append('DescriptionEN', values.descriptionEN);
+        formData.append('BranchLocationId', values.locationId);
 
         if (fileList.length > 0 && fileList[0].originFileObj) {
             formData.append('ImageFile', fileList[0].originFileObj);
@@ -112,6 +115,17 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                     rules={[{ required: true, message: t('branch.editModal.form.descriptionEN.required') }]}
                 >
                     <Input.TextArea rows={4} placeholder={t('branch.editModal.form.descriptionEN.placeholder')} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.editModal.form.location.label')}
+                    name="locationId"
+                    rules={[{ required: true, message: t('branch.editModal.form.location.required') }]}
+                >
+                    <BranchLocationFilterBox 
+                        onLocationChange={(value) => form.setFieldValue('locationId', value)}
+                        defaultValue={branch?.branchLocationId}
+                    />
                 </Form.Item>
 
                 <Form.Item

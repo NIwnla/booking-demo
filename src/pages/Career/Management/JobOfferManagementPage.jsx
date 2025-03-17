@@ -148,7 +148,7 @@ const JobOfferManagementPage = () => {
                     <Button
                         type="primary"
                         icon={<PlusOutlined />}
-                        onClick={() => navigate(routeNames.career.create)}
+                        onClick={() => navigate(routeNames.jobOffer.create)}
                     >
                         Create New Job Offer
                     </Button>

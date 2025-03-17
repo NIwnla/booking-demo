@@ -1,6 +1,8 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Row, Select, TimePicker } from 'antd';
-import React, { useState } from 'react';
+import { App, Button, Col, DatePicker, Row, Select, TimePicker } from 'antd';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../service/axios';
+import { apiEndPoints } from '../../constaints/apiEndPoint';
 // @ts-ignore
 import ReservationBackground from '../../assets/ReservationBackground.jpg';
 import { Link } from 'react-router-dom';
@@ -8,14 +10,56 @@ import { routeNames } from '../../constaints/routeName';
 
 const ReservationPage = () => {
     const [selectedLocation, setSelectedLocation] = useState(null);
+    const [isFetching, setIsFetching] = useState(false);
+    const [branches, setBranches] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [selectedAdult, setSelectedAdult] = useState(0);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const { message } = App.useApp();
 
-    const locations = [
-        'Tay Ho',
-        'Hoan Kiem',
-        'Ba Dinh',
-        'Dong Da',
-        'Hai Ba Trung',
-    ];
+    const [isMiddleScreen, setIsMiddleScreen] = useState(window.innerWidth >= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMiddleScreen(window.innerWidth >= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
+    const fetchBranches = async () => {
+        setIsFetching(true);
+        try {
+            const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
+                params: {
+                    includeDeleted: true,
+                    locationId: selectedLocation || null,
+                }
+            });
+            setBranches(response.data);
+        } catch (error) {
+            message.error('Error fetching branches');
+        } finally {
+            setIsFetching(false);
+        }
+    };
+
+    const fetchLocations = async () => {
+        try {
+            const response = await axiosInstance.get(apiEndPoints.BRANCH_LOCATION.GET_ALL);
+            setLocations(response.data);
+        } catch (error) {
+            console.error('Error fetching locations:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchLocations();
+    }, []);
+
 
     const peopleOptions = Array.from({ length: 10 }, (_, i) => ({
         value: i + 1,
@@ -67,19 +111,28 @@ const ReservationPage = () => {
                     color: 'white',
                     marginBottom: '2rem'
                 }}>
-                    Reserve a table at any of our restaurants in your city {selectedLocation}
+                    Reserve a table at any of our restaurants in your city {locations.find(loc => loc.id === selectedLocation)?.name || ''}
                 </p>
                 <Row gutter={[16, 16]} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '8px', width: '70vw' }}>
-                    <Col xs={12} md={12} lg={5}>
+                    <Col xs={12} md={12} lg={7}>
+                        <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                            Branch {locations.find(loc => loc.id === selectedLocation)?.name || ''}
+                        </div>
                         <Select
                             placeholder="Select location"
                             style={{ width: '100%' }}
-                            options={locations.map(loc => ({ value: loc, label: loc }))}
+                            options={locations.map(loc => ({
+                                value: loc.id,
+                                label: loc.name
+                            }))}
                             value={selectedLocation}
                             onChange={(value) => setSelectedLocation(value)}
                         />
                     </Col>
                     <Col xs={12} md={12} lg={5}>
+                        <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                            Adult
+                        </div>
                         <Select
                             placeholder="Number of people"
                             style={{ width: '100%' }}
@@ -87,34 +140,55 @@ const ReservationPage = () => {
                         />
                     </Col>
                     <Col xs={12} md={12} lg={5}>
+                        <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                            Date
+                        </div>
                         <DatePicker style={{ width: '100%' }} />
                     </Col>
-                    <Col xs={12} md={12} lg={5}>
-                        <TimePicker 
-                            style={{ width: '100%' }} 
-                            format="HH:mm"
-                            disabledTime={() => {
+                    <Col xs={12} md={12} lg={3}>
+                        <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                            Time
+                        </div>
+                        <Select
+                            style={{ width: '100%' }}
+                            placeholder="Select time"
+                            value={selectedTime}
+                            onChange={setSelectedTime}
+                            options={(() => {
                                 const now = new Date();
-                                return {
-                                    disabledHours: () => Array.from(
-                                        { length: now.getHours() }, 
-                                        (_, i) => i
-                                    ),
-                                    disabledMinutes: (selectedHour) => {
-                                        if (selectedHour === now.getHours()) {
-                                            return Array.from(
-                                                { length: now.getMinutes() }, 
-                                                (_, i) => i
-                                            );
+                                const currentHour = now.getHours();
+                                const currentMinute = now.getMinutes();
+                                const times = [];
+
+                                for (let hour = 0; hour < 24; hour++) {
+                                    for (let minute = 0; minute < 60; minute += 15) {
+                                        // Skip times before current time
+                                        if (hour < currentHour || (hour === currentHour && minute <= currentMinute)) {
+                                            continue;
                                         }
-                                        return [];
+
+                                        const formattedHour = hour.toString().padStart(2, '0');
+                                        const formattedMinute = minute.toString().padStart(2, '0');
+                                        const timeString = `${formattedHour}:${formattedMinute}`;
+
+                                        times.push({
+                                            value: timeString,
+                                            label: timeString,
+                                        });
                                     }
-                                };
-                            }}
+                                }
+                                return times;
+                            })()}
                         />
                     </Col>
-                    <Col xs={24} md={12} lg={4}>
-                        <Button type="primary" icon={<SearchOutlined />} style={{ width: '100%' }}>
+                    <Col xs={24} lg={4} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                        <Button
+                            type="primary"
+                            loading={isFetching}
+                            icon={<SearchOutlined />}
+                            style={{ width: '100%' }}
+                            onClick={() => fetchBranches()}
+                            disabled={!selectedLocation || !selectedTime}>
                             Search
                         </Button>
                     </Col>
@@ -125,12 +199,12 @@ const ReservationPage = () => {
                     </div>
                     {locations.map((location) => (
                         <div
-                            key={location}
+                            key={location.id}
                             style={{
                                 padding: '0.2rem',
                                 border: '1px solid #ddd',
                                 borderRadius: '8px',
-                                backgroundColor: selectedLocation === location ? '#ffcdd2' : 'white',
+                                backgroundColor: selectedLocation === location.id ? '#ffcdd2' : 'white',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
                                 textAlign: 'center',
@@ -139,46 +213,78 @@ const ReservationPage = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}
-                            onClick={() => handleLocationSelect(location)}
+                            onClick={() => handleLocationSelect(location.id)}
                         >
-                            {location}
+                            {location.name}
                         </div>
                     ))}
                 </div>
 
-                <h2 style={{
-                    fontSize: '1.8rem',
-                    margin: '2rem 0 1rem',
-                    textAlign: 'center',
-                    color: 'white',
-                }}>
-                    Find your table
-                </h2>
-                <h2 style={{
-                    fontSize: '1.8rem',
-                    color: 'white',
-                    textAlign: 'center'
-                }}>
-                    Or
-                </h2>
-                <div style={{
-                    backgroundColor: '#f8f9fa',
-                    padding: '1.5rem',
-                    borderRadius: '8px',
-                    marginTop: '0.5rem',
-                    maxWidth: '800px',
-                    width: '100%'
-                }}>
-                    <p style={{ fontSize: '1rem', color: '#666', marginBottom: '1rem' }}>
-                        For specific requests such as hosting large groups (15+ people), booking more than 30 days in advance,
-                        or choosing a preferred ambiance, please contact our 4P's Guest Service Center (09:00 - 22:00) via:
-                    </p>
-                    <p style={{ fontSize: '1rem', color: '#333', margin: 0 }}>
-                        Domestic number: <strong>1900 6043</strong><br />
-                        International number: <strong>(028) 3622 0500</strong>
-                    </p>
-                </div>
-                <Link to={routeNames.reservation.form}> Form </Link>
+
+                {branches.map((branch) => (
+                    <div
+                        key={branch.id}
+                        style={{
+                            backgroundColor: 'white',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            padding: '15px',
+                            borderBottom: '1px solid #eee',
+                            alignItems: 'flex-start',
+                            fontSize: isMiddleScreen ? '2rem' : '1rem'
+                        }}
+                    >
+                        <div style={{ flex: '1', width: '50%' }}>
+                            <h3 style={{ margin: '0 0 10px 0' }}>{branch.nameEN}</h3>
+                            <p style={{ margin: '0', color: '#666' }}>{branch.descriptionEN}</p>
+                        </div>
+                        <div style={{
+                            padding: '5px',
+                            background: 'red',
+                            color: 'white',
+                            fontSize: isMiddleScreen ? '1.75rem' : '0.75rem'
+                        }}>
+                            {selectedTime}
+                        </div>
+                    </div>
+                ))}
+                {branches.length === 0 && (
+                    <>
+                        <h2 style={{
+                            fontSize: '1.8rem',
+                            margin: '2rem 0 1rem',
+                            textAlign: 'center',
+                            color: 'white',
+                        }}>
+                            Find your table
+                        </h2>
+                        <h2 style={{
+                            fontSize: '1.8rem',
+                            color: 'white',
+                            textAlign: 'center'
+                        }}>
+                            Or
+                        </h2>
+                        <div style={{
+                            backgroundColor: '#f8f9fa',
+                            padding: '1.5rem',
+                            borderRadius: '8px',
+                            marginTop: '0.5rem',
+                            maxWidth: '800px',
+                            width: '100%'
+                        }}>
+                            <p style={{ fontSize: '1rem', color: '#666', marginBottom: '1rem' }}>
+                                For specific requests such as hosting large groups (15+ people), booking more than 30 days in advance,
+                                or choosing a preferred ambiance, please contact our 4P's Guest Service Center (09:00 - 22:00) via:
+                            </p>
+                            <p style={{ fontSize: '1rem', color: '#333', margin: 0 }}>
+                                Domestic number: <strong>1900 6043</strong><br />
+                                International number: <strong>(028) 3622 0500</strong>
+                            </p>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

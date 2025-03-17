@@ -8,6 +8,7 @@
         "columns": {
             "name": "Name",
             "description": "Description",
+            "location": "Location",
             "status": "Status",
             "action": "Action"
         },
@@ -31,6 +32,7 @@
                 "fields": {
                     "name": "Name",
                     "description": "Description",
+                    "location": "Location",
                     "status": "Status"
                 }
             }
@@ -65,6 +67,11 @@
                 "label": "Image",
                 "placeholder": "Select Image",
                 "required": "Please upload an image"
+            },
+            "location": {
+                "label": "Location",
+                "placeholder": "Select branch location",
+                "required": "Please select a branch location"
             }
         },
         "buttons": {
@@ -80,19 +87,34 @@
             "modalTitle": "Edit Branch"
         },
         "form": {
-            "name": {
-                "label": "Name",
-                "placeholder": "Enter branch name",
-                "required": "Please enter the branch name"
+            "nameVN": {
+                "label": "Name (VN)",
+                "placeholder": "Enter branch name in Vietnamese",
+                "required": "Please enter the branch name in Vietnamese"
             },
-            "description": {
-                "label": "Description",
-                "placeholder": "Enter branch description",
-                "required": "Please enter the branch description"
+            "nameEN": {
+                "label": "Name (EN)",
+                "placeholder": "Enter branch name in English",
+                "required": "Please enter the branch name in English"
+            },
+            "descriptionVN": {
+                "label": "Description (VN)",
+                "placeholder": "Enter branch description in Vietnamese",
+                "required": "Please enter the branch description in Vietnamese"
+            },
+            "descriptionEN": {
+                "label": "Description (EN)",
+                "placeholder": "Enter branch description in English",
+                "required": "Please enter the branch description in English"
             },
             "image": {
                 "label": "Image",
                 "placeholder": "Select Image"
+            },
+            "location": {
+                "label": "Location",
+                "placeholder": "Select branch location",
+                "required": "Please select a branch location"
             }
         },
         "buttons": {

@@ -18,11 +18,18 @@ export const apiEndPoints = {
         CHECK_PENDING: (id) => `/booking-informations/${id}/pending`,
     },
     BRANCH: {
-        GET_ALL: (includeDeleted) => `/branches/${includeDeleted ? 'true' : 'false'}`,
+        GET_ALL:  '/branches',
         GET_ALL_NAME: '/branches/name',
         CREATE: '/branches',
         EDIT: (id) => `/branches/${id}`,
         DELETE: (id) => `/branches/${id}`,
+    },
+    BRANCH_LOCATION: {
+        GET_ALL: '/branch-locations',
+        GET_BY_ID: (id) => `/branch-locations/${id}`,
+        CREATE: '/branch-locations',
+        EDIT: (id) => `/branch-locations/${id}`,
+        DELETE: (id) => `/branch-locations/${id}`,
     },
     DASHBOARD: {
         ADMIN: '/dashboard/statistic',
@@ -88,4 +95,5 @@ export const apiEndPoints = {
         EDIT: (id) => `/job-types/${id}`,
         DELETE: (id) => `/job-types/${id}`,
     },
+
 }

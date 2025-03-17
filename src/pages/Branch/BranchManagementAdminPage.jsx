@@ -2,12 +2,13 @@ import { App, Button, Image, Modal, Space, Spin, Table, Tag, Typography } from '
 import { Content } from 'antd/es/layout/layout';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import BranchCreationModal from '../../components/modals/branch/BranchCreationModal';
-import BranchEditModal from '../../components/modals/branch/BranchEditModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
-import axiosInstance from '../../service/axios';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
+import axiosInstance from '../../service/axios';
+import BranchCreationModal from './components/BranchCreationModal';
+import BranchEditModal from './components/BranchEditModal';
+import BranchLocationFilterBox from './components/BranchLocationFilterBox';
 
 const { Title } = Typography;
 
@@ -15,6 +16,7 @@ const BranchManagementAdminPage = () => {
     const { t, i18n } = useTranslation('global');
     const [branches, setBranches] = useState([]);
     const [selectedBranch, setSelectedBranch] = useState(null);
+    const [selectedLocation, setSelectedLocation] = useState(null);
     const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
     const [isCreationModalVisible, setIsCreationModalVisible] = useState(false);
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -24,7 +26,12 @@ const BranchManagementAdminPage = () => {
     const fetchBranches = async () => {
         setIsFetching(true);
         try {
-            const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL(true));
+            const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
+                params: {
+                    includeDeleted : true,
+                    locationId: selectedLocation || null,
+                }
+            });
             setBranches(response.data);
         } catch (error) {
             message.error(t('branch.branchManagement.messages.fetchError'));
@@ -35,7 +42,7 @@ const BranchManagementAdminPage = () => {
 
     useEffect(() => {
         fetchBranches();
-    }, []);
+    }, [selectedLocation]);
 
     const handleDetailClick = (branch) => {
         setSelectedBranch(branch);
@@ -90,6 +97,10 @@ const BranchManagementAdminPage = () => {
         fetchBranches();
     };
 
+    const handleLocationChange = (value) => {
+        setSelectedLocation(value);
+    };
+
     const columns = [
         {
             title: t('branch.branchManagement.columns.name'),
@@ -104,6 +115,11 @@ const BranchManagementAdminPage = () => {
             ellipsis: true,
             responsive: ['md'],
             render: (_, branch) => getLocalizedText(branch, 'description', i18n.language),
+        },
+        {
+            title: t('branch.branchManagement.columns.location'),
+            dataIndex: 'branchLocationName',
+            key: 'location',
         },
         {
             title: t('branch.branchManagement.columns.status'),
@@ -133,13 +149,18 @@ const BranchManagementAdminPage = () => {
     return (
         <Content style={{ padding: '20px' }}>
             <Title level={3}>{t('branch.branchManagement.titles.pageTitle')}</Title>
-            <Button
-                type="primary"
-                style={{ marginBottom: '16px' }}
-                onClick={handleCreateBranchClick}
-            >
-                {t('branch.branchManagement.titles.createButton')}
-            </Button>
+            <Space style={{ marginBottom: '16px' }}>
+                <Button
+                    type="primary"
+                    onClick={handleCreateBranchClick}
+                >
+                    {t('branch.branchManagement.titles.createButton')}
+                </Button>
+                <BranchLocationFilterBox
+                    onLocationChange={handleLocationChange}
+                    defaultValue={selectedLocation}
+                />
+            </Space>
 
             <Spin spinning={isFetching} tip={t('branch.branchManagement.messages.loading')}>
                 <Table
@@ -155,8 +176,9 @@ const BranchManagementAdminPage = () => {
             >
                 {selectedBranch && (
                     <div>
-                        <p><strong>{t('branch.branchManagement.modals.detail.fields.name')}:</strong> {selectedBranch.name}</p>
-                        <p><strong>{t('branch.branchManagement.modals.detail.fields.description')}:</strong> {selectedBranch.description}</p>
+                        <p><strong>{t('branch.branchManagement.modals.detail.fields.name')}:</strong> {getLocalizedText(selectedBranch, 'name', i18n.language)}</p>
+                        <p><strong>{t('branch.branchManagement.modals.detail.fields.description')}:</strong> {getLocalizedText(selectedBranch, 'description', i18n.language)}</p>
+                        <p><strong>{t('branch.branchManagement.modals.detail.fields.location')}:</strong> {selectedBranch.branchLocationName}</p>
                         <p><strong>{t('branch.branchManagement.modals.detail.fields.status')}:</strong> {selectedBranch.isDeleted ? t('branch.branchManagement.tags.disabled') : t('branch.branchManagement.tags.active')}</p>
                         <Image
                             src={`${AxiosConstants.AXIOS_BASEURL}/${selectedBranch.imagePath}`}
