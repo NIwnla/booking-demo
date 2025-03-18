@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 
-// Create the AuthContext with default values
 export const AuthContext = createContext({
     userId: null,
     role: null,
@@ -10,11 +9,14 @@ export const AuthContext = createContext({
     branchId: null,
     isAuthenticated: null,
     loading: null,
+    from: null,
     setAuthToken: (token) => { },
     clearAuthToken: () => { },
+    setReturnPath: (path) => { },
 });
 
 export const AuthProvider = ({ children }) => {
+    const [from, setFrom] = useState(null);
     const [userId, setUserId] = useState(null);
     const [role, setRole] = useState(null);
     const [email, setEmail] = useState(null);
@@ -49,14 +51,41 @@ export const AuthProvider = ({ children }) => {
         decodeToken(newToken);
     };
 
-    // Function to clear the auth token
+    const setReturnPath = (path) => {
+        setFrom(path);
+        // Store in cookies for 5 minutes
+        Cookies.set('returnPath', path, { expires: 5 / (24 * 60) });
+    };
+
+    // Load data from cookies on initial load
+    useEffect(() => {
+        try {
+            const storedToken = Cookies.get('authToken');
+            const storedPath = Cookies.get('returnPath');
+
+            if (storedToken) {
+                setAuthToken(storedToken);
+            }
+            if (storedPath) {
+                setFrom(storedPath);
+            }
+        } catch (error) {
+            console.error('Failed to fetch stored data:', error);
+            setIsAuthenticated(false);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     const clearAuthToken = () => {
         setUserId(null);
         setRole(null);
         setEmail(null);
         setBranchId(null);
         setIsAuthenticated(false);
+        setFrom(null);
         Cookies.remove('authToken');
+        Cookies.remove('returnPath');
     };
 
     // Load token from cookies on initial load
@@ -69,13 +98,24 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Failed to fetch user role:', error);
             setIsAuthenticated(false)
-        }finally{
+        } finally {
             setLoading(false);
         }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ userId, role, email, branchId, isAuthenticated, loading, setAuthToken, clearAuthToken }}>
+        <AuthContext.Provider value={{
+            userId,
+            role,
+            email,
+            branchId,
+            isAuthenticated,
+            loading,
+            from,
+            setAuthToken,
+            clearAuthToken,
+            setReturnPath
+        }}>
             {children}
         </AuthContext.Provider>
     );

@@ -1,6 +1,7 @@
 
 export const routeNames = {
     index: "/",
+    landing: "/landing",
     login: "/login",
     callback: "/callback",
     notFound: "/404",
@@ -74,5 +75,10 @@ export const routeNames = {
         findJobs: '/career/find',
         about: '/career/about',
         detail: '/career/detail/'
+    },
+    profile: {
+        main: '/profile',
+        edit: '/profile/edit',
+        settings: '/profile/settings'
     },
 }

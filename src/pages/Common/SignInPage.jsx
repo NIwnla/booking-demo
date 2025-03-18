@@ -21,7 +21,7 @@ const SignInPage = () => {
     return (
         <Row justify="center" align="top" style={{ height: '100vh' }}>
             <Col xs={22} sm={16} md={12} lg={8}>
-                <Card bordered={false} style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                <Card  style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <Title level={2} style={{ textAlign: 'center', marginBottom: '24px' }}>
                         {t('signInPage.title')}
                     </Title>

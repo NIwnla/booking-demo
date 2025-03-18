@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { userRoles } from '../../constaints/userRoles';
@@ -8,16 +8,18 @@ import BranchManagerLayout from './BranchManagerLayout';
 import DefaultLayout from './DefaultLayout';
 import GuestLayout from './GuestLayout';
 import LandingPageLayout from './LandingPageLayout';
-import { Spin } from 'antd';
 import LandingPageLayoutWhite from './LandingPageLayoutWhite';
 
 const RoleLayout = ({ children }) => {
     const { role } = useContext(AuthContext);
     const location = useLocation(); // Get the current URL path
 
+    if (location.pathname === routeNames.index) {
+        return <>{children}</>;
+    }
 
     // If the current route is the home page, use LandingPageLayout
-    if (location.pathname === routeNames.index || location.pathname === routeNames.career.main) {
+    if (location.pathname === routeNames.landing || location.pathname === routeNames.career.main) {
         return <LandingPageLayout>{children}</LandingPageLayout>;
     }
 

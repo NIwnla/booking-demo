@@ -44,6 +44,7 @@ import EditJobOffer from "../pages/Career/Management/EditJobOffer";
 import FindJobsPage from "../pages/Career/FindJobs/FindJobsPage";
 import JobOfferDetail from "../pages/Career/FindJobs/JobOfferDetail";
 import RecruitInformationDetail from "../pages/Career/Application/RecruitInformationDetail";
+import RedirectFirstPage from "../pages/Common/RedirectFirstPage";
 
 
 
@@ -67,7 +68,8 @@ const AppRoutes = () => {
     return (
         <RoleLayout>
             <Routes>
-                <Route path={routeNames.index} element={<LandingPage />} />
+                <Route path={routeNames.index} element={<RedirectFirstPage />} />
+                <Route path={routeNames.landing} element={<LandingPage />} />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
                     path={routeNames.homepage.admin}

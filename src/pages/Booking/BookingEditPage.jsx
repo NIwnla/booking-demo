@@ -6,8 +6,6 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
 import axiosInstance from '../../service/axios';
-import './BookingPage.css'; // Import styles to match BookingPage
-import FoodPreorderSection from './FoodPreOrderSection';
 
 const { Title, Text } = Typography;
 

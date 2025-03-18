@@ -1,11 +1,12 @@
-import { Layout, Input, Select, Typography, Tag, Space, Button, Table, Pagination, Modal, Spin, Card, Col, Row } from 'antd';
+import { Button, Input, Layout, Pagination, Select, Space, Table, Tag, Typography } from 'antd';
 import dayjs from 'dayjs';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
 import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
-import { AxiosConstants } from '../../constaints/axiosContaint';
+import BookingDetailsModal from './components/BookingDetailsModal';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -13,7 +14,7 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const BookingManagementAdminPage = () => {
-    const { t } = useTranslation("global");
+    const { t ,i18n} = useTranslation("global");
     const [data, setData] = useState([]);
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -28,7 +29,7 @@ const BookingManagementAdminPage = () => {
     const windowSize = useWindowSize();
 
     const getFormattedTime = (time) => {
-        const date = dayjs(time);
+        const date = dayjs(time).add(7, 'hours');
         if (windowSize.width <= 576) {
             return date.format('HH:mm');
         } else if (windowSize.width <= 768) {
@@ -132,9 +133,10 @@ const BookingManagementAdminPage = () => {
         },
         {
             title: t('booking.bookingManagement.columns.branchName'),
-            dataIndex: 'branchName',
+            dataIndex: 'branchNameVN',
             key: 'branchName',
             responsive: ['md'],
+            render:(_, record) => getLocalizedText(record, 'branchName', i18n.language)
         },
         {
             title: t('booking.bookingManagement.columns.time'),
@@ -144,15 +146,9 @@ const BookingManagementAdminPage = () => {
         },
         {
             title: t('booking.bookingManagement.columns.numberOfPeople'),
-            dataIndex: 'numberOfPeople',
-            key: 'numberOfPeople',
+            dataIndex: 'adult',
+            key: 'adult',
             responsive: ['lg'],
-        },
-        {
-            title: t('booking.bookingManagement.columns.numberOfChildren'),
-            dataIndex: 'numberOfChildren',
-            key: 'numberOfChildren',
-            responsive: ['xl'],
         },
         {
             title: t('booking.bookingManagement.columns.phoneNumber'),
@@ -199,7 +195,7 @@ const BookingManagementAdminPage = () => {
     ];
 
     return (
-        <Content style={{ padding: '20px' }}>
+        <Content style={{ padding: '2rem 10vw' }}>
             <Title level={3}>{t('booking.bookingManagement.titles.pageTitle')}</Title>
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
                 <Search
@@ -238,115 +234,14 @@ const BookingManagementAdminPage = () => {
                 style={{ marginTop: '20px', textAlign: 'center' }}
             />
 
-            <Modal
-                title={t('booking.bookingManagement.titles.modalTitle')}
-                open={isModalVisible}
-                onCancel={handleModalClose}
-                width={windowSize.width < 768 ? '100%' : '70vw'}
-                footer={[
-                    <Button key="close" onClick={handleModalClose}>
-                        {t('booking.bookingManagement.buttons.close')}
-                    </Button>,
-                ]}
-            >
-                {modalLoading ? (
-                    <Spin />
-                ) : selectedBooking && (
-                        <div>
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.userFullName')}:</strong> {selectedBooking.userFullName}
-                            </p>
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.email')}:</strong> {selectedBooking.email}
-                            </p>
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.branchName')}:</strong> {selectedBooking.branchName}
-                            </p>
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.time')}:</strong> {dayjs(selectedBooking.time).format('MM/DD HH:mm')}
-                            </p>
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.numberOfPeople')}:</strong> {selectedBooking.numberOfPeople}
-                            </p>
-                            {selectedBooking.numberOfChildren && (
-                                <p>
-                                    <strong>{t('booking.bookingManagement.modal.fields.numberOfChildren')}:</strong> {selectedBooking.numberOfChildren}
-                                </p>
-                            )}
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.phoneNumber')}:</strong> {selectedBooking.phoneNumber}
-                            </p>
-                            <p>
-                                <strong>{t('booking.bookingManagement.modal.fields.status')}: </strong>
-                                {selectedBooking.bookingStatus === 0
-                                    ? t('booking.bookingManagement.statuses.cancelled')
-                                    : selectedBooking.bookingStatus === 1
-                                        ? t('booking.bookingManagement.statuses.pending')
-                                        : t('booking.bookingManagement.statuses.confirmed')}
-                            </p>
-                            {selectedBooking.message && (
-                                <p>
-                                    <strong>{t('booking.bookingManagement.modal.fields.message')}:</strong> {selectedBooking.message}
-                                </p>
-                            )}
-                            {selectedBooking.preOrderItems && selectedBooking.preOrderItems.length > 0 && (
-                                <>
-                                    <div
-                                        style={{
-                                            display: windowSize.width < 768 ? 'block' : 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            marginTop: '20px',
-                                        }}
-                                    >
-                                        <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                            {t('booking.bookingManagement.titles.preOrderItems')}
-                                        </Title>
-                                        <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                            {t('booking.bookingManagement.titles.total')}:{' '}
-                                            {selectedBooking.preOrderItems
-                                                .reduce((total, item) => total + item.price * item.quantity, 0)
-                                                .toLocaleString()}{' '}
-                                            VND
-                                        </Title>
-                                    </div>
-
-                                    <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-                                        {selectedBooking.preOrderItems.map((item) => (
-                                            <Col key={item.id} xs={24} sm={12} md={8} lg={6} xl={4}>
-                                                <Card
-                                                    cover={
-                                                        <img
-                                                            alt={item.name}
-                                                            src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
-                                                            style={{ height: '150px', objectFit: 'cover' }}
-                                                        />
-                                                    }
-                                                    bordered
-                                                >
-                                                    <Card.Meta
-                                                        title={item.name}
-                                                        description={
-                                                            <>
-                                                                <p>
-                                                                    {t('booking.bookingManagement.modal.preOrderItems.price')}: {item.price.toLocaleString()} VND
-                                                                </p>
-                                                                <p>
-                                                                    {t('booking.bookingManagement.modal.preOrderItems.quantity')}: {item.quantity}
-                                                                </p>
-                                                            </>
-                                                        }
-                                                    />
-                                                </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </>
-                            )}
-                        </div>
-
-                )}
-            </Modal>
+        
+            <BookingDetailsModal
+                isVisible={isModalVisible}
+                onClose={handleModalClose}
+                loading={modalLoading}
+                booking={selectedBooking}
+                windowSize={windowSize}
+            />
         </Content>
     );
 };

@@ -7,7 +7,6 @@ import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
-import './BookingPage.css';
 import FoodPreorderSection from './FoodPreOrderSection';
 import FoodPreOrderSectionMobile from './FoodPreOrderSectionMobile';
 

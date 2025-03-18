@@ -1,12 +1,13 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { App, Button, Col, DatePicker, Row, Select, TimePicker } from 'antd';
-import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../service/axios';
+import { App, Button, Col, DatePicker, Row, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
+import axiosInstance from '../../service/axios';
+import { useNavigate } from 'react-router-dom';
 // @ts-ignore
 import ReservationBackground from '../../assets/ReservationBackground.jpg';
-import { Link } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
+import dayjs from 'dayjs';
 
 const ReservationPage = () => {
     const [selectedLocation, setSelectedLocation] = useState(null);
@@ -14,9 +15,10 @@ const ReservationPage = () => {
     const [branches, setBranches] = useState([]);
     const [locations, setLocations] = useState([]);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [selectedAdult, setSelectedAdult] = useState(0);
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedAdult, setSelectedAdult] = useState(2);
+    const [selectedDate, setSelectedDate] = useState(dayjs());
     const { message } = App.useApp();
+    const navigate = useNavigate();
 
     const [isMiddleScreen, setIsMiddleScreen] = useState(window.innerWidth >= 768);
 
@@ -28,7 +30,6 @@ const ReservationPage = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-
 
     const fetchBranches = async () => {
         setIsFetching(true);
@@ -62,12 +63,23 @@ const ReservationPage = () => {
 
 
     const peopleOptions = Array.from({ length: 10 }, (_, i) => ({
-        value: i + 1,
-        label: `${i + 1} ${i === 0 ? 'person' : 'people'}`,
+        value: i + 2,
+        label: `${i + 2} people`,
     }));
 
     const handleLocationSelect = (location) => {
         setSelectedLocation(location);
+    };
+
+    const handleReservationClick = (branch) => {
+        navigate(routeNames.reservation.form, {
+            state: {
+                branch,
+                time: selectedTime,
+                adult: selectedAdult,
+                date: selectedDate?.format('YYYY-MM-DD'),
+            }
+        });
     };
 
     return (
@@ -84,7 +96,7 @@ const ReservationPage = () => {
                 backgroundImage: `url(${ReservationBackground})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: 'blur(6px)',
+                filter: 'blur(10px)',
                 zIndex: 0,
             }} />
 
@@ -93,7 +105,7 @@ const ReservationPage = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '2rem 10vw',
+                padding: isMiddleScreen ? '2rem 10vw' : '2rem 2vw',
                 gap: '1.5rem',
                 position: 'relative',
                 backgroundColor: 'transparent',
@@ -137,13 +149,19 @@ const ReservationPage = () => {
                             placeholder="Number of people"
                             style={{ width: '100%' }}
                             options={peopleOptions}
+                            value={selectedAdult}
+                            onChange={setSelectedAdult}
                         />
                     </Col>
                     <Col xs={12} md={12} lg={5}>
                         <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
                             Date
                         </div>
-                        <DatePicker style={{ width: '100%' }} />
+                        <DatePicker
+                            style={{ width: '100%' }}
+                            value={selectedDate}
+                            onChange={setSelectedDate}
+                        />
                     </Col>
                     <Col xs={12} md={12} lg={3}>
                         <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
@@ -188,7 +206,7 @@ const ReservationPage = () => {
                             icon={<SearchOutlined />}
                             style={{ width: '100%' }}
                             onClick={() => fetchBranches()}
-                            disabled={!selectedLocation || !selectedTime}>
+                            disabled={!selectedLocation || !selectedTime || !selectedAdult || !selectedDate}>
                             Search
                         </Button>
                     </Col>
@@ -220,36 +238,7 @@ const ReservationPage = () => {
                     ))}
                 </div>
 
-
-                {branches.map((branch) => (
-                    <div
-                        key={branch.id}
-                        style={{
-                            backgroundColor: 'white',
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            padding: '15px',
-                            borderBottom: '1px solid #eee',
-                            alignItems: 'flex-start',
-                            fontSize: isMiddleScreen ? '2rem' : '1rem'
-                        }}
-                    >
-                        <div style={{ flex: '1', width: '50%' }}>
-                            <h3 style={{ margin: '0 0 10px 0' }}>{branch.nameEN}</h3>
-                            <p style={{ margin: '0', color: '#666' }}>{branch.descriptionEN}</p>
-                        </div>
-                        <div style={{
-                            padding: '5px',
-                            background: 'red',
-                            color: 'white',
-                            fontSize: isMiddleScreen ? '1.75rem' : '0.75rem'
-                        }}>
-                            {selectedTime}
-                        </div>
-                    </div>
-                ))}
-                {branches.length === 0 && (
+                {branches.length === 0 ? (
                     <>
                         <h2 style={{
                             fontSize: '1.8rem',
@@ -284,7 +273,63 @@ const ReservationPage = () => {
                             </p>
                         </div>
                     </>
+                ) : (
+                    <div style={{
+                        borderTop: '2px solid white',
+                        width: '100%'
+                    }}>
+                        <h2 style={{
+                            fontSize: '1.8rem',
+                            margin: '1rem 0',
+                            textAlign: 'center',
+                            color: 'white',
+                        }}>
+                            {branches.length} matching table found.  Click the desired time below to proceed.
+                        </h2>
+                        <p style={{
+                            fontSize: '1rem',
+                            color: 'white',
+                            textAlign: 'center',
+                            marginBottom: '1rem'
+                        }}>
+                            Available at {selectedTime}, {selectedDate?.format('DD-MM-YYYY')}, for {selectedAdult} adults.
+                        </p>
+                    </div>
                 )}
+
+                {branches.map((branch) => (
+                    <div
+                        key={branch.id}
+                        style={{
+                            backgroundColor: 'white',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            padding: '15px',
+                            borderBottom: '1px solid #eee',
+                            alignItems: 'flex-start',
+                            fontSize: isMiddleScreen ? '2rem' : '1rem'
+                        }}
+                    >
+                        <div style={{ flex: '1', width: '50%' }}>
+                            <h3 style={{ margin: '0 0 10px 0' }}>{branch.nameEN}</h3>
+                            <p style={{ margin: '0', color: '#666' }}>{branch.descriptionEN}</p>
+                        </div>
+                        <div
+                            style={{
+                                padding: '5px',
+                                background: 'red',
+                                color: 'white',
+                                fontSize: isMiddleScreen ? '1.75rem' : '0.75rem',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => handleReservationClick(branch)}>
+                            {selectedTime}
+                        </div>
+                    </div>
+                ))}
+
+
             </div>
         </div>
     );
