@@ -72,7 +72,8 @@
       "location": "Address",
       "phoneNumber": "Phone Number",
       "status": "Status",
-      "action": "Action"
+      "action": "Action",
+      "total": "Total"
     },
     "modal": {
       "title": "Delivery Details",
@@ -85,7 +86,16 @@
       "message": "Message",
       "preOrderItems": "Preorder Items",
       "total": "Total",
-      "quantity": "Quantity"
+      "quantity": "Quantity",
+      "orderSummary": "Order Summary",
+      "subTotal": "Sub Total",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "recipientName": "Recipient Name",
+      "recipientPhone": "Recipient Phone",
+      "condiments": "Condiments",
+      "sustainableOptions": "Sustainable Options",
+      "readMore": "Read More"
     },
     "messages": {
       "fetchError": "Failed to fetch data.",

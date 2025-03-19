@@ -1,19 +1,18 @@
-import { Card, Carousel, Col, Image, Row, Spin, Typography, Button, Modal, Tooltip } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Card, Carousel, Col, DatePicker, Image, Row, Spin, Typography } from 'antd';
+import dayjs from 'dayjs';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';
+import LocationPickerModal from '../../components/modals/foodMenu/LocationPickerModal';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
+import { DeliveryContext } from '../../context/DeliveryContext';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
 import './ScrollableCategories.css';
-import LocationPicker from '../../components/maps/LocationPicker';
-import LocationPickerModal from '../../components/modals/foodMenu/LocationPickerModal';
-import { useContext } from 'react';
-import { DeliveryContext } from '../../context/DeliveryContext';
 
 const { Title, Paragraph } = Typography;
 
@@ -32,7 +31,7 @@ const ImageCarousel = () => {
 const FoodMenuMainPage = () => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation('global');
-    const { location } = useContext(DeliveryContext);
+    const { location, deliveryTime, setDeliveryTime } = useContext(DeliveryContext);
     const [categories, setCategories] = useState([]);
     const [foods, setFoods] = useState([]);
     const [loadingCategories, setLoadingCategories] = useState(false);
@@ -119,6 +118,44 @@ const FoodMenuMainPage = () => {
                                 {location ? location.formattedAddress : t("foodMenu.mainPage.selectLocation")}
                             </Typography.Text>
                         </Button>
+
+                        <DatePicker
+                            showTime={{
+                                format: 'HH:mm',
+                                minuteStep: 15,
+                            }}
+                            format="DD/MM/YYYY HH:mm"
+                            value={deliveryTime ? dayjs(deliveryTime) : null}
+                            onChange={(datetime) => setDeliveryTime(datetime ? datetime.toISOString() : null)}
+                            style={{
+                                width: '100%',
+                                marginBottom: '10px'
+                            }}
+                            placeholder={t("foodMenu.mainPage.selectDeliveryTime")}
+                            disabledDate={(current) => {
+                                return current && current < dayjs().startOf('day');
+                            }}
+                            disabledTime={(current) => {
+                                const now = dayjs();
+                                const minTime = now.add(30, 'minute');
+
+                                if (current && current.isSame(now, 'day')) {
+                                    return {
+                                        disabledHours: () => Array.from({ length: 24 }, (_, i) => i)
+                                            .filter(hour => hour < minTime.hour()),
+                                        disabledMinutes: (selectedHour) => {
+                                            if (selectedHour === minTime.hour()) {
+                                                return Array.from({ length: 60 }, (_, i) => i)
+                                                    .filter(minute => minute < minTime.minute());
+                                            }
+                                            return [];
+                                        }
+                                    };
+                                }
+                                return {};
+                            }}
+                        />
+
                         <Paragraph style={{ fontSize: '0.875rem' }}>
                             {t("foodMenu.mainPage.deliveryDescription")}
                         </Paragraph>

@@ -15,6 +15,7 @@
   },
   "mainPage": {
     "deliveryInformationTitle": "Thông Tin Giao Hàng",
+    "selectDeliveryTime": "Chọn Thời Điểm Giao Hàng",
     "deliveryDescription": "Chào mừng đến với dịch vụ giao hàng của chúng tôi. Thưởng thức các món ăn tươi ngon được giao tận nơi.",
     "deliveryBenefits": "Nhanh chóng, đáng tin cậy và thuận tiện.",
     "categories": "Danh Mục",
@@ -112,6 +113,8 @@
     "title": "Tóm Tắt Đơn Hàng",
     "location": "Địa Điểm",
     "locationPlaceholder": "Chi tiết địa điểm của bạn ở đây",
+    "deliveryTime": "Thời gian giao hàng",
+    "noDeliveryTime": "Chưa chọn thời gian giao hàng",
     "instantDelivery": "Các món giao ngay",
     "subTotal": "Tổng phụ",
     "shipping": "Phí giao hàng",
@@ -124,6 +127,23 @@
     "terms": "Bằng cách nhấp vào nút này, tôi đồng ý với",
     "termsLink": "Điều Khoản & Điều Kiện Chung",
     "process": "Xử Lý",
-    "cancel": "Hủy"
+    "cancel": "Hủy",
+    "pickLocationAndTime": "Vui lòng chọn địa điểm và thời gian giao hàng",
+    "pickLocation": "Vui lòng chọn địa điểm giao hàng",
+    "pickTime": "Vui lòng chọn thời gian giao hàng"
+  },
+  "sms": {
+    "confirm": {
+      "title": "Xác Nhận Đơn Hàng",
+      "description": "Vui lòng nhập mã xác thực 8 chữ số được gửi đến điện thoại của bạn",
+      "orderSummary": "Thông Tin Đơn Hàng",
+      "orderDetails": "Chi Tiết Đơn Hàng",
+      "codeRequired": "Vui lòng nhập mã xác thực",
+      "invalidCode": "Vui lòng nhập mã 8 chữ số hợp lệ",
+      "verifyButton": "Xác Thực và Đặt Hàng",
+      "resendCode": "Gửi Lại Mã",
+      "success": "Đã tạo đơn hàng giao hàng thành công",
+      "error": "Đã xảy ra lỗi khi tạo đơn hàng"
+    }
   }
 }

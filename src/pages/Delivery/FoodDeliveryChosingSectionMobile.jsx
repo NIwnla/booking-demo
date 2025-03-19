@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';
-import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
+import FoodDeliveryDetailModal from './components/FoodDeliveryDetailModal';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 
 const FoodDeliveryChosingSectionMobile = ({ onPreorder, onFinish, isFormValid }) => {

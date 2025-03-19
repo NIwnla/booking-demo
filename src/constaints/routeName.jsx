@@ -58,6 +58,7 @@ export const routeNames = {
         },
         myCart: '/food-menu/my-cart',
         orderInfo: '/food-menu/order-info',
+        smsConfirm: '/food-menu/sms-confirm',
         searchResult: '/food-menu/search',
     },
     reservation: {

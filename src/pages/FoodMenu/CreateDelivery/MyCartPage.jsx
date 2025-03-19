@@ -2,11 +2,12 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Checkbox, Col, Input, Row, Typography } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
-import CartItemCard from "../../components/cards/foodMenu/CartItemCard";
-import MenuNavBar from "../../components/navbars/foodMenu/MenuNavBar";
-import { routeNames } from "../../constaints/routeName";
-import { DeliveryContext } from "../../context/DeliveryContext";
+import CartItemCard from "../../../components/cards/foodMenu/CartItemCard";
+import MenuNavBar from "../../../components/navbars/foodMenu/MenuNavBar";
+import { routeNames } from "../../../constaints/routeName";
+import { DeliveryContext } from "../../../context/DeliveryContext";
 import OrderSummarySection from './OrderSummarySection';
+import { useNavigate } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -15,13 +16,8 @@ const { TextArea } = Input;
 
 const MyCartPage = () => {
     const { t } = useTranslation('global');
-    const { cart } = useContext(DeliveryContext);
-    const [condimentState, setCondimentState] = useState({
-        ketchup: { checked: false, quantity: 1 },
-        chilli_sauce: { checked: false, quantity: 1 },
-        chilli_oil: { checked: false, quantity: 1 },
-        honey: { checked: false, quantity: 1 },
-    });
+    const { cart, condiments, sustainableOptions, updateCondiments, updateSustainableOptions } = useContext(DeliveryContext);    
+    const navigate = useNavigate();
 
     const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
@@ -36,24 +32,19 @@ const MyCartPage = () => {
 
 
     const handleCheckboxChange = (id) => {
-        setCondimentState((prev) => ({
-            ...prev,
-            [id]: { ...prev[id], checked: !prev[id].checked }
-        }));
+        updateCondiments(id, !condiments[id].checked, condiments[id].quantity);
+    };
+
+    const handleSustainableChange = (id) => {
+        updateSustainableOptions(id, !sustainableOptions[id].checked);
     };
 
     const increaseQuantity = (id) => {
-        setCondimentState((prev) => ({
-            ...prev,
-            [id]: { ...prev[id], quantity: prev[id].quantity + 1 }
-        }));
+        updateCondiments(id, condiments[id].checked, condiments[id].quantity + 1);
     };
 
     const decreaseQuantity = (id) => {
-        setCondimentState((prev) => ({
-            ...prev,
-            [id]: { ...prev[id], quantity: Math.max(1, prev[id].quantity - 1) }
-        }));
+        updateCondiments(id, condiments[id].checked, Math.max(1, condiments[id].quantity - 1));
     };
 
     return (
@@ -118,7 +109,7 @@ const MyCartPage = () => {
                                             </Paragraph>
 
                                             {/* Condiment List */}
-                                            {Object.entries(condimentState).map(([id, data]) => (
+                                            {Object.entries(condiments).map(([id, data]) => (
                                                 <div
                                                     key={id}
                                                     style={{
@@ -193,13 +184,9 @@ const MyCartPage = () => {
                                             </Paragraph>
 
                                             {/* Sustainable Options List */}
-                                            {[
-                                                { id: "cutlery", label: "Cutlery" },
-                                                { id: "pizza_reheating_foil", label: "Pizza Reheating Foil" },
-                                                { id: "heating_instructions", label: "Heating Instructions" }
-                                            ].map((option) => (
+                                            {Object.entries(sustainableOptions).map(([id, data]) => (
                                                 <div
-                                                    key={option.id}
+                                                    key={id}
                                                     style={{
                                                         display: "flex",
                                                         alignItems: "center",
@@ -207,9 +194,14 @@ const MyCartPage = () => {
                                                         marginTop: "0.7vh"
                                                     }}
                                                 >
-                                                    <Checkbox id={option.id} style={{ transform: "scale(1.2)" }} />
-                                                    <label htmlFor={option.id} style={{ fontSize: "0.875rem", cursor: "pointer", color: "#1565c0" }}>
-                                                        {t(`foodMenu.cart.condiments.${option.id}`)}
+                                                    <Checkbox
+                                                        id={id}
+                                                        style={{ transform: "scale(1.2)" }}
+                                                        checked={data.checked}
+                                                        onChange={() => handleSustainableChange(id)}
+                                                    />
+                                                    <label htmlFor={id} style={{ fontSize: "0.875rem", cursor: "pointer", color: "#1565c0" }}>
+                                                        {t(`foodMenu.cart.condiments.${id}`)}
                                                     </label>
                                                 </div>
                                             ))}
@@ -267,7 +259,9 @@ const MyCartPage = () => {
                     </Col>
                     {/* Right Side (8/24) - Summary or Checkout */}
                     <Col xs={24} lg={6}>
-                        <OrderSummarySection />
+                        <OrderSummarySection
+                            onProcess={() => navigate(routeNames.foodMenu.orderInfo)}
+                            onCancel={() => navigate(routeNames.foodMenu.main)} />
                     </Col>
                 </Row>
 

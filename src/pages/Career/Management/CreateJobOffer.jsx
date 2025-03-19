@@ -1,12 +1,12 @@
+import { App, Button, Card, Form, Input, Switch, Typography } from 'antd';
 import React, { useState } from 'react';
-import { Form, Input, Button, Card, Switch, Typography, message, Select } from 'antd';
-import JobTypeFilterBox from './components/JobTypeFilterBox';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
+import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { routeNames } from '../../../constaints/routeName';
 import axiosInstance from '../../../service/axios';
-import { apiEndPoints } from '../../../constaints/apiEndPoint';
+import JobTypeFilterBox from './components/JobTypeFilterBox';
 
 const { Title } = Typography;
 
@@ -14,6 +14,7 @@ const CreateJobOffer = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { message } = App.useApp();
 
     const onFinish = async (values) => {
         try {

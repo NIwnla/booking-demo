@@ -15,6 +15,7 @@
     },
     "mainPage": {
         "deliveryInformationTitle": "Delivery Information",
+        "selectDeliveryTime": "Select delivery time",
         "deliveryDescription": "Welcome to our delivery service. Enjoy fresh and delicious meals delivered to your doorstep.",
         "deliveryBenefits": "Fast, reliable, and convenient.",
         "categories": "Categories",
@@ -112,6 +113,8 @@
         "title": "Order Summary",
         "location": "Location",
         "locationPlaceholder": "Your location details here",
+        "deliveryTime": "Delivery Time",
+        "noDeliveryTime": "No delivery time selected",
         "instantDelivery": "Instant delivery items",
         "subTotal": "Sub-total",
         "shipping": "Shipping",
@@ -124,6 +127,23 @@
         "terms": "By clicking this button, I agree with these",
         "termsLink": "General Terms & Conditions",
         "process": "Process",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "pickLocationAndTime": "Please select delivery location and time",
+        "pickLocation": "Please select delivery location",
+        "pickTime": "Please select delivery time"
+    },
+    "sms": {
+        "confirm": {
+            "title": "Confirm Your Order",
+            "description": "Please enter the 8-digit verification code sent to your phone",
+            "orderSummary": "Order Summary",
+            "orderDetails": "Order Details",
+            "codeRequired": "Please enter the verification code",
+            "invalidCode": "Please enter a valid 8-digit code",
+            "verifyButton": "Verify and Place Order",
+            "resendCode": "Resend Code",
+            "success":"Successfully created delivery order",
+            "error": "Error when creating order"
+        }
     }
 }

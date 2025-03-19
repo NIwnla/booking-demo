@@ -1,11 +1,10 @@
-import { App, Button, Card, Col, Layout, Modal, Pagination, Row, Select, Space, Spin, Table, Tag, Typography, message } from 'antd';
+import { App, Button, Layout, Pagination, Select, Space, Table, Tag, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { apiEndPoints } from '../../constaints/apiEndPoint';
-import axiosInstance from '../../service/axios';
-import dayjs from 'dayjs';
-import { AxiosConstants } from '../../constaints/axiosContaint';
-import { useWindowSize } from '../../helpers/useWindowSize';
 import { useTranslation } from 'react-i18next';
+import { apiEndPoints } from '../../constaints/apiEndPoint';
+import { useWindowSize } from '../../helpers/useWindowSize';
+import axiosInstance from '../../service/axios';
+import DeliveryDetailsModal from './components/DeliveryDetailsModal';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -101,34 +100,27 @@ const DeliveryManagementPageAdmin = () => {
             title: t('delivery.management.columns.userFullName'),
             dataIndex: 'userFullName',
             key: 'userFullName',
-        },
-        {
-            title: t('delivery.management.columns.email'),
-            dataIndex: 'username',
-            key: 'username',
-            responsive: ['lg'],
-            ellipsis: true,
-        },
-        {
-            title: t('delivery.management.columns.time'),
-            dataIndex: 'time',
-            key: 'time',
-            responsive: ['md'],
-            ellipsis: true,
-            render: (time) => time ? dayjs(time).utc().local().format('DD/MM HH:mm') : '',
-        },
-        {
-            title: t('delivery.management.columns.location'),
-            dataIndex: 'location',
-            key: 'location',
-            responsive: ['md'],
             ellipsis: true,
         },
         {
             title: t('delivery.management.columns.phoneNumber'),
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
-            responsive: ['lg'],
+            responsive: ['sm'],
+        },
+        {
+            title: t('delivery.management.columns.location'),
+            dataIndex: 'location',
+            key: 'location',
+            ellipsis: true,
+            responsive: ['md'],
+        },
+        {
+            title: t('delivery.management.columns.total'),
+            dataIndex: 'total',
+            key: 'total',
+            responsive: ['sm'],
+            render: (total) => `${total.toLocaleString()} VND`,
         },
         {
             title: t('delivery.management.columns.status'),
@@ -169,7 +161,7 @@ const DeliveryManagementPageAdmin = () => {
     ];
 
     return (
-        <Content style={{ padding: '20px' }}>
+        <Content style={{ padding: '5vh 10vw' }}>
             <Title level={3}>{t('delivery.management.title')}</Title>
             <div style={{
                 display: 'flex',
@@ -209,69 +201,13 @@ const DeliveryManagementPageAdmin = () => {
                 style={{ marginTop: '20px', textAlign: 'center' }}
             />
 
-            <Modal
-                title={t('delivery.management.modal.title')}
-                open={isModalVisible}
-                onCancel={handleModalClose}
-                width={windowSize.width < 768 ? '100%' : '70vw'}
-                footer={[<Button key="close" onClick={handleModalClose}>{t('delivery.management.actions.close')}</Button>]}>
-                {loading ? (
-                    <Spin />
-                ) : selectedDelivery && (
-                    <div>
-                        <p><strong>{t('delivery.management.modal.userFullName')}:</strong> {selectedDelivery.userFullName}</p>
-                        <p><strong>{t('delivery.management.modal.email')}:</strong> {selectedDelivery.username}</p>
-                        <p><strong>{t('delivery.management.modal.time')}:</strong> {selectedDelivery.time ? dayjs(selectedDelivery.time).utc().local().format('DD/MM HH:mm') : ''}</p>
-                        <p><strong>{t('delivery.management.modal.location')}:</strong> {selectedDelivery.location}</p>
-                        <p><strong>{t('delivery.management.modal.phoneNumber')}:</strong> {selectedDelivery.phoneNumber}</p>
-                        <p><strong>{t('delivery.management.modal.status')}:</strong> {selectedDelivery.status}</p>
-                        {selectedDelivery.message && <p><strong>{t('delivery.management.modal.message')}:</strong> {selectedDelivery.message}</p>}
-
-                        <div
-                            style={{
-                                display: windowSize.width < 768 ? 'block' : 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                marginTop: '20px',
-                            }}
-                        >
-                            <Title level={4} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                {t('delivery.management.modal.preOrderItems')}:
-                            </Title>
-                            <Title level={5} style={{ margin: 0, width: windowSize.width < 768 ? '100%' : 'auto' }}>
-                                {t('delivery.management.modal.total')} {selectedDelivery.preOrderItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND
-                            </Title>
-                        </div>
-
-                        <Row gutter={[16, 16]} style={{ marginTop: '10px' }}>
-                            {selectedDelivery.preOrderItems.map(item => (
-                                <Col key={item.id} xs={24} sm={12} md={8} lg={6} xl={4}>
-                                    <Card
-                                        cover={
-                                            <img
-                                                alt={item.name}
-                                                src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
-                                                style={{ height: '150px', objectFit: 'cover' }}
-                                            />
-                                        }
-                                        bordered
-                                    >
-                                        <Card.Meta
-                                            title={item.name}
-                                            description={
-                                                <>
-                                                    <p>{item.price.toLocaleString()} VND</p>
-                                                    <p>{t('delivery.management.modal.quantity')}: {item.quantity}</p>
-                                                </>
-                                            }
-                                        />
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    </div>
-                )}
-            </Modal>
+            <DeliveryDetailsModal
+                isOpen={isModalVisible}
+                onClose={handleModalClose}
+                loading={loading}
+                delivery={selectedDelivery}
+                windowSize={windowSize}
+            />
         </Content>
     );
 };

@@ -4,12 +4,18 @@ export const DeliveryContext = createContext({
     location: null,
     cart: [],
     latestCartItem: null,
+    deliveryTime: null,
+    condiments: {},
+    sustainableOptions: {},
     setLocation: (newLocation) => { },
+    setDeliveryTime: (time) => { },
     addToCart: (food) => { },
     generateCartItemKey: (food) => { },
     decreaseQuantity: (cartItemKey) => { },
     removeFromCart: (cartItemKey) => { },
     clearCart: () => { },
+    updateCondiments: (id, checked, quantity) => { },
+    updateSustainableOptions: (id, checked) => { },
 });
 
 const generateCartItemKey = (food) => {
@@ -23,19 +29,65 @@ const generateCartItemKey = (food) => {
 export const DeliveryProvider = ({ children }) => {
     const [location, setLocation] = useState(null);
     const [cart, setCart] = useState([]);
-    const [latestCartItem, setLatestCartItem] = useState(null); // Stores the latest added item
+    const [latestCartItem, setLatestCartItem] = useState(null);
+    const [deliveryTime, setDeliveryTime] = useState(null);
+    const [condiments, setCondiments] = useState({
+        ketchup: { checked: false, quantity: 1 },
+        chilli_sauce: { checked: false, quantity: 1 },
+        chilli_oil: { checked: false, quantity: 1 },
+        honey: { checked: false, quantity: 1 },
+    });
+
+    const [sustainableOptions, setSustainableOptions] = useState({
+        cutlery: { checked: false },
+        pizza_reheating_foil: { checked: false },
+        heating_instructions: { checked: false }
+    });
 
     useEffect(() => {
         const storedCart = localStorage.getItem('cart');
         const storedLocation = localStorage.getItem('location');
+        const storedDeliveryTime = localStorage.getItem('deliveryTime');
+        const storedCondiments = localStorage.getItem('condiments');
+        const storedSustainableOptions = localStorage.getItem('sustainableOptions');
 
         if (storedCart) setCart(JSON.parse(storedCart));
         if (storedLocation) setLocation(JSON.parse(storedLocation));
+        if (storedDeliveryTime) setDeliveryTime(JSON.parse(storedDeliveryTime));
+        if (storedCondiments) setCondiments(JSON.parse(storedCondiments));
+        if (storedSustainableOptions) setSustainableOptions(JSON.parse(storedSustainableOptions));
     }, []);
 
-    const updateLocation = (newLocation) => {        
+    const updateDeliveryTime = (time) => {
+        setDeliveryTime(time);
+        localStorage.setItem('deliveryTime', JSON.stringify(time));
+    };
+
+    const updateLocation = (newLocation) => {
         setLocation(newLocation);
         localStorage.setItem('location', JSON.stringify(newLocation));
+    };
+
+    const updateCondiments = (id, checked, quantity) => {
+        setCondiments(prev => {
+            const updated = {
+                ...prev,
+                [id]: { ...prev[id], checked, quantity }
+            };
+            localStorage.setItem('condiments', JSON.stringify(updated));
+            return updated;
+        });
+    };
+
+    const updateSustainableOptions = (id, checked) => {
+        setSustainableOptions(prev => {
+            const updated = {
+                ...prev,
+                [id]: { ...prev[id], checked }
+            };
+            localStorage.setItem('sustainableOptions', JSON.stringify(updated));
+            return updated;
+        });
     };
 
     const addToCart = (food) => {
@@ -119,21 +171,42 @@ export const DeliveryProvider = ({ children }) => {
 
     const clearCart = () => {
         setCart([]);
-        setLatestCartItem(null); // Clear latestCartItem when cart is emptied
+        setLatestCartItem(null);
+        setDeliveryTime(null);
+        setCondiments({
+            ketchup: { checked: false, quantity: 1 },
+            chilli_sauce: { checked: false, quantity: 1 },
+            chilli_oil: { checked: false, quantity: 1 },
+            honey: { checked: false, quantity: 1 },
+        });
+        setSustainableOptions({
+            cutlery: { checked: false },
+            pizza_reheating_foil: { checked: false },
+            heating_instructions: { checked: false }
+        });
         localStorage.removeItem('cart');
+        localStorage.removeItem('deliveryTime');
+        localStorage.removeItem('condiments');
+        localStorage.removeItem('sustainableOptions');
     };
 
     return (
         <DeliveryContext.Provider value={{
             location,
             cart,
-            latestCartItem, // Expose latestCartItem
+            latestCartItem,
+            deliveryTime,
+            condiments,
+            sustainableOptions,
             setLocation: updateLocation,
+            setDeliveryTime: updateDeliveryTime,
             addToCart,
             decreaseQuantity,
             removeFromCart,
             clearCart,
-            generateCartItemKey
+            generateCartItemKey,
+            updateCondiments,
+            updateSustainableOptions
         }}>
             {children}
         </DeliveryContext.Provider>

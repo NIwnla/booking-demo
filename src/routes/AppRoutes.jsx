@@ -13,10 +13,19 @@ import BranchChoosePage from "../pages/Booking/BranchChoosePage";
 import CalendarPage from "../pages/Booking/CalendarPage";
 import BranchManagementAdminPage from "../pages/Branch/BranchManagementAdminPage";
 import ApplicationManagementPageAdmin from "../pages/Career/Application/ApplicationManagementPageAdmin";
+import RecruitInformationDetail from "../pages/Career/Application/RecruitInformationDetail";
 import CareerSignUpPage from "../pages/Career/CareerSignUpPage";
+import FindJobsPage from "../pages/Career/FindJobs/FindJobsPage";
+import JobOfferDetail from "../pages/Career/FindJobs/JobOfferDetail";
+import CareerMainPage from "../pages/Career/MainPage/CareerMainPage";
+import CreateJobOffer from "../pages/Career/Management/CreateJobOffer";
+import EditJobOffer from "../pages/Career/Management/EditJobOffer";
+import JobOfferDetailAdmin from "../pages/Career/Management/JobOfferDetailAdmin";
+import JobOfferManagementPage from "../pages/Career/Management/JobOfferManagementPage";
 import CategoryManagementAdminPage from "../pages/Category/CategoryManagementAdmin";
 import LandingPage from "../pages/Common/LandingPage/LandingPage";
 import NotFoundPage from "../pages/Common/NotFoundPage";
+import RedirectFirstPage from "../pages/Common/RedirectFirstPage";
 import SignInPage from "../pages/Common/SignInPage";
 import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
 import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
@@ -26,25 +35,17 @@ import FoodManagementPageAdmin from "../pages/Food/FoodManagementPageAdmin";
 import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
 import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
 import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
-import MyCartPage from "../pages/FoodMenu/MyCartPage";
-import OrderInformationPage from "../pages/FoodMenu/OrderInformationPage";
+import MyCartPage from "../pages/FoodMenu/CreateDelivery/MyCartPage";
+import OrderInformationPage from "../pages/FoodMenu/CreateDelivery/OrderInformationPage";
 import SearchResultPage from "../pages/FoodMenu/SearchResultPage";
 import FoodOptionPageAdmin from "../pages/FoodOption/FoodOptionPageAdmin";
 import HomePageAdmin from "../pages/Home/HomePageAdmin";
 import HomePageBranchManager from "../pages/Home/HomePageBranchManager";
 import HomePageGuest from "../pages/Home/HomePageGuest";
-import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
-import ReservationPage from "../pages/Reservation/ReservationPage";
 import ReservationForm from "../pages/Reservation/ReservationForm";
-import JobOfferManagementPage from "../pages/Career/Management/JobOfferManagementPage";
-import CreateJobOffer from "../pages/Career/Management/CreateJobOffer";
-import JobOfferDetailAdmin from "../pages/Career/Management/JobOfferDetailAdmin";
-import CareerMainPage from "../pages/Career/MainPage/CareerMainPage";
-import EditJobOffer from "../pages/Career/Management/EditJobOffer";
-import FindJobsPage from "../pages/Career/FindJobs/FindJobsPage";
-import JobOfferDetail from "../pages/Career/FindJobs/JobOfferDetail";
-import RecruitInformationDetail from "../pages/Career/Application/RecruitInformationDetail";
-import RedirectFirstPage from "../pages/Common/RedirectFirstPage";
+import ReservationPage from "../pages/Reservation/ReservationPage";
+import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
+import SMSConfirmPage from "../pages/FoodMenu/CreateDelivery/SMSConfirmPage";
 
 
 
@@ -151,6 +152,7 @@ const AppRoutes = () => {
                 <Route path={routeNames.foodMenu.myCart} element={<MyCartPage />} />
                 <Route path={routeNames.foodMenu.orderInfo} element={<OrderInformationPage />} />
                 <Route path={routeNames.foodMenu.searchResult} element={<SearchResultPage />} />
+                <Route path={routeNames.foodMenu.smsConfirm} element={<SMSConfirmPage />} />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.reservation.main} element={<ReservationPage />} />
                 <Route path={routeNames.reservation.form} element={<ReservationForm />} />

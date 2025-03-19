@@ -72,7 +72,8 @@
       "location": "Địa Chỉ",
       "phoneNumber": "Số Điện Thoại",
       "status": "Trạng Thái",
-      "action": "Hành Động"
+      "action": "Hành Động",
+      "total": "Tổng Cộng"
     },
     "modal": {
       "title": "Chi Tiết Giao Hàng",
@@ -85,7 +86,16 @@
       "message": "Lời Nhắn",
       "preOrderItems": "Danh Sách Món",
       "total": "Tổng",
-      "quantity": "Số Lượng"
+      "quantity": "Số Lượng",
+      "orderSummary": "Tổng Quan Đơn Hàng",
+      "subTotal": "Tạm Tính",
+      "shipping": "Phí Vận Chuyển",
+      "tax": "Thuế",
+      "recipientName": "Tên Người Nhận",
+      "recipientPhone": "Số Điện Thoại Người Nhận",
+      "condiments": "Gia Vị",
+      "sustainableOptions": "Tùy Chọn Bền Vững",
+      "readMore": "Hiện Thêm"
     },
     "messages": {
       "fetchError": "Không thể tải dữ liệu.",

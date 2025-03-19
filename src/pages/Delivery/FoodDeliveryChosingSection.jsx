@@ -17,7 +17,7 @@ import {
 } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import FoodDeliveryDetailModal from '../../components/modals/delivery/FoodDeliveryDetailModal';
+import FoodDeliveryDetailModal from './components/FoodDeliveryDetailModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../service/axios';

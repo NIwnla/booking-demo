@@ -1,19 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card, Typography, Divider, Button } from "antd";
 import { RightCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { DeliveryContext } from "../../context/DeliveryContext";
-import { routeNames } from "../../constaints/routeName";
-import LocationPickerModal from "../../components/modals/foodMenu/LocationPickerModal";
+import { DeliveryContext } from "../../../context/DeliveryContext";
+import { routeNames } from "../../../constaints/routeName";
+import LocationPickerModal from "../../../components/modals/foodMenu/LocationPickerModal";
+import dayjs from "dayjs";
+import DeliveryTimePickerModal from "../../../components/modals/foodMenu/DeliveryTimePickerModal";
 
 const { Title, Paragraph } = Typography;
 
-const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
-    const { cart, location } = useContext(DeliveryContext);
+const OrderSummarySection = ({ onProcess, onCancel }) => {
+    const { cart, location, deliveryTime, setDeliveryTime } = useContext(DeliveryContext);
     const { t } = useTranslation("global");
     const navigate = useNavigate();
     const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+    const [isTimeModalOpen, setIsTimeModalOpen] = useState(false);
 
     // Calculate summary values
     const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -21,6 +24,11 @@ const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
     const shippingCost = subTotal > 50000 ? 0 : 5000; // Free shipping if subtotal > 50,000 VND
     const tax = Math.round(subTotal * 0.1);
     const total = subTotal + shippingCost + tax;
+
+    const [disableProcess , setDisableProcess] = useState(!location || !deliveryTime);
+    useEffect(() => {
+        setDisableProcess(!location ||!deliveryTime);
+    }, [location, deliveryTime])
 
     return (
         <>
@@ -31,6 +39,18 @@ const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
                 <Paragraph>
                     📍 <strong>{t("foodMenu.orderSummary.location")}: </strong>
                     {location ? location.formattedAddress : t("foodMenu.orderSummary.locationPlaceholder")}
+
+                </Paragraph>
+            </Card>
+
+
+            <Card
+                style={{ textAlign: 'start', borderRadius: '10px', marginBottom: '20px', cursor: 'pointer' }}
+                onClick={() => setIsTimeModalOpen(true)}
+            >
+                <Paragraph>
+                    🕒 <strong>{t("foodMenu.orderSummary.deliveryTime")}: </strong>
+                    {deliveryTime ? dayjs(deliveryTime).format('DD/MM/YYYY HH:mm') : t("foodMenu.orderSummary.noDeliveryTime")}
                 </Paragraph>
             </Card>
 
@@ -83,7 +103,7 @@ const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
 
                 {/* Delivering To */}
                 <Title level={5} style={{ fontSize: "1rem", marginTop: "1vh" }}>{t("foodMenu.orderSummary.deliveringTo")}:</Title>
-                <Paragraph style={{ fontSize: "0.875rem", color: "#555" }}>{location?.formatedAdress || t("foodMenu.orderSummary.noLocation")}</Paragraph>
+                <Paragraph style={{ fontSize: "0.875rem", color: "#555" }}>{location ? location.formattedAddress : t("foodMenu.orderSummary.noLocation")}</Paragraph>
 
                 {/* Estimated Delivery Time */}
                 <Title level={5} style={{ fontSize: "1rem", marginTop: "1vh" }}>{t("foodMenu.orderSummary.estimatedDelivery")}:</Title>
@@ -100,7 +120,7 @@ const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
                 {cartItemCount > 0 &&
                     <div
                         style={{
-                            backgroundColor: "#d32f2f",
+                            backgroundColor: disableProcess ? 'gray' : "#d32f2f",
                             display: "flex",
                             justifyContent: "space-between",
                             alignItems: "center",
@@ -108,40 +128,71 @@ const OrderSummarySection = ({ onProcess = null, onCancel = null }) => {
                             marginTop: "2vh",
                             borderRadius: "2vw",
                             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-                            cursor: "pointer",
+                            cursor: disableProcess ? 'default' : "pointer",
                             transition: "background 0.3s ease",
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e64a4a")}
-                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d32f2f")}
-                        onClick={() => onProcess ? onProcess() : navigate(routeNames.foodMenu.orderInfo)}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = disableProcess ? 'gray' : "#e64a4a")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = disableProcess ? 'gray' : "#d32f2f")}
+                        onClick={disableProcess ? {} : onProcess}
                     >
-                        <Title level={4} style={{ fontSize: "0.875rem", margin: 0, color: "white" }}>
-                            {total.toLocaleString()} VND
-                        </Title>
-                        <Typography
-                            style={{
-                                fontSize: "0.875rem",
-                                color: "white",
-                                paddingRight: "0.1vw",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "0.5vw",
-                            }}
-                        >
-                            {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5rem" }} />
-                        </Typography>
-                    </div>}
+                        {disableProcess ? (
+                            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Typography
+                                    style={{
+                                        fontSize: "0.875rem",
+                                        color: "white",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "0.5vw",
+                                    }}
+                                >
+                                    {!location && !deliveryTime
+                                        ? t("foodMenu.orderSummary.pickLocationAndTime")
+                                        : !location
+                                            ? t("foodMenu.orderSummary.pickLocation")
+                                            : t("foodMenu.orderSummary.pickTime")
+                                    }
+                                </Typography>
+                            </div>
+                        ) : (
+                            <>
+                                <Title level={4} style={{ fontSize: "0.875rem", margin: 0, color: "white" }}>
+                                    {total.toLocaleString()} VND
+                                </Title>
+                                <Typography
+                                    style={{
+                                        fontSize: "0.875rem",
+                                        color: "white",
+                                        paddingRight: "0.1vw",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "0.5vw",
+                                    }}
+                                >
+                                    {t("foodMenu.orderSummary.process")} <RightCircleOutlined style={{ fontSize: "1.5rem" }} />
+                                </Typography>
+                            </>)}
+                    </div >}
 
                 {/* Cancel Button */}
                 <div style={{ textAlign: "center", marginTop: "1vh" }}>
-                    <Button type="link" onClick={() => onCancel ? onCancel() : navigate(routeNames.foodMenu.main)} style={{ fontSize: "1rem" }}>
+                    <Button type="link" onClick={onCancel} style={{ fontSize: "1rem" }}>
                         {t("foodMenu.orderSummary.cancel")}
                     </Button>
                 </div>
-            </Card>
+            </Card >
             <LocationPickerModal
                 isOpen={isLocationModalOpen}
                 onClose={() => setIsLocationModalOpen(false)}
+            />
+            <DeliveryTimePickerModal
+                isOpen={isTimeModalOpen}
+                onClose={() => setIsTimeModalOpen(false)}
+                value={deliveryTime}
+                onChange={(time) => {
+                    setDeliveryTime(time ? time.toISOString() : null);
+                    setIsTimeModalOpen(false);
+                }}
             />
         </>
     );

@@ -2,8 +2,8 @@ import { Breadcrumb, Card, Checkbox, Col, Divider, Form, Input, Row, Typography 
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import MenuNavBar from "../../components/navbars/foodMenu/MenuNavBar";
-import { routeNames } from "../../constaints/routeName";
+import MenuNavBar from "../../../components/navbars/foodMenu/MenuNavBar";
+import { routeNames } from "../../../constaints/routeName";
 import OrderSummarySection from "./OrderSummarySection";
 
 const { Title, Paragraph } = Typography;
@@ -11,8 +11,8 @@ const { Title, Paragraph } = Typography;
 const OrderInformationPage = () => {
     const { t } = useTranslation("global");
     const [isRecipientChecked, setIsRecipientChecked] = useState(false);
+    const [form] = Form.useForm();
     const navigate = useNavigate();
-
     return (
         <div>
             <MenuNavBar />
@@ -53,7 +53,7 @@ const OrderInformationPage = () => {
                                 }}
                             >
                                 {/* Delivery Form */}
-                                <Form layout="vertical">
+                                <Form layout="vertical" form={form}>
                                     {/* Name */}
                                     <Form.Item
                                         label={<span style={{ fontSize: "0.875rem" }}>{t('foodMenu.orderInformation.yourName')}</span>}
@@ -124,7 +124,20 @@ const OrderInformationPage = () => {
 
                     <Col xs={24} lg={8}>
                         <OrderSummarySection
-                            onCancel={() => navigate(routeNames.foodMenu.myCart)} />
+                            onCancel={() => navigate(routeNames.foodMenu.myCart)}
+                            onProcess={async () => {
+                                try {
+                                    const values = await form.validateFields();
+                                    navigate(routeNames.foodMenu.smsConfirm, {
+                                        state: {
+                                            orderInfo: values
+                                        }
+                                    });
+                                } catch (error) {
+                                    // Form validation failed
+                                    console.error('Form validation failed:', error);
+                                }
+                            }} />
                     </Col>
                 </Row>
             </div>

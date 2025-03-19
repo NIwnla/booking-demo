@@ -14,9 +14,8 @@ import SustainabilityReport from "./SustainabilityReport";
 const LandingPage = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const { role, setAuthToken } = useContext(AuthContext);
+    const { setAuthToken } = useContext(AuthContext);
     const token = searchParams.get('token');
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
 
