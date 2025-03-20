@@ -1,35 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { App, Button, Form, Input, Modal, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { App, Button, Form, Input, Modal, Upload } from "antd";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "../../../service/axios";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
-import CropImageModal from "../image/CropImageModal";
+import axiosInstance from "../../../service/axios";
+import CropImageModal from "../../../components/modals/image/CropImageModal";
 
-const CreateCategoryModal = ({ visible, onClose, onCategoryCreated }) => {
+const EditCategoryModal = ({ open, onClose, category, onCategoryUpdated }) => {
     const { t } = useTranslation('global');
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
     const { message } = App.useApp();
-    const [isFetching, setIsFetching] = useState(false);
     const [imageSrc, setImageSrc] = useState(null);
     const [fileList, setFileList] = useState([]);
     const [croppedImage, setCroppedImage] = useState(null);
     const [isCropModalVisible, setCropModalVisible] = useState(false);
 
     useEffect(() => {
-        if (visible) {
+        if (category) {
             form.resetFields();
             setFileList([]);
             setCroppedImage(null);
+            form.setFieldsValue({
+                nameVN: category.nameVN,
+                nameEN: category.nameEN
+            });
         }
-    }, [visible]);
+    }, [category]);
 
     const handleImageUpload = (info) => {
         if (info.fileList.length === 0) {
             setImageSrc(null);
             setCroppedImage(null);
             setFileList([]);
-            message.info(t("category.categoryCreationModal.messages.imageRemoved"));
+            message.info(t("food.editFoodModal.messages.imageRemoved"));
             return;
         }
 
@@ -42,7 +46,7 @@ const CreateCategoryModal = ({ visible, onClose, onCategoryCreated }) => {
             };
             reader.readAsDataURL(file);
         } else {
-            message.error(t("category.categoryCreationModal.messages.uploadError"));
+            message.error(t("food.editFoodModal.messages.uploadError"));
         }
     };
 
@@ -52,6 +56,7 @@ const CreateCategoryModal = ({ visible, onClose, onCategoryCreated }) => {
         const reader = new FileReader();
         reader.onload = () => {
             const base64 = reader.result;
+
             setFileList([
                 {
                     uid: "-1",
@@ -64,96 +69,91 @@ const CreateCategoryModal = ({ visible, onClose, onCategoryCreated }) => {
         reader.readAsDataURL(file);
     };
 
-    const handleCreate = async (values) => {
+    const handleFinish = async (values) => {
         const formData = new FormData();
         formData.append("nameVN", values.nameVN);
         formData.append("nameEN", values.nameEN);
         if (croppedImage) {
             formData.append("imageFile", croppedImage);
-        } else {
-            message.error(t("food.createFoodModal.messages.noImage"));
-            return;
         }
-        setIsFetching(true);
+        setLoading(true);
         try {
-            await axiosInstance.post(apiEndPoints.CATEGORY.CREATE, formData, {
+            await axiosInstance.put(apiEndPoints.CATEGORY.EDIT(category.id), formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            message.success(t("category.categoryCreationModal.messages.createSuccess"));
-            onCategoryCreated();
+            message.success(t("category.categoryEditModal.messages.updateSuccess"));
+            onCategoryUpdated();
             onClose();
         } catch (error) {
-            message.error(t("category.categoryCreationModal.messages.createError"));
+            message.error(t("category.categoryEditModal.messages.updateError"));
         } finally {
-            setIsFetching(false);
+            setLoading(false);
         }
     };
 
     return (
         <>
             <Modal
-                title={t("category.categoryCreationModal.titles.modalTitle")}
-                open={visible}
+                title={t("category.categoryEditModal.titles.modalTitle")}
+                open={open}
                 onCancel={onClose}
                 footer={null}
             >
-                <Form layout="vertical" form={form} onFinish={handleCreate}>
+                <Form form={form} layout="vertical" onFinish={handleFinish}>
                     <Form.Item
-                        label={t("category.categoryCreationModal.labels.nameVN")}
                         name="nameVN"
+                        label={t("category.categoryEditModal.labels.nameVN")}
                         rules={[
-                            { required: true, message: t("category.categoryCreationModal.messages.rules.nameRequired") },
-                            { max: 50, message: t("category.categoryCreationModal.messages.rules.nameMaxLength") },
+                            { required: true, message: t("category.categoryEditModal.messages.rules.nameVNRequired") },
+                            { max: 50, message: t("category.categoryEditModal.messages.rules.nameVNMaxLength") },
                         ]}
                     >
-                        <Input placeholder={t("category.categoryCreationModal.placeholders.nameVN")} />
+                        <Input placeholder={t("category.categoryEditModal.placeholders.nameVN")} />
                     </Form.Item>
                     <Form.Item
-                        label={t("category.categoryCreationModal.labels.nameEN")}
                         name="nameEN"
+                        label={t("category.categoryEditModal.labels.nameEN")}
                         rules={[
-                            { required: true, message: t("category.categoryCreationModal.messages.rules.nameRequired") },
-                            { max: 50, message: t("category.categoryCreationModal.messages.rules.nameMaxLength") },
+                            { required: true, message: t("category.categoryEditModal.messages.rules.nameENRequired") },
+                            { max: 50, message: t("category.categoryEditModal.messages.rules.nameENMaxLength") },
                         ]}
                     >
-                        <Input placeholder={t("category.categoryCreationModal.placeholders.nameEN")} />
+                        <Input placeholder={t("category.categoryEditModal.placeholders.nameEN")} />
                     </Form.Item>
-                    <Form.Item
-                        label={t("food.createFoodModal.labels.image")}
-                        name="imageFile"
-                        valuePropName="file"
-                        rules={[{ required: true, message: t("food.createFoodModal.messages.rules.imageRequired") }]}
-                    >
+
+                    <Form.Item name="imageFile" label={t("food.editFoodModal.labels.image")} valuePropName="file">
                         <Upload
-                            name="imageFile"
+                            name="image"
                             listType="picture"
                             maxCount={1}
                             beforeUpload={() => false}
                             onChange={handleImageUpload}
                             fileList={fileList}
                         >
-                            <Button icon={<UploadOutlined />}>{t("food.createFoodModal.buttons.selectImage")}</Button>
+                            <Button icon={<UploadOutlined />}>{t("food.editFoodModal.buttons.uploadImage")}</Button>
                         </Upload>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" loading={isFetching}>
-                            {t("category.categoryCreationModal.buttons.create")}
+                        <Button type="primary" htmlType="submit" loading={loading}>
+                            {t("category.categoryEditModal.buttons.updateCategory")}
                         </Button>
                     </Form.Item>
                 </Form>
             </Modal>
-            {imageSrc && (
-                <CropImageModal
-                    visible={isCropModalVisible}
-                    imageSrc={imageSrc}
-                    onClose={() => setCropModalVisible(false)}
-                    onCropComplete={handleCropComplete}
-                />
-            )}
+            {
+                imageSrc && (
+                    <CropImageModal
+                        visible={isCropModalVisible}
+                        imageSrc={imageSrc}
+                        onClose={() => setCropModalVisible(false)}
+                        onCropComplete={handleCropComplete}
+                    />
+                )
+            }
         </>
     );
 };
 
-export default CreateCategoryModal;
+export default EditCategoryModal;

@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
 import axiosInstance from "../../../service/axios";
-import CropImageModal from "../image/CropImageModal";
-import CategoryPickerModal from "../category/CategoryPickerModal";
+import CropImageModal from "../../../components/modals/image/CropImageModal";
+import CategoryPickerModal from "../../Category/components/CategoryPickerModal";
 
 const EditFoodModal = ({ visible, onClose, food, onFoodUpdated }) => {
     const { t, i18n } = useTranslation('global');

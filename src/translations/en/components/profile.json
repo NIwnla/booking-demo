@@ -1,0 +1,82 @@
+{
+    "tabs": {
+        "currentDeliveries": "Current Orders",
+        "currentReservations": "Current Reservations",
+        "deliveryHistory": "Order History",
+        "reservationHistory": "Reservation History",
+        "help": "Contact Support"
+    },
+    "email": "Email",
+    "deliveries": {
+        "noCurrentDelivery": "No current orders",
+        "noHistory": "No order history",
+        "orderTime": "Order Time",
+        "location": "Address",
+        "total": "Total",
+        "userInfo": {
+            "fullName": "Full Name",
+            "phoneNumber": "Phone Number",
+            "recipientName": "Recipient Name",
+            "recipientPhone": "Recipient Phone",
+            "time": "Time",
+            "location": "Address",
+            "status": "Status",
+            "message": "Notes"
+        },
+        "status": {
+            "title": "Status",
+            "cancelled": "Cancelled",
+            "waiting": "Waiting",
+            "inProgress": "In Progress",
+            "completed": "Completed"
+        },
+        "order": {
+            "summary": "Order Summary",
+            "subTotal": "Subtotal",
+            "shipping": "Shipping Fee",
+            "tax": "Tax",
+            "total": "Total",
+            "readMore": "Read More",
+            "condiments": "Condiments",
+            "sustainableOptions": "Sustainable Options"
+        }
+    },
+    "reservations": {
+        "noCurrentReservation": "No current reservations",
+        "noHistory": "No reservation history",
+        "branch": "Branch",
+        "date": "Date",
+        "guests": "Guests",
+        "form": {
+            "fullName": "Full Name",
+            "email": "Email",
+            "phoneNumber": "Phone Number",
+            "branch": "Branch",
+            "dateTime": "Date & Time",
+            "adult": "Adults",
+            "peopleOver60": "People over 60",
+            "peopleUnder6": "Children under 6",
+            "totalGuests": "Total Guests",
+            "status": "Status",
+            "smsNotification": "SMS Notification",
+            "notes": "Notes"
+        },
+        "status": {
+            "title": "Status",
+            "cancelled": "Cancelled",
+            "pending": "Pending",
+            "confirmed": "Confirmed",
+            "completed": "Completed"
+        },
+        "common": {
+            "yes": "Yes",
+            "no": "No"
+        }
+    },
+    "help": {
+        "title": "Contact Support",
+        "hotline": "Hotline",
+        "email": "Support Email",
+        "address": "Address"
+    }
+}

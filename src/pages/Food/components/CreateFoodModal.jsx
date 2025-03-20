@@ -4,8 +4,9 @@ import { App, Button, Form, Input, Modal, Upload, Tag } from "antd";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../../service/axios";
 import { apiEndPoints } from "../../../constaints/apiEndPoint";
-import CropImageModal from "../image/CropImageModal";
-import CategoryPickerModal from "../category/CategoryPickerModal";
+import CropImageModal from "../../../components/modals/image/CropImageModal";
+import CategoryPickerModal from "../../Category/components/CategoryPickerModal";
+
 
 const CreateFoodModal = ({ visible, onClose, onFoodCreated }) => {
     const { t , i18n} = useTranslation("global");

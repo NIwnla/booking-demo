@@ -33,6 +33,11 @@ const GuestLayout = ({ children }) => {
 
     const rightMenuItems = [
         {
+            key: 'Profile',
+            label: 'Profile',
+            onClick: () => navigate(routeNames.user.information),
+        },
+        {
             key: 'language',
             label: (
                 <span>

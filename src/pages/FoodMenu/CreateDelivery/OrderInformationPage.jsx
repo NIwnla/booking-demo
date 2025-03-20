@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import MenuNavBar from "../../../components/navbars/foodMenu/MenuNavBar";
 import { routeNames } from "../../../constaints/routeName";
-import OrderSummarySection from "./OrderSummarySection";
+import OrderSummarySection from "./components/OrderSummarySection";
 
 const { Title, Paragraph } = Typography;
 

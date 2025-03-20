@@ -12,6 +12,7 @@ export const apiEndPoints = {
         GET_ALL: '/booking-informations',
         GET_TIME_BY_MONTH: (month) => `/booking-informations/month/${month}`,
         GET_CURRENT_BOOKING: '/booking-informations/current',
+        GET_HISTORY_BOOKING: '/booking-informations/history',
         CREATE: '/booking-informations',
         EDIT_STATUS: (id, status) => `/booking-informations/${id}/${status}`,
         EDIT: (id) => `/booking-informations/${id}`,
@@ -72,6 +73,7 @@ export const apiEndPoints = {
         EDIT_STATUS: (id, status) => `/delivery-informations/${id}/${status}`,
         CHECK_PENDING: (id) => `/delivery-informations/${id}/pending`,
         GET_CURRENT: '/delivery-informations/current',
+        GET_HISTORY: '/delivery-informations/history',
     },
     CATEGORY: {
         GET_ALL: '/categories',

@@ -7,7 +7,7 @@ import MenuNavBar from "../../components/navbars/foodMenu/MenuNavBar";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { routeNames } from "../../constaints/routeName";
 import axiosInstance from "../../service/axios";
-import RightInformationSection from "./RightInformationSection";
+import RightInformationSection from "./components/RightInformationSection";
 
 const { Title } = Typography;
 

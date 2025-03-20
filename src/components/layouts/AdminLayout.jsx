@@ -33,6 +33,11 @@ const AdminLayout = ({ children }) => {
 
     const rightMenuItems = [
         {
+            key: 'Profile',
+            label: 'Profile',
+            onClick: () =>  navigate(routeNames.user.information),
+        },
+        {
             key: 'language',
             label: (
                 <span>
@@ -125,11 +130,7 @@ const AdminLayout = ({ children }) => {
             children: [
                 {
                     key: '2',
-                    label: <Link to={routeNames.booking.branchChoose}>{t('leftMenuItems.applications.booking')}</Link>,
-                },
-                {
-                    key: '9',
-                    label: <Link to={routeNames.deliveryInformation.create}>{t('leftMenuItems.applications.delivery')}</Link>,
+                    label: <Link to={routeNames.reservation.main}>{t('leftMenuItems.applications.booking')}</Link>,
                 },
                 {
                     key: '11',

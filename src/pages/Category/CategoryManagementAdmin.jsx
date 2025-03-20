@@ -2,8 +2,8 @@ import { App, Button, Card, Col, Image, Input, Row, Space, Spin, Typography } fr
 import { Content } from 'antd/es/layout/layout';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CreateCategoryModal from '../../components/modals/category/CreateCategoryModal';
-import EditCategoryModal from '../../components/modals/category/EditCategoryModal';
+import CreateCategoryModal from './components/CreateCategoryModal';
+import EditCategoryModal from './components/EditCategoryModal';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import { AxiosConstants } from '../../constaints/axiosContaint';

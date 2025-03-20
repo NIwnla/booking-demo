@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';
-import LocationPickerModal from '../../components/modals/foodMenu/LocationPickerModal';
+import LocationPickerModal from './components/LocationPickerModal';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';

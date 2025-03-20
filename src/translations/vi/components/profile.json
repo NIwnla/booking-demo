@@ -1,0 +1,82 @@
+{
+    "tabs": {
+        "currentDeliveries": "Đơn hàng hiện tại",
+        "currentReservations": "Đặt bàn hiện tại",
+        "deliveryHistory": "Lịch sử đơn hàng",
+        "reservationHistory": "Lịch sử đặt bàn",
+        "help": "Liên hệ hỗ trợ"
+    },
+    "email": "Email",
+    "deliveries": {
+        "noCurrentDelivery": "Không có đơn hàng hiện tại",
+        "noHistory": "Không có lịch sử đơn hàng",
+        "orderTime": "Thời gian đặt hàng",
+        "location":"Địa chỉ",
+        "total": "Tổng cộng",
+        "userInfo": {
+            "fullName": "Họ và tên",
+            "phoneNumber": "Số điện thoại",
+            "recipientName": "Tên người nhận",
+            "recipientPhone": "Số điện thoại người nhận",
+            "time": "Thời gian",
+            "location": "Địa chỉ",
+            "status": "Trạng thái",
+            "message": "Ghi chú"
+        },
+        "status": {
+            "title": "Trạng thái",
+            "cancelled": "Đã hủy",
+            "waiting": "Đang chờ",
+            "inProgress": "Đang giao",
+            "completed": "Hoàn thành"
+        },
+        "order": {
+            "summary": "Tổng quan đơn hàng",
+            "subTotal": "Tạm tính",
+            "shipping": "Phí vận chuyển",
+            "tax": "Thuế",
+            "total": "Tổng cộng",
+            "readMore": "Xem thêm",
+            "condiments": "Gia vị",
+            "sustainableOptions": "Tùy chọn bền vững"
+        }
+    },
+    "reservations": {
+        "noCurrentReservation": "Không có đặt bàn hiện tại",
+        "noHistory": "Không có lịch sử đặt bàn",
+        "branch": "Chi nhánh",
+        "date": "Ngày",
+        "guests": "Khách",
+        "form": {
+            "fullName": "Họ và tên",
+            "email": "Email",
+            "phoneNumber": "Số điện thoại",
+            "branch": "Chi nhánh",
+            "dateTime": "Thời gian",
+            "adult": "Người lớn",
+            "peopleOver60": "Người trên 60 tuổi",
+            "peopleUnder6": "Trẻ em dưới 6 tuổi",
+            "totalGuests": "Tổng số khách",
+            "status": "Trạng thái",
+            "smsNotification": "Thông báo SMS",
+            "notes": "Ghi chú"
+        },
+        "status": {
+            "title": "Trạng thái",
+            "cancelled": "Đã hủy",
+            "pending": "Đang chờ",
+            "confirmed": "Đã xác nhận",
+            "completed": "Hoàn thành"
+        },
+        "common": {
+            "yes": "Có",
+            "no": "Không"
+        }
+    },
+    "help": {
+        "title": "Liên hệ hỗ trợ",
+        "hotline": "Đường dây nóng",
+        "email": "Email hỗ trợ",
+        "address": "Địa chỉ"
+    }
+}

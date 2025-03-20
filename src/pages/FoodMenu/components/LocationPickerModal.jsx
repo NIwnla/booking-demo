@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Modal, Button, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-import LocationPicker from '../../maps/LocationPicker';
+import LocationPicker from '../../../components/maps/LocationPicker';
 import { DeliveryContext } from '../../../context/DeliveryContext';
 
 const LocationPickerModal = ({ 

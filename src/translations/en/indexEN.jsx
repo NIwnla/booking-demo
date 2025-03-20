@@ -18,7 +18,7 @@ import locationAndMenu from './components/landingPage/locationAndMenu.json';
 import sustainabilityReport from './components/landingPage/sustainabilityReport.json';
 import ourVision from './components/landingPage/ourVision.json';
 import originalProduct from './components/landingPage/originalProduct.json';
-
+import profile from './components/profile.json';
 const translations = {
   header,
   drawer,
@@ -39,7 +39,8 @@ const translations = {
   locationAndMenu,
   sustainabilityReport,
   ourVision,
-  originalProduct
+  originalProduct,
+  profile
 };
 
 export default translations;

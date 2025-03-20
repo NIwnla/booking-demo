@@ -3,14 +3,14 @@ import { App, Button, Card, Col, Image, Input, Pagination, Popconfirm, Row, Spac
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import CreateFoodModal from "../../components/modals/food/CreateFoodModal";
-import EditFoodModal from "../../components/modals/food/EditFoodModal";
 import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { AxiosConstants } from "../../constaints/axiosContaint";
 import axiosInstance from "../../service/axios";
 import './FoodManagementPageAdmin.css';
 import { getLocalizedText } from "../../helpers/getLocalizedText";
 import { routeNames } from "../../constaints/routeName";
+import CreateFoodModal from "./components/CreateFoodModal";
+import EditFoodModal from "./components/EditFoodModal";
 
 const FoodManagementPageAdmin = () => {
     const { t, i18n } = useTranslation('global');

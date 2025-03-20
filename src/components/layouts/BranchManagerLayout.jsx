@@ -1,9 +1,11 @@
-import { MenuOutlined } from '@ant-design/icons';
+import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Dropdown, Layout, Menu, Space, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
+import { changeLanguage } from '../../helpers/changeLanguage';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text, Paragraph } = Typography;
@@ -12,6 +14,7 @@ const BranchManagerLayout = ({ children }) => {
     const { email, clearAuthToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const [drawerVisible, setDrawerVisible] = useState(false);
+    const {t,i18n} = useTranslation('global');
 
     const handleLogout = () => {
         clearAuthToken();
@@ -20,8 +23,34 @@ const BranchManagerLayout = ({ children }) => {
 
     const rightMenuItems = [
         {
+            key: 'Profile',
+            label: 'Profile',
+            onClick: () => navigate(routeNames.user.information),
+        },
+        {
+            key: 'language',
+            label: (
+                <span>
+                    <GlobalOutlined style={{ marginRight: 8 }} />
+                    {t('header.language')}
+                </span>
+            ),
+            children: [
+                {
+                    key: 'english',
+                    label: 'English',
+                    onClick: () => changeLanguage(i18n, 'en'),
+                },
+                {
+                    key: 'vietnamese',
+                    label: 'Tiếng Việt',
+                    onClick: () => changeLanguage(i18n, 'vi'),
+                },
+            ],
+        },
+        {
             key: 'logout',
-            label: 'Logout',
+            label: t('header.logout'),
             onClick: handleLogout,
         },
     ];

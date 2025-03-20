@@ -124,8 +124,8 @@ const DeliveryManagementPageAdmin = () => {
         },
         {
             title: t('delivery.management.columns.status'),
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'deliveryStatus',
+            key: 'deliveryStatus',
             responsive: ['sm'],
             render: (status) => {
                 const statusMap = {

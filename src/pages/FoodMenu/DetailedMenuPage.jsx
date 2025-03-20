@@ -7,7 +7,7 @@ import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
-import RightInformationSection from './RightInformationSection';
+import RightInformationSection from './components/RightInformationSection';
 import './ScrollableCategories.css';
 import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import FoodCard from '../../components/cards/foodMenu/FoodCard';

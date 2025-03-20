@@ -18,6 +18,7 @@ export const routeNames = {
     },
     user: {
         management: '/users/management',
+        information: '/users/information'
     },
     homepage: {
         admin: '/home/admin',
@@ -37,7 +38,7 @@ export const routeNames = {
     recruitInformation: {
         signUp: '/recruit/sign-up',
         management: '/recruit/management',
-        detail:'/recruit/detail/'
+        detail: '/recruit/detail/'
     },
     driver: {
         management: '/drivers/management',
@@ -65,7 +66,7 @@ export const routeNames = {
         main: '/reservation',
         form: '/reservation/form',
     },
-    jobOffer:{
+    jobOffer: {
         management: '/job-offers/management',
         detail: '/job-offers/detail/',
         create: '/job-offers/create',

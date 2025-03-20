@@ -10,7 +10,7 @@ import { routeNames } from '../../constaints/routeName';
 import { DeliveryContext } from '../../context/DeliveryContext';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
-import RightInformationSection from './RightInformationSection';
+import RightInformationSection from './components/RightInformationSection';
 const { Title } = Typography;
 
 const DetailedFoodPage = ({ breadcrumb = null }) => {

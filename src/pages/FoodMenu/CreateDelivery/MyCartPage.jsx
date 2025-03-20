@@ -6,7 +6,7 @@ import CartItemCard from "../../../components/cards/foodMenu/CartItemCard";
 import MenuNavBar from "../../../components/navbars/foodMenu/MenuNavBar";
 import { routeNames } from "../../../constaints/routeName";
 import { DeliveryContext } from "../../../context/DeliveryContext";
-import OrderSummarySection from './OrderSummarySection';
+import OrderSummarySection from './components/OrderSummarySection';
 import { useNavigate } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;

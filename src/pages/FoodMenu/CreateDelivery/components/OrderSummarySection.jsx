@@ -3,11 +3,11 @@ import { Card, Typography, Divider, Button } from "antd";
 import { RightCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { DeliveryContext } from "../../../context/DeliveryContext";
-import { routeNames } from "../../../constaints/routeName";
-import LocationPickerModal from "../../../components/modals/foodMenu/LocationPickerModal";
+import { DeliveryContext } from "../../../../context/DeliveryContext";
+import { routeNames } from "../../../../constaints/routeName";
+import LocationPickerModal from "../../components/LocationPickerModal";
 import dayjs from "dayjs";
-import DeliveryTimePickerModal from "../../../components/modals/foodMenu/DeliveryTimePickerModal";
+import DeliveryTimePickerModal from "../../components/DeliveryTimePickerModal";
 
 const { Title, Paragraph } = Typography;
 

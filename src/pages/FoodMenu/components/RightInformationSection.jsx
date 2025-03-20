@@ -2,11 +2,11 @@ import { DeleteOutlined, RightCircleOutlined, ShoppingCartOutlined } from '@ant-
 import { Button, Card, Empty, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CartItemCard from '../../components/cards/foodMenu/CartItemCard';
-import { routeNames } from '../../constaints/routeName';
-import { DeliveryContext } from '../../context/DeliveryContext';
+import CartItemCard from '../../../components/cards/foodMenu/CartItemCard';
+import { routeNames } from '../../../constaints/routeName';
+import { DeliveryContext } from '../../../context/DeliveryContext';
 import { useTranslation } from "react-i18next";
-import LocationPickerModal from '../../components/modals/foodMenu/LocationPickerModal';
+import LocationPickerModal from './LocationPickerModal';
 
 const { Paragraph, Title } = Typography;
 

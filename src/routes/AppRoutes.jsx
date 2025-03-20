@@ -32,11 +32,12 @@ import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPag
 import DisableBranchChoosePage from "../pages/DisableBookingTime/DisableBranchChoosePage";
 import DisableCalendarPage from "../pages/DisableBookingTime/DisableCalendarPage";
 import FoodManagementPageAdmin from "../pages/Food/FoodManagementPageAdmin";
+import MyCartPage from "../pages/FoodMenu/CreateDelivery/MyCartPage";
+import OrderInformationPage from "../pages/FoodMenu/CreateDelivery/OrderInformationPage";
+import SMSConfirmPage from "../pages/FoodMenu/CreateDelivery/SMSConfirmPage";
 import DetailedFoodPage from "../pages/FoodMenu/DetailedFoodPage";
 import DetailedMenuPage from "../pages/FoodMenu/DetailedMenuPage";
 import FoodMenuMainPage from "../pages/FoodMenu/FoodMenuMainPage";
-import MyCartPage from "../pages/FoodMenu/CreateDelivery/MyCartPage";
-import OrderInformationPage from "../pages/FoodMenu/CreateDelivery/OrderInformationPage";
 import SearchResultPage from "../pages/FoodMenu/SearchResultPage";
 import FoodOptionPageAdmin from "../pages/FoodOption/FoodOptionPageAdmin";
 import HomePageAdmin from "../pages/Home/HomePageAdmin";
@@ -44,8 +45,8 @@ import HomePageBranchManager from "../pages/Home/HomePageBranchManager";
 import HomePageGuest from "../pages/Home/HomePageGuest";
 import ReservationForm from "../pages/Reservation/ReservationForm";
 import ReservationPage from "../pages/Reservation/ReservationPage";
+import UserProfilePage from "../pages/Users/Profile/UserProfilePage";
 import UserManagementAdminPage from "../pages/Users/UserManagementAdminPage";
-import SMSConfirmPage from "../pages/FoodMenu/CreateDelivery/SMSConfirmPage";
 
 
 
@@ -88,6 +89,10 @@ const AppRoutes = () => {
                 <Route
                     path={routeNames.user.management}
                     element={<PrivateRoute element={<UserManagementAdminPage />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+                <Route
+                    path={routeNames.user.information}
+                    element={<PrivateRoute element={<UserProfilePage />} allowedRoles={[userRoles.ADMIN]} />}
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route path={routeNames.booking.bookingPage} element={<BookingPage />} />
