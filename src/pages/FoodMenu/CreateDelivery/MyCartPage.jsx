@@ -1,13 +1,13 @@
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Checkbox, Col, Input, Row, Typography } from "antd";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 import CartItemCard from "../../../components/cards/foodMenu/CartItemCard";
-import MenuNavBar from "../../../components/navbars/foodMenu/MenuNavBar";
 import { routeNames } from "../../../constaints/routeName";
 import { DeliveryContext } from "../../../context/DeliveryContext";
 import OrderSummarySection from './components/OrderSummarySection';
-import { useNavigate } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -16,19 +16,10 @@ const { TextArea } = Input;
 
 const MyCartPage = () => {
     const { t } = useTranslation('global');
-    const { cart, condiments, sustainableOptions, updateCondiments, updateSustainableOptions } = useContext(DeliveryContext);    
+    const { cart, condiments, sustainableOptions, updateCondiments, updateSustainableOptions } = useContext(DeliveryContext);
     const navigate = useNavigate();
 
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
 
     const handleCheckboxChange = (id) => {
@@ -49,28 +40,37 @@ const MyCartPage = () => {
 
     return (
         <div>
-            <MenuNavBar />
-            <div style={{ padding: "5vh 10vw", backgroundColor: "#f4f4f4", minHeight: "100vh" }}>
+            <div style={{ padding:  "5vh 10vw", backgroundColor: "#f4f4f4", minHeight: "100vh", width:'100%' }}>
                 <Row gutter={[32, 16]}>
                     <Col xs={24} lg={18}>
-                        <Row gutter={[16, 16]} style={{ position: "relative" }}>
+                        <Row gutter={[16, 16]} >
                             {/* Title and breadcrumb */}
                             <Col span={24} style={{ display: "flex", justifyContent: "center", borderBottom: "2px solid #ddd", marginBottom: '2vh' }}>
                                 <div style={{ position: "absolute", left: 0, zIndex: 100 }}>
-                                    <Breadcrumb
-                                        items={[
-                                            {
-                                                title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.breadcrumbs.home')}</a></Title>,
-                                            },
-                                            {
-                                                title: <Title level={5}>{t('foodMenu.cart.title')}</Title>,
-                                            }
-                                        ]}
-                                    />
+                                    {isLargeScreen ? (
+                                        <Breadcrumb
+                                            items={[
+                                                {
+                                                    title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.breadcrumbs.home')}</a></Title>,
+                                                },
+                                                {
+                                                    title: <Title level={5}>{t('foodMenu.cart.title')}</Title>,
+                                                }
+                                            ]}
+                                        />) : (
+                                        <ArrowLeftOutlined
+                                            onClick={() => navigate(-1)}
+                                            style={{
+                                                fontSize: '20px',
+                                                cursor: 'pointer',
+                                                padding: '10px',
+                                            }}
+                                        />)
+                                    }
                                 </div>
                                 <Title style={{ fontSize: '1.5rem', textAlign: 'center' }}>{t('foodMenu.cart.title')} ({cart.length})</Title>
                             </Col>
-                            <Col span={24} style={{ paddingRight: "2vw", position: "relative" }}>
+                            <Col span={24} style={{ paddingRight: "2vw" }}>
                                 <Row gutter={[64, 16]}>
                                     {/* Product Details Column */}
                                     <Col
@@ -78,7 +78,7 @@ const MyCartPage = () => {
                                         style={{
                                             padding: "2vh",
                                             borderRadius: "10px",
-                                            borderRight: "2px dashed #ddd"
+                                            borderRight: isLargeScreen ? "2px dashed #ddd" : 'none'
                                         }}
                                     >
                                         <Title style={{ fontSize: '1rem' }}>{t('foodMenu.cart.productDetails')}</Title>
@@ -97,7 +97,7 @@ const MyCartPage = () => {
                                         <div
                                             style={{
                                                 marginTop: "2vh",
-                                                padding: "1vh 1vw",
+                                                padding: "1rem",
                                                 backgroundColor: "white",
                                                 borderRadius: "10px",
                                                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)"
@@ -121,7 +121,7 @@ const MyCartPage = () => {
                                                     }}
                                                 >
                                                     {/* Checkbox & Label */}
-                                                    <div style={{ display: "flex", alignItems: "center", gap: "1vw" }}>
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                                                         <Checkbox
                                                             id={id}
                                                             checked={data.checked}
@@ -190,7 +190,7 @@ const MyCartPage = () => {
                                                     style={{
                                                         display: "flex",
                                                         alignItems: "center",
-                                                        gap: "1vw",
+                                                        gap: "1rem",
                                                         marginTop: "0.7vh"
                                                     }}
                                                 >
@@ -230,14 +230,14 @@ const MyCartPage = () => {
                                         </div>
 
                                         {/* E-Voucher Section */}
-                                        <Title level={5} style={{ fontSize: '0.875rem', color: "#d32f2f", marginTop: "2vh" }}>{t('foodMenu.cart.eVoucher')}</Title>
+                                        <Title level={5} style={{ fontSize: '0.875rem', color: "#d32f2f", marginTop: "20px" }}>{t('foodMenu.cart.eVoucher')}</Title>
                                         <Paragraph style={{ fontSize: "0.875rem", color: "#777" }}>
                                             {t('foodMenu.cart.eVoucherDescription')}
                                         </Paragraph>
                                         <div
                                             style={{
                                                 marginTop: "1vh",
-                                                padding: "1vh 1vw",
+                                                padding: "1rem",
                                                 backgroundColor: "white",
                                                 borderRadius: "10px",
                                                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)"

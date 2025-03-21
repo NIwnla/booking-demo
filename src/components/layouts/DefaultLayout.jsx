@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { routeNames } from '../../constaints/routeName';
 import { changeLanguage } from '../../helpers/changeLanguage';
+import { useMediaQuery } from 'react-responsive';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -12,16 +13,7 @@ const { Text } = Typography;
 const DefaultLayout = ({ children }) => {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const { t, i18n } = useTranslation("global");
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     const rightMenuItems = [
         {
@@ -75,7 +67,7 @@ const DefaultLayout = ({ children }) => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     background: '#ff0000',
-                    padding: '0 10vw'
+                    padding: isLargeScreen ?'0 10vw' : '0 2vw'
                 }}
             >
                 <Link
@@ -117,7 +109,7 @@ const DefaultLayout = ({ children }) => {
             >
                 <Menu
                     theme="light"
-                    mode="vertical"
+                    mode="inline"
                     onClick={closeDrawer}
                     style={{ backgroundColor: '#ff0000' }}
                     items={rightMenuItems}

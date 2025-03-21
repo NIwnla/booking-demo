@@ -1,26 +1,18 @@
 import { LinkOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Col, Row, Typography, Carousel } from "antd";
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from 'react-responsive';
 
 const { Title, Text } = Typography;
 
 export default function FollowSocialMedia() {
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     return (
         <div style={{ width: "100%", padding: "50px 8vw", backgroundColor: "#f5f5f5", position: 'relative', zIndex: 1 }}>
             <Row gutter={[64, 64]}>
                 <Col xs={24} lg={16} style={{ padding: "16px" }}>
-                    <a style={{ fontSize: "2vw", marginBottom: "10px", color: 'black' }}>Follow <strong>Instagram</strong> <LinkOutlined /></a>
+                    <a style={{ fontSize: "1.8rem", marginBottom: "10px", color: 'black' }}>Follow <strong>Instagram</strong> <LinkOutlined /></a>
                     {isLargeScreen ? (
                         <Row gutter={[16, 16]}>
                             {[...Array(9)].map((_, index) => (
@@ -41,7 +33,7 @@ export default function FollowSocialMedia() {
                     )}
                 </Col>
                 <Col xs={24} lg={8} style={{ padding: "16px" }}>
-                    <a style={{ fontSize: "2vw", marginBottom: "10px", color: 'black' }}>Subscribe <strong>YouTube</strong> <LinkOutlined /></a>
+                    <a style={{ fontSize: "1.8rem", marginBottom: "10px", color: 'black' }}>Subscribe <strong>YouTube</strong> <LinkOutlined /></a>
                     {isLargeScreen ? (
                         <Row gutter={[16, 16]}>
                             {[...Array(3)].map((_, index) => (
@@ -73,7 +65,7 @@ export default function FollowSocialMedia() {
                     )}
                 </Col>
                 <Col span={24} style={{ padding: "16px" }}>
-                    <a style={{ fontSize: "2vw", marginBottom: "10px", color: 'black' }}>Follow <strong>Facebook</strong> <LinkOutlined /></a>
+                    <a style={{ fontSize: "1.8rem", marginBottom: "10px", color: 'black' }}>Follow <strong>Facebook</strong> <LinkOutlined /></a>
                     {isLargeScreen ? (
                         <Row gutter={[16, 16]}>
                             {[...Array(3)].map((_, index) => (

@@ -2,22 +2,14 @@ import { CaretDownOutlined, DownOutlined } from '@ant-design/icons';
 import { Carousel, Col, Dropdown, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 
 const { Title, Text } = Typography;
 
 const LocationAndMenu = () => {
     const { t } = useTranslation('global');
     const [selectedLocation, setSelectedLocation] = useState(null);
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     const locations = ["location1", "location2", "location3", "location4", "location5"];
     const items = [
@@ -227,7 +219,7 @@ const LocationAndMenu = () => {
                     }}>
                         {/* Title */}
                         <Title style={{
-                            fontSize: "3rem",
+                            fontSize: isLargeScreen ? "3rem" : '2rem',
                             fontWeight: "bold",
                             marginBottom: "1vh",
                             color: "white"
@@ -237,7 +229,7 @@ const LocationAndMenu = () => {
 
                         {/* Description */}
                         <Text style={{
-                            fontSize: "1.5rem",
+                            fontSize: isLargeScreen ? "1.5rem" : '1rem',
                             color: "white",
                             width: '60%'
                         }}>

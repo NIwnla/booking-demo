@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import { Button, Typography } from 'antd';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 
 const { Title, Text } = Typography;
 
 const SustainabilityReport = () => {
     const { t } = useTranslation('global');
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     return (
         <div style={{ 
@@ -36,7 +28,7 @@ const SustainabilityReport = () => {
             }}>
                 <Title style={{ 
                     color: 'white', 
-                    fontSize: '4rem', 
+                    fontSize:  isLargeScreen ?'4rem' : '2rem', 
                     width: isLargeScreen ? '45%' : '100%',
                     margin: 0 
                 }}>
@@ -51,8 +43,8 @@ const SustainabilityReport = () => {
                 <Button
                     shape="circle"
                     style={{
-                        height: isLargeScreen ? '6rem' : '6rem',
-                        width: isLargeScreen ? '8rem' : '9rem',
+                        height: isLargeScreen ? '6rem' : '4rem',
+                        width: isLargeScreen ? '8rem' : '6rem',
                         backgroundColor: 'white',
                         color: 'red',
                         transition: 'background-color 0.3s ease, color 0.3s ease',
@@ -78,7 +70,7 @@ const SustainabilityReport = () => {
             }}>
                 <p style={{ 
                     color: 'white', 
-                    fontSize: '1.8rem', 
+                    fontSize: isLargeScreen ? '1.8rem': '1rem', 
                     width: isLargeScreen ? '45%' : '100%',
                     margin: 0 
                 }}>

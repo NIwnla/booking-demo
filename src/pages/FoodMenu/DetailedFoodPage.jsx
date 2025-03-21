@@ -11,6 +11,8 @@ import { DeliveryContext } from '../../context/DeliveryContext';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
 import RightInformationSection from './components/RightInformationSection';
+import { useMediaQuery } from 'react-responsive';
+import MobileDetailedFoodPage from './MobileDetailedFoodPage';
 const { Title } = Typography;
 
 const DetailedFoodPage = ({ breadcrumb = null }) => {
@@ -24,6 +26,7 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
     const [isLoadingFood, setIsLoadingFood] = useState(null);
     const [fadeIn, setFadeIn] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     useEffect(() => {
         fetchFoodDetails();
@@ -49,13 +52,13 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
         return (
             <>
                 <Title style={{ fontSize: '1vw', marginBottom: '2vh' }}>
-                   {t('foodMenu.detailedFoodPage.description')}
+                    {t('foodMenu.detailedFoodPage.description')}
                 </Title>
                 <Typography style={{ fontSize: '1vw' }}>
                     {getLocalizedText(food, 'description', i18n.language)}
                 </Typography>
                 <Typography style={{ fontSize: '1vw' }}>
-                   {t('foodMenu.detailedFoodPage.price')}: {food?.basePrice}VND
+                    {t('foodMenu.detailedFoodPage.price')}: {food?.basePrice}VND
                 </Typography>
             </>
         );
@@ -98,8 +101,19 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
     };
 
 
-    return (
-        <div>
+    if (!isLargeScreen) return (
+        <MobileDetailedFoodPage
+            food={food}
+            isLoadingFood={isLoadingFood}
+            selectedOptions={selectedOptions}
+            handleOptionClick={handleOptionClick}
+            handleAddToCart={handleAddToCart}
+            t={t}
+            i18n={i18n}
+            breadcrumbItems={breadcrumbItems}
+        />)
+    if (isLargeScreen) return (
+        <div style={{height:'100vh'}}>
             <MenuNavBar />
             <Spin spinning={isLoadingFood}>
                 <div
@@ -113,7 +127,7 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                             opacity: fadeIn ? 1 : 0,
                             transition: 'opacity 0.5s ease-out'
                         }}>
-                        <Col span={8}>
+                        <Col xs={24} lg={8}>
                             <div style={{ padding: '20px' }}>
                                 {food && (
                                     <>
@@ -132,13 +146,13 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                                 )}
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col xs={24} lg={8}>
                             <div style={{ padding: '20px' }}>
                                 {food?.options && food?.options.length === 0 && <FoodDetails />}
                                 {food?.options && food?.options.length > 0 && (
                                     <div>
                                         <Title style={{ fontSize: '1.5vw', marginBottom: '2vh' }}>
-                                           {t('foodMenu.detailedFoodPage.options')}
+                                            {t('foodMenu.detailedFoodPage.options')}
                                         </Title>
                                         {food?.options.map(option => (
                                             <Row
@@ -232,12 +246,12 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
                                             alignItems: "center",
                                             gap: "0.5vw",
                                         }}>
-                                       {t('foodMenu.detailedFoodPage.addToCart')} <PlusCircleOutlined style={{ fontSize: "2vw" }} />
+                                        {t('foodMenu.detailedFoodPage.addToCart')} <PlusCircleOutlined style={{ fontSize: "2vw" }} />
                                     </Typography>
                                 </div>
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col xs={24} lg={8}>
                             <div style={{ padding: '20px' }}>
                                 <RightInformationSection />
                             </div>

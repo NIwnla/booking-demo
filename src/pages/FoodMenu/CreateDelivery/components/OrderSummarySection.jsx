@@ -156,14 +156,14 @@ const OrderSummarySection = ({ onProcess, onCancel }) => {
                             </div>
                         ) : (
                             <>
-                                <Title level={4} style={{ fontSize: "0.875rem", margin: 0, color: "white" }}>
+                                <Title level={4} style={{ fontSize: "0.875rem", margin: 0, color: "white", paddingLeft:'10px' }}>
                                     {total.toLocaleString()} VND
                                 </Title>
                                 <Typography
                                     style={{
                                         fontSize: "0.875rem",
                                         color: "white",
-                                        paddingRight: "0.1vw",
+                                        paddingRight: "10px",
                                         display: "flex",
                                         alignItems: "center",
                                         gap: "0.5vw",
@@ -175,7 +175,7 @@ const OrderSummarySection = ({ onProcess, onCancel }) => {
                     </div >}
 
                 {/* Cancel Button */}
-                <div style={{ textAlign: "center", marginTop: "1vh" }}>
+                <div style={{ textAlign: "center", marginTop: "10px" }}>
                     <Button type="link" onClick={onCancel} style={{ fontSize: "1rem" }}>
                         {t("foodMenu.orderSummary.cancel")}
                     </Button>

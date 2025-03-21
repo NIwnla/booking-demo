@@ -18,8 +18,9 @@ const CartItemCard = ({ item, isLargeScreen = true }) => {
                 borderRadius: '10px',
                 boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                 backgroundColor: 'white',
-                padding: '0.75rem',
-                position: 'relative'
+                padding: isLargeScreen ? '0.75rem' : '1rem',
+                position: 'relative',
+                marginBottom: isLargeScreen ? '0.5rem' : '1rem',
             }}
         >
             {/* Remove Item Button */}
@@ -32,37 +33,45 @@ const CartItemCard = ({ item, isLargeScreen = true }) => {
                 }}
                 style={{
                     position: 'absolute',
-                    top: '0.8vh',
-                    right: '0.5rem',
+                    top: isLargeScreen ? '0.8vh' : '0.5rem',
+                    right: isLargeScreen ? '0.5rem' : '0.5rem',
                     color: 'red',
                     cursor: 'pointer',
                     zIndex: 10,
+                    fontSize: isLargeScreen ? '14px' : '16px'
                 }}
             />
 
             {/* Item Layout */}
-            <Row align="top">
+            <Row align="top" gutter={[16, 16]}>
                 {/* Image Column */}
-                <Col span={6}>
+                <Col xs={8} lg={4}>
                     <Image
                         preview={false}
                         src={`${AxiosConstants.AXIOS_BASEURL}/${item.imagePath}`}
                         alt={item.name}
-                        style={{ width: isLargeScreen ? '3rem' : '6rem', height: isLargeScreen ? '3rem' : '6rem', borderRadius: '5px' }}
+                        style={{ 
+                            width: isLargeScreen ? '3rem' : '5rem', 
+                            height: isLargeScreen ? '3rem' : '5rem', 
+                            borderRadius: '8px',
+                            objectFit: 'cover'
+                        }}
                     />
                 </Col>
 
                 {/* Details Column */}
-                <Col span={18}>
+                <Col xs={16} lg={20}>
                     <Title
                         level={5}
                         style={{
+                            width:'80%',
                             margin: 0,
                             wordWrap: "break-word",
                             whiteSpace: "normal",
                             overflow: "hidden",
                             maxWidth: "100%",
                             marginRight: "1rem",
+                            fontSize: isLargeScreen ? '1rem' : '0.9rem'
                         }}
                     >
                         {getLocalizedText(item, "name", i18n.language)}
@@ -70,51 +79,63 @@ const CartItemCard = ({ item, isLargeScreen = true }) => {
 
                     {/* Show options if available */}
                     {item.options.length > 0 && (
-                        <ul style={{ paddingLeft: '15px', margin: '5px 0' }}>
+                        <ul style={{ 
+                            paddingLeft: isLargeScreen ? '15px' : '20px', 
+                            margin: isLargeScreen ? '5px 0' : '8px 0' 
+                        }}>
                             {item.options.map(option => (
                                 <li
                                     key={option.id}
                                     style={{
-                                        fontSize: "0.875rem",
+                                        fontSize: isLargeScreen ? "0.875rem" : "0.75rem",
                                         color: "#555",
                                         wordWrap: "break-word",
                                         whiteSpace: "normal",
                                         maxWidth: "100%",
+                                        marginBottom: isLargeScreen ? '2px' : '4px'
                                     }}
                                 >
-                                    {getLocalizedText(option, "name", i18n.language)} (+{option.price} VND)
+                                    {getLocalizedText(option, "name", i18n.language)} (+{option.price.toLocaleString()} VND)
                                 </li>
                             ))}
                         </ul>
                     )}
 
                     {/* Quantity Controls & Total Price in the Same Row */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
+                    <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: isLargeScreen ? 'center' : 'flex-start', 
+                        flexDirection : isLargeScreen ? 'row' : 'column',
+                        marginTop: isLargeScreen ? '5px' : '10px'
+                    }}>
                         {/* Quantity Controls (Left) */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: isLargeScreen ? '0.5rem' : '0.8rem' }}>
                             <Button
                                 style={{
-                                    fontSize: '0.75rem',
-                                    color: 'red'
+                                    color: 'red',
                                 }}
                                 shape="circle"
+                                size={isLargeScreen ? 'middle' : 'small'}
                                 icon={<MinusOutlined />}
-                                size="small"
                                 onClick={() => decreaseQuantity(item.cartItemKey)}
                                 disabled={item.quantity <= 1}
                             />
                             <strong style={{ fontSize: '0.875rem' }}>{item.quantity}</strong>
                             <Button
-                                style={{ fontSize: '0.75rem' }}
                                 shape="circle"
+                                size={isLargeScreen ? 'middle' :'small'}
                                 icon={<PlusOutlined />}
-                                size="small"
                                 onClick={() => addToCart(item)}
                             />
                         </div>
 
                         {/* Total Price (Right) */}
-                        <Paragraph style={{ margin: 0, fontSize: '0.875rem', fontWeight: 'bold' }}>
+                        <Paragraph style={{ 
+                            margin: 0, 
+                            fontSize: isLargeScreen ? '0.875rem' : '1.1rem', 
+                            fontWeight: 'bold' 
+                        }}>
                             {item.total.toLocaleString()} VND
                         </Paragraph>
                     </div>

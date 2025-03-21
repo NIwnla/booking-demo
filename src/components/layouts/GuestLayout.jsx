@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { AuthContext } from '../../context/AuthContext';
 import { changeLanguage } from '../../helpers/changeLanguage';
+import { useMediaQuery } from 'react-responsive';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
@@ -15,16 +16,7 @@ const GuestLayout = ({ children }) => {
     const navigate = useNavigate();
     const [drawerVisible, setDrawerVisible] = useState(false);
     const { t, i18n } = useTranslation("global");
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     const handleLogout = () => {
         clearAuthToken();
@@ -97,7 +89,7 @@ const GuestLayout = ({ children }) => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     background: '#ff0000',
-                    padding: '0 20px',
+                    padding: isLargeScreen ? '0 10vw' : '0 2vw'
                 }}
             >
                 {isLargeScreen && (

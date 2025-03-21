@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import utc from 'dayjs/plugin/utc';
 import { DeliveryContext, DeliveryProvider } from './context/DeliveryContext';
+import ScrollToTop from './components/utils/ScrollToTop';
 
 dayjs.extend(isoWeek);
 dayjs.extend(utc);
@@ -48,6 +49,7 @@ const App = () => {
               v7_startTransition: true,
               v7_relativeSplatPath: true,
             }}>
+              <ScrollToTop />
               <AppRoutes />
             </BrowserRouter>
           </DeliveryProvider>

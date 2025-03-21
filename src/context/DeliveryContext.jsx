@@ -16,6 +16,7 @@ export const DeliveryContext = createContext({
     clearCart: () => { },
     updateCondiments: (id, checked, quantity) => { },
     updateSustainableOptions: (id, checked) => { },
+    isPopoverVisible: false,
 });
 
 const generateCartItemKey = (food) => {
@@ -30,6 +31,7 @@ export const DeliveryProvider = ({ children }) => {
     const [location, setLocation] = useState(null);
     const [cart, setCart] = useState([]);
     const [latestCartItem, setLatestCartItem] = useState(null);
+    const [isPopoverVisible, setIsPopoverVisible] = useState(false);
     const [deliveryTime, setDeliveryTime] = useState(null);
     const [condiments, setCondiments] = useState({
         ketchup: { checked: false, quantity: 1 },
@@ -57,6 +59,17 @@ export const DeliveryProvider = ({ children }) => {
         if (storedCondiments) setCondiments(JSON.parse(storedCondiments));
         if (storedSustainableOptions) setSustainableOptions(JSON.parse(storedSustainableOptions));
     }, []);
+
+    useEffect(() => {
+        let timeoutId;
+        if (latestCartItem) {
+            setIsPopoverVisible(true);
+            timeoutId = setTimeout(() => setIsPopoverVisible(false), 3000);
+        }
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [latestCartItem]);
 
     const updateDeliveryTime = (time) => {
         setDeliveryTime(time);
@@ -206,7 +219,8 @@ export const DeliveryProvider = ({ children }) => {
             clearCart,
             generateCartItemKey,
             updateCondiments,
-            updateSustainableOptions
+            updateSustainableOptions,
+            isPopoverVisible,
         }}>
             {children}
         </DeliveryContext.Provider>

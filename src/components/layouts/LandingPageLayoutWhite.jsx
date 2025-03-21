@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { routeNames } from '../../constaints/routeName';
 import { changeLanguage } from '../../helpers/changeLanguage';
+import { useMediaQuery } from 'react-responsive';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -14,16 +15,7 @@ const LandingPageLayoutWhite = ({ children }) => {
     const { t, i18n } = useTranslation("global");
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "auto";
@@ -385,11 +377,11 @@ const LandingPageLayoutWhite = ({ children }) => {
                     }}>
                         <Text style={{ color: "white", fontSize: "0.9rem", paddingRight: '5vw' }}>
                             {t("footer.contact.inquiry.label")} {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
-                            <a style={{ color: 'white' }}>{t("footer.contact.inquiry.email")}</a>
+                            <a style={{ color: 'white', fontSize: "0.8rem" }}>{t("footer.contact.inquiry.email")}</a>
                         </Text>
-                        <Text style={{ color: "white", fontSize: "0.9rem" }}>
+                        <Text style={{ color: "white", fontSize: "0.8rem" }}>
                             {t("footer.contact.feedback.label")} {isLargeScreen ? "\u00A0\u00A0\u00A0" : (<br />)}
-                            <a style={{ color: 'white' }}>{t("footer.contact.feedback.email")}</a>
+                            <a style={{ color: 'white', fontSize: "0.8rem" }}>{t("footer.contact.feedback.email")}</a>
                         </Text>
                     </div>
                     <Text style={{ color: "white", fontSize: "0.9rem" }}>{t("footer.copyright")}</Text>

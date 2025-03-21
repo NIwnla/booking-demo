@@ -9,7 +9,7 @@ const Landing = () => {
     const branches = ['branch1', 'branch2', 'branch3', 'branch4'];
 
     return (
-        <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+        <div style={{height: "100vh" }}>
             {/* Background Video */}
             <video
                 autoPlay
@@ -66,7 +66,7 @@ const Landing = () => {
                         href={`#${branch.toLowerCase()}`}
                         style={{
                             color: "white",
-                            fontSize: "3vw",
+                            fontSize: "3rem",
                             textDecoration: "none",
                             fontWeight: "bold",
                             transition: "color 0.3s ease",

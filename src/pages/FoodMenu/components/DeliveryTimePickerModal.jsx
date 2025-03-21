@@ -22,6 +22,12 @@ const DeliveryTimePickerModal = ({ isOpen, onClose, value, onChange }) => {
                 value={value ? dayjs(value) : null}
                 onChange={onChange}
                 style={{ width: '100%' }}
+                popupStyle={{
+                    maxWidth: '90vw',
+                    maxHeight: '80vh',
+                    overflow: 'auto'
+                }}
+                inputReadOnly={true}
                 disabledDate={(current) => {
                     return current && current < dayjs().startOf('day');
                 }}

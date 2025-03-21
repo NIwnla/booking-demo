@@ -1,7 +1,11 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Breadcrumb, Card, Col, Image, Row, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { useLocation, useNavigate } from 'react-router-dom';
+import FoodCard from '../../components/cards/foodMenu/FoodCard';
+import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { routeNames } from '../../constaints/routeName';
@@ -9,8 +13,6 @@ import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
 import RightInformationSection from './components/RightInformationSection';
 import './ScrollableCategories.css';
-import MenuNavBar from '../../components/navbars/foodMenu/MenuNavBar';
-import FoodCard from '../../components/cards/foodMenu/FoodCard';
 
 const { Title } = Typography;
 
@@ -25,6 +27,8 @@ const DetailedMenuPage = () => {
     const [loadingFoods, setLoadingFoods] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const navigate = useNavigate();
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
+
 
     useEffect(() => {
         fetchCategories();
@@ -75,20 +79,31 @@ const DetailedMenuPage = () => {
     return (
         <div>
             <MenuNavBar />
-            <div style={{ padding: '5vh 10vw' }}>
+            <div style={{ padding: isLargeScreen ? '5vh 10vw' : '10px 2vw' }}>
                 <Row style={{ position: "relative" }}>
                     <Col xs={24} lg={18} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <div style={{ position: "absolute", left: 0, zIndex: 100 }}>
-                            <Breadcrumb
-                                items={[
-                                    {
-                                        title: <Title level={5}><a href={routeNames.foodMenu.main}>{t("foodMenu.detailedMenuPage.home")}</a></Title>,
-                                    },
-                                    selectedCategory && {
-                                        title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
-                                    },
-                                ].filter(Boolean)}
-                            />
+                            {isLargeScreen ? (
+                                <Breadcrumb
+                                    items={[
+                                        {
+                                            title: <Title level={5}><a href={routeNames.foodMenu.main}>{t("foodMenu.detailedMenuPage.home")}</a></Title>,
+                                        },
+                                        selectedCategory && {
+                                            title: <Title level={5}>{getLocalizedText(selectedCategory, 'name', i18n.language)}</Title>,
+                                        },
+                                    ].filter(Boolean)}
+                                />
+                            ) : (
+                                <ArrowLeftOutlined
+                                    onClick={() => navigate(-1)}
+                                    style={{
+                                        fontSize: '20px',
+                                        cursor: 'pointer',
+                                        padding: '10px',
+                                    }}
+                                />
+                            )}
                         </div>
                         <Title style={{ fontSize: '1.5rem', flex: 1, textAlign: 'center' }}>{t("foodMenu.detailedMenuPage.menu")}</Title>
                     </Col>
@@ -102,7 +117,7 @@ const DetailedMenuPage = () => {
                                 <div className="scroll-container">
                                     <Row gutter={16} wrap={false} style={{ margin: ' 4px', width: '100vw' }}>
                                         {categories.map((category) => (
-                                            <Col key={category.id} xs={10} md={8} lg={5} xl={4} xxl={3}>
+                                            <Col key={category.id} xs={10} sm={5} md={4} lg={5} xl={4} xxl={3}>
                                                 <Card
                                                     hoverable
                                                     onClick={() => setSelectedCategory(category)}
@@ -136,7 +151,7 @@ const DetailedMenuPage = () => {
                             <Spin spinning={loadingFoods}>
                                 <Row gutter={[16, 16]} justify="start">
                                     {foods.map((food) => (
-                                        <Col key={food.id} xs={24} sm={12} xl={8}>
+                                        <Col key={food.id} xs={24} sm={12} md={8} xl={8}>
                                             <FoodCard
                                                 food={food}
                                                 onClick={() => navigate(`${routeNames.foodMenu.detailed.fromMenu}${food.id}?categoryId=${categoryId}`)}
@@ -147,12 +162,14 @@ const DetailedMenuPage = () => {
                             </Spin>
                         </div>
                     </Col>
-                    <Col xs={24} lg={6}>
-                        {/* Information Section */}
-                        <div>
-                            <RightInformationSection />
-                        </div>
-                    </Col>
+                    {isLargeScreen &&
+                        <Col span={6}>
+                            {/* Information Section */}
+                            <div>
+                                <RightInformationSection />
+                            </div>
+                        </Col>
+                    }
                 </Row>
             </div>
         </div>

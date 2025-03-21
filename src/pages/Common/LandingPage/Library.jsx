@@ -1,5 +1,6 @@
 import { Button, Col, Row, Typography, Carousel } from "antd";  // Add Carousel import
 import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const { Title } = Typography;
 
@@ -13,16 +14,7 @@ const images = [
 const Library = () => {
     const [topImage, setTopImage] = useState(images[0].id);
 
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     const handleClick = (id) => {
         setTopImage(id);

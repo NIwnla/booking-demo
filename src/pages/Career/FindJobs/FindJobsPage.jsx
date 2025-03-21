@@ -8,6 +8,7 @@ import CareerNavBar from '../components/CareerNavBar';
 import CustomDropdown from '../components/CustomDropdown';
 import { useTranslation } from 'react-i18next';
 import JobSearchBar from '../components/JobSearchBar';
+import { useMediaQuery } from 'react-responsive';
 
 const { Title } = Typography;
 
@@ -26,16 +27,7 @@ const FindJobsPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
 
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     useEffect(() => {
         const fetchJobTypes = async () => {

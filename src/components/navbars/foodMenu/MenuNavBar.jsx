@@ -1,5 +1,5 @@
 import { LoadingOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { AutoComplete, Badge, Popover, Spin, Typography, Image } from "antd";
+import { AutoComplete, Badge, Popover, Spin, Typography, Image, FloatButton } from "antd";
 import debounce from "lodash/debounce";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import { DeliveryContext } from "../../../context/DeliveryContext";
 import { getLocalizedText } from "../../../helpers/getLocalizedText";
 import axiosInstance from "../../../service/axios";
 import { AxiosConstants } from "../../../constaints/axiosContaint";
+import { useMediaQuery } from "react-responsive";
 
 const { Paragraph } = Typography;
 
@@ -22,6 +23,7 @@ const MenuNavBar = () => {
     const [searchValue, setSearchValue] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     // Show popover when latestCartItem changes
     useEffect(() => {
@@ -104,7 +106,7 @@ const MenuNavBar = () => {
 
     // Popover Content for New Item Notification
     const popoverContent = latestCartItem ? (
-        <div>
+        <div style={{maxWidth:'100vw'}}>
             <Paragraph style={{ fontSize: "0.875rem", color: "#888", marginTop: 5 }}>
                 {t('foodMenu.navbar.newItemAdded')}
             </Paragraph>
@@ -136,7 +138,7 @@ const MenuNavBar = () => {
                     justifyContent: "space-between",
                     backgroundColor: "white",
                     color: "black",
-                    padding: "1vh 10vw",
+                    padding: isLargeScreen ? "1vh 10vw" : "1vh 2vw",
                     boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                     fontSize: "0.875rem",
                     position: "sticky",
@@ -145,18 +147,24 @@ const MenuNavBar = () => {
                 }}
             >
                 {/* Left - Menu Items */}
-                <div style={{ display: "flex", gap: "3vw" }}>
-                    <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample1')}</a>
-                    <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample2')}</a>
-                    <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample3')}</a>
-                </div>
+                {isLargeScreen && (
+                    <div style={{ display: "flex", gap: "3vw" }}>
+                        <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample1')}</a>
+                        <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample2')}</a>
+                        <a href="#" style={{ color: "black", cursor: "pointer" }}>{t('foodMenu.navbar.menu.sample3')}</a>
+                    </div>
+                )}
 
                 {/* Right - Search Bar & Shopping Cart */}
-                <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                    {/* Ant Design Search Bar with AutoComplete */}
+                <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "15px",
+                    width: isLargeScreen ? "auto" : "100%"
+                }}>
                     <AutoComplete
                         options={isLoading ? [{ value: "loading", label: <Spin indicator={<LoadingOutlined />} /> }] : searchResults}
-                        style={{ width: "25vw" }}
+                        style={{ width: isLargeScreen ? "25vw" : "100%" }}
                         onSearch={handleSearch}
                         value={searchValue}
                         onSelect={handleSelect}
@@ -165,14 +173,31 @@ const MenuNavBar = () => {
                         filterOption={false}
                     />
 
-                    {/* Shopping Cart Icon with Popover */}
-                    <Popover content={popoverContent} open={isPopoverVisible} placement="bottomRight" trigger="click">
-                        <Badge count={cartItemCount} overflowCount={99} size="small">
-                            <ShoppingCartOutlined onClick={() => navigate(routeNames.foodMenu.myCart)} style={{ fontSize: "1.5rem", cursor: "pointer" }} />
-                        </Badge>
-                    </Popover>
+                    {/* Shopping Cart Icon with Popover - Only show on large screens */}
+                    {isLargeScreen && (
+                        <Popover content={popoverContent} open={isPopoverVisible} placement="bottomRight" trigger="click">
+                            <Badge count={cartItemCount} overflowCount={99} size="small">
+                                <ShoppingCartOutlined
+                                    onClick={() => navigate(routeNames.foodMenu.myCart)}
+                                    style={{ fontSize: "1.5rem", cursor: "pointer" }}
+                                />
+                            </Badge>
+                        </Popover>
+                    )}
                 </div>
             </nav>
+
+            {/* Floating Cart Button - Only show on small screens */}
+            {!isLargeScreen && (
+                <Popover content={popoverContent} open={isPopoverVisible} placement="topRight" trigger="click">
+                    <FloatButton
+                        icon={<ShoppingCartOutlined/>}
+                        onClick={() => navigate(routeNames.foodMenu.myCart)}
+                        type="default"
+                        badge={{ count: cartItemCount, overflowCount: 99 }}
+                    />
+                </Popover>
+            )}
         </>
     );
 };

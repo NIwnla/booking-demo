@@ -1,10 +1,12 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Breadcrumb, Card, Checkbox, Col, Divider, Form, Input, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
-import MenuNavBar from "../../../components/navbars/foodMenu/MenuNavBar";
 import { routeNames } from "../../../constaints/routeName";
 import OrderSummarySection from "./components/OrderSummarySection";
+
 
 const { Title, Paragraph } = Typography;
 
@@ -13,12 +15,15 @@ const OrderInformationPage = () => {
     const [isRecipientChecked, setIsRecipientChecked] = useState(false);
     const [form] = Form.useForm();
     const navigate = useNavigate();
+
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
+
     return (
         <div>
-            <MenuNavBar />
             <div style={{ padding: "5vh 10vw", backgroundColor: "#f4f4f4", minHeight: "100vh" }}>
                 {/* Breadcrumb */}
-                <Breadcrumb
+                {isLargeScreen ? (
+                    <Breadcrumb
                     items={[
                         {
                             title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.breadcrumbs.home')}</a></Title>,
@@ -30,11 +35,20 @@ const OrderInformationPage = () => {
                             title: <Title level={5}>{t('foodMenu.orderInformation.title')}</Title>,
                         }
                     ]}
-                />
+                />) : (
+                    <ArrowLeftOutlined
+                        onClick={() => navigate(-1)}
+                        style={{
+                            fontSize: '20px',
+                            cursor: 'pointer',
+                            padding: '10px',
+                        }}
+                    />
+                )}
 
                 <Row gutter={[16, 16]}>
                     <Col xs={24} lg={16}>
-                        <div style={{ margin: '0 12vw' }}>
+                        <div style={{ margin: isLargeScreen ? '0 12vw' : '0 2vw' }}>
                             <div style={{ textAlign: "center", marginBottom: "2vh" }}>
                                 <Title level={3} style={{ display: "inline-block", color: 'rgba(255, 0, 0, 0.8)', fontSize: "1.5rem" }}>
                                     {t('foodMenu.orderInformation.checkout')}

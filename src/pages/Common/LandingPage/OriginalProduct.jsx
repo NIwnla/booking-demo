@@ -3,19 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 // @ts-ignore
 import loadingIcon from './../../../assets/LoadingIcon.png';
+import { useMediaQuery } from "react-responsive";
 
 const OriginalProduct = () => {
     const { t } = useTranslation('global');
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     // Sample product data
     const products = [
@@ -29,12 +21,21 @@ const OriginalProduct = () => {
         <div style={{ padding: "50px 7vw", position: 'relative', zIndex: 1, backgroundColor: 'white' }}>
             <Row gutter={[16, 16]} style={{ padding: "50px 3vw" }}>
                 <Col xs={24} lg={6} style={{ display: 'flex', alignItems: 'center' }}>
-                    <h1 style={{ fontSize: "4vw", margin: 0, width: '100%', textAlign: isLargeScreen ? 'start' : 'center' }}>
+                    <h1 style={{
+                        fontSize: isLargeScreen ? "4vw" : '8vw',
+                        margin: 0,
+                        width: '100%',
+                        textAlign: isLargeScreen ? 'start' : 'center'
+                    }}>
                         {t('originalProduct.title')}
                     </h1>
                 </Col>
                 <Col xs={24} lg={18} style={{ display: 'flex', alignItems: 'center' }}>
-                    <p style={{ fontSize: "1.25vw", lineHeight: "1.5", margin: 0 }}>
+                    <p style={{
+                        fontSize:isLargeScreen ?  "1.25vw" : '1rem',
+                        lineHeight: "1.5",
+                        margin: 0
+                    }}>
                         {t('originalProduct.description')}
                     </p>
                 </Col>

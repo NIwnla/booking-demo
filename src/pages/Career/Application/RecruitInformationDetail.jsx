@@ -7,6 +7,7 @@ import axiosInstance from '../../../service/axios';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../../constaints/axiosContaint';
 import { routeNames } from '../../../constaints/routeName';
+import { useMediaQuery } from 'react-responsive';
 
 const RecruitInformationDetail = () => {
     const { id } = useParams();
@@ -15,16 +16,7 @@ const RecruitInformationDetail = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
     useEffect(() => {
         const fetchData = async () => {

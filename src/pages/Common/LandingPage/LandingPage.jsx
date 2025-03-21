@@ -12,10 +12,6 @@ import OurVision from "./OurVision";
 import SustainabilityReport from "./SustainabilityReport";
 
 const LandingPage = () => {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const { setAuthToken } = useContext(AuthContext);
-    const token = searchParams.get('token');
     const [loading, setLoading] = useState(true);
 
 
@@ -24,15 +20,8 @@ const LandingPage = () => {
         setTimeout(() => setLoading(false), 1000);
     }, []);
 
-    useEffect(() => {
-        if (token) {
-            setAuthToken(token);
-        }
-    }, [token, setAuthToken]);
-
-
     return (
-        <div>
+        <div style={{maxWidth:'100vw'}}>
             <LandingPageLoading loading={loading} />
             <Landing />
             <LocationAndMenu />
