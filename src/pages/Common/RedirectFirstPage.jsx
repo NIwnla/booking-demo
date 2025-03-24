@@ -16,7 +16,7 @@ const RedirectFirstPage = () => {
             setAuthToken(token);
             // Redirect to stored path or default to landing page
             if (isAuthenticated) {
-                navigate(from || routeNames.landing, { replace: true });
+                navigate(from || routeNames.foodMenu.main, { replace: true });
             }
         } else {
             navigate(routeNames.landing, { replace: true });
