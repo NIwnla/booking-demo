@@ -120,8 +120,6 @@ const CreateJobOffer = () => {
                             rules={[{
                                 required: true,
                                 message: 'Please input the number of recruitments!',
-                                type: 'number',
-                                min: 0
                             }]}
                             initialValue={1}
                         >
