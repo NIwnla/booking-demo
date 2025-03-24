@@ -9,12 +9,17 @@ import ReservationBackground from '../../assets/ReservationBackground.jpg';
 import { routeNames } from '../../constaints/routeName';
 import dayjs from 'dayjs';
 import { Helmet } from 'react-helmet-async';
+import { getLocalizedText } from '../../helpers/getLocalizedText';
+import { useTranslation } from 'react-i18next';
 
 const ReservationPage = () => {
+    const {t , i18n} = useTranslation('global')
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [isFetching, setIsFetching] = useState(false);
     const [branches, setBranches] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [selectingBranch, setSelectingBranch] = useState([]);
+    const [selectedBranch, setSelectedBranch] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [selectedAdult, setSelectedAdult] = useState(2);
     const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -32,7 +37,26 @@ const ReservationPage = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const fetchBranches = async () => {
+    const fetchAllBranches = async () => {
+        setIsFetching(true);
+        try {
+            const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
+                params: {
+                    includeDeleted: true,
+                    locationId: selectedLocation || null,
+                    search: selectedBranch
+                }
+            });
+            setBranches(response.data);
+        } catch (error) {
+            message.error('Error fetching branches');
+        } finally {
+            setIsFetching(false);
+        }
+    };
+
+
+    const fetchBranchesName = async () => {
         setIsFetching(true);
         try {
             const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
@@ -41,7 +65,7 @@ const ReservationPage = () => {
                     locationId: selectedLocation || null,
                 }
             });
-            setBranches(response.data);
+            setSelectingBranch(response.data);
         } catch (error) {
             message.error('Error fetching branches');
         } finally {
@@ -53,10 +77,15 @@ const ReservationPage = () => {
         try {
             const response = await axiosInstance.get(apiEndPoints.BRANCH_LOCATION.GET_ALL);
             setLocations(response.data);
+            setSelectedLocation(response.data[0].id);
         } catch (error) {
             console.error('Error fetching locations:', error);
         }
     };
+
+    useEffect(() => {
+        fetchBranchesName();
+    },[selectedLocation])
 
     useEffect(() => {
         fetchLocations();
@@ -139,12 +168,15 @@ const ReservationPage = () => {
                             <Select
                                 placeholder="Select location"
                                 style={{ width: '100%' }}
-                                options={locations.map(loc => ({
-                                    value: loc.id,
-                                    label: loc.name
-                                }))}
-                                value={selectedLocation}
-                                onChange={(value) => setSelectedLocation(value)}
+                                options={[
+                                    { value: null, label: 'All Branches' },
+                                    ...selectingBranch.map(loc => ({
+                                        value: getLocalizedText(loc, 'name', i18n.language),
+                                        label: getLocalizedText(loc, 'name', i18n.language)
+                                    }))
+                                ]}
+                                value={selectedBranch}
+                                onChange={(value) => setSelectedBranch(value)}
                             />
                         </Col>
                         <Col xs={12} md={12} lg={5}>
@@ -211,7 +243,7 @@ const ReservationPage = () => {
                                 loading={isFetching}
                                 icon={<SearchOutlined />}
                                 style={{ width: '100%' }}
-                                onClick={() => fetchBranches()}
+                                onClick={() => fetchAllBranches()}
                                 disabled={!selectedLocation || !selectedTime || !selectedAdult || !selectedDate}>
                                 Search
                             </Button>
