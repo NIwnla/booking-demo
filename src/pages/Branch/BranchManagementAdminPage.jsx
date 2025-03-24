@@ -6,6 +6,7 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
 import axiosInstance from '../../service/axios';
+import { Helmet } from 'react-helmet-async';
 import BranchCreationModal from './components/BranchCreationModal';
 import BranchEditModal from './components/BranchEditModal';
 import BranchLocationFilterBox from './components/BranchLocationFilterBox';
@@ -28,7 +29,7 @@ const BranchManagementAdminPage = () => {
         try {
             const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
                 params: {
-                    includeDeleted : true,
+                    includeDeleted: true,
                     locationId: selectedLocation || null,
                 }
             });
@@ -147,58 +148,65 @@ const BranchManagementAdminPage = () => {
     ];
 
     return (
-        <Content style={{ padding: '20px' }}>
-            <Title level={3}>{t('branch.branchManagement.titles.pageTitle')}</Title>
-            <Space style={{ marginBottom: '16px' }}>
-                <Button
-                    type="primary"
-                    onClick={handleCreateBranchClick}
+        <>
+            <Helmet>
+                <title>Branch Management - Nollowa Chicken Admin</title>
+                <meta name="description" content="Manage restaurant branches and locations" />
+            </Helmet>
+
+            <Content style={{ padding: '20px' }}>
+                <Title level={3}>{t('branch.branchManagement.titles.pageTitle')}</Title>
+                <Space style={{ marginBottom: '16px' }}>
+                    <Button
+                        type="primary"
+                        onClick={handleCreateBranchClick}
+                    >
+                        {t('branch.branchManagement.titles.createButton')}
+                    </Button>
+                    <BranchLocationFilterBox
+                        onLocationChange={handleLocationChange}
+                        defaultValue={selectedLocation}
+                    />
+                </Space>
+
+                <Spin spinning={isFetching} tip={t('branch.branchManagement.messages.loading')}>
+                    <Table
+                        // @ts-ignore
+                        columns={columns} dataSource={branches} rowKey="id" pagination={false} />
+                </Spin>
+
+                <Modal
+                    title={t('branch.branchManagement.titles.detailModalTitle')}
+                    open={isDetailModalVisible}
+                    onCancel={handleDetailModalClose}
+                    footer={null}
                 >
-                    {t('branch.branchManagement.titles.createButton')}
-                </Button>
-                <BranchLocationFilterBox
-                    onLocationChange={handleLocationChange}
-                    defaultValue={selectedLocation}
+                    {selectedBranch && (
+                        <div>
+                            <p><strong>{t('branch.branchManagement.modals.detail.fields.name')}:</strong> {getLocalizedText(selectedBranch, 'name', i18n.language)}</p>
+                            <p><strong>{t('branch.branchManagement.modals.detail.fields.description')}:</strong> {getLocalizedText(selectedBranch, 'description', i18n.language)}</p>
+                            <p><strong>{t('branch.branchManagement.modals.detail.fields.location')}:</strong> {selectedBranch.branchLocationName}</p>
+                            <p><strong>{t('branch.branchManagement.modals.detail.fields.status')}:</strong> {selectedBranch.isDeleted ? t('branch.branchManagement.tags.disabled') : t('branch.branchManagement.tags.active')}</p>
+                            <Image
+                                src={`${AxiosConstants.AXIOS_BASEURL}/${selectedBranch.imagePath}`}
+                                alt={selectedBranch.name}
+                            />
+                        </div>
+                    )}
+                </Modal>
+
+                <BranchCreationModal
+                    open={isCreationModalVisible}
+                    onClose={handleCreationModalClose}
+                    onBranchCreated={handleBranchCreated}
                 />
-            </Space>
-
-            <Spin spinning={isFetching} tip={t('branch.branchManagement.messages.loading')}>
-                <Table
-                    // @ts-ignore
-                    columns={columns} dataSource={branches} rowKey="id" pagination={false} />
-            </Spin>
-
-            <Modal
-                title={t('branch.branchManagement.titles.detailModalTitle')}
-                open={isDetailModalVisible}
-                onCancel={handleDetailModalClose}
-                footer={null}
-            >
-                {selectedBranch && (
-                    <div>
-                        <p><strong>{t('branch.branchManagement.modals.detail.fields.name')}:</strong> {getLocalizedText(selectedBranch, 'name', i18n.language)}</p>
-                        <p><strong>{t('branch.branchManagement.modals.detail.fields.description')}:</strong> {getLocalizedText(selectedBranch, 'description', i18n.language)}</p>
-                        <p><strong>{t('branch.branchManagement.modals.detail.fields.location')}:</strong> {selectedBranch.branchLocationName}</p>
-                        <p><strong>{t('branch.branchManagement.modals.detail.fields.status')}:</strong> {selectedBranch.isDeleted ? t('branch.branchManagement.tags.disabled') : t('branch.branchManagement.tags.active')}</p>
-                        <Image
-                            src={`${AxiosConstants.AXIOS_BASEURL}/${selectedBranch.imagePath}`}
-                            alt={selectedBranch.name}
-                        />
-                    </div>
-                )}
-            </Modal>
-
-            <BranchCreationModal
-                open={isCreationModalVisible}
-                onClose={handleCreationModalClose}
-                onBranchCreated={handleBranchCreated}
-            />
-            <BranchEditModal
-                open={isEditModalVisible}
-                onClose={handleEditModalClose}
-                branch={selectedBranch}
-                onBranchUpdated={handleBranchEdited} />
-        </Content>
+                <BranchEditModal
+                    open={isEditModalVisible}
+                    onClose={handleEditModalClose}
+                    branch={selectedBranch}
+                    onBranchUpdated={handleBranchEdited} />
+            </Content>
+        </>
     );
 };
 

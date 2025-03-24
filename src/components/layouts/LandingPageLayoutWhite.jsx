@@ -59,7 +59,7 @@ const LandingPageLayoutWhite = ({ children }) => {
                     margin: 0,
                     cursor: 'pointer',
                     color: 'black',
-                    fontSize: '2rem',
+                    fontSize: isLargeScreen ? '2rem' : '1.5rem',
                     transition: 'color 0.3s ease',
                     fontWeight: 'bold'
                 }} onClick={() => navigate("/")}>

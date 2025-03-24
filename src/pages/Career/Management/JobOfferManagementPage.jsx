@@ -1,6 +1,7 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined, ZoomInOutlined } from '@ant-design/icons';
 import { Button, Card, Popconfirm, Space, Table, Tag, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
@@ -136,38 +137,44 @@ const JobOfferManagementPage = () => {
     ];
 
     return (
-        <div style={{ padding: '3vh 10vw' }}>
-            <Card>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: '16px'
-                }}>
-                    <Title level={2} style={{ margin: 0 }}>Job Offers Management</Title>
-                    <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => navigate(routeNames.jobOffer.create)}
-                    >
-                        Create New Job Offer
-                    </Button>
-                </div>
+        <>
+            <Helmet>
+                <title>Job Offers Management - Nollowa Chicken Admin</title>
+                <meta name="description" content="Manage job postings and opportunities" />
+            </Helmet>
+            <div style={{ padding: '3vh 10vw' }}>
+                <Card>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '16px'
+                    }}>
+                        <Title level={2} style={{ margin: 0 }}>Job Offers Management</Title>
+                        <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={() => navigate(routeNames.jobOffer.create)}
+                        >
+                            Create New Job Offer
+                        </Button>
+                    </div>
 
-                <div style={{ marginBottom: '16px' }}>
-                    <JobTypeFilterBox onTypeChange={value => setSelectedType(value)} />
-                </div>
+                    <div style={{ marginBottom: '16px' }}>
+                        <JobTypeFilterBox onTypeChange={value => setSelectedType(value)} />
+                    </div>
 
-                <Table
-                    // @ts-ignore
-                    columns={columns}
-                    dataSource={jobOffers}
-                    rowKey="id"
-                    pagination={false}
-                    loading={loading}
-                />
-            </Card>
-        </div>
+                    <Table
+                        // @ts-ignore
+                        columns={columns}
+                        dataSource={jobOffers}
+                        rowKey="id"
+                        pagination={false}
+                        loading={loading}
+                    />
+                </Card>
+            </div>
+        </>
     );
 };
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const CareerNavBar = ({ selected }) => {
+const CareerNavBar = ({ selected, isLargeScreen }) => {
     const linkStyle = {
         color: 'red',
         textDecoration: 'none',
-        padding: '1rem 2rem',
+        padding: isLargeScreen ? '1rem 2rem' : '0.5rem 1rem',
         fontSize: '1.2rem',
         transition: 'all 0.3s ease'
     };

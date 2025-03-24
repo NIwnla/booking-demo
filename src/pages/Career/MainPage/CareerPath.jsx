@@ -217,7 +217,7 @@ const CareerPath = () => {
                     </Col>
                     <Col xs={24} lg={10}>
                         <Row gutter={[4, 4]}>
-                            <Col xs={16} lg={24}>
+                            <Col xs={24} md={16} lg={24}>
                                 <div
                                     onMouseEnter={() => setHoverStates(prev => ({ ...prev, block1: true }))}
                                     onMouseLeave={() => setHoverStates(prev => ({ ...prev, block1: false }))}
@@ -262,7 +262,7 @@ const CareerPath = () => {
                                     </Paragraph>
                                 </div>
                             </Col>
-                            <Col xs={8} lg={24}>
+                            <Col xs={24} md={8} lg={24}>
                                 <div
                                     onMouseEnter={() => setHoverStates(prev => ({ ...prev, block2: true }))}
                                     onMouseLeave={() => setHoverStates(prev => ({ ...prev, block2: false }))}

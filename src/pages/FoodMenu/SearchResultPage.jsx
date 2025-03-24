@@ -8,6 +8,7 @@ import { apiEndPoints } from "../../constaints/apiEndPoint";
 import { routeNames } from "../../constaints/routeName";
 import axiosInstance from "../../service/axios";
 import RightInformationSection from "./components/RightInformationSection";
+import { Helmet } from "react-helmet-async";
 
 const { Title } = Typography;
 
@@ -45,58 +46,64 @@ const SearchResultPage = () => {
     }, [loading]);
 
     return (
-        <div>
-            <MenuNavBar />
-            <div style={{
-                padding: "5vh 10vw",
-                backgroundColor: "#f4f4f4",
-                minHeight: "100vh",
-                opacity: visible ? 1 : 0,
-                visibility: visible ? "visible" : "hidden",
-                transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out",
-            }}>
+        <>
+            <Helmet>
+                <title>Search: {searchQuery} - Nollowa Chicken Menu</title>
+                <meta name="description" content={`Search results for ${searchQuery} in our menu`} />
+            </Helmet>
+            <div>
+                <MenuNavBar />
+                <div style={{
+                    padding: "5vh 10vw",
+                    backgroundColor: "#f4f4f4",
+                    minHeight: "100vh",
+                    opacity: visible ? 1 : 0,
+                    visibility: visible ? "visible" : "hidden",
+                    transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out",
+                }}>
 
-                <Row gutter={[16, 16]}>
-                    <Col span={18} style={{ display: "flex", justifyContent: "center" }}>
-                        <div style={{ position: "absolute", left: 0, zIndex: 100 }}>
-                            <Breadcrumb
-                                items={[
-                                    {
-                                        title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.search.breadcrumbs.home')}</a></Title>,
-                                    },
-                                    {
-                                        title: <Title level={5}>{t('foodMenu.search.breadcrumbs.search')}</Title>,
-                                    }
-                                ]}
-                            />
-                        </div>
-                        <Title style={{ fontSize: '1.5vw', textAlign: 'center' }}>{t('foodMenu.search.title')}</Title>
-                    </Col>
+                    <Row gutter={[16, 16]}>
+                        <Col span={18} style={{ display: "flex", justifyContent: "center" }}>
+                            <div style={{ position: "absolute", left: 0, zIndex: 100 }}>
+                                <Breadcrumb
+                                    items={[
+                                        {
+                                            title: <Title level={5}><a href={routeNames.foodMenu.main}>{t('foodMenu.search.breadcrumbs.home')}</a></Title>,
+                                        },
+                                        {
+                                            title: <Title level={5}>{t('foodMenu.search.breadcrumbs.search')}</Title>,
+                                        }
+                                    ]}
+                                />
+                            </div>
+                            <Title style={{ fontSize: '1.5vw', textAlign: 'center' }}>{t('foodMenu.search.title')}</Title>
+                        </Col>
 
-                    {/* Left Column (16/24) - Search Results */}
-                    <Col xs={24} lg={18}>
-                        {loading ? (
-                            <Spin size="large" style={{ display: "block", margin: "20px auto" }} />
-                        ) : searchResults.length > 0 ? (
-                            <Row gutter={[16, 16]}>
-                                {searchResults.map((food) => (
-                                    <Col xs={24} md={12} xl={8} key={food.id}>
-                                        <FoodCard food={food} />
-                                    </Col>
-                                ))}
-                            </Row>
-                        ) : (
-                            <Empty description={t('foodMenu.search.noResults')} style={{ marginTop: "2vh" }} />
-                        )}
-                    </Col>
+                        {/* Left Column (16/24) - Search Results */}
+                        <Col xs={24} lg={18}>
+                            {loading ? (
+                                <Spin size="large" style={{ display: "block", margin: "20px auto" }} />
+                            ) : searchResults.length > 0 ? (
+                                <Row gutter={[16, 16]}>
+                                    {searchResults.map((food) => (
+                                        <Col xs={24} md={12} xl={8} key={food.id}>
+                                            <FoodCard food={food} />
+                                        </Col>
+                                    ))}
+                                </Row>
+                            ) : (
+                                <Empty description={t('foodMenu.search.noResults')} style={{ marginTop: "2vh" }} />
+                            )}
+                        </Col>
 
-                    {/* Right Column (8/24) - Filter Section */}
-                    <Col xs={24} lg={6}>
-                        <RightInformationSection />
-                    </Col>
-                </Row>
+                        {/* Right Column (8/24) - Filter Section */}
+                        <Col xs={24} lg={6}>
+                            <RightInformationSection />
+                        </Col>
+                    </Row>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

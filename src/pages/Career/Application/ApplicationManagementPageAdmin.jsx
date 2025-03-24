@@ -7,6 +7,7 @@ import { AxiosConstants } from "../../../constaints/axiosContaint";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { routeNames } from "../../../constaints/routeName";
+import { Helmet } from "react-helmet-async";
 
 const ApplicationManagementPageAdmin = () => {
     const { t } = useTranslation('global');
@@ -139,6 +140,11 @@ const ApplicationManagementPageAdmin = () => {
     };
 
     return (
+         <>
+            <Helmet>
+                <title>Application Management - Nollowa Chicken Admin</title>
+                <meta name="description" content="Manage and review job applications" />
+            </Helmet>
         <div style={{padding:'5vh 10vw'}}>
             <h1>{t("career.management.titles.pageTitle")}</h1>
             <Input.Search
@@ -160,6 +166,7 @@ const ApplicationManagementPageAdmin = () => {
                 onChange={handleTableChange}
             />
         </div>
+        </>
     );
 };
 

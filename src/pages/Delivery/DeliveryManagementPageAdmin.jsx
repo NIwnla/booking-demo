@@ -5,6 +5,7 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import { useWindowSize } from '../../helpers/useWindowSize';
 import axiosInstance from '../../service/axios';
 import DeliveryDetailsModal from './components/DeliveryDetailsModal';
+import { Helmet } from 'react-helmet-async';
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -161,54 +162,60 @@ const DeliveryManagementPageAdmin = () => {
     ];
 
     return (
-        <Content style={{ padding: '5vh 10vw' }}>
-            <Title level={3}>{t('delivery.management.title')}</Title>
-            <div style={{
-                display: 'flex',
-                gap: '20px',
-                alignItems: 'center',
-                marginBottom: '20px',
-            }}>
-                <Select
-                    placeholder={t('delivery.management.filterPlaceholder')}
-                    style={{ width: '100%' }}
-                    onChange={handleStatusChange}
-                    value={statusFilter}
-                    allowClear
-                >
-                    <Option value={undefined}>{t('delivery.management.statuses.all')}</Option>
-                    <Option value={0}>{t('delivery.management.statuses.cancelled')}</Option>
-                    <Option value={1}>{t('delivery.management.statuses.waiting')}</Option>
-                    <Option value={2}>{t('delivery.management.statuses.inProgress')}</Option>
-                    <Option value={3}>{t('delivery.management.statuses.completed')}</Option>
-                </Select>
-            </div>
+        <>
+            <Helmet>
+                <title>Delivery Management - Nollowa Chicken Admin</title>
+                <meta name="description" content="Manage delivery orders and their statuses" />
+            </Helmet>
+            <Content style={{ padding: '5vh 10vw' }}>
+                <Title level={3}>{t('delivery.management.title')}</Title>
+                <div style={{
+                    display: 'flex',
+                    gap: '20px',
+                    alignItems: 'center',
+                    marginBottom: '20px',
+                }}>
+                    <Select
+                        placeholder={t('delivery.management.filterPlaceholder')}
+                        style={{ width: '100%' }}
+                        onChange={handleStatusChange}
+                        value={statusFilter}
+                        allowClear
+                    >
+                        <Option value={undefined}>{t('delivery.management.statuses.all')}</Option>
+                        <Option value={0}>{t('delivery.management.statuses.cancelled')}</Option>
+                        <Option value={1}>{t('delivery.management.statuses.waiting')}</Option>
+                        <Option value={2}>{t('delivery.management.statuses.inProgress')}</Option>
+                        <Option value={3}>{t('delivery.management.statuses.completed')}</Option>
+                    </Select>
+                </div>
 
-            <Table
-                // @ts-ignore
-                columns={columns}
-                dataSource={data}
-                rowKey="id"
-                pagination={false}
-                loading={loading}
-            />
-            <Pagination
-                current={pageIndex}
-                pageSize={pageSize}
-                total={totalCount}
-                onChange={(page) => setPageIndex(page)}
-                simple={windowSize.width < 768}
-                style={{ marginTop: '20px', textAlign: 'center' }}
-            />
+                <Table
+                    // @ts-ignore
+                    columns={columns}
+                    dataSource={data}
+                    rowKey="id"
+                    pagination={false}
+                    loading={loading}
+                />
+                <Pagination
+                    current={pageIndex}
+                    pageSize={pageSize}
+                    total={totalCount}
+                    onChange={(page) => setPageIndex(page)}
+                    simple={windowSize.width < 768}
+                    style={{ marginTop: '20px', textAlign: 'center' }}
+                />
 
-            <DeliveryDetailsModal
-                isOpen={isModalVisible}
-                onClose={handleModalClose}
-                loading={loading}
-                delivery={selectedDelivery}
-                windowSize={windowSize}
-            />
-        </Content>
+                <DeliveryDetailsModal
+                    isOpen={isModalVisible}
+                    onClose={handleModalClose}
+                    loading={loading}
+                    delivery={selectedDelivery}
+                    windowSize={windowSize}
+                />
+            </Content>
+        </>
     );
 };
 

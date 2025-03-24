@@ -1,19 +1,12 @@
-import { Row, Col, Button } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Col, Row } from "antd";
+import React from "react";
+import { useMediaQuery } from "react-responsive";
 // @ts-ignore
 import loadingIcon from './../../../assets/LoadingIcon.png';
 
 const News = () => {
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+    const isLargeScreen = useMediaQuery({ minWidth: 992 });
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth > 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
     // Sample news data (11 news + 1 "View More" button)
     const newsItems = [
         { img: loadingIcon, date: "Jan 1, 2025", title: "News Title 1" },
@@ -31,7 +24,7 @@ const News = () => {
 
     return (
         <div style={{ padding: "5vh 10vw", position: 'relative', zIndex: 1, backgroundColor: 'white', borderTop: "1px solid black" }}>
-            <h1 style={{ fontSize: "3vw", marginBottom: "3vh", width: '100%', textAlign: 'center' }}>News</h1>
+            <h1 style={{ fontSize: "3rem", marginBottom: "3vh", width: '100%', textAlign: 'center' }}>News</h1>
             <Row gutter={[16, 16]}>
                 {newsItems.map((news, index) => (
                     <Col key={index} xs={24} lg={6}>
@@ -40,8 +33,8 @@ const News = () => {
                                 src={news.img}
                                 alt={news.title}
                                 style={{
-                                    width: isLargeScreen ? "40%" : '15rem',
-                                    height: isLargeScreen ? "8vw" : '15rem',
+                                    width: isLargeScreen ? "40%" : '7rem',
+                                    height: isLargeScreen ? "8vw" : '7rem',
                                     objectFit: "cover",
                                     borderRadius: "8px",
                                     border: '1px solid black'

@@ -1,5 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Breadcrumb, Checkbox, Col, Image, Row, Spin, Typography } from 'antd';
+import { Helmet } from 'react-helmet-async';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
@@ -102,164 +103,176 @@ const DetailedFoodPage = ({ breadcrumb = null }) => {
 
 
     if (!isLargeScreen) return (
-        <MobileDetailedFoodPage
-            food={food}
-            isLoadingFood={isLoadingFood}
-            selectedOptions={selectedOptions}
-            handleOptionClick={handleOptionClick}
-            handleAddToCart={handleAddToCart}
-            t={t}
-            i18n={i18n}
-            breadcrumbItems={breadcrumbItems}
-        />)
+        <>
+            <Helmet>
+                <title>{food ? `${getLocalizedText(food, 'name', i18n.language)} - Menu` : 'Food Details'} - Nollowa Chicken</title>
+                <meta name="description" content={food ? getLocalizedText(food, 'description', i18n.language) : 'Food item details'} />
+            </Helmet>
+            <MobileDetailedFoodPage
+                food={food}
+                isLoadingFood={isLoadingFood}
+                selectedOptions={selectedOptions}
+                handleOptionClick={handleOptionClick}
+                handleAddToCart={handleAddToCart}
+                t={t}
+                i18n={i18n}
+                breadcrumbItems={breadcrumbItems}
+            />
+        </>)
     if (isLargeScreen) return (
-        <div style={{height:'100vh'}}>
-            <MenuNavBar />
-            <Spin spinning={isLoadingFood}>
-                <div
-                    style={{
-                        padding: '5vh 10vw',
-                    }}>
-                    <Breadcrumb style={{ marginBottom: '1vh' }} items={breadcrumbItems} />
-                    <Row
-                        gutter={[16, 16]}
+        <>
+            <Helmet>
+                <title>{food ? `${getLocalizedText(food, 'name', i18n.language)} - Menu` : 'Food Details'} - Nollowa Chicken</title>
+                <meta name="description" content={food ? getLocalizedText(food, 'description', i18n.language) : 'Food item details'} />
+            </Helmet>
+            <div style={{ height: '100vh' }}>
+                <MenuNavBar />
+                <Spin spinning={isLoadingFood}>
+                    <div
                         style={{
-                            opacity: fadeIn ? 1 : 0,
-                            transition: 'opacity 0.5s ease-out'
+                            padding: '5vh 10vw',
                         }}>
-                        <Col xs={24} lg={8}>
-                            <div style={{ padding: '20px' }}>
-                                {food && (
-                                    <>
-                                        <Title style={{ fontSize: '1.5vw', marginBottom: '5vh' }}>
-                                            {getLocalizedText(food, 'name', i18n.language)}
-                                        </Title>
-                                        <div style={{ textAlign: 'center' }}>
-                                            <Image
-                                                preview={false}
-                                                src={`${AxiosConstants.AXIOS_BASEURL}/${food?.imagePath}`}
-                                                alt={getLocalizedText(food, 'name', i18n.language)}
-                                                style={{ height: '20vw', width: '20vw', borderRadius: '50%', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.4)', marginBottom: '5vh' }} />
-                                        </div>
-                                        {food?.options && food?.options.length > 0 && <FoodDetails />}
-                                    </>
-                                )}
-                            </div>
-                        </Col>
-                        <Col xs={24} lg={8}>
-                            <div style={{ padding: '20px' }}>
-                                {food?.options && food?.options.length === 0 && <FoodDetails />}
-                                {food?.options && food?.options.length > 0 && (
-                                    <div>
-                                        <Title style={{ fontSize: '1.5vw', marginBottom: '2vh' }}>
-                                            {t('foodMenu.detailedFoodPage.options')}
-                                        </Title>
-                                        {food?.options.map(option => (
-                                            <Row
-                                                key={option.id}
-                                                align="middle"
-                                                style={{
-                                                    display: "flex",
-                                                    justifyContent: "flex-start",
-                                                    alignItems: "center",
-                                                    padding: "1.5vh 1vw",
-                                                    cursor: "pointer",
-                                                    transition: "background-color 0.3s ease",
-                                                    backgroundColor: selectedOptions.includes(option.id) ? "white" : "transparent",
-                                                }}
-                                                onClick={() => handleOptionClick(option.id)}
-                                            >
-                                                {/* Left Side: Checkbox & Image */}
-                                                <div style={{ display: "flex", alignItems: "center", gap: "1vw" }}>
-                                                    <Checkbox
-                                                        checked={selectedOptions.includes(option.id)}
-                                                        style={{ transform: "scale(1.3)" }}
-                                                    />
-                                                    <Image
-                                                        preview={false}
-                                                        src={`${AxiosConstants.AXIOS_BASEURL}/${option.imagePath}`}
-                                                        alt={getLocalizedText(option, "name", i18n.language)}
-                                                        style={{ height: "4vw", width: "4vw" }}
-                                                    />
-                                                </div>
-
-                                                {/* Right Side: Text Content */}
-                                                <div style={{ flex: 1, textAlign: "left", marginLeft: '1.5vw', minWidth: "10vw", maxWidth: "20vw" }}>
-                                                    <Title
-                                                        level={5}
-                                                        style={{
-                                                            fontSize: "1vw",
-                                                            wordWrap: "break-word", // Break words if too long
-                                                            whiteSpace: "normal", // Allow text to wrap into new lines
-                                                            maxWidth: "100%", // Keep it from expanding too much
-                                                        }}
-                                                    >
-                                                        {getLocalizedText(option, "name", i18n.language)}
-                                                    </Title>
-                                                    <Typography
-                                                        style={{
-                                                            fontSize: "0.8vw",
-                                                            wordWrap: "break-word", // Break words if necessary
-                                                            whiteSpace: "normal", // Allow wrapping
-                                                            maxWidth: "10vw", // Restrict excessive expansion
-                                                        }}
-                                                    >
-                                                        + {option.price} VND
-                                                    </Typography>
-                                                </div>
-                                            </Row>
-
-                                        ))}
-                                    </div>
-                                )}
-
-                                {/* Total Price & Add to Cart Button */}
-                                <div
-                                    style={{
-                                        backgroundColor: '#d32f2f',
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        padding: "1vh 1vw",
-                                        marginTop: "2vh",
-                                        borderRadius: "2vw",
-                                        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-                                        cursor: 'pointer',
-                                        transition: "background 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#e64a4a"}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#d32f2f"}
-                                    onClick={handleAddToCart}
-                                >
-                                    <Title level={4} style={{ fontSize: "1vw", margin: 0, color: 'white' }}>
-                                        {(food?.basePrice + selectedOptions.reduce((sum, optionId) => {
-                                            const selectedOption = food?.options.find(opt => opt.id === optionId);
-                                            return sum + (selectedOption ? selectedOption.price : 0);
-                                        }, 0)).toLocaleString()} VND
-                                    </Title>
-                                    <Typography
-                                        style={{
-                                            fontSize: "1vw",
-                                            color: 'white',
-                                            paddingRight: '0.1vw',
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "0.5vw",
-                                        }}>
-                                        {t('foodMenu.detailedFoodPage.addToCart')} <PlusCircleOutlined style={{ fontSize: "2vw" }} />
-                                    </Typography>
+                        <Breadcrumb style={{ marginBottom: '1vh' }} items={breadcrumbItems} />
+                        <Row
+                            gutter={[16, 16]}
+                            style={{
+                                opacity: fadeIn ? 1 : 0,
+                                transition: 'opacity 0.5s ease-out'
+                            }}>
+                            <Col xs={24} lg={8}>
+                                <div style={{ padding: '20px' }}>
+                                    {food && (
+                                        <>
+                                            <Title style={{ fontSize: '1.5vw', marginBottom: '5vh' }}>
+                                                {getLocalizedText(food, 'name', i18n.language)}
+                                            </Title>
+                                            <div style={{ textAlign: 'center' }}>
+                                                <Image
+                                                    preview={false}
+                                                    src={`${AxiosConstants.AXIOS_BASEURL}/${food?.imagePath}`}
+                                                    alt={getLocalizedText(food, 'name', i18n.language)}
+                                                    style={{ height: '20vw', width: '20vw', borderRadius: '50%', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.4)', marginBottom: '5vh' }} />
+                                            </div>
+                                            {food?.options && food?.options.length > 0 && <FoodDetails />}
+                                        </>
+                                    )}
                                 </div>
-                            </div>
-                        </Col>
-                        <Col xs={24} lg={8}>
-                            <div style={{ padding: '20px' }}>
-                                <RightInformationSection />
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            </Spin>
-        </div>
+                            </Col>
+                            <Col xs={24} lg={8}>
+                                <div style={{ padding: '20px' }}>
+                                    {food?.options && food?.options.length === 0 && <FoodDetails />}
+                                    {food?.options && food?.options.length > 0 && (
+                                        <div>
+                                            <Title style={{ fontSize: '1.5vw', marginBottom: '2vh' }}>
+                                                {t('foodMenu.detailedFoodPage.options')}
+                                            </Title>
+                                            {food?.options.map(option => (
+                                                <Row
+                                                    key={option.id}
+                                                    align="middle"
+                                                    style={{
+                                                        display: "flex",
+                                                        justifyContent: "flex-start",
+                                                        alignItems: "center",
+                                                        padding: "1.5vh 1vw",
+                                                        cursor: "pointer",
+                                                        transition: "background-color 0.3s ease",
+                                                        backgroundColor: selectedOptions.includes(option.id) ? "white" : "transparent",
+                                                    }}
+                                                    onClick={() => handleOptionClick(option.id)}
+                                                >
+                                                    {/* Left Side: Checkbox & Image */}
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "1vw" }}>
+                                                        <Checkbox
+                                                            checked={selectedOptions.includes(option.id)}
+                                                            style={{ transform: "scale(1.3)" }}
+                                                        />
+                                                        <Image
+                                                            preview={false}
+                                                            src={`${AxiosConstants.AXIOS_BASEURL}/${option.imagePath}`}
+                                                            alt={getLocalizedText(option, "name", i18n.language)}
+                                                            style={{ height: "4vw", width: "4vw" }}
+                                                        />
+                                                    </div>
+
+                                                    {/* Right Side: Text Content */}
+                                                    <div style={{ flex: 1, textAlign: "left", marginLeft: '1.5vw', minWidth: "10vw", maxWidth: "20vw" }}>
+                                                        <Title
+                                                            level={5}
+                                                            style={{
+                                                                fontSize: "1vw",
+                                                                wordWrap: "break-word", // Break words if too long
+                                                                whiteSpace: "normal", // Allow text to wrap into new lines
+                                                                maxWidth: "100%", // Keep it from expanding too much
+                                                            }}
+                                                        >
+                                                            {getLocalizedText(option, "name", i18n.language)}
+                                                        </Title>
+                                                        <Typography
+                                                            style={{
+                                                                fontSize: "0.8vw",
+                                                                wordWrap: "break-word", // Break words if necessary
+                                                                whiteSpace: "normal", // Allow wrapping
+                                                                maxWidth: "10vw", // Restrict excessive expansion
+                                                            }}
+                                                        >
+                                                            + {option.price} VND
+                                                        </Typography>
+                                                    </div>
+                                                </Row>
+
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* Total Price & Add to Cart Button */}
+                                    <div
+                                        style={{
+                                            backgroundColor: '#d32f2f',
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            padding: "1vh 1vw",
+                                            marginTop: "2vh",
+                                            borderRadius: "2vw",
+                                            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+                                            cursor: 'pointer',
+                                            transition: "background 0.3s ease"
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#e64a4a"}
+                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#d32f2f"}
+                                        onClick={handleAddToCart}
+                                    >
+                                        <Title level={4} style={{ fontSize: "1vw", margin: 0, color: 'white' }}>
+                                            {(food?.basePrice + selectedOptions.reduce((sum, optionId) => {
+                                                const selectedOption = food?.options.find(opt => opt.id === optionId);
+                                                return sum + (selectedOption ? selectedOption.price : 0);
+                                            }, 0)).toLocaleString()} VND
+                                        </Title>
+                                        <Typography
+                                            style={{
+                                                fontSize: "1vw",
+                                                color: 'white',
+                                                paddingRight: '0.1vw',
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "0.5vw",
+                                            }}>
+                                            {t('foodMenu.detailedFoodPage.addToCart')} <PlusCircleOutlined style={{ fontSize: "2vw" }} />
+                                        </Typography>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} lg={8}>
+                                <div style={{ padding: '20px' }}>
+                                    <RightInformationSection />
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </Spin>
+            </div>
+        </>
     );
 };
 

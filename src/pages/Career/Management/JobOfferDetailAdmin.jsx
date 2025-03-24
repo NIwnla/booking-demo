@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { routeNames } from '../../../constaints/routeName';
 import axiosInstance from '../../../service/axios';
+import { Helmet } from 'react-helmet-async';
+
 
 const { Title, Paragraph } = Typography;
 
@@ -44,68 +46,74 @@ const JobOfferDetailAdmin = () => {
     const jobTitle = i18n.language === 'vi' ? jobOffer.nameVN : jobOffer.nameEN;
 
     return (
-        <div style={{ padding: '2vh 10vw' }}>
-            <Card>
-                <Title level={2}>{jobTitle}</Title>
-                <Paragraph style={{ marginBottom: '24px' }}>
-                    {jobOffer.shortDescription}
-                </Paragraph>
+        <>
+            <Helmet>
+                <title>{jobOffer ? `${jobTitle} - Job Management` : 'Job Details - Nollowa Chicken Admin'}</title>
+                <meta name="description" content="Manage job offer details and requirements" />
+            </Helmet>
+            <div style={{ padding: '2vh 10vw' }}>
+                <Card>
+                    <Title level={2}>{jobTitle}</Title>
+                    <Paragraph style={{ marginBottom: '24px' }}>
+                        {jobOffer.shortDescription}
+                    </Paragraph>
 
-                <Row gutter={[24, 24]}>
-                    <Col xs={24} lg={16}>
-                        <Card title="Job Description">
-                            <div
-                                dangerouslySetInnerHTML={{ __html: jobOffer.description }}
-                                style={{
-                                    fontSize: '1.25rem',
-                                    padding: '12px'
-                                }}
-                            />
-                        </Card>
-                    </Col>
-                    <Col xs={24} lg={8}>
-                        <Card title="Job Details">
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                                {infoItems.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        style={{
-                                            display: 'flex',
-                                            borderBottom: index !== infoItems.length - 1 ? '2px solid #f0f0f0' : 'none',
-                                            paddingBottom: '16px'
-                                        }}
-                                    >
-                                        <div style={{
-                                            minWidth: '150px',
-                                            fontWeight: 'bold',
-                                            color: '#666',
-                                            paddingRight: '16px',
-                                            wordBreak: 'break-word'
-                                        }}>
-                                            {item.label}
+                    <Row gutter={[24, 24]}>
+                        <Col xs={24} lg={16}>
+                            <Card title="Job Description">
+                                <div
+                                    dangerouslySetInnerHTML={{ __html: jobOffer.description }}
+                                    style={{
+                                        fontSize: '1.25rem',
+                                        padding: '12px'
+                                    }}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} lg={8}>
+                            <Card title="Job Details">
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                    {infoItems.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            style={{
+                                                display: 'flex',
+                                                borderBottom: index !== infoItems.length - 1 ? '2px solid #f0f0f0' : 'none',
+                                                paddingBottom: '16px'
+                                            }}
+                                        >
+                                            <div style={{
+                                                minWidth: '150px',
+                                                fontWeight: 'bold',
+                                                color: '#666',
+                                                paddingRight: '16px',
+                                                wordBreak: 'break-word'
+                                            }}>
+                                                {item.label}
+                                            </div>
+                                            <div style={{
+                                                flex: 1,
+                                                wordBreak: 'break-word'
+                                            }}>
+                                                {item.value}
+                                            </div>
                                         </div>
-                                        <div style={{
-                                            flex: 1,
-                                            wordBreak: 'break-word'
-                                        }}>
-                                            {item.value}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </Card>
-                    </Col>
-                </Row>
+                                    ))}
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
 
-                <div style={{ marginTop: '24px' }}>
-                    <Link to={routeNames.jobOffer.management}>
-                        <Button icon={<ArrowLeftOutlined />}>
-                            Back to Job Offers
-                        </Button>
-                    </Link>
-                </div>
-            </Card>
-        </div>
+                    <div style={{ marginTop: '24px' }}>
+                        <Link to={routeNames.jobOffer.management}>
+                            <Button icon={<ArrowLeftOutlined />}>
+                                Back to Job Offers
+                            </Button>
+                        </Link>
+                    </div>
+                </Card>
+            </div>
+        </>
     );
 };
 

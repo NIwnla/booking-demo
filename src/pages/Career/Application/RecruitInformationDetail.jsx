@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Descriptions, Button, Space, Spin, message, Popconfirm } from 'antd';
-import { FilePdfOutlined, CheckOutlined, CloseOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeftOutlined, CheckOutlined, CloseOutlined, FilePdfOutlined } from '@ant-design/icons';
+import { Button, Card, Descriptions, message, Popconfirm, Space, Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import axiosInstance from '../../../service/axios';
+import { useMediaQuery } from 'react-responsive';
+import { useNavigate, useParams } from 'react-router-dom';
 import { apiEndPoints } from '../../../constaints/apiEndPoint';
 import { AxiosConstants } from '../../../constaints/axiosContaint';
 import { routeNames } from '../../../constaints/routeName';
-import { useMediaQuery } from 'react-responsive';
+import axiosInstance from '../../../service/axios';
 
 const RecruitInformationDetail = () => {
     const { id } = useParams();
@@ -63,6 +64,13 @@ const RecruitInformationDetail = () => {
     }
 
     return (
+         <>
+            <Helmet>
+                <title>
+                    {data ? `Application: ${data.firstName} ${data.lastName} - Nollowa Chicken Admin` : 'Application Details - Nollowa Chicken Admin'}
+                </title>
+                <meta name="description" content="Detailed view of job application" />
+            </Helmet>
         <div style={{ padding: isLargeScreen ? '5vh 10vw' : '5vh 2vw' }}>
             <Button 
                 icon={<ArrowLeftOutlined />} 
@@ -129,6 +137,7 @@ const RecruitInformationDetail = () => {
                 </Popconfirm>
             </Space>
         </div>
+        </>
     );
 };
 

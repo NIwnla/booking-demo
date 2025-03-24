@@ -8,6 +8,7 @@ import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import { AxiosConstants } from '../../constaints/axiosContaint';
 import { getLocalizedText } from '../../helpers/getLocalizedText';
+import { Helmet } from 'react-helmet-async';
 
 const { Title } = Typography;
 const { Search } = Input;
@@ -109,71 +110,77 @@ const CategoryManagementAdminPage = () => {
     ];
 
     return (
-        <Content style={{ padding: '20px' }}>
-            <Title level={3}>{t('category.categoryManagement.titles.pageTitle')}</Title>
-            <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-                <Col xs={24} md={12}>
-                    <Button
-                        type="primary"
-                        onClick={handleCreateCategoryClick}
-                        style={{ width: '100%' }}
-                    >
-                        {t('category.categoryManagement.titles.createButton')}
-                    </Button>
-                </Col>
-                <Col xs={24} md={12}>
-                    <Search
-                        placeholder={t('category.categoryManagement.search.placeholder')}
-                        onSearch={(value) => setSearchName(value)}
-                        style={{ width: '100%' }}
-                    />
-                </Col>
-            </Row>
-            <Spin spinning={isFetching} tip={t('category.categoryManagement.messages.loading')}>
-                <Row gutter={[16, 16]}>
-                    {categories.map((category) => (
-                        <Col key={category.id} xs={24} sm={12} md={12} lg={6}>
-                            <Card
-                                hoverable
-                                cover={
-                                    <div style={{ overflow: "hidden", height: "30vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                        <Image
-                                            alt={category.name}
-                                            src={category.imagePath ? `${AxiosConstants.AXIOS_BASEURL}/${category.imagePath}` : 'placeholder-image-url'}
-                                        />
-                                    </div>
-                                }
-                            >
-                                <Card.Meta
-                                    title={getLocalizedText(category, 'name', i18n.language)}
-                                />
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
-                                    <Space wrap>
-                                        <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleEditClick(category)}>
-                                            {t('category.categoryManagement.buttons.edit')}
-                                        </Button>
-                                        <Button danger style={{ maxWidth: "15vw" }} onClick={() => handleDeleteClick(category.id)}>
-                                            {t('category.categoryManagement.buttons.delete')}
-                                        </Button>
-                                    </Space>
-                                </div>
-                            </Card>
-                        </Col>
-                    ))}
+        <>
+            <Helmet>
+                <title>Category Management - Nollowa Chicken Admin</title>
+                <meta name="description" content="Manage food categories for Nollowa Chicken menu" />
+            </Helmet>
+            <Content style={{ padding: '20px' }}>
+                <Title level={3}>{t('category.categoryManagement.titles.pageTitle')}</Title>
+                <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+                    <Col xs={24} md={12}>
+                        <Button
+                            type="primary"
+                            onClick={handleCreateCategoryClick}
+                            style={{ width: '100%' }}
+                        >
+                            {t('category.categoryManagement.titles.createButton')}
+                        </Button>
+                    </Col>
+                    <Col xs={24} md={12}>
+                        <Search
+                            placeholder={t('category.categoryManagement.search.placeholder')}
+                            onSearch={(value) => setSearchName(value)}
+                            style={{ width: '100%' }}
+                        />
+                    </Col>
                 </Row>
-            </Spin>
-            <CreateCategoryModal
-                visible={isCreationModalVisible}
-                onClose={handleCreationModalClose}
-                onCategoryCreated={handleCategoryCreated}
-            />
-            <EditCategoryModal
-                open={isEditModalVisible}
-                onClose={handleEditModalClose}
-                category={selectedCategory}
-                onCategoryUpdated={handleCategoryEdited}
-            />
-        </Content>
+                <Spin spinning={isFetching} tip={t('category.categoryManagement.messages.loading')}>
+                    <Row gutter={[16, 16]}>
+                        {categories.map((category) => (
+                            <Col key={category.id} xs={24} sm={12} md={12} lg={6}>
+                                <Card
+                                    hoverable
+                                    cover={
+                                        <div style={{ overflow: "hidden", height: "30vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                            <Image
+                                                alt={category.name}
+                                                src={category.imagePath ? `${AxiosConstants.AXIOS_BASEURL}/${category.imagePath}` : 'placeholder-image-url'}
+                                            />
+                                        </div>
+                                    }
+                                >
+                                    <Card.Meta
+                                        title={getLocalizedText(category, 'name', i18n.language)}
+                                    />
+                                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                                        <Space wrap>
+                                            <Button type="primary" style={{ maxWidth: "15vw" }} onClick={() => handleEditClick(category)}>
+                                                {t('category.categoryManagement.buttons.edit')}
+                                            </Button>
+                                            <Button danger style={{ maxWidth: "15vw" }} onClick={() => handleDeleteClick(category.id)}>
+                                                {t('category.categoryManagement.buttons.delete')}
+                                            </Button>
+                                        </Space>
+                                    </div>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                </Spin>
+                <CreateCategoryModal
+                    visible={isCreationModalVisible}
+                    onClose={handleCreationModalClose}
+                    onCategoryCreated={handleCategoryCreated}
+                />
+                <EditCategoryModal
+                    open={isEditModalVisible}
+                    onClose={handleEditModalClose}
+                    category={selectedCategory}
+                    onCategoryUpdated={handleCategoryEdited}
+                />
+            </Content>
+        </>
     );
 };
 

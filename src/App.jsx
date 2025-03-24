@@ -9,6 +9,7 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 import utc from 'dayjs/plugin/utc';
 import { DeliveryContext, DeliveryProvider } from './context/DeliveryContext';
 import ScrollToTop from './components/utils/ScrollToTop';
+import { HelmetProvider } from 'react-helmet-async';
 
 dayjs.extend(isoWeek);
 dayjs.extend(utc);
@@ -41,6 +42,7 @@ const customTheme = {
 
 const App = () => {
   return (
+    <HelmetProvider>
     <ConfigProvider theme={customTheme}>
       <AntdApp>
         <AuthProvider>
@@ -56,6 +58,7 @@ const App = () => {
         </AuthProvider>
       </AntdApp>
     </ConfigProvider>
+    </HelmetProvider>
   )
 };
 

@@ -162,7 +162,7 @@ const LifeAt = () => {
                     <div
                         ref={refDelivering}
                         style={{
-                            fontSize: '6rem',
+                            fontSize: isLargeScreen ?  '6rem' : '4rem',
                             marginBottom: '1rem'
                         }}>
                         <TypedText text="Delivering" inView={inViewDelivering} delay={0} />
@@ -170,7 +170,7 @@ const LifeAt = () => {
                     <div
                         ref={refWow}
                         style={{
-                            fontSize: '7rem',
+                            fontSize: isLargeScreen ?  '7rem' : '5rem',
                             marginBottom: '1rem'
                         }}>
                         <TypedText text="Wow" inView={inViewWow} delay={0.5} />
@@ -178,7 +178,7 @@ const LifeAt = () => {
                     <div
                         ref={refSharing}
                         style={{
-                            fontSize: '6rem',
+                            fontSize: isLargeScreen ? '6rem' : '4rem',
                             marginBottom: '1rem'
                         }}>
                         <TypedText text="Sharing" inView={inViewSharing} delay={1} />
@@ -186,7 +186,7 @@ const LifeAt = () => {
                     <div
                         ref={refHappiness}
                         style={{
-                            fontSize: '6rem',
+                            fontSize: isLargeScreen ? '6rem' : '3rem',
                             marginBottom: '2rem'
                         }}>
                         <TypedText text="Happiness" inView={inViewHappiness} delay={1.5} />

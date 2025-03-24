@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import { AuthContext } from '../../context/AuthContext';
+import { Helmet } from 'react-helmet-async';
 
 const { Title, Text } = Typography;
 
@@ -108,6 +109,10 @@ const ReservationForm = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Complete Reservation - Nollowa Chicken</title>
+                <meta name="description" content="Complete your table reservation at Nollowa Chicken" />
+            </Helmet>
             <div style={{ position: 'relative' }}>
                 {/* Blurred Background */}
                 <div style={{
