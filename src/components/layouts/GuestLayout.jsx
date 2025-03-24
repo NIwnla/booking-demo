@@ -60,7 +60,7 @@ const GuestLayout = ({ children }) => {
     const leftMenuItems = [
         {
             key: '2',
-            label: <Link to={routeNames.booking.branchChoose}>{t('header.reservation')}</Link>,
+            label: <Link to={routeNames.reservation.main}>{t('header.reservation')}</Link>,
         },
         {
             key: '3',
@@ -68,7 +68,7 @@ const GuestLayout = ({ children }) => {
         },
         {
             key: '4',
-            label: <Link to={routeNames.recruitInformation.signUp}>{t('header.career')}</Link>,
+            label: <Link to={routeNames.career.main}>{t('header.career')}</Link>,
         }
     ];
 

@@ -18,7 +18,7 @@ const DefaultLayout = ({ children }) => {
     const rightMenuItems = [
         {
             key: 'reservation',
-            label: <Link to={routeNames.booking.branchChoose}>{t('header.reservation')}</Link>,
+            label: <Link to={routeNames.reservation.main}>{t('header.reservation')}</Link>,
         },
         {
             key: 'delivery',
@@ -26,7 +26,7 @@ const DefaultLayout = ({ children }) => {
         },
         {
             key: 'career',
-            label: <Link to={routeNames.recruitInformation.signUp}>{t('header.career')}</Link>,
+            label: <Link to={routeNames.career.main}>{t('header.career')}</Link>,
         },
         {
             key: 'language',
