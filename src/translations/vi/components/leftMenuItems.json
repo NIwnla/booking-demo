@@ -1,7 +1,8 @@
 {
   "general": {
     "label": "Chung",
-    "home": "Trang Chủ"
+    "home": "Trang Chủ",
+    "dashboard": "Bảng Thống Kê"
   },
   "management": {
     "label": "Quản Lý",
@@ -21,7 +22,7 @@
   "applications": {
     "label": "Ứng Dụng",
     "booking": "Đặt Chỗ",
-    "delivery": "Giao Hàng",
+    "career": "Tìm Việc",
     "foodMenu": "Thực Đơn"
   }
 }

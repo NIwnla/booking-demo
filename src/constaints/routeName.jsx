@@ -20,6 +20,11 @@ export const routeNames = {
         management: '/users/management',
         information: '/users/information'
     },
+    dashboard:{
+        overview: '/dashboard/overview',
+        branch: '/dashboard/branch',
+        user: '/dashboard/user',
+    },
     homepage: {
         admin: '/home/admin',
         branchManager: '/home/branch-manager',
@@ -82,5 +87,10 @@ export const routeNames = {
         main: '/profile',
         edit: '/profile/edit',
         settings: '/profile/settings'
+    },
+    statistic: {
+        main: '/statistic',
+        booking: '/statistic/booking',
+        delivery: '/statistic/delivery'
     },
 }

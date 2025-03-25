@@ -1,7 +1,8 @@
 {
   "general": {
     "label": "General",
-    "home": "Home"
+    "home": "Home",
+    "dashboard": "Dashboard"
   },
   "management": {
     "label": "Management",
@@ -21,7 +22,7 @@
   "applications": {
     "label": "Applications",
     "booking": "Booking",
-    "delivery": "Delivery",
+    "career": "Career",
     "foodMenu": "Menu"
   }
 }

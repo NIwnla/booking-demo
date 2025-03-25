@@ -1,27 +1,37 @@
 import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { routeNames } from "../../constaints/routeName";
-import React from "react";
+import { userRoles } from "../../constaints/userRoles";
+import { AuthContext } from "../../context/AuthContext";
 
 const RedirectFirstPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const searchParams = new URLSearchParams(location.search);
-    const { setAuthToken, from, isAuthenticated } = useContext(AuthContext);
+    const { setAuthToken, from, isAuthenticated, role } = useContext(AuthContext);
     const token = searchParams.get('token');
 
     useEffect(() => {
         if (token) {
             setAuthToken(token);
-            // Redirect to stored path or default to landing page
             if (isAuthenticated) {
-                navigate(from || routeNames.foodMenu.main, { replace: true });
+                let redirectPath;
+                switch (role) {
+                    case userRoles.ADMIN:
+                        redirectPath = routeNames.dashboard.overview;
+                        break;
+                    case userRoles.BRANCH_MANAGER:
+                    case userRoles.GUEST:
+                    default:
+                        redirectPath = routeNames.foodMenu.main;
+                        break;
+                }
+                navigate(from || redirectPath, { replace: true });
             }
         } else {
             navigate(routeNames.landing, { replace: true });
         }
-    }, [token, isAuthenticated, from, navigate]);
+    }, [token, isAuthenticated, role, from, navigate]);
 
     return null;
 }

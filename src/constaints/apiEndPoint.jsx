@@ -34,6 +34,9 @@ export const apiEndPoints = {
     },
     DASHBOARD: {
         ADMIN: '/dashboard/statistic',
+        OVERVIEW: '/dashboard/reservation-overview',
+        BRANCH: (id) => `/dashboard/branch/${id}/statistics`,
+        USER: (id) => `/dashboard/user/${id}/statistics`,
     },
     DISABLED_TIME: {
         GET_BY_MONTH: (year, month, branchId) => `/disabled-booking-times/${year}/${month}/${branchId}`,

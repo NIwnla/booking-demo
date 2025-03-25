@@ -66,6 +66,10 @@ const AdminLayout = ({ children }) => {
                     key: '1',
                     label: <Link to={routeNames.index}>{t('leftMenuItems.general.home')}</Link>,
                 },
+                {
+                    key: 'dashboard',
+                    label: <Link to={routeNames.dashboard.overview}>{t('leftMenuItems.general.dashboard')}</Link>,
+                },
             ],
         },
         {
@@ -130,7 +134,7 @@ const AdminLayout = ({ children }) => {
                 },
                 {
                     key: '12',
-                    label: <Link to={routeNames.career.main}>{t('leftMenuItems.applications.delivery')}</Link>,
+                    label: <Link to={routeNames.career.main}>{t('leftMenuItems.applications.career')}</Link>,
                 },
             ],
         },

@@ -27,6 +27,8 @@ import LandingPage from "../pages/Common/LandingPage/LandingPage";
 import NotFoundPage from "../pages/Common/NotFoundPage";
 import RedirectFirstPage from "../pages/Common/RedirectFirstPage";
 import SignInPage from "../pages/Common/SignInPage";
+import BranchDashboard from "../pages/Dashboard/BranchDashboard";
+import DashboardOverview from "../pages/Dashboard/DashboardOverview";
 import DeliveryCreationPage from "../pages/Delivery/DeliveryCreationPage";
 import DeliveryManagementPageAdmin from "../pages/Delivery/DeliveryManagementPageAdmin";
 import DisableBranchChoosePage from "../pages/DisableBookingTime/DisableBranchChoosePage";
@@ -84,6 +86,15 @@ const AppRoutes = () => {
                 <Route
                     path={routeNames.homepage.guest}
                     element={<PrivateRoute element={<HomePageGuest />} allowedRoles={[userRoles.GUEST]} />}
+                />
+                {/* -------------------------------------------------------------------------------------------------------------------------- */}
+                <Route
+                    path={routeNames.dashboard.overview}
+                    element={<PrivateRoute element={<DashboardOverview />} allowedRoles={[userRoles.ADMIN]} />}
+                />
+                <Route
+                    path={routeNames.dashboard.branch}
+                    element={<PrivateRoute element={<BranchDashboard />} allowedRoles={[userRoles.ADMIN]} />}
                 />
                 {/* -------------------------------------------------------------------------------------------------------------------------- */}
                 <Route
