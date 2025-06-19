@@ -43,6 +43,7 @@ const ReservationPage = () => {
             const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
                 params: {
                     includeDeleted: true,
+                    time: selectedTime,
                     locationId: selectedLocation || null,
                     search: selectedBranch
                 }
@@ -161,7 +162,7 @@ const ReservationPage = () => {
                         Reserve a table at any of our restaurants in your city {locations.find(loc => loc.id === selectedLocation)?.name || ''}
                     </p>
                     <Row gutter={[16, 16]} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '8px', width: '70vw' }}>
-                        <Col xs={12} md={12} lg={7}>
+                        <Col xs={24} md={12} lg={7}>
                             <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
                                 Branch {locations.find(loc => loc.id === selectedLocation)?.name || ''}
                             </div>
@@ -179,7 +180,7 @@ const ReservationPage = () => {
                                 onChange={(value) => setSelectedBranch(value)}
                             />
                         </Col>
-                        <Col xs={12} md={12} lg={5}>
+                        <Col xs={24} md={12} lg={5}>
                             <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
                                 Adult
                             </div>
@@ -191,7 +192,7 @@ const ReservationPage = () => {
                                 onChange={setSelectedAdult}
                             />
                         </Col>
-                        <Col xs={12} md={12} lg={5}>
+                        <Col xs={24} md={12} lg={5}>
                             <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
                                 Date
                             </div>
@@ -201,7 +202,7 @@ const ReservationPage = () => {
                                 onChange={setSelectedDate}
                             />
                         </Col>
-                        <Col xs={12} md={12} lg={3}>
+                        <Col xs={24} md={12} lg={3}>
                             <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
                                 Time
                             </div>
