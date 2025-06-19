@@ -1,10 +1,10 @@
+// @ts-nocheck
 import { SearchOutlined } from '@ant-design/icons';
 import { App, Button, Col, DatePicker, Row, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { apiEndPoints } from '../../constaints/apiEndPoint';
 import axiosInstance from '../../service/axios';
 import { useNavigate } from 'react-router-dom';
-// @ts-ignore
 import ReservationBackground from '../../assets/ReservationBackground.jpg';
 import { routeNames } from '../../constaints/routeName';
 import dayjs from 'dayjs';
@@ -13,7 +13,7 @@ import { getLocalizedText } from '../../helpers/getLocalizedText';
 import { useTranslation } from 'react-i18next';
 
 const ReservationPage = () => {
-    const {t , i18n} = useTranslation('global')
+    const { t, i18n } = useTranslation('global')
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [isFetching, setIsFetching] = useState(false);
     const [branches, setBranches] = useState([]);
@@ -86,7 +86,7 @@ const ReservationPage = () => {
 
     useEffect(() => {
         fetchBranchesName();
-    },[selectedLocation])
+    }, [selectedLocation])
 
     useEffect(() => {
         fetchLocations();
@@ -103,6 +103,9 @@ const ReservationPage = () => {
     };
 
     const handleReservationClick = (branch) => {
+        const [year, month, day] = selectedDate.format('YYYY-MM-DD').split('-').map(Number);
+        const [hours, minutes] = selectedTime.split(':').map(Number);
+        const dateTime = new Date(year, month - 1, day, hours, minutes);``
         navigate(routeNames.reservation.form, {
             state: {
                 branch,
