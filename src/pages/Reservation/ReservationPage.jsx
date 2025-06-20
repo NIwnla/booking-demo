@@ -109,7 +109,7 @@ const ReservationPage = () => {
         navigate(routeNames.reservation.form, {
             state: {
                 branch,
-                time: selectedTime,
+                time: dateTime,
                 adult: selectedAdult,
                 date: selectedDate?.format('YYYY-MM-DD'),
             }
