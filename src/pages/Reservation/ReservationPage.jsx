@@ -38,12 +38,15 @@ const ReservationPage = () => {
     }, []);
 
     const fetchAllBranches = async () => {
+        const [year, month, day] = selectedDate.format('YYYY-MM-DD').split('-').map(Number);
+        const [hours, minutes] = selectedTime.split(':').map(Number);
+        const dateTime = new Date(year, month - 1, day, hours, minutes); ``
         setIsFetching(true);
         try {
             const response = await axiosInstance.get(apiEndPoints.BRANCH.GET_ALL, {
                 params: {
                     includeDeleted: true,
-                    time: selectedTime,
+                    time: dateTime,
                     locationId: selectedLocation || null,
                     search: selectedBranch
                 }
@@ -103,13 +106,10 @@ const ReservationPage = () => {
     };
 
     const handleReservationClick = (branch) => {
-        const [year, month, day] = selectedDate.format('YYYY-MM-DD').split('-').map(Number);
-        const [hours, minutes] = selectedTime.split(':').map(Number);
-        const dateTime = new Date(year, month - 1, day, hours, minutes);``
         navigate(routeNames.reservation.form, {
             state: {
                 branch,
-                time: dateTime,
+                time: selectedTime,
                 adult: selectedAdult,
                 date: selectedDate?.format('YYYY-MM-DD'),
             }
