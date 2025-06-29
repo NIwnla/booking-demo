@@ -20,6 +20,7 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
         formData.append('DescriptionEN', values.descriptionEN);
         formData.append('ImageFile', values.imageFile.file);
         formData.append('BranchLocationId', values.locationId);
+        formData.append('NumberOfTables', values.numberOfTables);
 
         setLoading(true);
 
@@ -92,6 +93,17 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                     rules={[{ required: true, message: t('branch.creationModal.form.location.required') }]}
                 >
                     <BranchLocationFilterBox onLocationChange={(value) => form.setFieldValue('locationId', value)} />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.creationModal.form.numberOfTables.label')}
+                    name="numberOfTables"
+                    rules={[
+                        { required: true, message: t('branch.creationModal.form.numberOfTables.required') },
+                        { type: 'number', min: 1, message: t('branch.creationModal.form.numberOfTables.positive') }
+                    ]}
+                >
+                    <Input type="number" min={1} placeholder={t('branch.creationModal.form.numberOfTables.placeholder')} />
                 </Form.Item>
 
                 <Form.Item

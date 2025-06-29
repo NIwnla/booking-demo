@@ -72,6 +72,12 @@
                 "label": "Location",
                 "placeholder": "Select branch location",
                 "required": "Please select a branch location"
+            },
+            "numberOfTables": {
+                "label": "Number of Tables",
+                "placeholder": "Enter number of tables",
+                "required": "Please enter the number of tables",
+                "positive": "Number of tables must be a positive number"
             }
         },
         "buttons": {

@@ -72,6 +72,12 @@
         "label": "Địa Điểm",
         "placeholder": "Chọn địa điểm chi nhánh",
         "required": "Vui lòng chọn địa điểm chi nhánh"
+      },
+      "numberOfTables": {
+        "label": "Số lượng bàn",
+        "placeholder": "Nhập số lượng bàn",
+        "required": "Vui lòng nhập số lượng bàn",
+        "positive": "Số lượng bàn phải là số dương"
       }
     },
     "buttons": {

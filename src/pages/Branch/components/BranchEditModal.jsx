@@ -21,7 +21,8 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 nameEN: branch.nameEN,
                 descriptionVN: branch.descriptionVN,
                 descriptionEN: branch.descriptionEN,
-                locationId: branch.branchLocationId
+                locationId: branch.branchLocationId,
+                numberOfTables: branch.numberOfTables
             });
 
             setFileList(branch.imagePath ? [
@@ -42,6 +43,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
         formData.append('DescriptionVN', values.descriptionVN);
         formData.append('DescriptionEN', values.descriptionEN);
         formData.append('BranchLocationId', values.locationId);
+        formData.append('NumberOfTables', values.numberOfTables);
 
         if (fileList.length > 0 && fileList[0].originFileObj) {
             formData.append('ImageFile', fileList[0].originFileObj);
@@ -126,6 +128,17 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                         onLocationChange={(value) => form.setFieldValue('locationId', value)}
                         defaultValue={branch?.branchLocationId}
                     />
+                </Form.Item>
+
+                <Form.Item
+                    label={t('branch.creationModal.form.numberOfTables.label')}
+                    name="numberOfTables"
+                    rules={[
+                        { required: true, message: t('branch.creationModal.form.numberOfTables.required') },
+                        { type: 'number', min: 1, message: t('branch.creationModal.form.numberOfTables.positive') }
+                    ]}
+                >
+                    <Input type="number" min={1} placeholder={t('branch.creationModal.form.numberOfTables.placeholder')} />
                 </Form.Item>
 
                 <Form.Item
