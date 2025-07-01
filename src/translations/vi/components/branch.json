@@ -79,6 +79,12 @@
         "placeholder": "Nhập số lượng bàn",
         "required": "Vui lòng nhập số lượng bàn",
         "positive": "Số lượng bàn phải là số dương"
+      },
+      "reservationLimit":{
+        "label":"Giới hạn bàn",
+        "placeholder":"Nhập giới hạn bàn",
+        "required":"Vui lòng nhập giới hạn bàn",
+        "positive":"Giới hạn bàn phải là số dương"
       }
     },
     "buttons": {

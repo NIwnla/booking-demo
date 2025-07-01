@@ -133,10 +133,6 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 <Form.Item
                     label={t('branch.creationModal.form.reservationLimit.label')}
                     name="reservationLimit"
-                    rules={[
-                        { required: true, message: t('branch.creationModal.form.reservationLimit.required') },
-                        { type: 'number', min: 1, message: t('branch.creationModal.form.reservationLimit.positive') }
-                    ]}
                 >
                     <Input type="number" min={1} placeholder={t('branch.creationModal.form.reservationLimit.placeholder')} />
                 </Form.Item>

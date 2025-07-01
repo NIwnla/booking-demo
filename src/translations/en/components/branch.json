@@ -79,6 +79,12 @@
                 "placeholder": "Enter number of tables",
                 "required": "Please enter the number of tables",
                 "positive": "Number of tables must be a positive number"
+            },
+            "reservationLimit":{
+                "label":"Reservation Limit",
+                "placeholder":"Enter reservation limit",
+                "required":"Please enter the reservation limit",
+                "positive":"Reservation limit must be a positive number"
             }
         },
         "buttons": {
