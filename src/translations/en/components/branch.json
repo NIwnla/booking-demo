@@ -10,7 +10,8 @@
             "description": "Description",
             "location": "Location",
             "status": "Status",
-            "action": "Action"
+            "action": "Action",
+            "reservationLimit" : "ReservationLimit"
         },
         "buttons": {
             "detail": "Detail",

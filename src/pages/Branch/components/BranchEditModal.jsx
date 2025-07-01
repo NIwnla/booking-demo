@@ -22,7 +22,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 descriptionVN: branch.descriptionVN,
                 descriptionEN: branch.descriptionEN,
                 locationId: branch.branchLocationId,
-                numberOfTables: branch.numberOfTables
+                reservationLimit: branch.reservationLimit
             });
 
             setFileList(branch.imagePath ? [
@@ -43,7 +43,7 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
         formData.append('DescriptionVN', values.descriptionVN);
         formData.append('DescriptionEN', values.descriptionEN);
         formData.append('BranchLocationId', values.locationId);
-        formData.append('NumberOfTables', values.numberOfTables);
+        formData.append('ReservationLimit', values.reservationLimit);
 
         if (fileList.length > 0 && fileList[0].originFileObj) {
             formData.append('ImageFile', fileList[0].originFileObj);
@@ -131,14 +131,14 @@ const BranchEditModal = ({ open, onClose, branch, onBranchUpdated }) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={t('branch.creationModal.form.numberOfTables.label')}
-                    name="numberOfTables"
+                    label={t('branch.creationModal.form.reservationLimit.label')}
+                    name="reservationLimit"
                     rules={[
-                        { required: true, message: t('branch.creationModal.form.numberOfTables.required') },
-                        { type: 'number', min: 1, message: t('branch.creationModal.form.numberOfTables.positive') }
+                        { required: true, message: t('branch.creationModal.form.reservationLimit.required') },
+                        { type: 'number', min: 1, message: t('branch.creationModal.form.reservationLimit.positive') }
                     ]}
                 >
-                    <Input type="number" min={1} placeholder={t('branch.creationModal.form.numberOfTables.placeholder')} />
+                    <Input type="number" min={1} placeholder={t('branch.creationModal.form.reservationLimit.placeholder')} />
                 </Form.Item>
 
                 <Form.Item

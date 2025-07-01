@@ -20,7 +20,7 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
         formData.append('DescriptionEN', values.descriptionEN);
         formData.append('ImageFile', values.imageFile.file);
         formData.append('BranchLocationId', values.locationId);
-        formData.append('NumberOfTables', values.numberOfTables);
+        formData.append('ReservationLimit', values.reservationLimit);
 
         setLoading(true);
 
@@ -96,14 +96,14 @@ const BranchCreationModal = ({ open, onClose, onBranchCreated }) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={t('branch.creationModal.form.numberOfTables.label')}
-                    name="numberOfTables"
+                    label={t('branch.creationModal.form.reservationLimit.label')}
+                    name="reservationLimit"
                     rules={[
-                        { required: true, message: t('branch.creationModal.form.numberOfTables.required') },
-                        { type: 'number', min: 1, message: t('branch.creationModal.form.numberOfTables.positive') }
+                        { required: true, message: t('branch.creationModal.form.reservationLimit.required') },
+                        { type: 'number', min: 1, message: t('branch.creationModal.form.reservationLimit.positive') }
                     ]}
                 >
-                    <Input type="number" min={1} placeholder={t('branch.creationModal.form.numberOfTables.placeholder')} />
+                    <Input type="number" min={1} placeholder={t('branch.creationModal.form.reservationLimit.placeholder')} />
                 </Form.Item>
 
                 <Form.Item

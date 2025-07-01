@@ -123,6 +123,11 @@ const BranchManagementAdminPage = () => {
             key: 'location',
         },
         {
+            title: t('branch.branchManagement.columns.reservationLimit'),
+            dataIndex: 'reservationLimit',
+            key: 'reservationLimit',
+        },
+        {
             title: t('branch.branchManagement.columns.status'),
             dataIndex: 'isDeleted',
             key: 'isDeleted',

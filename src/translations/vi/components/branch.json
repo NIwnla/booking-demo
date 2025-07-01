@@ -10,7 +10,8 @@
       "description": "Mô Tả",
       "location": "Địa Điểm",
       "status": "Trạng Thái",
-      "action": "Hành Động"
+      "action": "Hành Động",
+      "reservationLimit": "Giới Hạn Số Bàn"
     },
     "buttons": {
       "detail": "Chi Tiết",
